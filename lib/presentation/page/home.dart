@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:share_quiz/presentation/screen/news.dart';
+import 'package:share_quiz/presentation/screen/trend.dart';
 
 class Home extends HookWidget {
   final _tab = <Tab>[
@@ -20,8 +22,8 @@ class Home extends HookWidget {
         drawer: _createDrawer(),
         body: TabBarView(
           children: [
-            Text('Car'),
-            Text('Car'),
+            News(),
+            Trend(),
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -47,8 +49,7 @@ class Home extends HookWidget {
               ),
               CircleAvatar(
                 radius: 30.0,
-                // backgroundImage:
-                // NetworkImage(photoUrl),
+                // backgroundImage: NetworkImage(photoUrl),
                 backgroundColor: Colors.transparent,
               )
             ]),
