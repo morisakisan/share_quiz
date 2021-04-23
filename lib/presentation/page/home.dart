@@ -10,25 +10,26 @@ class Home extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: _tab.length,
-        child: Scaffold(
-            appBar: AppBar(
-                title: Text('クイズシェア'),
-                bottom: TabBar(
-                  tabs: _tab,
-                )),
-            drawer: _createDrawer(),
-            body: TabBarView(
-              children: [
-                Text('Car'),
-                Text('Car'),
-              ],
-            ),
-            floatingActionButton: FloatingActionButton(
-              onPressed: () {},
-              child: Icon(Icons.add),
-              backgroundColor: Colors.green,
-            )));
+      length: _tab.length,
+      child: Scaffold(
+        appBar: AppBar(
+            title: Text('クイズシェア'),
+            bottom: TabBar(
+              tabs: _tab,
+            )),
+        drawer: _createDrawer(),
+        body: TabBarView(
+          children: [
+            Text('Car'),
+            Text('Car'),
+          ],
+        ),
+        floatingActionButton: FloatingActionButton(
+            onPressed: () {},
+            child: Icon(Icons.add),
+            backgroundColor: Colors.green),
+      ),
+    );
   }
 
   Drawer _createDrawer() {
@@ -57,34 +58,27 @@ class Home extends HookWidget {
           ),
           ListTile(
             title: Text('プロフィール'),
-            onTap: () {
-
-            },
+            onTap: () {},
           ),
           Divider(),
           ListTile(
             title: Text('設定'),
-            onTap: () {
-
-            },
+            onTap: () {},
           ),
           Divider(),
           ListTile(
             title: Text('プライバシーポリシー'),
-            onTap: () {
-            },
+            onTap: () {},
           ),
           Divider(),
           ListTile(
             title: Text('ライセンス'),
-            onTap: () {
-            },
+            onTap: () {},
           ),
           Divider(),
           ListTile(
             title: Text('ログアウト'),
-            onTap: () {
-            },
+            onTap: () {},
           ),
         ],
       ),
