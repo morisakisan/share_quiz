@@ -11,14 +11,39 @@ class News extends HookWidget {
   @override
   Widget build(BuildContext context) {
     var state = useProvider(provider.select((s) => s));
-    var text = "";
     if (state is Loading) {
-      text = "l";
+      return Center(
+        child: SizedBox(
+          height: 100,
+          width: 100,
+          child: CircularProgressIndicator(),
+        ),
+      );
     } else if (state is Error) {
-      text = "e";
-    } else if (state is Success) {
-      text = "s";
+      return Text("error");
+    } else {
+      final list = (state as Success).quiz;
+      final widgets = list.map((value) {
+        return Card(
+            margin: EdgeInsets.only(bottom: 16.0),
+            child: Column(
+              children: [
+                // Image.network(value.imageUrl),
+                Text(
+                  value.title,
+                  style: TextStyle(fontSize: 30),
+                ),
+                Text(
+                  value.question,
+                  style: TextStyle(fontSize: 16),
+                )
+              ],
+            ));
+      }).toList();
+      return ListView(
+        children: widgets,
+        padding: EdgeInsets.all(16.0),
+      );
     }
-    return Text(text);
   }
 }
