@@ -11,5 +11,4 @@ class QuizStateNotifier extends StateNotifier<QuizState> {
       state = await QuizStateMapper.transform();
     }();
   }
-
 }
