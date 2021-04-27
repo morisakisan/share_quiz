@@ -6,7 +6,7 @@ import 'package:share_quiz/domain/quiz/quiz_repository.dart';
 import 'package:share_quiz/domain/quiz/quiz_state.dart';
 
 class News extends HookWidget {
-  final provider = StateNotifierProvider((ref) => QuizNotifier(ref.read));
+  final provider = StateNotifierProvider((ref) => QuizNotifier());
 
   @override
   Widget build(BuildContext context) {

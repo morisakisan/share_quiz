@@ -5,17 +5,11 @@ import 'package:share_quiz/domain/quiz/quiz_state.dart';
 import 'package:state_notifier/state_notifier.dart';
 
 class QuizNotifier extends StateNotifier<QuizState> {
-  QuizNotifier(this._read) : super(QuizState.loading()) {
+  QuizNotifier() : super(QuizState.loading()) {
     () async {
       await QuizFirebaseStorage().dummy();
-      state = await _read(itemsFetcher.future);
+      state = await Mapper.transform();
     }();
   }
 
-  final Reader _read;
 }
-
-final itemsFetcher = FutureProvider((ref) async {
-  // ignore: top_level_function_literal_block
-  return Mapper.transform();
-});
