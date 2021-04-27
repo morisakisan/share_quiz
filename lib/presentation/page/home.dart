@@ -6,6 +6,8 @@ import 'package:share_quiz/presentation/screen/news.dart';
 import 'package:share_quiz/presentation/screen/trend.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import '../nav.dart';
+
 class Home extends HookWidget {
   final _tab = <Tab>[
     Tab(text: '新着'),
@@ -30,7 +32,9 @@ class Home extends HookWidget {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed(Nav.QUIZ_POST);
+            },
             child: Icon(Icons.add),
             backgroundColor: Colors.green),
       ),
@@ -40,7 +44,6 @@ class Home extends HookWidget {
   final provider = StateNotifierProvider((ref) => UserStateNotifier());
 
   Drawer _createDrawer() {
-
     UserState state = useProvider(provider.select((s) => s));
 
     //一旦無理やり
