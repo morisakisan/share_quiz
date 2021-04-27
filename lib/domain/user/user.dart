@@ -9,7 +9,6 @@ abstract class User with _$User {
     required int id,
     required String name,
     required String detail,
-    required String photoUrl,
-    required bool isLoading,
+    required String photoUrl
   }) = _User;
 }

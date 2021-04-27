@@ -20,14 +20,12 @@ class _$UserTearOff {
       {required int id,
       required String name,
       required String detail,
-      required String photoUrl,
-      required bool isLoading}) {
+      required String photoUrl}) {
     return _User(
       id: id,
       name: name,
       detail: detail,
       photoUrl: photoUrl,
-      isLoading: isLoading,
     );
   }
 }
@@ -41,7 +39,6 @@ mixin _$User {
   String get name => throw _privateConstructorUsedError;
   String get detail => throw _privateConstructorUsedError;
   String get photoUrl => throw _privateConstructorUsedError;
-  bool get isLoading => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
@@ -51,8 +48,7 @@ mixin _$User {
 abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res>;
-  $Res call(
-      {int id, String name, String detail, String photoUrl, bool isLoading});
+  $Res call({int id, String name, String detail, String photoUrl});
 }
 
 /// @nodoc
@@ -69,7 +65,6 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object? name = freezed,
     Object? detail = freezed,
     Object? photoUrl = freezed,
-    Object? isLoading = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -88,10 +83,6 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      isLoading: isLoading == freezed
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -101,8 +92,7 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   factory _$UserCopyWith(_User value, $Res Function(_User) then) =
       __$UserCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {int id, String name, String detail, String photoUrl, bool isLoading});
+  $Res call({int id, String name, String detail, String photoUrl});
 }
 
 /// @nodoc
@@ -120,7 +110,6 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object? name = freezed,
     Object? detail = freezed,
     Object? photoUrl = freezed,
-    Object? isLoading = freezed,
   }) {
     return _then(_User(
       id: id == freezed
@@ -139,10 +128,6 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      isLoading: isLoading == freezed
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -154,8 +139,7 @@ class _$_User with DiagnosticableTreeMixin implements _User {
       {required this.id,
       required this.name,
       required this.detail,
-      required this.photoUrl,
-      required this.isLoading});
+      required this.photoUrl});
 
   @override
   final int id;
@@ -165,12 +149,10 @@ class _$_User with DiagnosticableTreeMixin implements _User {
   final String detail;
   @override
   final String photoUrl;
-  @override
-  final bool isLoading;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'User(id: $id, name: $name, detail: $detail, photoUrl: $photoUrl, isLoading: $isLoading)';
+    return 'User(id: $id, name: $name, detail: $detail, photoUrl: $photoUrl)';
   }
 
   @override
@@ -181,8 +163,7 @@ class _$_User with DiagnosticableTreeMixin implements _User {
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('detail', detail))
-      ..add(DiagnosticsProperty('photoUrl', photoUrl))
-      ..add(DiagnosticsProperty('isLoading', isLoading));
+      ..add(DiagnosticsProperty('photoUrl', photoUrl));
   }
 
   @override
@@ -197,10 +178,7 @@ class _$_User with DiagnosticableTreeMixin implements _User {
                 const DeepCollectionEquality().equals(other.detail, detail)) &&
             (identical(other.photoUrl, photoUrl) ||
                 const DeepCollectionEquality()
-                    .equals(other.photoUrl, photoUrl)) &&
-            (identical(other.isLoading, isLoading) ||
-                const DeepCollectionEquality()
-                    .equals(other.isLoading, isLoading)));
+                    .equals(other.photoUrl, photoUrl)));
   }
 
   @override
@@ -209,8 +187,7 @@ class _$_User with DiagnosticableTreeMixin implements _User {
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(detail) ^
-      const DeepCollectionEquality().hash(photoUrl) ^
-      const DeepCollectionEquality().hash(isLoading);
+      const DeepCollectionEquality().hash(photoUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -223,8 +200,7 @@ abstract class _User implements User {
       {required int id,
       required String name,
       required String detail,
-      required String photoUrl,
-      required bool isLoading}) = _$_User;
+      required String photoUrl}) = _$_User;
 
   @override
   int get id => throw _privateConstructorUsedError;
@@ -234,8 +210,6 @@ abstract class _User implements User {
   String get detail => throw _privateConstructorUsedError;
   @override
   String get photoUrl => throw _privateConstructorUsedError;
-  @override
-  bool get isLoading => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$UserCopyWith<_User> get copyWith => throw _privateConstructorUsedError;
