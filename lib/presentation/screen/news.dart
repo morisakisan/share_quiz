@@ -6,25 +6,18 @@ import 'package:share_quiz/domain/quiz/quiz_repository.dart';
 import 'package:share_quiz/domain/quiz/quiz_state.dart';
 
 class News extends HookWidget {
-
-  final provider = StateNotifierProvider<QuizNotifier, QuizState>(
-        (ref) => QuizNotifier(ref.read),
-  );
+  final provider = StateNotifierProvider((ref) => QuizNotifier(ref.read));
 
   @override
   Widget build(BuildContext context) {
-    final state = useProvider(provider.select((s) => s));
-    final String text;
-    switch(state.runtimeType) {
-      case Loading:
-        text = "l";
-        break;
-      case Error:
-        text = "e";
-        break;
-      default:
-        text = "s";
-        break;
+    QuizState state = useProvider(provider.select((s) => s));
+    var text = "";
+    if (state is Loading) {
+      text = "l";
+    } else if (state is Error) {
+      text = "e";
+    } else if (state is Success) {
+      text = "s";
     }
     return Text(text);
   }
