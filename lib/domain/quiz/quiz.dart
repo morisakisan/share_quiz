@@ -10,6 +10,7 @@ abstract class Quiz with _$Quiz {
     required String title,
     required String question,
     required List<String> choices,
-    required int answer
+    required int answer,
+    @Default(null) String? imageUrl,
   }) = _Quiz;
 }

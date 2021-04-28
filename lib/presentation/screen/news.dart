@@ -28,7 +28,7 @@ class News extends HookWidget {
             margin: EdgeInsets.only(bottom: 16.0),
             child: Column(
               children: [
-                // Image.network(value.imageUrl),
+                Image.network(value.imageUrl!),
                 Text(
                   value.title,
                   style: TextStyle(fontSize: 30),

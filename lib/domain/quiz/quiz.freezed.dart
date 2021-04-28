@@ -21,13 +21,15 @@ class _$QuizTearOff {
       required String title,
       required String question,
       required List<String> choices,
-      required int answer}) {
+      required int answer,
+      String? imageUrl = null}) {
     return _Quiz(
       id: id,
       title: title,
       question: question,
       choices: choices,
       answer: answer,
+      imageUrl: imageUrl,
     );
   }
 }
@@ -42,6 +44,7 @@ mixin _$Quiz {
   String get question => throw _privateConstructorUsedError;
   List<String> get choices => throw _privateConstructorUsedError;
   int get answer => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $QuizCopyWith<Quiz> get copyWith => throw _privateConstructorUsedError;
@@ -56,7 +59,8 @@ abstract class $QuizCopyWith<$Res> {
       String title,
       String question,
       List<String> choices,
-      int answer});
+      int answer,
+      String? imageUrl});
 }
 
 /// @nodoc
@@ -74,6 +78,7 @@ class _$QuizCopyWithImpl<$Res> implements $QuizCopyWith<$Res> {
     Object? question = freezed,
     Object? choices = freezed,
     Object? answer = freezed,
+    Object? imageUrl = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -96,6 +101,10 @@ class _$QuizCopyWithImpl<$Res> implements $QuizCopyWith<$Res> {
           ? _value.answer
           : answer // ignore: cast_nullable_to_non_nullable
               as int,
+      imageUrl: imageUrl == freezed
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -110,7 +119,8 @@ abstract class _$QuizCopyWith<$Res> implements $QuizCopyWith<$Res> {
       String title,
       String question,
       List<String> choices,
-      int answer});
+      int answer,
+      String? imageUrl});
 }
 
 /// @nodoc
@@ -129,6 +139,7 @@ class __$QuizCopyWithImpl<$Res> extends _$QuizCopyWithImpl<$Res>
     Object? question = freezed,
     Object? choices = freezed,
     Object? answer = freezed,
+    Object? imageUrl = freezed,
   }) {
     return _then(_Quiz(
       id: id == freezed
@@ -151,6 +162,10 @@ class __$QuizCopyWithImpl<$Res> extends _$QuizCopyWithImpl<$Res>
           ? _value.answer
           : answer // ignore: cast_nullable_to_non_nullable
               as int,
+      imageUrl: imageUrl == freezed
+          ? _value.imageUrl
+          : imageUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -163,7 +178,8 @@ class _$_Quiz with DiagnosticableTreeMixin implements _Quiz {
       required this.title,
       required this.question,
       required this.choices,
-      required this.answer});
+      required this.answer,
+      this.imageUrl = null});
 
   @override
   final int id;
@@ -175,10 +191,13 @@ class _$_Quiz with DiagnosticableTreeMixin implements _Quiz {
   final List<String> choices;
   @override
   final int answer;
+  @JsonKey(defaultValue: null)
+  @override
+  final String? imageUrl;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Quiz(id: $id, title: $title, question: $question, choices: $choices, answer: $answer)';
+    return 'Quiz(id: $id, title: $title, question: $question, choices: $choices, answer: $answer, imageUrl: $imageUrl)';
   }
 
   @override
@@ -190,7 +209,8 @@ class _$_Quiz with DiagnosticableTreeMixin implements _Quiz {
       ..add(DiagnosticsProperty('title', title))
       ..add(DiagnosticsProperty('question', question))
       ..add(DiagnosticsProperty('choices', choices))
-      ..add(DiagnosticsProperty('answer', answer));
+      ..add(DiagnosticsProperty('answer', answer))
+      ..add(DiagnosticsProperty('imageUrl', imageUrl));
   }
 
   @override
@@ -208,7 +228,10 @@ class _$_Quiz with DiagnosticableTreeMixin implements _Quiz {
                 const DeepCollectionEquality()
                     .equals(other.choices, choices)) &&
             (identical(other.answer, answer) ||
-                const DeepCollectionEquality().equals(other.answer, answer)));
+                const DeepCollectionEquality().equals(other.answer, answer)) &&
+            (identical(other.imageUrl, imageUrl) ||
+                const DeepCollectionEquality()
+                    .equals(other.imageUrl, imageUrl)));
   }
 
   @override
@@ -218,7 +241,8 @@ class _$_Quiz with DiagnosticableTreeMixin implements _Quiz {
       const DeepCollectionEquality().hash(title) ^
       const DeepCollectionEquality().hash(question) ^
       const DeepCollectionEquality().hash(choices) ^
-      const DeepCollectionEquality().hash(answer);
+      const DeepCollectionEquality().hash(answer) ^
+      const DeepCollectionEquality().hash(imageUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -232,7 +256,8 @@ abstract class _Quiz implements Quiz {
       required String title,
       required String question,
       required List<String> choices,
-      required int answer}) = _$_Quiz;
+      required int answer,
+      String? imageUrl}) = _$_Quiz;
 
   @override
   int get id => throw _privateConstructorUsedError;
@@ -244,6 +269,8 @@ abstract class _Quiz implements Quiz {
   List<String> get choices => throw _privateConstructorUsedError;
   @override
   int get answer => throw _privateConstructorUsedError;
+  @override
+  String? get imageUrl => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$QuizCopyWith<_Quiz> get copyWith => throw _privateConstructorUsedError;
