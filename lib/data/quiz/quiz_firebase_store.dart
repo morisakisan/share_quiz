@@ -1,4 +1,4 @@
-class QuizFirebaseStorage {
+class QuizFirebaseStore {
   Future<void> dummy() async {
   }
 }

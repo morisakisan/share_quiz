@@ -28,15 +28,21 @@ class News extends HookWidget {
             margin: EdgeInsets.only(bottom: 16.0),
             child: Column(
               children: [
-                Image.network(value.imageUrl!),
+                Ink.image(
+                  image: NetworkImage(value.imageUrl!),
+                  height: 240,
+                  fit: BoxFit.cover,
+                ),
                 Text(
                   value.title,
-                  style: TextStyle(fontSize: 30),
+                  style: TextStyle(fontSize: 24),
                 ),
+                const SizedBox(height: 12),
                 Text(
                   value.question,
                   style: TextStyle(fontSize: 16),
-                )
+                ),
+                const SizedBox(height: 12),
               ],
             ));
       }).toList();

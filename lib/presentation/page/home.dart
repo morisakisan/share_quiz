@@ -20,7 +20,7 @@ class Home extends HookWidget {
       length: _tab.length,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('クイズシェア'),
+          title: Text('ShareQuiz'),
           bottom: TabBar(
             tabs: _tab,
           ),
@@ -33,11 +33,12 @@ class Home extends HookWidget {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              Navigator.of(context).pushNamed(Nav.QUIZ_POST);
-            },
-            child: Icon(Icons.add),
-            backgroundColor: Colors.green),
+          onPressed: () {
+            Navigator.of(context).pushNamed(Nav.QUIZ_POST);
+          },
+          child: Icon(Icons.add),
+          backgroundColor: Colors.green,
+        ),
       ),
     );
   }
