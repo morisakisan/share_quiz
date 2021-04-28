@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:share_quiz/domain/user/user_state.dart';
 import 'package:share_quiz/domain/user/user_state_notifier.dart';
 import 'package:share_quiz/presentation/screen/news.dart';
-import 'package:share_quiz/presentation/screen/trend.dart';
+import 'package:share_quiz/presentation/screen/ranking.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../nav.dart';
@@ -11,7 +11,7 @@ import '../nav.dart';
 class Home extends HookWidget {
   final _tab = <Tab>[
     Tab(text: '新着'),
-    Tab(text: 'トレンド'),
+    Tab(text: 'ランキング'),
   ];
 
   @override
@@ -20,15 +20,16 @@ class Home extends HookWidget {
       length: _tab.length,
       child: Scaffold(
         appBar: AppBar(
-            title: Text('クイズシェア'),
-            bottom: TabBar(
-              tabs: _tab,
-            )),
-        drawer: _createDrawer(),
+          title: Text('クイズシェア'),
+          bottom: TabBar(
+            tabs: _tab,
+          ),
+        ),
+        drawer: _createDrawer(context),
         body: TabBarView(
           children: [
             News(),
-            Trend(),
+            Ranking(),
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -43,7 +44,7 @@ class Home extends HookWidget {
 
   final provider = StateNotifierProvider((ref) => UserStateNotifier());
 
-  Drawer _createDrawer() {
+  Drawer _createDrawer(BuildContext context) {
     UserState state = useProvider(provider.select((s) => s));
 
     //一旦無理やり
@@ -92,7 +93,9 @@ class Home extends HookWidget {
           Divider(),
           ListTile(
             title: Text('ライセンス'),
-            onTap: () {},
+            onTap: () {
+              showLicensePage(context: context);
+            },
           ),
           Divider(),
           ListTile(
