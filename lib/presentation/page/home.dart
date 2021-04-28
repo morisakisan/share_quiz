@@ -45,7 +45,7 @@ class Home extends HookWidget {
   final provider = StateNotifierProvider((ref) => UserStateNotifier());
 
   Drawer _createDrawer(BuildContext context) {
-    UserState state = useProvider(provider.select((s) => s));
+    var state = useProvider(provider.select((s) => s));
 
     //一旦無理やり
     if (state is Loading) {
