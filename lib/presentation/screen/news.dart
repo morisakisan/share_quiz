@@ -25,26 +25,26 @@ class News extends HookWidget {
       final list = (state as Success).quiz;
       final widgets = list.map((value) {
         return Card(
-            margin: EdgeInsets.only(bottom: 16.0),
-            child: Column(
-              children: [
-                Ink.image(
-                  image: NetworkImage(value.imageUrl!),
-                  height: 240,
-                  fit: BoxFit.cover,
-                ),
-                Text(
-                  value.title,
-                  style: TextStyle(fontSize: 24),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  value.question,
-                  style: TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 12),
-              ],
-            ));
+          margin: EdgeInsets.only(bottom: 16.0),
+          child: Column(
+            children: [
+              Image.network(
+                value.imageUrl!,
+                height: 240,
+              ),
+              Text(
+                value.title,
+                style: TextStyle(fontSize: 24),
+              ),
+              const SizedBox(height: 12),
+              Text(
+                value.question,
+                style: TextStyle(fontSize: 16),
+              ),
+              const SizedBox(height: 12),
+            ],
+          ),
+        );
       }).toList();
       return ListView(
         children: widgets,
