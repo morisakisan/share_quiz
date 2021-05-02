@@ -5,6 +5,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_quiz/domain/quiz/quiz_state_notifier.dart';
 import 'package:share_quiz/domain/quiz/quiz_state.dart';
 
+import '../nav.dart';
+
 class News extends HookWidget {
   final provider = StateNotifierProvider((ref) => QuizStateNotifier());
 
@@ -48,7 +50,10 @@ class News extends HookWidget {
               ],
             ),
             onTap: () {
-              
+              Navigator.of(context).pushNamed(
+                Nav.QUIZ_DETAIL,
+                arguments: value,
+              );
             },
           ),
         );
