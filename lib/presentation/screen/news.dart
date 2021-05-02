@@ -26,23 +26,30 @@ class News extends HookWidget {
       final widgets = list.map((value) {
         return Card(
           margin: EdgeInsets.only(bottom: 16.0),
-          child: Column(
-            children: [
-              Image.network(
-                value.imageUrl!,
-                height: 240,
-              ),
-              Text(
-                value.title,
-                style: TextStyle(fontSize: 24),
-              ),
-              const SizedBox(height: 12),
-              Text(
-                value.question,
-                style: TextStyle(fontSize: 16),
-              ),
-              const SizedBox(height: 12),
-            ],
+          child: InkWell(
+            child: Column(
+              children: [
+                Ink.image(
+                  height: 240,
+                  image: NetworkImage(
+                    value.imageUrl!,
+                  ),
+                ),
+                Text(
+                  value.title,
+                  style: TextStyle(fontSize: 24),
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  value.question,
+                  style: TextStyle(fontSize: 16),
+                ),
+                const SizedBox(height: 12),
+              ],
+            ),
+            onTap: () {
+              
+            },
           ),
         );
       }).toList();
