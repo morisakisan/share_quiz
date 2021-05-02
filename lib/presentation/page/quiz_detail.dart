@@ -11,7 +11,9 @@ class QuizDetail extends HookWidget {
       appBar: AppBar(
         title: Text('クイズ詳細'),
       ),
-      body: Text(quiz.toString()),
+      body: Text(
+        quiz.toString(),
+      ),
     );
   }
 }
