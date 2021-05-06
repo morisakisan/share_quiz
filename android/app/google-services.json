@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "225826406409",
+    "project_id": "quzishare",
+    "storage_bucket": "quzishare.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225826406409:android:e45b90e5dd989c4391b8d8",
+        "android_client_info": {
+          "package_name": "com.shingo.share_quiz.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "225826406409-ju630p8u0f2o4e5bplm2h8ilg1k32tri.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwQRxS69cOq-NTakUsoCyutVh6oIjuHSU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "225826406409-ju630p8u0f2o4e5bplm2h8ilg1k32tri.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
