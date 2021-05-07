@@ -4,13 +4,17 @@ import 'package:share_quiz/domain/user/user_state.dart';
 
 class UserStateMapper {
   UserStateMapper._();
+
   static Future<UserState> transform(User? user) async {
-    return UserState(
-      UserData(
-          name: "たかし",
+    UserData? userData;
+    if (user != null) {
+      userData = UserData(
+          name: user.displayName ?? "",
           detail: "よろしく",
-          photoUrl:
-              "https://i.pinimg.com/originals/bd/27/d9/bd27d92d14c0b460fb103f24ddf09f09.jpg"),
+          photoUrl: user.photoURL ?? "");
+    }
+    return UserState(
+      userData,
     );
   }
 }

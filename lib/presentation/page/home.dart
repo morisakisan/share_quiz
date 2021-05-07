@@ -14,8 +14,11 @@ class Home extends HookWidget {
     Tab(text: 'ランキング'),
   ];
 
+  final provider = StateNotifierProvider((ref) => UserStateNotifier());
+
   @override
   Widget build(BuildContext context) {
+    var state = useProvider(provider.select((s) => s));
     return DefaultTabController(
       length: _tab.length,
       child: Scaffold(
@@ -25,7 +28,7 @@ class Home extends HookWidget {
             tabs: _tab,
           ),
         ),
-        drawer: _createDrawer(context),
+        drawer: _createDrawer(context, state),
         body: TabBarView(
           children: [
             News(),
@@ -34,7 +37,12 @@ class Home extends HookWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            Navigator.of(context).pushNamed(Nav.QUIZ_POST);
+            if(state is Success) {
+              final user = state.user;
+              if(user != null) {
+                Navigator.of(context).pushNamed(Nav.QUIZ_POST);
+              }
+            }
           },
           child: Icon(Icons.add),
           backgroundColor: Colors.green,
@@ -43,17 +51,15 @@ class Home extends HookWidget {
     );
   }
 
-  final provider = StateNotifierProvider((ref) => UserStateNotifier());
-
-  Drawer _createDrawer(BuildContext context) {
-    var state = useProvider(provider.select((s) => s));
-
+  Drawer _createDrawer(BuildContext context, UserState state) {
     //一旦無理やり
     if (state is Loading) {
       return Drawer();
     }
 
     final user = (state as Success).user;
+    final name = user?.name ?? "";
+    final photoUrl = user?.photoUrl ?? "";
 
     return Drawer(
       child: ListView(
@@ -61,7 +67,7 @@ class Home extends HookWidget {
           DrawerHeader(
             child: Column(children: [
               Text(
-                user.name,
+                name,
                 style: TextStyle(
                   fontSize: 24,
                   color: Colors.white,
@@ -69,7 +75,7 @@ class Home extends HookWidget {
               ),
               CircleAvatar(
                 radius: 30.0,
-                backgroundImage: NetworkImage(user.photoUrl),
+                backgroundImage: NetworkImage(photoUrl),
                 backgroundColor: Colors.transparent,
               )
             ]),

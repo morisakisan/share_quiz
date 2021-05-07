@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$UserStateTearOff {
   const _$UserStateTearOff();
 
-  Success call(UserData user) {
+  Success call(UserData? user) {
     return Success(
       user,
     );
@@ -40,14 +40,14 @@ const $UserState = _$UserStateTearOff();
 mixin _$UserState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(UserData user) $default, {
+    TResult Function(UserData? user) $default, {
     required TResult Function() loading,
     required TResult Function(Exception error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(UserData user)? $default, {
+    TResult Function(UserData? user)? $default, {
     TResult Function()? loading,
     TResult Function(Exception error)? error,
     required TResult orElse(),
@@ -89,9 +89,9 @@ class _$UserStateCopyWithImpl<$Res> implements $UserStateCopyWith<$Res> {
 abstract class $SuccessCopyWith<$Res> {
   factory $SuccessCopyWith(Success value, $Res Function(Success) then) =
       _$SuccessCopyWithImpl<$Res>;
-  $Res call({UserData user});
+  $Res call({UserData? user});
 
-  $UserDataCopyWith<$Res> get user;
+  $UserDataCopyWith<$Res>? get user;
 }
 
 /// @nodoc
@@ -111,13 +111,17 @@ class _$SuccessCopyWithImpl<$Res> extends _$UserStateCopyWithImpl<$Res>
       user == freezed
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as UserData,
+              as UserData?,
     ));
   }
 
   @override
-  $UserDataCopyWith<$Res> get user {
-    return $UserDataCopyWith<$Res>(_value.user, (value) {
+  $UserDataCopyWith<$Res>? get user {
+    if (_value.user == null) {
+      return null;
+    }
+
+    return $UserDataCopyWith<$Res>(_value.user!, (value) {
       return _then(_value.copyWith(user: value));
     });
   }
@@ -129,7 +133,7 @@ class _$Success with DiagnosticableTreeMixin implements Success {
   _$Success(this.user);
 
   @override
-  final UserData user;
+  final UserData? user;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -164,7 +168,7 @@ class _$Success with DiagnosticableTreeMixin implements Success {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(UserData user) $default, {
+    TResult Function(UserData? user) $default, {
     required TResult Function() loading,
     required TResult Function(Exception error) error,
   }) {
@@ -174,7 +178,7 @@ class _$Success with DiagnosticableTreeMixin implements Success {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(UserData user)? $default, {
+    TResult Function(UserData? user)? $default, {
     TResult Function()? loading,
     TResult Function(Exception error)? error,
     required TResult orElse(),
@@ -211,9 +215,9 @@ class _$Success with DiagnosticableTreeMixin implements Success {
 }
 
 abstract class Success implements UserState {
-  factory Success(UserData user) = _$Success;
+  factory Success(UserData? user) = _$Success;
 
-  UserData get user => throw _privateConstructorUsedError;
+  UserData? get user => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $SuccessCopyWith<Success> get copyWith => throw _privateConstructorUsedError;
 }
@@ -261,7 +265,7 @@ class _$Loading with DiagnosticableTreeMixin implements Loading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(UserData user) $default, {
+    TResult Function(UserData? user) $default, {
     required TResult Function() loading,
     required TResult Function(Exception error) error,
   }) {
@@ -271,7 +275,7 @@ class _$Loading with DiagnosticableTreeMixin implements Loading {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(UserData user)? $default, {
+    TResult Function(UserData? user)? $default, {
     TResult Function()? loading,
     TResult Function(Exception error)? error,
     required TResult orElse(),
@@ -381,7 +385,7 @@ class _$Error with DiagnosticableTreeMixin implements Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(UserData user) $default, {
+    TResult Function(UserData? user) $default, {
     required TResult Function() loading,
     required TResult Function(Exception error) error,
   }) {
@@ -391,7 +395,7 @@ class _$Error with DiagnosticableTreeMixin implements Error {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(UserData user)? $default, {
+    TResult Function(UserData? user)? $default, {
     TResult Function()? loading,
     TResult Function(Exception error)? error,
     required TResult orElse(),
