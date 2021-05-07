@@ -29,7 +29,7 @@ class Home extends HookWidget {
             tabs: _tab,
           ),
         ),
-        drawer: _createDrawer(context, state),
+        drawer: _createDrawer(context, state, notifier),
         body: TabBarView(
           children: [
             News(),
@@ -54,8 +54,9 @@ class Home extends HookWidget {
     );
   }
 
-  Drawer _createDrawer(BuildContext context, UserState state) {
-    //一旦無理やり
+  Drawer _createDrawer(
+      BuildContext context, UserState state, UserStateNotifier notifier) {
+    //todo 一旦無理やり
     if (state is Loading) {
       return Drawer();
     }
@@ -110,7 +111,9 @@ class Home extends HookWidget {
           Divider(),
           ListTile(
             title: Text('ログアウト'),
-            onTap: () {},
+            onTap: () {
+              notifier.logout();
+            },
           ),
         ],
       ),

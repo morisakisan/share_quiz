@@ -5,15 +5,23 @@ import 'package:share_quiz/domain/user/user_data.dart';
 import 'package:share_quiz/domain/user/user_state.dart';
 
 class UserStateNotifier extends StateNotifier<UserState> {
+
+  final dataStore = UserFirebaseStore();
+
   UserStateNotifier() : super(UserState.loading()) {
     () async {
-      final user = await UserFirebaseStore().gerCurrentUser();
+      final user = await dataStore.gerCurrentUser();
       state = await UserStateMapper.transform(user);
     }();
   }
 
   signInGoogle() async {
-    final user = await UserFirebaseStore().signInWithGoogle();
+    final user = await dataStore.signInWithGoogle();
     state = await UserStateMapper.transform(user);
+  }
+
+  logout() async {
+    await dataStore.signOutGoogle();
+    state = await UserStateMapper.transform(null);
   }
 }

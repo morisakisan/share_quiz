@@ -22,4 +22,9 @@ class UserFirebaseStore {
 
     return user;
   }
+
+  signOutGoogle() async {
+    await GoogleSignIn().signOut();
+  }
+
 }
