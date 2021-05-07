@@ -1,14 +1,13 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:flutter/foundation.dart';
 
-part 'user.freezed.dart';
+part 'user_data.freezed.dart';
 
 @freezed
-abstract class User with _$User {
-  const factory User({
-    required int id,
+abstract class UserData with _$UserData {
+  const factory UserData({
     required String name,
     required String detail,
     required String photoUrl
-  }) = _User;
+  }) = _UserData;
 }

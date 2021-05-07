@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
-part of 'user.dart';
+part of 'user_data.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,16 +13,14 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$UserTearOff {
-  const _$UserTearOff();
+class _$UserDataTearOff {
+  const _$UserDataTearOff();
 
-  _User call(
-      {required int id,
-      required String name,
+  _UserData call(
+      {required String name,
       required String detail,
       required String photoUrl}) {
-    return _User(
-      id: id,
+    return _UserData(
       name: name,
       detail: detail,
       photoUrl: photoUrl,
@@ -31,46 +29,41 @@ class _$UserTearOff {
 }
 
 /// @nodoc
-const $User = _$UserTearOff();
+const $UserData = _$UserDataTearOff();
 
 /// @nodoc
-mixin _$User {
-  int get id => throw _privateConstructorUsedError;
+mixin _$UserData {
   String get name => throw _privateConstructorUsedError;
   String get detail => throw _privateConstructorUsedError;
   String get photoUrl => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $UserCopyWith<User> get copyWith => throw _privateConstructorUsedError;
+  $UserDataCopyWith<UserData> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $UserCopyWith<$Res> {
-  factory $UserCopyWith(User value, $Res Function(User) then) =
-      _$UserCopyWithImpl<$Res>;
-  $Res call({int id, String name, String detail, String photoUrl});
+abstract class $UserDataCopyWith<$Res> {
+  factory $UserDataCopyWith(UserData value, $Res Function(UserData) then) =
+      _$UserDataCopyWithImpl<$Res>;
+  $Res call({String name, String detail, String photoUrl});
 }
 
 /// @nodoc
-class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
-  _$UserCopyWithImpl(this._value, this._then);
+class _$UserDataCopyWithImpl<$Res> implements $UserDataCopyWith<$Res> {
+  _$UserDataCopyWithImpl(this._value, this._then);
 
-  final User _value;
+  final UserData _value;
   // ignore: unused_field
-  final $Res Function(User) _then;
+  final $Res Function(UserData) _then;
 
   @override
   $Res call({
-    Object? id = freezed,
     Object? name = freezed,
     Object? detail = freezed,
     Object? photoUrl = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -88,34 +81,29 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
-  factory _$UserCopyWith(_User value, $Res Function(_User) then) =
-      __$UserCopyWithImpl<$Res>;
+abstract class _$UserDataCopyWith<$Res> implements $UserDataCopyWith<$Res> {
+  factory _$UserDataCopyWith(_UserData value, $Res Function(_UserData) then) =
+      __$UserDataCopyWithImpl<$Res>;
   @override
-  $Res call({int id, String name, String detail, String photoUrl});
+  $Res call({String name, String detail, String photoUrl});
 }
 
 /// @nodoc
-class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
-    implements _$UserCopyWith<$Res> {
-  __$UserCopyWithImpl(_User _value, $Res Function(_User) _then)
-      : super(_value, (v) => _then(v as _User));
+class __$UserDataCopyWithImpl<$Res> extends _$UserDataCopyWithImpl<$Res>
+    implements _$UserDataCopyWith<$Res> {
+  __$UserDataCopyWithImpl(_UserData _value, $Res Function(_UserData) _then)
+      : super(_value, (v) => _then(v as _UserData));
 
   @override
-  _User get _value => super._value as _User;
+  _UserData get _value => super._value as _UserData;
 
   @override
   $Res call({
-    Object? id = freezed,
     Object? name = freezed,
     Object? detail = freezed,
     Object? photoUrl = freezed,
   }) {
-    return _then(_User(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
+    return _then(_UserData(
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -134,15 +122,10 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_User with DiagnosticableTreeMixin implements _User {
-  const _$_User(
-      {required this.id,
-      required this.name,
-      required this.detail,
-      required this.photoUrl});
+class _$_UserData with DiagnosticableTreeMixin implements _UserData {
+  const _$_UserData(
+      {required this.name, required this.detail, required this.photoUrl});
 
-  @override
-  final int id;
   @override
   final String name;
   @override
@@ -152,15 +135,14 @@ class _$_User with DiagnosticableTreeMixin implements _User {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'User(id: $id, name: $name, detail: $detail, photoUrl: $photoUrl)';
+    return 'UserData(name: $name, detail: $detail, photoUrl: $photoUrl)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'User'))
-      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('type', 'UserData'))
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('detail', detail))
       ..add(DiagnosticsProperty('photoUrl', photoUrl));
@@ -169,9 +151,7 @@ class _$_User with DiagnosticableTreeMixin implements _User {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _User &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
+        (other is _UserData &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.detail, detail) ||
@@ -184,26 +164,22 @@ class _$_User with DiagnosticableTreeMixin implements _User {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(detail) ^
       const DeepCollectionEquality().hash(photoUrl);
 
   @JsonKey(ignore: true)
   @override
-  _$UserCopyWith<_User> get copyWith =>
-      __$UserCopyWithImpl<_User>(this, _$identity);
+  _$UserDataCopyWith<_UserData> get copyWith =>
+      __$UserDataCopyWithImpl<_UserData>(this, _$identity);
 }
 
-abstract class _User implements User {
-  const factory _User(
-      {required int id,
-      required String name,
+abstract class _UserData implements UserData {
+  const factory _UserData(
+      {required String name,
       required String detail,
-      required String photoUrl}) = _$_User;
+      required String photoUrl}) = _$_UserData;
 
-  @override
-  int get id => throw _privateConstructorUsedError;
   @override
   String get name => throw _privateConstructorUsedError;
   @override
@@ -212,5 +188,6 @@ abstract class _User implements User {
   String get photoUrl => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$UserCopyWith<_User> get copyWith => throw _privateConstructorUsedError;
+  _$UserDataCopyWith<_UserData> get copyWith =>
+      throw _privateConstructorUsedError;
 }

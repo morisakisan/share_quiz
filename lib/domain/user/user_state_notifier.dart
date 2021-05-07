@@ -6,8 +6,8 @@ import 'package:share_quiz/domain/user/user_state.dart';
 class UserStateNotifier extends StateNotifier<UserState> {
   UserStateNotifier() : super(UserState.loading()) {
         () async {
-      await UserFirebaseStore().dummy();
-      state = await UserStateMapper.transform();
+      final user = await UserFirebaseStore().gerCurrentUser();
+      state = await UserStateMapper.transform(user);
     }();
   }
 

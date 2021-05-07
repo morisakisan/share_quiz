@@ -1,11 +1,12 @@
-import 'package:share_quiz/domain/user/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:share_quiz/domain/user/user_data.dart';
 import 'package:share_quiz/domain/user/user_state.dart';
 
 class UserStateMapper {
-  static Future<UserState> transform() async {
+  UserStateMapper._();
+  static Future<UserState> transform(User? user) async {
     return UserState(
-      User(
-          id: 1,
+      UserData(
           name: "たかし",
           detail: "よろしく",
           photoUrl:

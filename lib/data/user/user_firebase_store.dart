@@ -1,3 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 class UserFirebaseStore {
-  Future<void> dummy() async {}
+  Future<User?> gerCurrentUser() async {
+    return FirebaseAuth.instance.currentUser;
+  }
 }
