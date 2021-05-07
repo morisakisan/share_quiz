@@ -6,22 +6,22 @@ import 'package:share_quiz/domain/user/user_state.dart';
 
 class UserStateNotifier extends StateNotifier<UserState> {
 
-  final dataStore = UserFirebaseStore();
+  final _dataStore = UserFirebaseStore();
 
   UserStateNotifier() : super(UserState.loading()) {
     () async {
-      final user = await dataStore.gerCurrentUser();
+      final user = await _dataStore.gerCurrentUser();
       state = await UserStateMapper.transform(user);
     }();
   }
 
   signInGoogle() async {
-    final user = await dataStore.signInWithGoogle();
+    final user = await _dataStore.signInWithGoogle();
     state = await UserStateMapper.transform(user);
   }
 
   logout() async {
-    await dataStore.signOutGoogle();
+    await _dataStore.signOutGoogle();
     state = await UserStateMapper.transform(null);
   }
 }

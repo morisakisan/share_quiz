@@ -17,14 +17,12 @@ class _$QuizTearOff {
   const _$QuizTearOff();
 
   _Quiz call(
-      {required int id,
-      required String title,
+      {required String title,
       required String question,
       required List<String> choices,
       required int answer,
       String? imageUrl = null}) {
     return _Quiz(
-      id: id,
       title: title,
       question: question,
       choices: choices,
@@ -39,7 +37,6 @@ const $Quiz = _$QuizTearOff();
 
 /// @nodoc
 mixin _$Quiz {
-  int get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get question => throw _privateConstructorUsedError;
   List<String> get choices => throw _privateConstructorUsedError;
@@ -55,8 +52,7 @@ abstract class $QuizCopyWith<$Res> {
   factory $QuizCopyWith(Quiz value, $Res Function(Quiz) then) =
       _$QuizCopyWithImpl<$Res>;
   $Res call(
-      {int id,
-      String title,
+      {String title,
       String question,
       List<String> choices,
       int answer,
@@ -73,7 +69,6 @@ class _$QuizCopyWithImpl<$Res> implements $QuizCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? id = freezed,
     Object? title = freezed,
     Object? question = freezed,
     Object? choices = freezed,
@@ -81,10 +76,6 @@ class _$QuizCopyWithImpl<$Res> implements $QuizCopyWith<$Res> {
     Object? imageUrl = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -115,8 +106,7 @@ abstract class _$QuizCopyWith<$Res> implements $QuizCopyWith<$Res> {
       __$QuizCopyWithImpl<$Res>;
   @override
   $Res call(
-      {int id,
-      String title,
+      {String title,
       String question,
       List<String> choices,
       int answer,
@@ -134,7 +124,6 @@ class __$QuizCopyWithImpl<$Res> extends _$QuizCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? id = freezed,
     Object? title = freezed,
     Object? question = freezed,
     Object? choices = freezed,
@@ -142,10 +131,6 @@ class __$QuizCopyWithImpl<$Res> extends _$QuizCopyWithImpl<$Res>
     Object? imageUrl = freezed,
   }) {
     return _then(_Quiz(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -174,15 +159,12 @@ class __$QuizCopyWithImpl<$Res> extends _$QuizCopyWithImpl<$Res>
 
 class _$_Quiz with DiagnosticableTreeMixin implements _Quiz {
   const _$_Quiz(
-      {required this.id,
-      required this.title,
+      {required this.title,
       required this.question,
       required this.choices,
       required this.answer,
       this.imageUrl = null});
 
-  @override
-  final int id;
   @override
   final String title;
   @override
@@ -197,7 +179,7 @@ class _$_Quiz with DiagnosticableTreeMixin implements _Quiz {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Quiz(id: $id, title: $title, question: $question, choices: $choices, answer: $answer, imageUrl: $imageUrl)';
+    return 'Quiz(title: $title, question: $question, choices: $choices, answer: $answer, imageUrl: $imageUrl)';
   }
 
   @override
@@ -205,7 +187,6 @@ class _$_Quiz with DiagnosticableTreeMixin implements _Quiz {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Quiz'))
-      ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('title', title))
       ..add(DiagnosticsProperty('question', question))
       ..add(DiagnosticsProperty('choices', choices))
@@ -217,8 +198,6 @@ class _$_Quiz with DiagnosticableTreeMixin implements _Quiz {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Quiz &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.title, title) ||
                 const DeepCollectionEquality().equals(other.title, title)) &&
             (identical(other.question, question) ||
@@ -237,7 +216,6 @@ class _$_Quiz with DiagnosticableTreeMixin implements _Quiz {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(title) ^
       const DeepCollectionEquality().hash(question) ^
       const DeepCollectionEquality().hash(choices) ^
@@ -252,15 +230,12 @@ class _$_Quiz with DiagnosticableTreeMixin implements _Quiz {
 
 abstract class _Quiz implements Quiz {
   const factory _Quiz(
-      {required int id,
-      required String title,
+      {required String title,
       required String question,
       required List<String> choices,
       required int answer,
       String? imageUrl}) = _$_Quiz;
 
-  @override
-  int get id => throw _privateConstructorUsedError;
   @override
   String get title => throw _privateConstructorUsedError;
   @override

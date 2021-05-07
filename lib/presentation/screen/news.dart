@@ -34,7 +34,7 @@ class News extends HookWidget {
                 Ink.image(
                   height: 240,
                   image: NetworkImage(
-                    value.imageUrl!,
+                    value.imageUrl ?? "",
                   ),
                 ),
                 Text(
