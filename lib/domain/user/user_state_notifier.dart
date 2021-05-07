@@ -13,9 +13,7 @@ class UserStateNotifier extends StateNotifier<UserState> {
   }
 
   signInGoogle() async {
-    var userData = UserData(name: "たかし", detail: "よろしく", photoUrl: "");
-    state = UserState(
-      userData,
-    );
+    final user = await UserFirebaseStore().signInWithGoogle();
+    state = await UserStateMapper.transform(user);
   }
 }
