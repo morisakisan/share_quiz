@@ -19,6 +19,7 @@ class Home extends HookWidget {
   @override
   Widget build(BuildContext context) {
     var state = useProvider(provider.select((s) => s));
+    var notifier = useProvider(provider.notifier);
     return DefaultTabController(
       length: _tab.length,
       child: Scaffold(
@@ -37,10 +38,12 @@ class Home extends HookWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            if(state is Success) {
+            if (state is Success) {
               final user = state.user;
-              if(user != null) {
+              if (user != null) {
                 Navigator.of(context).pushNamed(Nav.QUIZ_POST);
+              } else {
+                notifier.signInGoogle();
               }
             }
           },
