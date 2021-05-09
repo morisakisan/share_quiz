@@ -8,11 +8,10 @@ class QuizStateMapper {
   static Future<QuizState> transform(List<QueryDocumentSnapshot> data) async {
     final list = data.map<Quiz>((e) {
       var json = e.data();
-      List<String> choices = List.from(json['choices']);
       return Quiz(
         title: json["title"],
         question : json["question"],
-        choices: choices,
+        choices: List.from(json['choices']),
         answer: json["answer"],
       );
     }).toList();
