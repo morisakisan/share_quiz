@@ -8,15 +8,6 @@ class ImageFormField extends FormField<File> {
       : super(
           onSaved: onSaved,
           builder: (FormFieldState<File> state) {
-            pickImage(ImageSource source) async {
-              final pickedFile = await ImagePicker().getImage(source: source);
-              // ignore: unnecessary_null_comparison
-              if (pickedFile == null) {
-                return;
-              }
-              state.didChange(File(pickedFile.path));
-            }
-
             Widget widget;
             if (state.value != null) {
               widget = Image.file(File(state.value!.path));
@@ -33,19 +24,28 @@ class ImageFormField extends FormField<File> {
                     IconButton(
                       icon: Icon(Icons.photo_camera),
                       onPressed: () {
-                        pickImage(ImageSource.camera);
+                        _pickImage(ImageSource.camera, state);
                       },
                     ),
                     IconButton(
                       icon: Icon(Icons.photo_album),
                       onPressed: () {
-                        pickImage(ImageSource.gallery);
+                        _pickImage(ImageSource.gallery, state);
                       },
                     ),
                   ],
-                )
+                ),
               ],
             );
           },
         );
+
+  static _pickImage(ImageSource source, FormFieldState<File> state) async {
+    final pickedFile = await ImagePicker().getImage(source: source);
+    // ignore: unnecessary_null_comparison
+    if (pickedFile == null) {
+      return;
+    }
+    state.didChange(File(pickedFile.path));
+  }
 }
