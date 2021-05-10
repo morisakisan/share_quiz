@@ -1,16 +1,18 @@
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:share_quiz/domain/quiz_post/quiz_post_data.dart';
+import 'package:share_quiz/domain/quiz_post/quiz_post_repository.dart';
 import 'package:share_quiz/presentation/widget/image_form_field.dart';
 
 class QuizPost extends HookWidget {
   final _formKey = GlobalKey<FormState>();
+  final _repository = QuizPostRepository();
 
   String? _title;
-  String? _description;
+  String? _question;
   File? _image;
 
   @override
@@ -45,17 +47,17 @@ class QuizPost extends HookWidget {
                 padding: const EdgeInsets.only(top: 16.0),
                 child: TextFormField(
                   decoration: const InputDecoration(
-                    labelText: "詳細",
-                    hintText: '詳細を入れてね。',
+                    labelText: "問題文",
+                    hintText: '問題文を入れてね。',
                   ),
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return '文字がはいってないよ。';
+                      return '問題文がはいってないよ。';
                     }
                     return null;
                   },
                   onSaved: (value) {
-                    _description = value;
+                    _question = value;
                   },
                 ),
               ),
@@ -63,7 +65,7 @@ class QuizPost extends HookWidget {
                 padding: const EdgeInsets.only(top: 16.0),
                 child: ImageFormField(
                   onSaved: (value) {
-                    _image = value as File?;
+                    _image = value;
                   },
                 ),
               ),
@@ -74,7 +76,16 @@ class QuizPost extends HookWidget {
                     if (!_formKey.currentState!.validate()) return;
                     // 入力データが正常な場合の処理
                     _formKey.currentState!.save();
-                    Navigator.pop(context);
+                    final postData = QuizPostData(
+                      title: _title!,
+                      question: _question!,
+                      choices: [],
+                      answer: 0,
+                      imageFile: _image,
+                    );
+                    _repository.store(postData).then((value) {
+                      Navigator.pop(context);
+                    });
                   },
                   child: Text('送信'),
                 ),
@@ -85,5 +96,4 @@ class QuizPost extends HookWidget {
       ),
     );
   }
-
 }
