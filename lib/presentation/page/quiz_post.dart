@@ -5,6 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:share_quiz/domain/quiz_post/quiz_post_data.dart';
 import 'package:share_quiz/domain/quiz_post/quiz_post_repository.dart';
+import 'package:share_quiz/presentation/widget/choices_form_field.dart';
 import 'package:share_quiz/presentation/widget/image_form_field.dart';
 
 class QuizPost extends HookWidget {
@@ -14,6 +15,7 @@ class QuizPost extends HookWidget {
   String? _title;
   String? _question;
   File? _image;
+  List<String>? _choices;
 
   @override
   Widget build(BuildContext context) {
@@ -43,53 +45,54 @@ class QuizPost extends HookWidget {
                   _title = value;
                 },
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16.0),
-                child: TextFormField(
-                  decoration: const InputDecoration(
-                    labelText: "問題文",
-                    hintText: '問題文を入れてね。',
-                  ),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return '問題文がはいってないよ。';
-                    }
-                    return null;
-                  },
-                  onSaved: (value) {
-                    _question = value;
-                  },
+              const SizedBox(height: 16),
+              TextFormField(
+                decoration: const InputDecoration(
+                  labelText: "問題文",
+                  hintText: '問題文を入れてね。',
                 ),
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return '問題文がはいってないよ。';
+                  }
+                  return null;
+                },
+                onSaved: (value) {
+                  _question = value;
+                },
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16.0),
-                child: ImageFormField(
-                  onSaved: (value) {
-                    _image = value;
-                  },
-                ),
+              const SizedBox(height: 16),
+              ImageFormField(
+                onSaved: (value) {
+                  _image = value;
+                },
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 16.0),
-                child: ElevatedButton(
-                  onPressed: () {
-                    if (!_formKey.currentState!.validate()) return;
-                    // 入力データが正常な場合の処理
-                    _formKey.currentState!.save();
-                    final postData = QuizPostData(
-                      title: _title!,
-                      question: _question!,
-                      choices: [],
-                      answer: 0,
-                      imageFile: _image,
-                    );
-                    _repository.store(postData).then((value) {
-                      Navigator.pop(context);
-                    });
-                  },
-                  child: Text('送信'),
-                ),
-              )
+              const SizedBox(height: 16),
+              ChoicesFormField(
+                context,
+                onSaved: (value) {
+                  _choices = value;
+                },
+              ),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  if (!_formKey.currentState!.validate()) return;
+                  // 入力データが正常な場合の処理
+                  _formKey.currentState!.save();
+                  final postData = QuizPostData(
+                    title: _title!,
+                    question: _question!,
+                    choices: [],
+                    answer: 0,
+                    imageFile: _image,
+                  );
+                  _repository.store(postData).then((value) {
+                    Navigator.pop(context);
+                  });
+                },
+                child: Text('送信'),
+              ),
             ],
           ),
         ),
