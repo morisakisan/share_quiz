@@ -28,7 +28,7 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
                   final list = state.value!.item1;
                   final choice = list.removeAt(oldIndex);
                   list.insert(newIndex, choice);
-                  state.didChange(state.value!.withItem1(list));
+                  state.didChange(state.value!.withItem1(list).withItem2(newIndex));
                 },
                 children: state.value!.item1.asMap().entries.map(
                   (entry) {
