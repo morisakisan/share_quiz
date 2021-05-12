@@ -13,7 +13,7 @@ class QuizStateMapper {
         question : json["question"],
         choices: List.from(json['choices']),
         answer: json["answer"],
-        imageUrl: json["imageUrl"]
+        imageUrl: json["image_url"]
       );
     }).toList();
 
