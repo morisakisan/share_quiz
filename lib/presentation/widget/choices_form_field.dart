@@ -49,7 +49,7 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
                         onPressed: () {
                           final list = state.value!.item1;
                           list.removeAt(idx);
-                          state.didChange(state.value!.withItem1(list));
+                          state.didChange(state.value!.withItem1(list).withItem2(0));
                         },
                       ),
 
