@@ -16,6 +16,7 @@ class QuizPost extends HookWidget {
   String? _question;
   File? _image;
   List<String>? _choices;
+  int? _answer;
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +72,8 @@ class QuizPost extends HookWidget {
               ChoicesFormField(
                 context,
                 onSaved: (value) {
-                  _choices = value;
+                  _choices = value!.item1;
+                  _answer = value.item2;
                 },
               ),
               const SizedBox(height: 16),
@@ -84,7 +86,7 @@ class QuizPost extends HookWidget {
                     title: _title!,
                     question: _question!,
                     choices: _choices!,
-                    answer: 0,
+                    answer: _answer!,
                     imageFile: _image,
                   );
                   _repository.store(postData).then((value) =>

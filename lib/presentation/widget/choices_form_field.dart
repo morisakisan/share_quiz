@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:tuple/tuple.dart';
 
-class ChoicesFormField extends FormField<List<String>> {
+class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
+
   ChoicesFormField(BuildContext context,
-      {FormFieldSetter<List<String>>? onSaved})
+      {FormFieldSetter<Tuple2<List<String>, int>>? onSaved})
       : super(
-          initialValue: [],
+          initialValue: Tuple2([], 0),
           onSaved: onSaved,
-          builder: (FormFieldState<List<String>> state) {
+          builder: (FormFieldState<Tuple2<List<String>, int>> state) {
+            final selectedRadioTile = state.value!.item2;
             Widget? header;
-            if (state.value!.length < 5) {
+            if (state.value!.item1.length < 5) {
               header = ElevatedButton.icon(
                   label: Text('選択肢を追加する'),
                   icon: Icon(Icons.add),
@@ -22,28 +25,34 @@ class ChoicesFormField extends FormField<List<String>> {
                     // removing the item at oldIndex will shorten the list by 1.
                     newIndex -= 1;
                   }
-                  final list = state.value!;
+                  final list = state.value!.item1;
                   final choice = list.removeAt(oldIndex);
                   list.insert(newIndex, choice);
-                  state.didChange(list);
+                  state.didChange(state.value!.withItem1(list));
                 },
-                children: state.value!.asMap().entries.map(
+                children: state.value!.item1.asMap().entries.map(
                   (entry) {
                     final idx = entry.key;
                     final val = entry.value;
-                    return ListTile(
+                    return RadioListTile(
                       key: Key(idx.toString()),
-                      trailing: IconButton(
+                      value: idx,
+                      groupValue: selectedRadioTile,
+                      title: Text(val),
+                      onChanged: (v) {
+                        state.didChange(state.value!.withItem2(v as int));
+                      },
+                      secondary: IconButton(
                         icon: Icon(
                           Icons.delete,
                         ),
                         onPressed: () {
-                          final list = state.value!;
+                          final list = state.value!.item1;
                           list.removeAt(idx);
-                          state.didChange(list);
+                          state.didChange(state.value!.withItem1(list));
                         },
                       ),
-                      title: Text(val),
+
                     );
                   },
                 ).toList(),
@@ -53,7 +62,7 @@ class ChoicesFormField extends FormField<List<String>> {
         );
 
   static _showInputTextDialog(
-      BuildContext context, FormFieldState<List<String>> state) {
+      BuildContext context, FormFieldState<Tuple2<List<String>, int>> state) {
     showDialog(
       context: context,
       builder: (context) {
@@ -71,9 +80,9 @@ class ChoicesFormField extends FormField<List<String>> {
             TextButton(
               child: Text("OK"),
               onPressed: () {
-                final list = state.value!;
+                final list = state.value!.item1;
                 list.add(choice);
-                state.didChange(list);
+                state.didChange(state.value!.withItem1(list));
                 Navigator.pop(context);
               },
             ),
