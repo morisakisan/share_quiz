@@ -37,7 +37,7 @@ class QuizPost extends HookWidget {
                 ),
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return '文字がはいってないよ。';
+                    return 'タイトルがはいってないよ。';
                   }
                   return null;
                 },
@@ -83,15 +83,15 @@ class QuizPost extends HookWidget {
                   final postData = QuizPostData(
                     title: _title!,
                     question: _question!,
-                    choices: [],
+                    choices: _choices!,
                     answer: 0,
                     imageFile: _image,
                   );
-                  _repository.store(postData).then((value) {
-                    Navigator.pop(context);
-                  });
+                  _repository.store(postData).then((value) =>
+                    Navigator.pop(context)
+                  );
                 },
-                child: Text('送信'),
+                child: Text('クイズを投稿する'),
               ),
             ],
           ),
