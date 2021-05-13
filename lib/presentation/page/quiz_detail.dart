@@ -10,7 +10,7 @@ class QuizDetail extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final state = useProvider(counterProvider.select((value) => value));
-    var select = useProvider(counterProvider.notifier);
+    final select = useProvider(counterProvider.notifier);
     final quiz = ModalRoute.of(context)!.settings.arguments as Quiz;
     return Scaffold(
       appBar: AppBar(
