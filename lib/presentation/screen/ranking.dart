@@ -5,6 +5,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 class Ranking extends HookWidget {
   @override
   Widget build(BuildContext context) {
-    return Text('ranking');
+    return Text('工事中');
   }
 }
