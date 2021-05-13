@@ -6,16 +6,18 @@ class QuizStateMapper {
   QuizStateMapper._();
 
   static Future<QuizState> transform(List<QueryDocumentSnapshot> data) async {
-    final list = data.map<Quiz>((e) {
-      var json = e.data();
-      return Quiz(
-        title: json["title"],
-        question : json["question"],
-        choices: List.from(json['choices']),
-        answer: json["answer"],
-        imageUrl: json["image_url"]
-      );
-    }).toList();
+    final list = data.map<Quiz>(
+      (e) {
+        var json = e.data();
+        return Quiz(
+            title: json["title"],
+            question: json["question"],
+            choices: List.from(json['choices']),
+            answer: json["answer"],
+            imageUrl: json["image_url"],
+            createdAt: json["created_at"]);
+      },
+    ).toList();
 
     return QuizState(
       list,
