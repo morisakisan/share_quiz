@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
-part of 'quiz_state.dart';
+part of 'quiz_new_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,8 +13,8 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$QuizStateTearOff {
-  const _$QuizStateTearOff();
+class _$QuizNewStateTearOff {
+  const _$QuizNewStateTearOff();
 
   Success call(List<Quiz> quiz) {
     return Success(
@@ -34,10 +34,10 @@ class _$QuizStateTearOff {
 }
 
 /// @nodoc
-const $QuizState = _$QuizStateTearOff();
+const $QuizNewState = _$QuizNewStateTearOff();
 
 /// @nodoc
-mixin _$QuizState {
+mixin _$QuizNewState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(List<Quiz> quiz) $default, {
@@ -71,18 +71,19 @@ mixin _$QuizState {
 }
 
 /// @nodoc
-abstract class $QuizStateCopyWith<$Res> {
-  factory $QuizStateCopyWith(QuizState value, $Res Function(QuizState) then) =
-      _$QuizStateCopyWithImpl<$Res>;
+abstract class $QuizNewStateCopyWith<$Res> {
+  factory $QuizNewStateCopyWith(
+          QuizNewState value, $Res Function(QuizNewState) then) =
+      _$QuizNewStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$QuizStateCopyWithImpl<$Res> implements $QuizStateCopyWith<$Res> {
-  _$QuizStateCopyWithImpl(this._value, this._then);
+class _$QuizNewStateCopyWithImpl<$Res> implements $QuizNewStateCopyWith<$Res> {
+  _$QuizNewStateCopyWithImpl(this._value, this._then);
 
-  final QuizState _value;
+  final QuizNewState _value;
   // ignore: unused_field
-  final $Res Function(QuizState) _then;
+  final $Res Function(QuizNewState) _then;
 }
 
 /// @nodoc
@@ -93,7 +94,7 @@ abstract class $SuccessCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SuccessCopyWithImpl<$Res> extends _$QuizStateCopyWithImpl<$Res>
+class _$SuccessCopyWithImpl<$Res> extends _$QuizNewStateCopyWithImpl<$Res>
     implements $SuccessCopyWith<$Res> {
   _$SuccessCopyWithImpl(Success _value, $Res Function(Success) _then)
       : super(_value, (v) => _then(v as Success));
@@ -124,14 +125,14 @@ class _$Success with DiagnosticableTreeMixin implements Success {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'QuizState(quiz: $quiz)';
+    return 'QuizNewState(quiz: $quiz)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'QuizState'))
+      ..add(DiagnosticsProperty('type', 'QuizNewState'))
       ..add(DiagnosticsProperty('quiz', quiz));
   }
 
@@ -201,7 +202,7 @@ class _$Success with DiagnosticableTreeMixin implements Success {
   }
 }
 
-abstract class Success implements QuizState {
+abstract class Success implements QuizNewState {
   factory Success(List<Quiz> quiz) = _$Success;
 
   List<Quiz> get quiz => throw _privateConstructorUsedError;
@@ -216,7 +217,7 @@ abstract class $LoadingCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$LoadingCopyWithImpl<$Res> extends _$QuizStateCopyWithImpl<$Res>
+class _$LoadingCopyWithImpl<$Res> extends _$QuizNewStateCopyWithImpl<$Res>
     implements $LoadingCopyWith<$Res> {
   _$LoadingCopyWithImpl(Loading _value, $Res Function(Loading) _then)
       : super(_value, (v) => _then(v as Loading));
@@ -232,13 +233,13 @@ class _$Loading with DiagnosticableTreeMixin implements Loading {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'QuizState.loading()';
+    return 'QuizNewState.loading()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'QuizState.loading'));
+    properties..add(DiagnosticsProperty('type', 'QuizNewState.loading'));
   }
 
   @override
@@ -298,7 +299,7 @@ class _$Loading with DiagnosticableTreeMixin implements Loading {
   }
 }
 
-abstract class Loading implements QuizState {
+abstract class Loading implements QuizNewState {
   factory Loading() = _$Loading;
 }
 
@@ -310,7 +311,7 @@ abstract class $ErrorCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ErrorCopyWithImpl<$Res> extends _$QuizStateCopyWithImpl<$Res>
+class _$ErrorCopyWithImpl<$Res> extends _$QuizNewStateCopyWithImpl<$Res>
     implements $ErrorCopyWith<$Res> {
   _$ErrorCopyWithImpl(Error _value, $Res Function(Error) _then)
       : super(_value, (v) => _then(v as Error));
@@ -341,14 +342,14 @@ class _$Error with DiagnosticableTreeMixin implements Error {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'QuizState.error(error: $error)';
+    return 'QuizNewState.error(error: $error)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'QuizState.error'))
+      ..add(DiagnosticsProperty('type', 'QuizNewState.error'))
       ..add(DiagnosticsProperty('error', error));
   }
 
@@ -418,7 +419,7 @@ class _$Error with DiagnosticableTreeMixin implements Error {
   }
 }
 
-abstract class Error implements QuizState {
+abstract class Error implements QuizNewState {
   factory Error(Exception error) = _$Error;
 
   Exception get error => throw _privateConstructorUsedError;

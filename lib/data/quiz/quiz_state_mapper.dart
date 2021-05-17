@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:share_quiz/domain/quiz/quiz.dart';
-import 'package:share_quiz/domain/quiz/quiz_state.dart';
+import 'package:share_quiz/domain/quiz_new/quiz_new_state.dart';
 
-class QuizStateMapper {
-  QuizStateMapper._();
+class QuizNewStateMapper {
+  QuizNewStateMapper._();
 
-  static Future<QuizState> transform(List<QueryDocumentSnapshot> data) async {
+  static Future<QuizNewState> transform(List<QueryDocumentSnapshot> data) async {
     final list = data.map<Quiz>(
       (e) {
         var json = e.data();
@@ -19,7 +19,7 @@ class QuizStateMapper {
       },
     ).toList();
 
-    return QuizState(
+    return QuizNewState(
       list,
     );
   }
