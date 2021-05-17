@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:share_quiz/domain/user/user_state.dart';
-import 'package:share_quiz/domain/user/user_state_notifier.dart';
+import 'package:share_quiz/domain/user_login/user_login_state.dart';
+import 'package:share_quiz/domain/user_login/user_login_state_notifier.dart';
 import 'package:share_quiz/presentation/screen/news.dart';
 import 'package:share_quiz/presentation/screen/ranking.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -14,7 +14,7 @@ class Home extends HookWidget {
     Tab(text: 'ランキング'),
   ];
 
-  final provider = StateNotifierProvider((ref) => UserStateNotifier());
+  final provider = StateNotifierProvider((ref) => UserLoginStateNotifier());
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class Home extends HookWidget {
               if (user != null) {
                 Navigator.of(context).pushNamed(Nav.QUIZ_POST);
               } else {
-                notifier.signInGoogle();
+                notifier.signInWithGoogle();
               }
             }
           },
@@ -55,7 +55,7 @@ class Home extends HookWidget {
   }
 
   Drawer _createDrawer(
-      BuildContext context, UserState state, UserStateNotifier notifier) {
+      BuildContext context, UserLoginState state, UserLoginStateNotifier notifier) {
     //todo 一旦無理やり
     if (state is Loading) {
       return Drawer();

@@ -2,20 +2,20 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_quiz/data/user/user_firebase_store.dart';
 import 'package:share_quiz/data/user/user_state_mapper.dart';
 import 'package:share_quiz/domain/user/user_data.dart';
-import 'package:share_quiz/domain/user/user_state.dart';
+import 'package:share_quiz/domain/user_login/user_login_state.dart';
 
-class UserStateNotifier extends StateNotifier<UserState> {
+class UserLoginStateNotifier extends StateNotifier<UserLoginState> {
 
   final _dataStore = UserFirebaseStore();
 
-  UserStateNotifier() : super(UserState.loading()) {
+  UserLoginStateNotifier() : super(UserLoginState.loading()) {
     () async {
       final user = await _dataStore.gerCurrentUser();
       state = await UserStateMapper.transform(user);
     }();
   }
 
-  signInGoogle() async {
+  signInWithGoogle() async {
     final user = await _dataStore.signInWithGoogle();
     state = await UserStateMapper.transform(user);
   }

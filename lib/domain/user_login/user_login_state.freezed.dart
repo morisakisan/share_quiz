@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
-part of 'user_state.dart';
+part of 'user_login_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,8 +13,8 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$UserStateTearOff {
-  const _$UserStateTearOff();
+class _$UserLoginStateTearOff {
+  const _$UserLoginStateTearOff();
 
   Success call(UserData? user) {
     return Success(
@@ -34,10 +34,10 @@ class _$UserStateTearOff {
 }
 
 /// @nodoc
-const $UserState = _$UserStateTearOff();
+const $UserLoginState = _$UserLoginStateTearOff();
 
 /// @nodoc
-mixin _$UserState {
+mixin _$UserLoginState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
     TResult Function(UserData? user) $default, {
@@ -71,18 +71,20 @@ mixin _$UserState {
 }
 
 /// @nodoc
-abstract class $UserStateCopyWith<$Res> {
-  factory $UserStateCopyWith(UserState value, $Res Function(UserState) then) =
-      _$UserStateCopyWithImpl<$Res>;
+abstract class $UserLoginStateCopyWith<$Res> {
+  factory $UserLoginStateCopyWith(
+          UserLoginState value, $Res Function(UserLoginState) then) =
+      _$UserLoginStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class _$UserStateCopyWithImpl<$Res> implements $UserStateCopyWith<$Res> {
-  _$UserStateCopyWithImpl(this._value, this._then);
+class _$UserLoginStateCopyWithImpl<$Res>
+    implements $UserLoginStateCopyWith<$Res> {
+  _$UserLoginStateCopyWithImpl(this._value, this._then);
 
-  final UserState _value;
+  final UserLoginState _value;
   // ignore: unused_field
-  final $Res Function(UserState) _then;
+  final $Res Function(UserLoginState) _then;
 }
 
 /// @nodoc
@@ -95,7 +97,7 @@ abstract class $SuccessCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SuccessCopyWithImpl<$Res> extends _$UserStateCopyWithImpl<$Res>
+class _$SuccessCopyWithImpl<$Res> extends _$UserLoginStateCopyWithImpl<$Res>
     implements $SuccessCopyWith<$Res> {
   _$SuccessCopyWithImpl(Success _value, $Res Function(Success) _then)
       : super(_value, (v) => _then(v as Success));
@@ -137,14 +139,14 @@ class _$Success with DiagnosticableTreeMixin implements Success {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserState(user: $user)';
+    return 'UserLoginState(user: $user)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'UserState'))
+      ..add(DiagnosticsProperty('type', 'UserLoginState'))
       ..add(DiagnosticsProperty('user', user));
   }
 
@@ -214,7 +216,7 @@ class _$Success with DiagnosticableTreeMixin implements Success {
   }
 }
 
-abstract class Success implements UserState {
+abstract class Success implements UserLoginState {
   factory Success(UserData? user) = _$Success;
 
   UserData? get user => throw _privateConstructorUsedError;
@@ -229,7 +231,7 @@ abstract class $LoadingCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$LoadingCopyWithImpl<$Res> extends _$UserStateCopyWithImpl<$Res>
+class _$LoadingCopyWithImpl<$Res> extends _$UserLoginStateCopyWithImpl<$Res>
     implements $LoadingCopyWith<$Res> {
   _$LoadingCopyWithImpl(Loading _value, $Res Function(Loading) _then)
       : super(_value, (v) => _then(v as Loading));
@@ -245,13 +247,13 @@ class _$Loading with DiagnosticableTreeMixin implements Loading {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserState.loading()';
+    return 'UserLoginState.loading()';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
-    properties..add(DiagnosticsProperty('type', 'UserState.loading'));
+    properties..add(DiagnosticsProperty('type', 'UserLoginState.loading'));
   }
 
   @override
@@ -311,7 +313,7 @@ class _$Loading with DiagnosticableTreeMixin implements Loading {
   }
 }
 
-abstract class Loading implements UserState {
+abstract class Loading implements UserLoginState {
   factory Loading() = _$Loading;
 }
 
@@ -323,7 +325,7 @@ abstract class $ErrorCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ErrorCopyWithImpl<$Res> extends _$UserStateCopyWithImpl<$Res>
+class _$ErrorCopyWithImpl<$Res> extends _$UserLoginStateCopyWithImpl<$Res>
     implements $ErrorCopyWith<$Res> {
   _$ErrorCopyWithImpl(Error _value, $Res Function(Error) _then)
       : super(_value, (v) => _then(v as Error));
@@ -354,14 +356,14 @@ class _$Error with DiagnosticableTreeMixin implements Error {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserState.error(error: $error)';
+    return 'UserLoginState.error(error: $error)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'UserState.error'))
+      ..add(DiagnosticsProperty('type', 'UserLoginState.error'))
       ..add(DiagnosticsProperty('error', error));
   }
 
@@ -431,7 +433,7 @@ class _$Error with DiagnosticableTreeMixin implements Error {
   }
 }
 
-abstract class Error implements UserState {
+abstract class Error implements UserLoginState {
   factory Error(Exception error) = _$Error;
 
   Exception get error => throw _privateConstructorUsedError;
