@@ -5,7 +5,7 @@ import 'package:share_quiz/domain/quiz_new/quiz_new_state.dart';
 class QuizNewStateMapper {
   QuizNewStateMapper._();
 
-  static Future<QuizNewState> transform(List<QueryDocumentSnapshot> data) async {
+  static Future<QuizNewState> transform(List<QueryDocumentSnapshot<Map<String, dynamic>>> data) async {
     final list = data.map<Quiz>(
       (e) {
         var json = e.data();

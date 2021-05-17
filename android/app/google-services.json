@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "225826406409-rrgnfijccmqdse2k4cbjv2o14v38ad61.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shingo.share_quiz.debug",
+            "certificate_hash": "52919a5f1ba83f81df43c8b791facf87da0fee02"
+          }
+        },
+        {
           "client_id": "225826406409-ju630p8u0f2o4e5bplm2h8ilg1k32tri.apps.googleusercontent.com",
           "client_type": 3
         }

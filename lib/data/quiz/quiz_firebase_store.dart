@@ -1,15 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class QuizFirebaseStore {
-
-  CollectionReference _getCollection() {
-    return FirebaseFirestore.instance
-        .collection('quiz');
+  CollectionReference<Map<String, dynamic>> _getCollection() {
+    return FirebaseFirestore.instance.collection('quiz');
   }
 
-  Future<List<QueryDocumentSnapshot>> fetchNews() async {
-    var document = await _getCollection()
-        .get();
+  Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> fetchNews() async {
+    var document = await _getCollection().get();
     return document.docs;
   }
 

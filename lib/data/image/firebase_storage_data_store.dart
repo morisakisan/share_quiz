@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 
 import 'package:firebase_storage/firebase_storage.dart';
@@ -8,6 +9,10 @@ class FirebaseStorageDataStore {
     if (file == null) {
       return null;
     }
+
+    final hash = sha256;
+    var value = await hash.bind(file.openRead()).first;
+
     final ref = FirebaseStorage.instance
         .ref()
         .child('playground')
