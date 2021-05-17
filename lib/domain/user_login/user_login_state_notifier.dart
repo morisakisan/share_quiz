@@ -1,7 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_quiz/data/user/user_firebase_store.dart';
 import 'package:share_quiz/data/user/user_state_mapper.dart';
-import 'package:share_quiz/domain/user/user_data.dart';
 import 'package:share_quiz/domain/user_login/user_login_state.dart';
 
 class UserLoginStateNotifier extends StateNotifier<UserLoginState> {
