@@ -10,7 +10,12 @@ class ImageFormField extends FormField<File> {
           builder: (FormFieldState<File> state) {
             Widget widget;
             if (state.value != null) {
-              widget = Image.file(File(state.value!.path));
+              widget = Image.file(
+                File(state.value!.path),
+                width: 150,
+                height: 150,
+                fit: BoxFit.cover
+              );
             } else {
               widget = Text("画像を選んでね");
             }
@@ -31,6 +36,12 @@ class ImageFormField extends FormField<File> {
                       icon: Icon(Icons.photo_album),
                       onPressed: () {
                         _pickImage(ImageSource.gallery, state);
+                      },
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.delete),
+                      onPressed: () {
+                        state.didChange(null);
                       },
                     ),
                   ],
