@@ -9,7 +9,7 @@ class ImageFormField extends FormField<File> {
           onSaved: onSaved,
           builder: (FormFieldState<File> state) {
             Widget widget;
-            List<Widget> list = [
+            final list = [
               IconButton(
                 icon: Icon(Icons.photo_camera),
                 onPressed: () {
@@ -39,12 +39,9 @@ class ImageFormField extends FormField<File> {
             }
 
             return Column(
-              children: <Widget>[
+              children: [
                 widget,
-                Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: list
-                ),
+                Row(mainAxisSize: MainAxisSize.min, children: list),
               ],
             );
           },
