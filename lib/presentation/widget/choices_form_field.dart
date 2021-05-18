@@ -100,12 +100,28 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
     showDialog(
       context: context,
       builder: (context) {
-        var choice = "";
+        String? choice;
+        final _formKey = GlobalKey<FormState>();
         return AlertDialog(
-          title: Text("選択肢を入力してね！"),
-          content: TextField(onChanged: (s) {
-            choice = s;
-          }),
+          title: Text("選択肢を入力してね"),
+          content: Form(
+            key: _formKey,
+            child: TextFormField(
+              decoration: const InputDecoration(
+                labelText: "選択肢",
+                hintText: '選択肢を入力してね',
+              ),
+              validator: (value) {
+                if (value?.isEmpty ?? true) {
+                  return '選択肢がはいってないよ';
+                }
+                return null;
+              },
+              onSaved: (value) {
+                choice = value;
+              },
+            ),
+          ),
           actions: <Widget>[
             TextButton(
               child: Text("Cancel"),
@@ -114,8 +130,12 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
             TextButton(
               child: Text("OK"),
               onPressed: () {
+                if (!_formKey.currentState!.validate()) return;
+                // 入力データが正常な場合の処理
+                _formKey.currentState!.save();
+
                 final list = state.value!.item1;
-                list.add(choice);
+                list.add(choice!);
                 state.didChange(state.value!.withItem1(list));
                 Navigator.pop(context);
               },

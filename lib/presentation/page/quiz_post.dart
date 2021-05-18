@@ -34,10 +34,10 @@ class QuizPost extends HookWidget {
               TextFormField(
                 decoration: const InputDecoration(
                   labelText: "タイトル",
-                  hintText: 'タイトル入れてね',
+                  hintText: 'タイトルを入れてね',
                 ),
                 validator: (value) {
-                  if (value!.isEmpty) {
+                  if (value?.isEmpty ?? true) {
                     return 'タイトルがはいってないよ';
                   }
                   return null;
@@ -53,7 +53,7 @@ class QuizPost extends HookWidget {
                   hintText: '問題文を入れてね',
                 ),
                 validator: (value) {
-                  if (value!.isEmpty) {
+                  if (value?.isEmpty ?? true) {
                     return '問題文がはいってないよ';
                   }
                   return null;
