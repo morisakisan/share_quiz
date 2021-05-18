@@ -2,24 +2,53 @@ import 'package:flutter/material.dart';
 import 'package:tuple/tuple.dart';
 
 class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
-
   ChoicesFormField(BuildContext context,
       {FormFieldSetter<Tuple2<List<String>, int>>? onSaved})
       : super(
           initialValue: Tuple2([], 0),
           onSaved: onSaved,
+          validator: (value) {
+            final list = value!.item1;
+            if (list.length < 2) {
+              return "選択肢は二つ以上いれてね";
+            }
+            return null;
+          },
           builder: (FormFieldState<Tuple2<List<String>, int>> state) {
             final selectedRadioTile = state.value!.item2;
-            Widget? header;
+            final headerChildren = <Widget>[];
             if (state.value!.item1.length < 5) {
-              header = ElevatedButton.icon(
+              headerChildren.add(
+                ElevatedButton.icon(
                   label: Text('選択肢を追加する'),
                   icon: Icon(Icons.add),
-                  onPressed: () => _showInputTextDialog(context, state));
+                  onPressed: () => _showInputTextDialog(context, state),
+                ),
+              );
             }
+
+            if (state.hasError) {
+              headerChildren.add(
+                Text(
+                  state.errorText!,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.red[400],
+                  ),
+                ),
+              );
+            }
+
             return Expanded(
               child: ReorderableListView(
-                header: header,
+                header: Container(
+                  margin: EdgeInsets.only(),
+                  alignment: Alignment.topLeft,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: headerChildren,
+                  ),
+                ),
                 onReorder: (oldIndex, newIndex) {
                   if (oldIndex < newIndex) {
                     // removing the item at oldIndex will shorten the list by 1.
@@ -28,7 +57,9 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
                   final list = state.value!.item1;
                   final choice = list.removeAt(oldIndex);
                   list.insert(newIndex, choice);
-                  state.didChange(state.value!.withItem1(list).withItem2(newIndex));
+                  state.didChange(
+                    state.value!.withItem1(list).withItem2(newIndex),
+                  );
                 },
                 children: state.value!.item1.asMap().entries.map(
                   (entry) {
@@ -40,7 +71,9 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
                       groupValue: selectedRadioTile,
                       title: Text(val),
                       onChanged: (v) {
-                        state.didChange(state.value!.withItem2(v as int));
+                        state.didChange(
+                          state.value!.withItem2(v as int),
+                        );
                       },
                       secondary: IconButton(
                         icon: Icon(
@@ -49,10 +82,11 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
                         onPressed: () {
                           final list = state.value!.item1;
                           list.removeAt(idx);
-                          state.didChange(state.value!.withItem1(list).withItem2(0));
+                          state.didChange(
+                            state.value!.withItem1(list).withItem2(0),
+                          );
                         },
                       ),
-
                     );
                   },
                 ).toList(),
