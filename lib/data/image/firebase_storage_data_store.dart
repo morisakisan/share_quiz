@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class FirebaseStorageDataStore {
+
   Future<String?> uploadFile(File? file) async {
     if (file == null) {
       return null;
@@ -15,8 +16,7 @@ class FirebaseStorageDataStore {
 
     final ref = FirebaseStorage.instance
         .ref()
-        .child('playground')
-        .child('/some-image.jpg');
+        .child('$value.jpg');
 
     final metadata = SettableMetadata(
       contentType: 'image/jpeg',

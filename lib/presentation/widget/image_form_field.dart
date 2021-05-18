@@ -41,7 +41,11 @@ class ImageFormField extends FormField<File> {
         );
 
   static _pickImage(ImageSource source, FormFieldState<File> state) async {
-    final pickedFile = await ImagePicker().getImage(source: source);
+    final pickedFile = await ImagePicker().getImage(
+      source: source,
+      maxWidth: 1024,
+      maxHeight: 1024,
+    );
     // ignore: unnecessary_null_comparison
     if (pickedFile == null) {
       return;
