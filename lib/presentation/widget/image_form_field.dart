@@ -9,12 +9,30 @@ class ImageFormField extends FormField<File> {
           onSaved: onSaved,
           builder: (FormFieldState<File> state) {
             Widget widget;
+            List<Widget> list = [
+              IconButton(
+                icon: Icon(Icons.photo_camera),
+                onPressed: () {
+                  _pickImage(ImageSource.camera, state);
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.photo_album),
+                onPressed: () {
+                  _pickImage(ImageSource.gallery, state);
+                },
+              ),
+            ];
             if (state.value != null) {
-              widget = Image.file(
-                File(state.value!.path),
-                width: 150,
-                height: 150,
-                fit: BoxFit.cover
+              widget = Image.file(File(state.value!.path),
+                  width: 150, height: 150, fit: BoxFit.cover);
+              list.add(
+                IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () {
+                    state.didChange(null);
+                  },
+                ),
               );
             } else {
               widget = Text("画像を選んでね");
@@ -25,26 +43,7 @@ class ImageFormField extends FormField<File> {
                 widget,
                 Row(
                   mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    IconButton(
-                      icon: Icon(Icons.photo_camera),
-                      onPressed: () {
-                        _pickImage(ImageSource.camera, state);
-                      },
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.photo_album),
-                      onPressed: () {
-                        _pickImage(ImageSource.gallery, state);
-                      },
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.delete),
-                      onPressed: () {
-                        state.didChange(null);
-                      },
-                    ),
-                  ],
+                  children: list
                 ),
               ],
             );
