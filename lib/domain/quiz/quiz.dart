@@ -6,6 +6,7 @@ part 'quiz.freezed.dart';
 @freezed
 abstract class Quiz with _$Quiz {
   const factory Quiz({
+    required String quizId,
     required String title,
     required String question,
     required List<String> choices,

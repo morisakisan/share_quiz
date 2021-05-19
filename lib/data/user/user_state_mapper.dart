@@ -9,6 +9,7 @@ class UserStateMapper {
     UserData? userData;
     if (user != null) {
       userData = UserData(
+          uid: user.uid,
           name: user.displayName ?? "",
           detail: "よろしく",
           photoUrl: user.photoURL ?? "");

@@ -17,7 +17,7 @@ class QuizFirebaseStore {
         .asyncMap((event) => event.docs);
   }
 
-  post(Map<String, dynamic> json) async {
-    await _getCollection().doc().set(json);
+  Future<void> post(Map<String, dynamic> json) {
+    return _getCollection().doc().set(json);
   }
 }

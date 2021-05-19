@@ -17,10 +17,12 @@ class _$UserDataTearOff {
   const _$UserDataTearOff();
 
   _UserData call(
-      {required String name,
+      {required String uid,
+      required String name,
       required String detail,
       required String photoUrl}) {
     return _UserData(
+      uid: uid,
       name: name,
       detail: detail,
       photoUrl: photoUrl,
@@ -33,6 +35,7 @@ const $UserData = _$UserDataTearOff();
 
 /// @nodoc
 mixin _$UserData {
+  String get uid => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get detail => throw _privateConstructorUsedError;
   String get photoUrl => throw _privateConstructorUsedError;
@@ -46,7 +49,7 @@ mixin _$UserData {
 abstract class $UserDataCopyWith<$Res> {
   factory $UserDataCopyWith(UserData value, $Res Function(UserData) then) =
       _$UserDataCopyWithImpl<$Res>;
-  $Res call({String name, String detail, String photoUrl});
+  $Res call({String uid, String name, String detail, String photoUrl});
 }
 
 /// @nodoc
@@ -59,11 +62,16 @@ class _$UserDataCopyWithImpl<$Res> implements $UserDataCopyWith<$Res> {
 
   @override
   $Res call({
+    Object? uid = freezed,
     Object? name = freezed,
     Object? detail = freezed,
     Object? photoUrl = freezed,
   }) {
     return _then(_value.copyWith(
+      uid: uid == freezed
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -85,7 +93,7 @@ abstract class _$UserDataCopyWith<$Res> implements $UserDataCopyWith<$Res> {
   factory _$UserDataCopyWith(_UserData value, $Res Function(_UserData) then) =
       __$UserDataCopyWithImpl<$Res>;
   @override
-  $Res call({String name, String detail, String photoUrl});
+  $Res call({String uid, String name, String detail, String photoUrl});
 }
 
 /// @nodoc
@@ -99,11 +107,16 @@ class __$UserDataCopyWithImpl<$Res> extends _$UserDataCopyWithImpl<$Res>
 
   @override
   $Res call({
+    Object? uid = freezed,
     Object? name = freezed,
     Object? detail = freezed,
     Object? photoUrl = freezed,
   }) {
     return _then(_UserData(
+      uid: uid == freezed
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -124,8 +137,13 @@ class __$UserDataCopyWithImpl<$Res> extends _$UserDataCopyWithImpl<$Res>
 
 class _$_UserData with DiagnosticableTreeMixin implements _UserData {
   const _$_UserData(
-      {required this.name, required this.detail, required this.photoUrl});
+      {required this.uid,
+      required this.name,
+      required this.detail,
+      required this.photoUrl});
 
+  @override
+  final String uid;
   @override
   final String name;
   @override
@@ -135,7 +153,7 @@ class _$_UserData with DiagnosticableTreeMixin implements _UserData {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserData(name: $name, detail: $detail, photoUrl: $photoUrl)';
+    return 'UserData(uid: $uid, name: $name, detail: $detail, photoUrl: $photoUrl)';
   }
 
   @override
@@ -143,6 +161,7 @@ class _$_UserData with DiagnosticableTreeMixin implements _UserData {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'UserData'))
+      ..add(DiagnosticsProperty('uid', uid))
       ..add(DiagnosticsProperty('name', name))
       ..add(DiagnosticsProperty('detail', detail))
       ..add(DiagnosticsProperty('photoUrl', photoUrl));
@@ -152,6 +171,8 @@ class _$_UserData with DiagnosticableTreeMixin implements _UserData {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _UserData &&
+            (identical(other.uid, uid) ||
+                const DeepCollectionEquality().equals(other.uid, uid)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.detail, detail) ||
@@ -164,6 +185,7 @@ class _$_UserData with DiagnosticableTreeMixin implements _UserData {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(uid) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(detail) ^
       const DeepCollectionEquality().hash(photoUrl);
@@ -176,10 +198,13 @@ class _$_UserData with DiagnosticableTreeMixin implements _UserData {
 
 abstract class _UserData implements UserData {
   const factory _UserData(
-      {required String name,
+      {required String uid,
+      required String name,
       required String detail,
       required String photoUrl}) = _$_UserData;
 
+  @override
+  String get uid => throw _privateConstructorUsedError;
   @override
   String get name => throw _privateConstructorUsedError;
   @override

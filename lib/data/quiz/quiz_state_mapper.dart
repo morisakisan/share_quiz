@@ -11,6 +11,7 @@ class QuizNewStateMapper {
       (e) {
         var json = e.data();
         return Quiz(
+            quizId: e.id,
             title: json["title"],
             question: json["question"],
             choices: List.from(json['choices']),
