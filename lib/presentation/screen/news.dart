@@ -1,80 +1,71 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:share_quiz/domain/quiz_new/quiz_new_state.dart';
-import 'package:share_quiz/domain/quiz_new/quiz_new_state_repository.dart';
+import 'package:share_quiz/domain/quiz/quiz.dart';
+import 'package:share_quiz/domain/quiz_new/quiz_new_repository.dart';
 
 import '../nav.dart';
 
 class News extends HookWidget {
-  // final provider = StateNotifierProvider((ref) => QuizNewStateNotifier());
-
-  // final provider = StreamProvider<QuizNewState>((ref) {
-  //   return _repository.fetch();
-  // });
-
-  final provider = StreamProvider.autoDispose(
-    (_) {
-      final repository = QuizNewStateRepository();
-      return repository.fetch();
-    },
-  );
+  final _repository = QuizNewRepository();
 
   @override
   Widget build(BuildContext context) {
-    var state = useProvider(provider.select((s) => s.data?.value));
-    if (state is Loading) {
-      return Center(
-        child: SizedBox(
-          height: 100,
-          width: 100,
-          child: CircularProgressIndicator(),
-        ),
-      );
-    } else if (state is Error) {
-      return Text("error");
-    } else if (state is Success) {
-      final list = state.quiz;
-      final widgets = list.map((value) {
-        return Card(
-          margin: EdgeInsets.only(bottom: 16.0),
-          child: InkWell(
-            child: Column(
-              children: [
-                Ink.image(
-                  height: 240,
-                  image: NetworkImage(
-                    value.imageUrl ?? "",
-                  ),
-                ),
-                Text(
-                  value.title,
-                  style: TextStyle(fontSize: 24),
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  value.question,
-                  style: TextStyle(fontSize: 16),
-                ),
-                const SizedBox(height: 12),
-              ],
+    return StreamBuilder(
+      stream: _repository.fetch(),
+      builder: (BuildContext context, AsyncSnapshot<List<Quiz>> snapShot) {
+        if (snapShot.hasError) {
+          return Text("error");
+        } else if (!snapShot.hasData) {
+          return Center(
+            child: SizedBox(
+              height: 100,
+              width: 100,
+              child: CircularProgressIndicator(),
             ),
-            onTap: () {
-              Navigator.of(context).pushNamed(
-                Nav.QUIZ_DETAIL,
-                arguments: value,
+          );
+        } else {
+          final widgets = snapShot.data!.map(
+            (value) {
+              return Card(
+                margin: EdgeInsets.only(bottom: 16.0),
+                child: InkWell(
+                  child: Column(
+                    children: [
+                      Ink.image(
+                        height: 240,
+                        image: NetworkImage(
+                          value.imageUrl ?? "",
+                        ),
+                      ),
+                      Text(
+                        value.title,
+                        style: TextStyle(fontSize: 24),
+                      ),
+                      const SizedBox(height: 12),
+                      Text(
+                        value.question,
+                        style: TextStyle(fontSize: 16),
+                      ),
+                      const SizedBox(height: 12),
+                    ],
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pushNamed(
+                      Nav.QUIZ_DETAIL,
+                      arguments: value,
+                    );
+                  },
+                ),
               );
             },
-          ),
-        );
-      }).toList();
-      return ListView(
-        children: widgets,
-        padding: EdgeInsets.all(16.0),
-      );
-    } else {
-      return Text("error");
-    }
+          ).toList();
+          return ListView(
+            children: widgets,
+            padding: EdgeInsets.all(16.0),
+          );
+        }
+      },
+    );
   }
 }

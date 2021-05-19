@@ -14,7 +14,7 @@ class QuizFirebaseStore {
     return _getCollection()
         .orderBy("created_at", descending: true)
         .snapshots()
-        .asyncMap((event) => event.docs);
+        .map((event) => event.docs);
   }
 
   Future<void> post(Map<String, dynamic> json) {
