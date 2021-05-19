@@ -6,19 +6,23 @@ class QuizNewStateMapper {
 
   static Stream<List<Quiz>> transform(
       Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>> data) {
-    return data.map((e) {
-      return e.map((event) {
-        var json = event.data();
-        return Quiz(
-          quizId: event.id,
-          title: json["title"],
-          question: json["question"],
-          choices: List.from(json['choices']),
-          answer: json["answer"],
-          imageUrl: json["image_url"],
-          createdAt: json["created_at"],
-        );
-      }).toList();
-    });
+    return data.map(
+      (e) {
+        return e.map(
+          (event) {
+            var json = event.data();
+            return Quiz(
+              quizId: event.id,
+              title: json["title"],
+              question: json["question"],
+              choices: List.from(json['choices']),
+              answer: json["answer"],
+              imageUrl: json["image_url"],
+              createdAt: json["created_at"],
+            );
+          },
+        ).toList();
+      },
+    );
   }
 }

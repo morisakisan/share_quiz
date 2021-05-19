@@ -16,9 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$ResourceTearOff {
   const _$ResourceTearOff();
 
-  Success<T> call<T>(T quiz) {
+  Success<T> call<T>(T value) {
     return Success<T>(
-      quiz,
+      value,
     );
   }
 
@@ -40,14 +40,14 @@ const $Resource = _$ResourceTearOff();
 mixin _$Resource<T> {
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(T quiz) $default, {
+    TResult Function(T value) $default, {
     required TResult Function() loading,
     required TResult Function(Exception error) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(T quiz)? $default, {
+    TResult Function(T value)? $default, {
     TResult Function()? loading,
     TResult Function(Exception error)? error,
     required TResult orElse(),
@@ -90,7 +90,7 @@ class _$ResourceCopyWithImpl<T, $Res> implements $ResourceCopyWith<T, $Res> {
 abstract class $SuccessCopyWith<T, $Res> {
   factory $SuccessCopyWith(Success<T> value, $Res Function(Success<T>) then) =
       _$SuccessCopyWithImpl<T, $Res>;
-  $Res call({T quiz});
+  $Res call({T value});
 }
 
 /// @nodoc
@@ -104,12 +104,12 @@ class _$SuccessCopyWithImpl<T, $Res> extends _$ResourceCopyWithImpl<T, $Res>
 
   @override
   $Res call({
-    Object? quiz = freezed,
+    Object? value = freezed,
   }) {
     return _then(Success<T>(
-      quiz == freezed
-          ? _value.quiz
-          : quiz // ignore: cast_nullable_to_non_nullable
+      value == freezed
+          ? _value.value
+          : value // ignore: cast_nullable_to_non_nullable
               as T,
     ));
   }
@@ -118,27 +118,27 @@ class _$SuccessCopyWithImpl<T, $Res> extends _$ResourceCopyWithImpl<T, $Res>
 /// @nodoc
 
 class _$Success<T> implements Success<T> {
-  _$Success(this.quiz);
+  _$Success(this.value);
 
   @override
-  final T quiz;
+  final T value;
 
   @override
   String toString() {
-    return 'Resource<$T>(quiz: $quiz)';
+    return 'Resource<$T>(value: $value)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is Success<T> &&
-            (identical(other.quiz, quiz) ||
-                const DeepCollectionEquality().equals(other.quiz, quiz)));
+            (identical(other.value, value) ||
+                const DeepCollectionEquality().equals(other.value, value)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(quiz);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(value);
 
   @JsonKey(ignore: true)
   @override
@@ -148,23 +148,23 @@ class _$Success<T> implements Success<T> {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(T quiz) $default, {
+    TResult Function(T value) $default, {
     required TResult Function() loading,
     required TResult Function(Exception error) error,
   }) {
-    return $default(quiz);
+    return $default(value);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(T quiz)? $default, {
+    TResult Function(T value)? $default, {
     TResult Function()? loading,
     TResult Function(Exception error)? error,
     required TResult orElse(),
   }) {
     if ($default != null) {
-      return $default(quiz);
+      return $default(value);
     }
     return orElse();
   }
@@ -195,9 +195,9 @@ class _$Success<T> implements Success<T> {
 }
 
 abstract class Success<T> implements Resource<T> {
-  factory Success(T quiz) = _$Success<T>;
+  factory Success(T value) = _$Success<T>;
 
-  T get quiz => throw _privateConstructorUsedError;
+  T get value => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $SuccessCopyWith<T, Success<T>> get copyWith =>
       throw _privateConstructorUsedError;
@@ -240,7 +240,7 @@ class _$Loading<T> implements Loading<T> {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(T quiz) $default, {
+    TResult Function(T value) $default, {
     required TResult Function() loading,
     required TResult Function(Exception error) error,
   }) {
@@ -250,7 +250,7 @@ class _$Loading<T> implements Loading<T> {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(T quiz)? $default, {
+    TResult Function(T value)? $default, {
     TResult Function()? loading,
     TResult Function(Exception error)? error,
     required TResult orElse(),
@@ -352,7 +352,7 @@ class _$Error<T> implements Error<T> {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>(
-    TResult Function(T quiz) $default, {
+    TResult Function(T value) $default, {
     required TResult Function() loading,
     required TResult Function(Exception error) error,
   }) {
@@ -362,7 +362,7 @@ class _$Error<T> implements Error<T> {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>(
-    TResult Function(T quiz)? $default, {
+    TResult Function(T value)? $default, {
     TResult Function()? loading,
     TResult Function(Exception error)? error,
     required TResult orElse(),

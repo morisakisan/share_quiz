@@ -7,7 +7,6 @@ import 'package:share_quiz/domain/quiz/quiz.dart';
 class QuizNewRepository {
   final _dataStore = QuizFirebaseStore();
 
-  Stream<List<Quiz>> fetch() {
-    return QuizNewStateMapper.transform(_dataStore.fetchNews());
-  }
+  Stream<List<Quiz>> fetch() =>
+    QuizNewStateMapper.transform(_dataStore.fetchNews());
 }

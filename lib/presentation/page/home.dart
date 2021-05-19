@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:share_quiz/domain/user_login/user_login_state.dart';
+import 'package:share_quiz/domain/common/resource.dart';
+import 'package:share_quiz/domain/user/user_data.dart';
 import 'package:share_quiz/domain/user_login/user_login_state_notifier.dart';
 import 'package:share_quiz/presentation/screen/news.dart';
 import 'package:share_quiz/presentation/screen/ranking.dart';
@@ -39,7 +40,7 @@ class Home extends HookWidget {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             if (state is Success) {
-              final user = state.user;
+              final user = state.value;
               if (user != null) {
                 Navigator.of(context).pushNamed(Nav.QUIZ_POST);
               } else {
@@ -54,35 +55,70 @@ class Home extends HookWidget {
     );
   }
 
-  Drawer _createDrawer(
-      BuildContext context, UserLoginState state, UserLoginStateNotifier notifier) {
+  Drawer _createDrawer(BuildContext context, Resource<UserData?> state,
+      UserLoginStateNotifier notifier) {
     //todo 一旦無理やり
-    if (state is Loading) {
-      return Drawer();
-    }
 
-    final user = (state as Success).user;
-    final name = user?.name ?? "";
-    final photoUrl = user?.photoUrl ?? "";
+    final Widget profile;
+    if (state is Loading) {
+      profile = Center(
+        child: SizedBox(
+          height: 50,
+          width: 50,
+          child: CircularProgressIndicator(),
+        ),
+      );
+    } else if (state is Error) {
+      profile = Column();
+    } else if (state is Success) {
+      final user = (state as Success).value;
+      if (user != null) {
+        final name = user?.name ?? "";
+        final photoUrl = user?.photoUrl ?? "";
+        profile = Column(
+          children: [
+            CircleAvatar(
+              radius: 30.0,
+              backgroundImage: NetworkImage(photoUrl),
+              backgroundColor: Colors.transparent,
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            Text(
+              name,
+              style: TextStyle(
+                fontSize: 24,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        );
+      } else {
+        profile = Column(
+          children: [
+            SizedBox(
+              height: 16,
+            ),
+            Text(
+              "未ログインです。ログインしてください。",
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.white,
+              ),
+            )
+          ],
+        );
+      }
+    } else {
+      throw Exception();
+    }
 
     return Drawer(
       child: ListView(
         children: <Widget>[
           DrawerHeader(
-            child: Column(children: [
-              Text(
-                name,
-                style: TextStyle(
-                  fontSize: 24,
-                  color: Colors.white,
-                ),
-              ),
-              CircleAvatar(
-                radius: 30.0,
-                backgroundImage: NetworkImage(photoUrl),
-                backgroundColor: Colors.transparent,
-              )
-            ]),
+            child: profile,
             decoration: BoxDecoration(
               color: Colors.blue,
             ),

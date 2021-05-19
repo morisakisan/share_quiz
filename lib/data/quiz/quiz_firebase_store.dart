@@ -13,6 +13,7 @@ class QuizFirebaseStore {
   Stream<List<QueryDocumentSnapshot<Map<String, dynamic>>>> fetchNews() {
     return _getCollection()
         .orderBy("created_at", descending: true)
+        .limit(100)
         .snapshots()
         .map((event) => event.docs);
   }
