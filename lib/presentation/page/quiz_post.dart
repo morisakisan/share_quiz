@@ -30,6 +30,7 @@ class QuizPost extends HookWidget {
     if (state is Loading) {
       child.add(_loading());
     } else if (state is Error) {
+
     } else if (state is Success) {
       Navigator.pop(context);
     }
