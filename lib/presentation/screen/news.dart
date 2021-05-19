@@ -15,11 +15,12 @@ class News extends HookWidget {
   //   return _repository.fetch();
   // });
 
-
-  final provider = StreamProvider.autoDispose((_) {
-    final repository = QuizNewStateRepository();
-    return repository.fetch();
-  });
+  final provider = StreamProvider.autoDispose(
+    (_) {
+      final repository = QuizNewStateRepository();
+      return repository.fetch();
+    },
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +35,8 @@ class News extends HookWidget {
       );
     } else if (state is Error) {
       return Text("error");
-    } else if (state is Success){
-      final list = (state as Success).quiz;
+    } else if (state is Success) {
+      final list = state.quiz;
       final widgets = list.map((value) {
         return Card(
           margin: EdgeInsets.only(bottom: 16.0),
