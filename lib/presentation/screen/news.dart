@@ -76,7 +76,7 @@ class News extends HookWidget {
                     arguments: quiz,
                   );
                 },
-                child: const Text('クイズを受ける'),
+                child: const Text('クイズに答える'),
               ),
             ],
           )
