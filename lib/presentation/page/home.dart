@@ -30,7 +30,9 @@ class Home extends HookWidget {
             tabs: _tab,
           ),
         ),
-        drawer: _createDrawer(context, state, notifier),
+        drawer: SafeArea(
+          child: _createDrawer(context, state, notifier),
+        ),
         body: TabBarView(
           children: [
             News(),
@@ -75,6 +77,7 @@ class Home extends HookWidget {
         final name = user?.name ?? "";
         final photoUrl = user?.photoUrl ?? "";
         profile = Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             CircleAvatar(
               radius: 30.0,
@@ -91,16 +94,9 @@ class Home extends HookWidget {
           ],
         );
       } else {
-        profile = Column(
-          children: [
-            SizedBox(
-              height: 16,
-            ),
-            Text(
-              "未ログインです。ログインしてください。",
-              style: Theme.of(context).primaryTextTheme.headline6,
-            )
-          ],
+        profile = Text(
+          "未ログインです。ログインしてください。",
+          style: Theme.of(context).primaryTextTheme.headline6,
         );
       }
     } else {
@@ -111,7 +107,9 @@ class Home extends HookWidget {
       child: ListView(
         children: <Widget>[
           DrawerHeader(
-            child: profile,
+            child: Center(
+              child: profile,
+            ),
             decoration: BoxDecoration(
               color: theme.primaryColor,
             ),
