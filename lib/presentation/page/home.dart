@@ -58,7 +58,7 @@ class Home extends HookWidget {
   Drawer _createDrawer(BuildContext context, Resource<UserData?> state,
       UserLoginStateNotifier notifier) {
     //todo 一旦無理やり
-
+    final theme = Theme.of(context);
     final Widget profile;
     if (state is Loading) {
       profile = Center(
@@ -87,10 +87,7 @@ class Home extends HookWidget {
             ),
             Text(
               name,
-              style: TextStyle(
-                fontSize: 24,
-                color: Colors.white,
-              ),
+              style: Theme.of(context).primaryTextTheme.headline6,
             ),
           ],
         );
@@ -102,10 +99,7 @@ class Home extends HookWidget {
             ),
             Text(
               "未ログインです。ログインしてください。",
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.white,
-              ),
+              style: Theme.of(context).primaryTextTheme.headline6,
             )
           ],
         );
@@ -120,33 +114,48 @@ class Home extends HookWidget {
           DrawerHeader(
             child: profile,
             decoration: BoxDecoration(
-              color: Colors.blue,
+              color: theme.primaryColor,
             ),
           ),
           ListTile(
-            title: Text('プロフィール'),
+            title: Text(
+              'プロフィール',
+              style: theme.textTheme.bodyText1,
+            ),
             onTap: () {},
           ),
           Divider(),
           ListTile(
-            title: Text('設定'),
+            title: Text(
+              '設定',
+              style: theme.textTheme.bodyText1,
+            ),
             onTap: () {},
           ),
           Divider(),
           ListTile(
-            title: Text('プライバシーポリシー'),
+            title: Text(
+              'プライバシーポリシー',
+              style: theme.textTheme.bodyText1,
+            ),
             onTap: () {},
           ),
           Divider(),
           ListTile(
-            title: Text('ライセンス'),
+            title: Text(
+              'ライセンス',
+              style: theme.textTheme.bodyText1,
+            ),
             onTap: () {
               showLicensePage(context: context);
             },
           ),
           Divider(),
           ListTile(
-            title: Text('ログアウト'),
+            title: Text(
+              'ログアウト',
+              style: theme.textTheme.bodyText1,
+            ),
             onTap: () {
               notifier.logout();
             },

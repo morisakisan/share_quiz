@@ -3,6 +3,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:share_quiz/domain/quiz/quiz.dart';
 import 'package:share_quiz/domain/quiz_new/quiz_new_repository.dart';
+import "package:intl/intl.dart";
 
 import '../nav.dart';
 
@@ -39,6 +40,9 @@ class News extends HookWidget {
   }
 
   Widget _getQuizView(BuildContext context, Quiz quiz) {
+    final theme = Theme.of(context);
+    final formatter = DateFormat('yyyy/MM/dd(E) HH:mm', "ja_JP");
+    final formatted = formatter.format(quiz.createdAt.toDate()); // Dateから
     return Card(
       clipBehavior: Clip.antiAlias,
       child: Column(
@@ -48,28 +52,27 @@ class News extends HookWidget {
             padding: const EdgeInsets.all(16.0),
             child: Text(
               quiz.title,
-              style: TextStyle(
-                fontSize: 24,
-              ),
+              style: theme.textTheme.headline5,
             ),
           ),
-          Image.network(quiz.imageUrl ?? ""),
+          AspectRatio(
+            aspectRatio: 1.0,
+            child: Image.network(
+              quiz.imageUrl ?? "",
+              fit: BoxFit.cover
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
             child: Text(
               "問題　${quiz.question}",
-              style: TextStyle(
-                fontSize: 16,
-              ),
+              style: theme.textTheme.bodyText2,
             ),
           ),
           ButtonBar(
             alignment: MainAxisAlignment.start,
             children: [
               TextButton(
-                style: TextButton.styleFrom(
-                  primary: const Color(0xFF6200EE),
-                ),
                 onPressed: () {
                   Navigator.of(context).pushNamed(
                     Nav.QUIZ_DETAIL,
@@ -79,7 +82,14 @@ class News extends HookWidget {
                 child: const Text('クイズに答える'),
               ),
             ],
-          )
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 0, 0, 8),
+            child: Text(
+              formatted,
+              style: theme.textTheme.caption,
+            ),
+          ),
         ],
       ),
     );
