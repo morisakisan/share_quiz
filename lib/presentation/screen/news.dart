@@ -43,6 +43,20 @@ class News extends HookWidget {
     final theme = Theme.of(context);
     final formatter = DateFormat('yyyy/MM/dd(E) HH:mm', "ja_JP");
     final formatted = formatter.format(quiz.createdAt.toDate()); // Dateから
+
+    final Widget image;
+    if (quiz.imageUrl != null) {
+      image = AspectRatio(
+        aspectRatio: 1.0,
+        child: Image.network(quiz.imageUrl!, fit: BoxFit.cover),
+      );
+    } else {
+      image = Padding(
+        padding: const EdgeInsets.only(left: 16.0),
+        child: Text("no image"),
+      );
+    }
+
     return Card(
       clipBehavior: Clip.antiAlias,
       child: Column(
@@ -55,13 +69,7 @@ class News extends HookWidget {
               style: theme.textTheme.headline5,
             ),
           ),
-          AspectRatio(
-            aspectRatio: 1.0,
-            child: Image.network(
-              quiz.imageUrl ?? "",
-              fit: BoxFit.cover
-            ),
-          ),
+          image,
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
             child: Text(
