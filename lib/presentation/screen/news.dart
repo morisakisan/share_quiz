@@ -25,47 +25,63 @@ class News extends HookWidget {
             ),
           );
         } else {
-          final widgets = snapShot.data!.map(
-            (value) {
-              return Card(
-                margin: EdgeInsets.only(bottom: 16.0),
-                child: InkWell(
-                  child: Column(
-                    children: [
-                      Ink.image(
-                        height: 240,
-                        image: NetworkImage(
-                          value.imageUrl ?? "",
-                        ),
-                      ),
-                      Text(
-                        value.title,
-                        style: TextStyle(fontSize: 24),
-                      ),
-                      const SizedBox(height: 12),
-                      Text(
-                        value.question,
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      const SizedBox(height: 12),
-                    ],
-                  ),
-                  onTap: () {
-                    Navigator.of(context).pushNamed(
-                      Nav.QUIZ_DETAIL,
-                      arguments: value,
-                    );
-                  },
-                ),
-              );
-            },
-          ).toList();
           return ListView(
-            children: widgets,
+            children: snapShot.data!.map(
+              (value) {
+                return _getQuizView(context, value);
+              },
+            ).toList(),
             padding: EdgeInsets.all(16.0),
           );
         }
       },
+    );
+  }
+
+  Widget _getQuizView(BuildContext context, Quiz quiz) {
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              quiz.title,
+              style: TextStyle(
+                fontSize: 24,
+              ),
+            ),
+          ),
+          Image.network(quiz.imageUrl ?? ""),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
+            child: Text(
+              "問題　${quiz.question}",
+              style: TextStyle(
+                fontSize: 16,
+              ),
+            ),
+          ),
+          ButtonBar(
+            alignment: MainAxisAlignment.start,
+            children: [
+              TextButton(
+                style: TextButton.styleFrom(
+                  primary: const Color(0xFF6200EE),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(
+                    Nav.QUIZ_DETAIL,
+                    arguments: quiz,
+                  );
+                },
+                child: const Text('クイズを受ける'),
+              ),
+            ],
+          )
+        ],
+      ),
     );
   }
 }

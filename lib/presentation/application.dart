@@ -5,7 +5,6 @@ import 'package:share_quiz/presentation/page/home.dart';
 import 'nav.dart';
 
 class Application extends HookWidget {
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
