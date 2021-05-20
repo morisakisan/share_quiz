@@ -48,7 +48,10 @@ class News extends HookWidget {
     if (quiz.imageUrl != null) {
       image = AspectRatio(
         aspectRatio: 1.0,
-        child: Image.network(quiz.imageUrl!, fit: BoxFit.cover),
+        child: Hero(
+          tag: quiz.imageUrl!,
+          child: Image.network(quiz.imageUrl!, fit: BoxFit.cover),
+        ),
       );
     } else {
       image = Padding(

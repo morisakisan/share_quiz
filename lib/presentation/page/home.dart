@@ -57,7 +57,6 @@ class Home extends HookWidget {
 
   Drawer _createDrawer(BuildContext context, Resource<UserData?> state,
       UserLoginStateNotifier notifier) {
-    //todo 一旦無理やり
     final theme = Theme.of(context);
     final Widget profile;
     if (state is Loading) {
