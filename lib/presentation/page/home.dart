@@ -89,14 +89,14 @@ class Home extends HookWidget {
             ),
             Text(
               name,
-              style: Theme.of(context).primaryTextTheme.headline6,
+              style: theme.primaryTextTheme.headline6,
             ),
           ],
         );
       } else {
         profile = Text(
           "未ログインです。ログインしてください。",
-          style: Theme.of(context).primaryTextTheme.headline6,
+          style: theme.primaryTextTheme.headline6,
         );
       }
     } else {
