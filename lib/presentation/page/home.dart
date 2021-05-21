@@ -154,7 +154,27 @@ class Home extends HookWidget {
               style: theme.textTheme.bodyText1,
             ),
             onTap: () {
-              notifier.logout();
+              showDialog(
+                context: context,
+                builder: (_) {
+                  return AlertDialog(
+                    content: Text("ログアウトを行います"),
+                    actions: [
+                      TextButton(
+                        child: Text("Cancel"),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                      TextButton(
+                        child: Text("OK"),
+                        onPressed: () {
+                          notifier.logout();
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
             },
           ),
         ],
