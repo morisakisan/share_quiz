@@ -10,11 +10,11 @@ class Setting extends HookWidget {
       appBar: AppBar(
         title: Text('設定'),
       ),
-      body: buildSettingsList(),
+      body: _buildSettingsList(),
     );
   }
 
-  Widget buildSettingsList() {
+  Widget _buildSettingsList() {
     return SettingsList(
       sections: [
         SettingsSection(
@@ -36,6 +36,16 @@ class Setting extends HookWidget {
               onPressed: (context) {
                 showLicensePage(context: context);
               },
+            ),
+          ],
+        ),
+        SettingsSection(
+          title: 'バージョン',
+          tiles: [
+            SettingsTile(
+              title: 'バージョン',
+              leading: Icon(Icons.info_outline),
+              trailing: Text("1.0.0"),
             ),
           ],
         ),
