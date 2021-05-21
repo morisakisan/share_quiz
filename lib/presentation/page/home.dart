@@ -115,40 +115,25 @@ class Home extends HookWidget {
             ),
           ),
           ListTile(
+            leading: Icon(Icons.account_circle),
             title: Text(
               'プロフィール',
               style: theme.textTheme.bodyText1,
             ),
             onTap: () {},
           ),
-          Divider(),
           ListTile(
+            leading: Icon(Icons.settings),
             title: Text(
               '設定',
               style: theme.textTheme.bodyText1,
             ),
-            onTap: () {},
-          ),
-          Divider(),
-          ListTile(
-            title: Text(
-              'プライバシーポリシー',
-              style: theme.textTheme.bodyText1,
-            ),
-            onTap: () {},
-          ),
-          Divider(),
-          ListTile(
-            title: Text(
-              'ライセンス',
-              style: theme.textTheme.bodyText1,
-            ),
             onTap: () {
-              showLicensePage(context: context);
+              Navigator.of(context).pushNamed(Nav.SETTING);
             },
           ),
-          Divider(),
           ListTile(
+            leading: Icon(Icons.login_outlined),
             title: Text(
               'ログアウト',
               style: theme.textTheme.bodyText1,
