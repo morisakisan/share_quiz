@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:settings_ui/settings_ui.dart';
+import 'package:package_info/package_info.dart';
 
 class Setting extends HookWidget {
   @override
@@ -10,11 +11,16 @@ class Setting extends HookWidget {
       appBar: AppBar(
         title: Text('設定'),
       ),
-      body: _buildSettingsList(),
+      body: FutureBuilder<PackageInfo>(
+        future: PackageInfo.fromPlatform(),
+        builder: (context, snapshot) {
+          return _buildSettingsList(snapshot.data!);
+        },
+      ),
     );
   }
 
-  Widget _buildSettingsList() {
+  Widget _buildSettingsList(PackageInfo info) {
     return SettingsList(
       sections: [
         SettingsSection(
@@ -34,7 +40,11 @@ class Setting extends HookWidget {
               title: 'ライセンス',
               leading: Icon(Icons.collections_bookmark),
               onPressed: (context) {
-                showLicensePage(context: context);
+                showLicensePage(
+                  context: context,
+                  applicationName: info.appName,
+                  applicationVersion: info.version,
+                );
               },
             ),
           ],
@@ -45,7 +55,7 @@ class Setting extends HookWidget {
             SettingsTile(
               title: 'バージョン',
               leading: Icon(Icons.info_outline),
-              trailing: Text("1.0.0"),
+              trailing: Text(info.version),
             ),
           ],
         ),
