@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -18,7 +19,9 @@ class UserFirebaseStore {
       accessToken: googleSignInAuthentication.accessToken,
       idToken: googleSignInAuthentication.idToken,
     );
-    final user = (await FirebaseAuth.instance.signInWithCredential(credential)).user;
+
+    final user =
+        (await FirebaseAuth.instance.signInWithCredential(credential)).user;
 
     return user;
   }
@@ -27,4 +30,20 @@ class UserFirebaseStore {
     await GoogleSignIn().signOut();
   }
 
+  CollectionReference<Map<String, dynamic>> _getCollection() => FirebaseFirestore.instance.collection('user');
+
+  Future<bool> isAlreadyUser(User user) async {
+    final data = await _getCollection().where('uid', isEqualTo: user.uid).get();
+    return data.docs.isNotEmpty;
+  }
+
+  setUserData(User user) async {
+    return await _getCollection().doc().set(
+      {
+        "uid": user.uid,
+        "displayName": user.displayName,
+        "photoURL": user.photoURL,
+      },
+    );
+  }
 }

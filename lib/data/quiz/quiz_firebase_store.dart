@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class QuizFirebaseStore {
-  
   CollectionReference<Map<String, dynamic>> _getCollection() {
     return FirebaseFirestore.instance.collection('quiz');
   }
@@ -11,7 +10,9 @@ class QuizFirebaseStore {
         .orderBy("created_at", descending: true)
         .limit(100)
         .snapshots()
-        .map((event) => event.docs);
+        .map(
+          (event) => event.docs,
+        );
   }
 
   Future<void> post(Map<String, dynamic> json) {

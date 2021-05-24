@@ -5,7 +5,6 @@ import 'package:share_quiz/domain/common/resource.dart';
 import 'package:share_quiz/domain/user/user_data.dart';
 
 class UserLoginStateNotifier extends StateNotifier<Resource<UserData?>> {
-
   final _dataStore = UserFirebaseStore();
 
   UserLoginStateNotifier() : super(Resource.loading()) {
@@ -16,8 +15,18 @@ class UserLoginStateNotifier extends StateNotifier<Resource<UserData?>> {
   }
 
   signInWithGoogle() async {
-    final user = await _dataStore.signInWithGoogle();
-    state = Resource(UserStateMapper.transform(user));
+    await _dataStore.signInWithGoogle().then(
+      (user) async {
+        if (user != null && !await _dataStore.isAlreadyUser(user)) {
+          await _dataStore.setUserData(user);
+        }
+        state = Resource(UserStateMapper.transform(user));
+      },
+    ).catchError(
+      (error) {
+        state = Resource.error(error);
+      },
+    );
   }
 
   logout() async {
