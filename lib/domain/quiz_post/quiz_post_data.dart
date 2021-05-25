@@ -1,7 +1,11 @@
+// Dart imports:
 import 'dart:io';
 
-import 'package:freezed_annotation/freezed_annotation.dart';
+// Flutter imports:
 import 'package:flutter/foundation.dart';
+
+// Package imports:
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'quiz_post_data.freezed.dart';
 
