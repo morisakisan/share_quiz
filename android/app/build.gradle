@@ -66,7 +66,7 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file("../debug.keystore")
+            storeFile file("src/debug/debug.keystore")
             storePassword 'quiz_share_debug'
             keyAlias 'key0'
             keyPassword 'quiz_share_debug'
