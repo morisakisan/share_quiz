@@ -12,10 +12,12 @@ jobs:
     steps:
       - name: checkout
       - uses: actions/checkout@v2
+
       - name: install java 12.x
         uses: actions/setup-java@v1
         with:
           java-version: '12.x'
+
       - name: setup cache
         uses: actions/cache@v1
         with:
@@ -34,19 +36,27 @@ jobs:
       - name: flutter test
         run: flutter test
 
-      - name: build apk
+      - name:  Translate secrets of base64 into json
+        env:
+          GOOGLE_SERVICE: ${{ secrets.DEBUG_ANDROID_GOOGLE_SERVICE }}
+        run:
+          echo $GOOGLE_SERVICE | base64 --decode > ./android/app/src/debug/google-services.json
+
+      - name: Create key.properties
         run: |
-          echo '${{ secrets.KEYSTORE_BASE64 }}' | base64 -d > android/release.keystore
-          export KEYSTORE_PASSWORD='${{ secrets.KEYSTORE_PASSWORD }}'
-          export KEY_ALIAS='${{ secrets.KEY_ALIAS }}'
-          export KEY_PASSWORD='${{ secrets.KEY_PASSWORD }}'
-          flutter build apk --debug
+          echo ${{ secrets.DEBUG_ANDROID_KEYSTORE }} | base64 -d > android/src/debug/debug.keystore
+          echo 'store_password=${{ secrets.DEBUG_ANDROID_STORE_PASSWORD }}' >> android/debug_key.properties
+          echo 'key_ailias=${{ secrets.DEBUG_ANDROID_AILIAS }}' >> android/debug_key.properties
+          echo 'key_password=${{ secrets.DEBUG_ANDROID_STORE_PASSWORD }}' >> android/debug_key.properties
+
+      - name: Build APK
+        run: flutter build apk --debug --build-number=$GITHUB_RUN_NUMBER
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: android
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: build/app/outputs/flutter-apk/app-debug.apk
 
   deploy:
     needs: [build]
@@ -68,4 +78,4 @@ jobs:
           appId: ${{secrets.FIREBASE_APP_ID_ANDROID}}
           token: ${{secrets.FIREBASE_TOKEN}}
           groups: testers
-          file: android/app-release.apk
+          file: android/app-debug.apk
