@@ -45,10 +45,10 @@ jobs:
 
       - name: Create key.properties
         run: |
-          echo ${{ secrets.DEBUG_ANDROID_KEYSTORE }} | base64 -d > android/src/debug/debug.keystore
-          echo 'store_password=${{ secrets.DEBUG_ANDROID_STORE_PASSWORD }}' >> android/debug_key.properties
-          echo 'key_ailias=${{ secrets.DEBUG_ANDROID_AILIAS }}' >> android/debug_key.properties
-          echo 'key_password=${{ secrets.DEBUG_ANDROID_STORE_PASSWORD }}' >> android/debug_key.properties
+          echo ${{ secrets.DEBUG_ANDROID_KEYSTORE }} | base64 -d > ./android/src/debug/debug.keystore
+          echo 'store_password=${{ secrets.DEBUG_ANDROID_STORE_PASSWORD }}' >> ./android/debug_key.properties
+          echo 'key_ailias=${{ secrets.DEBUG_ANDROID_AILIAS }}' >> ./android/debug_key.properties
+          echo 'key_password=${{ secrets.DEBUG_ANDROID_STORE_PASSWORD }}' >> ./android/debug_key.properties
 
       - name: Build APK
         run: flutter build apk --debug --build-number=$GITHUB_RUN_NUMBER
