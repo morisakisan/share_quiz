@@ -66,10 +66,15 @@ android {
 
     signingConfigs {
         debug {
-            storeFile file("src/debug/debug.keystore")
-            storePassword localProperties.getProperty("debug_store_password")
-            keyAlias localProperties.getProperty("debug_key_ailias")
-            keyPassword localProperties.getProperty("debug_key_password")
+            def keystorePropertiesFile = rootProject.file("debug_key.properties")
+            if (keystorePropertiesFile.exists()) {
+                def keystoreProperties = new Properties()
+                keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+                storeFile file("src/debug/debug.keystore")
+                storePassword keystoreProperties.getProperty("store_password")
+                keyAlias keystoreProperties.getProperty("key_ailias")
+                keyPassword keystoreProperties.getProperty("key_password")
+            }
         }
     }
 }
