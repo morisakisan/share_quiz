@@ -13,10 +13,10 @@ jobs:
       - name: checkout
         uses: actions/checkout@v2
 
-      - name: install java 12.x
+      - name: install java 11.x
         uses: actions/setup-java@v2
         with:
-          java-version: '12.x'
+          java-version: '11.x'
 
       - name: setup cache
         uses: actions/cache@v1
