@@ -1,0 +1,66 @@
+// Dart imports:
+import 'dart:io';
+
+// Flutter imports:
+import 'package:flutter/material.dart';
+
+// Package imports:
+import 'package:image_picker/image_picker.dart';
+
+class ImageFormField extends FormField<File> {
+  ImageFormField({FormFieldSetter<File>? onSaved})
+      : super(
+          onSaved: onSaved,
+          builder: (FormFieldState<File> state) {
+            Widget widget;
+            final list = [
+              IconButton(
+                icon: Icon(Icons.photo_camera),
+                onPressed: () {
+                  _pickImage(ImageSource.camera, state);
+                },
+              ),
+              IconButton(
+                icon: Icon(Icons.photo_album),
+                onPressed: () {
+                  _pickImage(ImageSource.gallery, state);
+                },
+              ),
+            ];
+            if (state.value != null) {
+              widget = Image.file(File(state.value!.path),
+                  width: 150, height: 150, fit: BoxFit.cover);
+              list.add(
+                IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () {
+                    state.didChange(null);
+                  },
+                ),
+              );
+            } else {
+              widget = Text("画像を選んでね");
+            }
+
+            return Column(
+              children: [
+                widget,
+                Row(mainAxisSize: MainAxisSize.min, children: list),
+              ],
+            );
+          },
+        );
+
+  static _pickImage(ImageSource source, FormFieldState<File> state) async {
+    final pickedFile = await ImagePicker().getImage(
+      source: source,
+      maxWidth: 1024,
+      maxHeight: 1024,
+    );
+    // ignore: unnecessary_null_comparison
+    if (pickedFile == null) {
+      return;
+    }
+    state.didChange(File(pickedFile.path));
+  }
+}
