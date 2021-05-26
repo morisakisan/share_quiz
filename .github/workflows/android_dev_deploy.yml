@@ -1,0 +1,59 @@
+name: Android Dev CD
+
+on:
+  pull_request:
+    branches: [ dev ]
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+
+      - name: install java 11.x
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11.x'
+
+      - name: setup cache
+        uses: actions/cache@v1
+        with:
+          path: /Users/runner/hostedtoolcache/flutter
+          key: ${{ runner.OS }}-flutter-install-cache
+
+      - name: install flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.2.0'
+          channel: 'stable'
+
+      - name: flutter dependencies install
+        run: flutter pub get
+
+      - name: flutter test
+        run: flutter test
+
+      - name:  Translate secrets of base64 into json
+        run:
+          echo ${{ secrets.DEBUG_ANDROID_GOOGLE_SERVICE }} | base64 --decode > ./android/app/src/debug/google-services.json
+
+      - name: Create key.properties
+        run: |
+          echo ${{ secrets.DEBUG_ANDROID_KEYSTORE }} | base64 -d > ./android/app/src/debug/debug.keystore
+          echo ${{ secrets.DEBUG_KEY_PROPERTIES }} | base64 -d > ./android/debug_key.properties
+
+      - name: Build APK
+        run: flutter build apk --debug --build-number=$GITHUB_RUN_NUMBER
+
+      # Firebase にデプロイ
+      - name: Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.3.2
+        with:
+          appId: ${{secrets.FIREBASE_APP_ID_ANDROID}}
+          token: ${{secrets.FIREBASE_TOKEN}}
+          groups: testers
+          file: ./build/app/outputs/apk/debug/app-debug.apk
