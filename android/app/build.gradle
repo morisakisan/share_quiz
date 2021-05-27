@@ -48,22 +48,6 @@ android {
         multiDexEnabled true
     }
 
-    buildTypes {
-        debug {
-            applicationIdSuffix ".debug"
-            versionNameSuffix '-DEBUG'
-            debuggable true
-            resValue "string", "app_name", "share quiz debug"
-        }
-
-        release {
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.release
-            resValue "string", "app_name", "share quiz"
-        }
-    }
-
     signingConfigs {
         debug {
             def keystorePropertiesFile = rootProject.file("debug_key.properties")
@@ -89,6 +73,23 @@ android {
             }
         }
     }
+
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            versionNameSuffix '-DEBUG'
+            debuggable true
+            resValue "string", "app_name", "share quiz debug"
+        }
+
+        release {
+            // TODO: Add your own signing config for the release build.
+            // Signing with the debug keys for now, so `flutter run --release` works.
+            signingConfig signingConfigs.release
+            resValue "string", "app_name", "share quiz"
+        }
+    }
+
 }
 
 flutter {
