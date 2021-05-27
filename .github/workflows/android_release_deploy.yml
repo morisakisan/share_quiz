@@ -41,6 +41,7 @@ jobs:
 
       - name:  Translate secrets of base64 into json
         run:
+          mkdir ./android/app/src/release
           echo ${{ secrets.RELEASE_ANDROID_GOOGLE_SERVICE }} | base64 --decode > ./android/app/src/release/google-services.json
 
       - name: Create key.properties
