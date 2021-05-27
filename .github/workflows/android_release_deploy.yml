@@ -1,7 +1,7 @@
 name: Android Release CD
 
 on:
-  workdlow_dispatch:
+  workflow_dispatch:
     branches: [ master ]
   pull_request:
     branches: [ dev ]
