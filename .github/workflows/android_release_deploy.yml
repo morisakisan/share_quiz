@@ -1,4 +1,4 @@
-name: Android Dev CD
+name: Android Release CD
 
 on:
   workdlow_dispatch:
