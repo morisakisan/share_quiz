@@ -21,6 +21,7 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
             final selectedRadioTile = state.value!.item2;
             final headerChildren = <Widget>[];
             headerChildren.add(Text("選択肢"));
+            headerChildren.add(Text("正解の選択肢にチェックを入れてください"));
             if (state.value!.item1.length < 5) {
               headerChildren.add(
                 ElevatedButton.icon(
