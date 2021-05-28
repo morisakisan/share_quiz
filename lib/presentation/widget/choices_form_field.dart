@@ -20,6 +20,7 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
           builder: (FormFieldState<Tuple2<List<String>, int>> state) {
             final selectedRadioTile = state.value!.item2;
             final headerChildren = <Widget>[];
+            headerChildren.add(Text("選択肢"));
             if (state.value!.item1.length < 5) {
               headerChildren.add(
                 ElevatedButton.icon(
@@ -43,12 +44,14 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
             }
 
             return ReorderableListView(
+              physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               header: Container(
                 margin: EdgeInsets.only(),
                 alignment: Alignment.topLeft,
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  // mainAxisSize: MainAxisSize.min,
                   children: headerChildren,
                 ),
               ),
