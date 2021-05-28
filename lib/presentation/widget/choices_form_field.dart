@@ -42,58 +42,57 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
               );
             }
 
-            return Expanded(
-              child: ReorderableListView(
-                header: Container(
-                  margin: EdgeInsets.only(),
-                  alignment: Alignment.topLeft,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: headerChildren,
-                  ),
+            return ReorderableListView(
+              shrinkWrap: true,
+              header: Container(
+                margin: EdgeInsets.only(),
+                alignment: Alignment.topLeft,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: headerChildren,
                 ),
-                onReorder: (oldIndex, newIndex) {
-                  if (oldIndex < newIndex) {
-                    // removing the item at oldIndex will shorten the list by 1.
-                    newIndex -= 1;
-                  }
-                  final list = state.value!.item1;
-                  final choice = list.removeAt(oldIndex);
-                  list.insert(newIndex, choice);
-                  state.didChange(
-                    state.value!.withItem1(list).withItem2(newIndex),
-                  );
-                },
-                children: state.value!.item1.asMap().entries.map(
-                  (entry) {
-                    final idx = entry.key;
-                    final val = entry.value;
-                    return RadioListTile(
-                      key: Key(idx.toString()),
-                      value: idx,
-                      groupValue: selectedRadioTile,
-                      title: Text(val),
-                      onChanged: (v) {
+              ),
+              onReorder: (oldIndex, newIndex) {
+                if (oldIndex < newIndex) {
+                  // removing the item at oldIndex will shorten the list by 1.
+                  newIndex -= 1;
+                }
+                final list = state.value!.item1;
+                final choice = list.removeAt(oldIndex);
+                list.insert(newIndex, choice);
+                state.didChange(
+                  state.value!.withItem1(list).withItem2(newIndex),
+                );
+              },
+              children: state.value!.item1.asMap().entries.map(
+                (entry) {
+                  final idx = entry.key;
+                  final val = entry.value;
+                  return RadioListTile(
+                    key: Key(idx.toString()),
+                    value: idx,
+                    groupValue: selectedRadioTile,
+                    title: Text(val),
+                    onChanged: (v) {
+                      state.didChange(
+                        state.value!.withItem2(v as int),
+                      );
+                    },
+                    secondary: IconButton(
+                      icon: Icon(
+                        Icons.delete,
+                      ),
+                      onPressed: () {
+                        final list = state.value!.item1;
+                        list.removeAt(idx);
                         state.didChange(
-                          state.value!.withItem2(v as int),
+                          state.value!.withItem1(list).withItem2(0),
                         );
                       },
-                      secondary: IconButton(
-                        icon: Icon(
-                          Icons.delete,
-                        ),
-                        onPressed: () {
-                          final list = state.value!.item1;
-                          list.removeAt(idx);
-                          state.didChange(
-                            state.value!.withItem1(list).withItem2(0),
-                          );
-                        },
-                      ),
-                    );
-                  },
-                ).toList(),
-              ),
+                    ),
+                  );
+                },
+              ).toList(),
             );
           },
         );

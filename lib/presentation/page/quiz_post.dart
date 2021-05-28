@@ -31,11 +31,14 @@ class QuizPost extends HookWidget {
   Widget build(BuildContext context) {
     final state = useProvider(provider.select((s) => s));
 
-    final child = [_form(context)];
+    final List<Widget> children = [
+      SingleChildScrollView(
+        child: _form(context),
+      )
+    ];
     if (state is Loading) {
-      child.add(_loading());
+      children.add(_loading());
     } else if (state is Error) {
-
     } else if (state is Success) {
       Navigator.pop(context);
     }
@@ -45,7 +48,7 @@ class QuizPost extends HookWidget {
         title: Text('クイズを入力してね'),
       ),
       body: Stack(
-        children: child,
+        children: children,
       ),
     );
   }
