@@ -25,7 +25,9 @@ class QuizPost extends HookWidget {
   List<String>? _choices;
   int? _answer;
 
-  final provider = StateNotifierProvider((ref) => QuizPostStateNotifier());
+  final provider = StateNotifierProvider(
+    (ref) => QuizPostStateNotifier(),
+  );
 
   @override
   Widget build(BuildContext context) {
