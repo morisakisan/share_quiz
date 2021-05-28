@@ -50,7 +50,13 @@ class ImageFormField extends FormField<File> {
                 ),
               );
             }
-            children.add(Row(mainAxisSize: MainAxisSize.min, children: icons));
+            children.add(
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: icons,
+              ),
+            );
 
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
