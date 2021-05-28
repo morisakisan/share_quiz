@@ -60,6 +60,9 @@ class QuizPost extends HookWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             TextFormField(
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+              maxLength: 20,
               decoration: const InputDecoration(
                 labelText: "タイトル",
                 hintText: 'タイトルを入れてね',
@@ -76,6 +79,9 @@ class QuizPost extends HookWidget {
             ),
             const SizedBox(height: 16),
             TextFormField(
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+              maxLength: 100,
               decoration: const InputDecoration(
                 labelText: "問題文",
                 hintText: '問題文を入れてね',

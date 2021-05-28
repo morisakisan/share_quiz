@@ -110,6 +110,9 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
           content: Form(
             key: _formKey,
             child: TextFormField(
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+              maxLength: 30,
               decoration: const InputDecoration(
                 labelText: "選択肢",
                 hintText: '選択肢を入力してね',
