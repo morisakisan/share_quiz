@@ -33,6 +33,11 @@ class ImageFormField extends FormField<File> {
               ),
             ];
             if (state.value != null) {
+              children.add(
+                SizedBox(
+                  height: 16,
+                ),
+              );
               Widget widget = Image.file(File(state.value!.path),
                   width: 150, height: 150, fit: BoxFit.cover);
               children.add(widget);

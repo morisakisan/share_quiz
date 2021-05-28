@@ -20,14 +20,34 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
           builder: (FormFieldState<Tuple2<List<String>, int>> state) {
             final selectedRadioTile = state.value!.item2;
             final headerChildren = <Widget>[];
-            headerChildren.add(Text("選択肢"));
-            headerChildren.add(Text("正解の選択肢にチェックを入れてください"));
+            headerChildren.add(
+              Text(
+                "選択肢",
+              ),
+            );
             if (state.value!.item1.length < 5) {
+              headerChildren.add(
+                SizedBox(
+                  height: 16,
+                ),
+              );
               headerChildren.add(
                 ElevatedButton.icon(
                   label: Text('選択肢を追加する'),
                   icon: Icon(Icons.add),
                   onPressed: () => _showInputTextDialog(context, state),
+                ),
+              );
+            }
+            if (state.value!.item1.isNotEmpty) {
+              headerChildren.add(
+                SizedBox(
+                  height: 16,
+                ),
+              );
+              headerChildren.add(
+                Text(
+                  "正解の選択肢にチェックを入れてください",
                 ),
               );
             }
