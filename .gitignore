@@ -44,8 +44,3 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
-
-/android/app/src/debug/google-services.json
-/android/app/src/debug/debug.keystore
-
-/android/app/src/release/google-services.json

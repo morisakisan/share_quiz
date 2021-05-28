@@ -5,6 +5,14 @@ gradle-wrapper.jar
 /gradlew.bat
 /local.properties
 /debug_key.properties
+/release_key.properties
+
+/app/src/debug/google-services.json
+/app/src/debug/debug.keystore
+
+/app/src/release/google-services.json
+/app/src/release/release.jks
+
 GeneratedPluginRegistrant.java
 
 # Remember to never publicly share your keystore.

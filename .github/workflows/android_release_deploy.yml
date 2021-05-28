@@ -1,9 +1,11 @@
-name: Android Dev CD
+name: Android Release CD
 
 on:
+  workflow_dispatch:
+    branches: [ master ]
   push:
     branches:
-      - dev
+      - master
 
 jobs:
   build_and_deploy:
@@ -38,23 +40,27 @@ jobs:
       - name: flutter test
         run: flutter test
 
+      - name: mkdir
+        run:
+          mkdir ./android/app/src/release
+
       - name:  Translate secrets of base64 into json
         run:
-          echo ${{ secrets.DEBUG_ANDROID_GOOGLE_SERVICE }} | base64 --decode > ./android/app/src/debug/google-services.json
+          echo ${{ secrets.RELEASE_ANDROID_GOOGLE_SERVICE }} | base64 --decode > ./android/app/src/release/google-services.json
 
       - name: Create key.properties
         run: |
-          echo ${{ secrets.DEBUG_ANDROID_KEYSTORE }} | base64 -d > ./android/app/src/debug/debug.keystore
-          echo ${{ secrets.DEBUG_KEY_PROPERTIES }} | base64 -d > ./android/debug_key.properties
+          echo ${{ secrets.RELEASE_ANDROID_KEYSTORE }} | base64 -d > ./android/app/src/release/release.jks
+          echo ${{ secrets.RELEASE_KEY_PROPERTIES }} | base64 -d > ./android/release_key.properties
 
       - name: Build APK
-        run: flutter build apk --debug --build-number=$GITHUB_RUN_NUMBER
+        run: flutter build apk --release --build-number=$GITHUB_RUN_NUMBER
 
       # Firebase にデプロイ
       - name: Firebase App Distribution
         uses: wzieba/Firebase-Distribution-Github-Action@v1.3.2
         with:
-          appId: ${{secrets.FIREBASE_APP_ID_ANDROID}}
+          appId: ${{secrets.RELEASE_FIREBASE_APP_ID_ANDROID}}
           token: ${{secrets.FIREBASE_TOKEN}}
           groups: testers
-          file: ./build/app/outputs/apk/debug/app-debug.apk
+          file: ./build/app/outputs/apk/release/app-release.apk
