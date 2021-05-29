@@ -20,12 +20,34 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
           builder: (FormFieldState<Tuple2<List<String>, int>> state) {
             final selectedRadioTile = state.value!.item2;
             final headerChildren = <Widget>[];
+            headerChildren.add(
+              Text(
+                "選択肢",
+              ),
+            );
             if (state.value!.item1.length < 5) {
+              headerChildren.add(
+                SizedBox(
+                  height: 16,
+                ),
+              );
               headerChildren.add(
                 ElevatedButton.icon(
                   label: Text('選択肢を追加する'),
                   icon: Icon(Icons.add),
                   onPressed: () => _showInputTextDialog(context, state),
+                ),
+              );
+            }
+            if (state.value!.item1.isNotEmpty) {
+              headerChildren.add(
+                SizedBox(
+                  height: 16,
+                ),
+              );
+              headerChildren.add(
+                Text(
+                  "正解の選択肢にチェックを入れてください",
                 ),
               );
             }
@@ -42,58 +64,59 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
               );
             }
 
-            return Expanded(
-              child: ReorderableListView(
-                header: Container(
-                  margin: EdgeInsets.only(),
-                  alignment: Alignment.topLeft,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: headerChildren,
-                  ),
+            return ReorderableListView(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              header: Container(
+                margin: EdgeInsets.only(),
+                alignment: Alignment.topLeft,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  // mainAxisSize: MainAxisSize.min,
+                  children: headerChildren,
                 ),
-                onReorder: (oldIndex, newIndex) {
-                  if (oldIndex < newIndex) {
-                    // removing the item at oldIndex will shorten the list by 1.
-                    newIndex -= 1;
-                  }
-                  final list = state.value!.item1;
-                  final choice = list.removeAt(oldIndex);
-                  list.insert(newIndex, choice);
-                  state.didChange(
-                    state.value!.withItem1(list).withItem2(newIndex),
-                  );
-                },
-                children: state.value!.item1.asMap().entries.map(
-                  (entry) {
-                    final idx = entry.key;
-                    final val = entry.value;
-                    return RadioListTile(
-                      key: Key(idx.toString()),
-                      value: idx,
-                      groupValue: selectedRadioTile,
-                      title: Text(val),
-                      onChanged: (v) {
+              ),
+              onReorder: (oldIndex, newIndex) {
+                if (oldIndex < newIndex) {
+                  // removing the item at oldIndex will shorten the list by 1.
+                  newIndex -= 1;
+                }
+                final list = state.value!.item1;
+                final choice = list.removeAt(oldIndex);
+                list.insert(newIndex, choice);
+                state.didChange(
+                  state.value!.withItem1(list).withItem2(newIndex),
+                );
+              },
+              children: state.value!.item1.asMap().entries.map(
+                (entry) {
+                  final idx = entry.key;
+                  final val = entry.value;
+                  return RadioListTile(
+                    key: Key(idx.toString()),
+                    value: idx,
+                    groupValue: selectedRadioTile,
+                    title: Text(val),
+                    onChanged: (v) {
+                      state.didChange(
+                        state.value!.withItem2(v as int),
+                      );
+                    },
+                    secondary: IconButton(
+                      icon: Icon(
+                        Icons.delete,
+                      ),
+                      onPressed: () {
+                        final list = state.value!.item1;
+                        list.removeAt(idx);
                         state.didChange(
-                          state.value!.withItem2(v as int),
+                          state.value!.withItem1(list).withItem2(0),
                         );
                       },
-                      secondary: IconButton(
-                        icon: Icon(
-                          Icons.delete,
-                        ),
-                        onPressed: () {
-                          final list = state.value!.item1;
-                          list.removeAt(idx);
-                          state.didChange(
-                            state.value!.withItem1(list).withItem2(0),
-                          );
-                        },
-                      ),
-                    );
-                  },
-                ).toList(),
-              ),
+                    ),
+                  );
+                },
+              ).toList(),
             );
           },
         );
@@ -110,6 +133,9 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
           content: Form(
             key: _formKey,
             child: TextFormField(
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+              maxLength: 30,
               decoration: const InputDecoration(
                 labelText: "選択肢",
                 hintText: '選択肢を入力してね',

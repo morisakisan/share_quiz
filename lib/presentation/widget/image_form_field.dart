@@ -12,8 +12,8 @@ class ImageFormField extends FormField<File> {
       : super(
           onSaved: onSaved,
           builder: (FormFieldState<File> state) {
-            Widget widget;
-            final list = [
+            final theme = Theme.of(state.context);
+            final icons = [
               IconButton(
                 icon: Icon(Icons.photo_camera),
                 onPressed: () {
@@ -27,10 +27,21 @@ class ImageFormField extends FormField<File> {
                 },
               ),
             ];
+            final List<Widget> children = [
+              Text(
+                "画像",
+              ),
+            ];
             if (state.value != null) {
-              widget = Image.file(File(state.value!.path),
+              children.add(
+                SizedBox(
+                  height: 16,
+                ),
+              );
+              Widget widget = Image.file(File(state.value!.path),
                   width: 150, height: 150, fit: BoxFit.cover);
-              list.add(
+              children.add(widget);
+              icons.add(
                 IconButton(
                   icon: Icon(Icons.delete),
                   onPressed: () {
@@ -38,15 +49,18 @@ class ImageFormField extends FormField<File> {
                   },
                 ),
               );
-            } else {
-              widget = Text("画像を選んでね");
             }
+            children.add(
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: icons,
+              ),
+            );
 
             return Column(
-              children: [
-                widget,
-                Row(mainAxisSize: MainAxisSize.min, children: list),
-              ],
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: children,
             );
           },
         );

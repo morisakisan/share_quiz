@@ -25,17 +25,22 @@ class QuizPost extends HookWidget {
   List<String>? _choices;
   int? _answer;
 
-  final provider = StateNotifierProvider((ref) => QuizPostStateNotifier());
+  final provider = StateNotifierProvider(
+    (ref) => QuizPostStateNotifier(),
+  );
 
   @override
   Widget build(BuildContext context) {
     final state = useProvider(provider.select((s) => s));
 
-    final child = [_form(context)];
+    final List<Widget> children = [
+      SingleChildScrollView(
+        child: _form(context),
+      )
+    ];
     if (state is Loading) {
-      child.add(_loading());
+      children.add(_loading());
     } else if (state is Error) {
-
     } else if (state is Success) {
       Navigator.pop(context);
     }
@@ -45,7 +50,7 @@ class QuizPost extends HookWidget {
         title: Text('クイズを入力してね'),
       ),
       body: Stack(
-        children: child,
+        children: children,
       ),
     );
   }
@@ -60,6 +65,9 @@ class QuizPost extends HookWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             TextFormField(
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+              maxLength: 20,
               decoration: const InputDecoration(
                 labelText: "タイトル",
                 hintText: 'タイトルを入れてね',
@@ -76,6 +84,9 @@ class QuizPost extends HookWidget {
             ),
             const SizedBox(height: 16),
             TextFormField(
+              keyboardType: TextInputType.multiline,
+              maxLines: null,
+              maxLength: 100,
               decoration: const InputDecoration(
                 labelText: "問題文",
                 hintText: '問題文を入れてね',
