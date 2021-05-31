@@ -21,10 +21,12 @@ class _$AnswerDtoTearOff {
   const _$AnswerDtoTearOff();
 
   _AnswerDto call(
-      {required String id, required int select, required int userId}) {
+      {@JsonKey(ignore: true) String? id,
+      @JsonKey(name: 'answer') required int answer,
+      @JsonKey(name: 'user_id') required int userId}) {
     return _AnswerDto(
       id: id,
-      select: select,
+      answer: answer,
       userId: userId,
     );
   }
@@ -39,8 +41,11 @@ const $AnswerDto = _$AnswerDtoTearOff();
 
 /// @nodoc
 mixin _$AnswerDto {
-  String get id => throw _privateConstructorUsedError;
-  int get select => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  String? get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'answer')
+  int get answer => throw _privateConstructorUsedError;
+  @JsonKey(name: 'user_id')
   int get userId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -53,7 +58,10 @@ mixin _$AnswerDto {
 abstract class $AnswerDtoCopyWith<$Res> {
   factory $AnswerDtoCopyWith(AnswerDto value, $Res Function(AnswerDto) then) =
       _$AnswerDtoCopyWithImpl<$Res>;
-  $Res call({String id, int select, int userId});
+  $Res call(
+      {@JsonKey(ignore: true) String? id,
+      @JsonKey(name: 'answer') int answer,
+      @JsonKey(name: 'user_id') int userId});
 }
 
 /// @nodoc
@@ -67,17 +75,17 @@ class _$AnswerDtoCopyWithImpl<$Res> implements $AnswerDtoCopyWith<$Res> {
   @override
   $Res call({
     Object? id = freezed,
-    Object? select = freezed,
+    Object? answer = freezed,
     Object? userId = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      select: select == freezed
-          ? _value.select
-          : select // ignore: cast_nullable_to_non_nullable
+              as String?,
+      answer: answer == freezed
+          ? _value.answer
+          : answer // ignore: cast_nullable_to_non_nullable
               as int,
       userId: userId == freezed
           ? _value.userId
@@ -93,7 +101,10 @@ abstract class _$AnswerDtoCopyWith<$Res> implements $AnswerDtoCopyWith<$Res> {
           _AnswerDto value, $Res Function(_AnswerDto) then) =
       __$AnswerDtoCopyWithImpl<$Res>;
   @override
-  $Res call({String id, int select, int userId});
+  $Res call(
+      {@JsonKey(ignore: true) String? id,
+      @JsonKey(name: 'answer') int answer,
+      @JsonKey(name: 'user_id') int userId});
 }
 
 /// @nodoc
@@ -108,17 +119,17 @@ class __$AnswerDtoCopyWithImpl<$Res> extends _$AnswerDtoCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? select = freezed,
+    Object? answer = freezed,
     Object? userId = freezed,
   }) {
     return _then(_AnswerDto(
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      select: select == freezed
-          ? _value.select
-          : select // ignore: cast_nullable_to_non_nullable
+              as String?,
+      answer: answer == freezed
+          ? _value.answer
+          : answer // ignore: cast_nullable_to_non_nullable
               as int,
       userId: userId == freezed
           ? _value.userId
@@ -132,21 +143,26 @@ class __$AnswerDtoCopyWithImpl<$Res> extends _$AnswerDtoCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_AnswerDto with DiagnosticableTreeMixin implements _AnswerDto {
   const _$_AnswerDto(
-      {required this.id, required this.select, required this.userId});
+      {@JsonKey(ignore: true) this.id,
+      @JsonKey(name: 'answer') required this.answer,
+      @JsonKey(name: 'user_id') required this.userId});
 
   factory _$_AnswerDto.fromJson(Map<String, dynamic> json) =>
       _$_$_AnswerDtoFromJson(json);
 
   @override
-  final String id;
+  @JsonKey(ignore: true)
+  final String? id;
   @override
-  final int select;
+  @JsonKey(name: 'answer')
+  final int answer;
   @override
+  @JsonKey(name: 'user_id')
   final int userId;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AnswerDto(id: $id, select: $select, userId: $userId)';
+    return 'AnswerDto(id: $id, answer: $answer, userId: $userId)';
   }
 
   @override
@@ -155,7 +171,7 @@ class _$_AnswerDto with DiagnosticableTreeMixin implements _AnswerDto {
     properties
       ..add(DiagnosticsProperty('type', 'AnswerDto'))
       ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('select', select))
+      ..add(DiagnosticsProperty('answer', answer))
       ..add(DiagnosticsProperty('userId', userId));
   }
 
@@ -165,8 +181,8 @@ class _$_AnswerDto with DiagnosticableTreeMixin implements _AnswerDto {
         (other is _AnswerDto &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.select, select) ||
-                const DeepCollectionEquality().equals(other.select, select)) &&
+            (identical(other.answer, answer) ||
+                const DeepCollectionEquality().equals(other.answer, answer)) &&
             (identical(other.userId, userId) ||
                 const DeepCollectionEquality().equals(other.userId, userId)));
   }
@@ -175,7 +191,7 @@ class _$_AnswerDto with DiagnosticableTreeMixin implements _AnswerDto {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(select) ^
+      const DeepCollectionEquality().hash(answer) ^
       const DeepCollectionEquality().hash(userId);
 
   @JsonKey(ignore: true)
@@ -191,18 +207,21 @@ class _$_AnswerDto with DiagnosticableTreeMixin implements _AnswerDto {
 
 abstract class _AnswerDto implements AnswerDto {
   const factory _AnswerDto(
-      {required String id,
-      required int select,
-      required int userId}) = _$_AnswerDto;
+      {@JsonKey(ignore: true) String? id,
+      @JsonKey(name: 'answer') required int answer,
+      @JsonKey(name: 'user_id') required int userId}) = _$_AnswerDto;
 
   factory _AnswerDto.fromJson(Map<String, dynamic> json) =
       _$_AnswerDto.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  String? get id => throw _privateConstructorUsedError;
   @override
-  int get select => throw _privateConstructorUsedError;
+  @JsonKey(name: 'answer')
+  int get answer => throw _privateConstructorUsedError;
   @override
+  @JsonKey(name: 'user_id')
   int get userId => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)

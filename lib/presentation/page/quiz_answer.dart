@@ -13,26 +13,33 @@ import 'package:share_quiz/domain/quiz_answer_data/quiz_answer_data.dart';
 import 'package:share_quiz/domain/quiz_answer_data/quiz_answer_data_notifer.dart';
 
 class QuizAnswer extends HookWidget {
-  final counterProvider = StateNotifierProvider((_) => Select());
+  final selectProvider = StateNotifierProvider((_) => Select());
   final quizAnswerProvider =
       StateNotifierProvider((_) => QuizAnswerDataNotifier());
 
   @override
   Widget build(BuildContext context) {
     print("build");
-    final selectNotifier =
-        useProvider(counterProvider.select((value) => value));
-    final select = useProvider(counterProvider.notifier);
+
+    final selectNotifier = useProvider(selectProvider.notifier);
+    final selectValue = useProvider(selectProvider.select((value) => value));
+
     final quizId = ModalRoute.of(context)!.settings.arguments as String;
     final quizAnswerNotifier = useProvider(quizAnswerProvider.notifier);
-
     final quizAnswer = useProvider(quizAnswerProvider.select((value) => value));
+
     final theme = Theme.of(context);
 
     final QuizAnswerData quizAnswerData;
     if (quizAnswer is Loading) {
       quizAnswerNotifier.fetch(quizId);
-      return Container();
+      return Center(
+        child: const SizedBox(
+          height: 100,
+          width: 100,
+          child: const CircularProgressIndicator(),
+        ),
+      );
     } else if (quizAnswer is Error) {
       return Container();
     } else if (quizAnswer is Success) {
@@ -58,6 +65,32 @@ class QuizAnswer extends HookWidget {
       );
     }
 
+    final Function()? answerOnPressed;
+    final ValueChanged<int?>? onChanged;
+    if (quizAnswerData.select_anser != null) {
+      selectNotifier.select = quizAnswerData.select_anser!;
+      answerOnPressed = () {
+        final String text;
+        if (selectValue == quiz.correctAnswer) {
+          text = "正解です。";
+        } else {
+          text = "間違いです。";
+        }
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(text),
+          ),
+        );
+      };
+      onChanged = (v) {
+        selectNotifier.select = v!;
+      };
+    } else {
+      answerOnPressed = null;
+      onChanged = null;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(quiz.title),
@@ -81,34 +114,19 @@ class QuizAnswer extends HookWidget {
                   (entry) {
                     final idx = entry.key;
                     final val = entry.value;
-                    return RadioListTile(
+                    return RadioListTile<int>(
                       key: Key(idx.toString()),
                       value: idx,
-                      groupValue: selectNotifier,
+                      groupValue: selectValue,
                       title: Text(val),
-                      onChanged: (v) {
-                        select.select = v as int;
-                      },
+                      onChanged: onChanged,
                     );
                   },
                 ).toList() +
                 [
                   ElevatedButton(
                     child: const Text('回答する'),
-                    onPressed: () {
-                      final String text;
-                      if (selectNotifier == quiz.correctAnswer) {
-                        text = "正解です。";
-                      } else {
-                        text = "間違いです。";
-                      }
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(text),
-                        ),
-                      );
-                    },
+                    onPressed: answerOnPressed,
                   ),
                 ],
           ),

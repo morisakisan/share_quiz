@@ -27,7 +27,7 @@ class QuizAnswerDataRepository {
     );
     final user = await _userDataStore.gerCurrentUser();
     final answer = await _answerDataStore.fetchMyAnswers(quizId, user!.uid);
-    return QuizAnswerData(quiz: quiz, select_anser: answer?.select ?? null);
+    return QuizAnswerData(quiz: quiz, select_anser: answer?.answer ?? null);
   }
 
 }

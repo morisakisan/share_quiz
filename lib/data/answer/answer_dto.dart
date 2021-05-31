@@ -10,9 +10,9 @@ part 'answer_dto.g.dart';
 @freezed
 abstract class AnswerDto with _$AnswerDto {
   const factory AnswerDto({
-    required String id,
-    required int select,
-    required int userId,
+    @JsonKey(ignore: true) String? id,
+    @JsonKey(name: 'answer') required int answer,
+    @JsonKey(name: 'user_id') required int userId,
   }) = _AnswerDto;
 
   factory AnswerDto.fromJson(Map<String, dynamic> json) =>
