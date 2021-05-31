@@ -43,7 +43,7 @@ class AnswerFirebaseStore {
       final updateQuizDto = QuizDto.fromJson(updateQuiz.data()!);
       final answers = (await updateQuiz.reference.collection("answer").get())
           .docs
-          .map((e) => AnswerDto.fromJson(e.data())Ò);
+          .map((e) => AnswerDto.fromJson(e.data()));
       final answerCount = answers.length;
       var correctAnswerCount = 0;
       answers.forEach((dto) {

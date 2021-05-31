@@ -37,7 +37,9 @@ class _$QuizDtoTearOff {
       @JsonKey(name: 'created_at')
           required DateTime createdAt,
       @JsonKey(name: 'user_id')
-          required String userId}) {
+          required String userId,
+      @JsonKey(name: 'correct_answer_rate')
+          required double? car}) {
     return _QuizDto(
       docId: docId,
       correctAnswer: correctAnswer,
@@ -47,6 +49,7 @@ class _$QuizDtoTearOff {
       choices: choices,
       createdAt: createdAt,
       userId: userId,
+      car: car,
     );
   }
 
@@ -77,6 +80,8 @@ mixin _$QuizDto {
   DateTime get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_id')
   String get userId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'correct_answer_rate')
+  double? get car => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -95,7 +100,8 @@ abstract class $QuizDtoCopyWith<$Res> {
       @JsonKey(name: 'image_url') String imageUrl,
       @JsonKey(name: 'choices') List<String> choices,
       @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'user_id') String userId});
+      @JsonKey(name: 'user_id') String userId,
+      @JsonKey(name: 'correct_answer_rate') double? car});
 }
 
 /// @nodoc
@@ -116,6 +122,7 @@ class _$QuizDtoCopyWithImpl<$Res> implements $QuizDtoCopyWith<$Res> {
     Object? choices = freezed,
     Object? createdAt = freezed,
     Object? userId = freezed,
+    Object? car = freezed,
   }) {
     return _then(_value.copyWith(
       docId: docId == freezed
@@ -150,6 +157,10 @@ class _$QuizDtoCopyWithImpl<$Res> implements $QuizDtoCopyWith<$Res> {
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
+      car: car == freezed
+          ? _value.car
+          : car // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
@@ -167,7 +178,8 @@ abstract class _$QuizDtoCopyWith<$Res> implements $QuizDtoCopyWith<$Res> {
       @JsonKey(name: 'image_url') String imageUrl,
       @JsonKey(name: 'choices') List<String> choices,
       @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'user_id') String userId});
+      @JsonKey(name: 'user_id') String userId,
+      @JsonKey(name: 'correct_answer_rate') double? car});
 }
 
 /// @nodoc
@@ -189,6 +201,7 @@ class __$QuizDtoCopyWithImpl<$Res> extends _$QuizDtoCopyWithImpl<$Res>
     Object? choices = freezed,
     Object? createdAt = freezed,
     Object? userId = freezed,
+    Object? car = freezed,
   }) {
     return _then(_QuizDto(
       docId: docId == freezed
@@ -223,6 +236,10 @@ class __$QuizDtoCopyWithImpl<$Res> extends _$QuizDtoCopyWithImpl<$Res>
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
+      car: car == freezed
+          ? _value.car
+          : car // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
@@ -247,7 +264,9 @@ class _$_QuizDto with DiagnosticableTreeMixin implements _QuizDto {
       @JsonKey(name: 'created_at')
           required this.createdAt,
       @JsonKey(name: 'user_id')
-          required this.userId});
+          required this.userId,
+      @JsonKey(name: 'correct_answer_rate')
+          required this.car});
 
   factory _$_QuizDto.fromJson(Map<String, dynamic> json) =>
       _$_$_QuizDtoFromJson(json);
@@ -277,10 +296,13 @@ class _$_QuizDto with DiagnosticableTreeMixin implements _QuizDto {
   @override
   @JsonKey(name: 'user_id')
   final String userId;
+  @override
+  @JsonKey(name: 'correct_answer_rate')
+  final double? car;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'QuizDto(docId: $docId, correctAnswer: $correctAnswer, title: $title, question: $question, imageUrl: $imageUrl, choices: $choices, createdAt: $createdAt, userId: $userId)';
+    return 'QuizDto(docId: $docId, correctAnswer: $correctAnswer, title: $title, question: $question, imageUrl: $imageUrl, choices: $choices, createdAt: $createdAt, userId: $userId, car: $car)';
   }
 
   @override
@@ -295,7 +317,8 @@ class _$_QuizDto with DiagnosticableTreeMixin implements _QuizDto {
       ..add(DiagnosticsProperty('imageUrl', imageUrl))
       ..add(DiagnosticsProperty('choices', choices))
       ..add(DiagnosticsProperty('createdAt', createdAt))
-      ..add(DiagnosticsProperty('userId', userId));
+      ..add(DiagnosticsProperty('userId', userId))
+      ..add(DiagnosticsProperty('car', car));
   }
 
   @override
@@ -322,7 +345,9 @@ class _$_QuizDto with DiagnosticableTreeMixin implements _QuizDto {
                 const DeepCollectionEquality()
                     .equals(other.createdAt, createdAt)) &&
             (identical(other.userId, userId) ||
-                const DeepCollectionEquality().equals(other.userId, userId)));
+                const DeepCollectionEquality().equals(other.userId, userId)) &&
+            (identical(other.car, car) ||
+                const DeepCollectionEquality().equals(other.car, car)));
   }
 
   @override
@@ -335,7 +360,8 @@ class _$_QuizDto with DiagnosticableTreeMixin implements _QuizDto {
       const DeepCollectionEquality().hash(imageUrl) ^
       const DeepCollectionEquality().hash(choices) ^
       const DeepCollectionEquality().hash(createdAt) ^
-      const DeepCollectionEquality().hash(userId);
+      const DeepCollectionEquality().hash(userId) ^
+      const DeepCollectionEquality().hash(car);
 
   @JsonKey(ignore: true)
   @override
@@ -366,7 +392,9 @@ abstract class _QuizDto implements QuizDto {
       @JsonKey(name: 'created_at')
           required DateTime createdAt,
       @JsonKey(name: 'user_id')
-          required String userId}) = _$_QuizDto;
+          required String userId,
+      @JsonKey(name: 'correct_answer_rate')
+          required double? car}) = _$_QuizDto;
 
   factory _QuizDto.fromJson(Map<String, dynamic> json) = _$_QuizDto.fromJson;
 
@@ -395,6 +423,9 @@ abstract class _QuizDto implements QuizDto {
   @override
   @JsonKey(name: 'user_id')
   String get userId => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(name: 'correct_answer_rate')
+  double? get car => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$QuizDtoCopyWith<_QuizDto> get copyWith =>
