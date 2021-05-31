@@ -38,7 +38,7 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
                 ),
               );
               headerChildren.add(
-                ElevatedButton.icon(
+                TextButton.icon(
                   label: const Text('選択肢を追加する'),
                   icon: Icon(Icons.add),
                   onPressed: () => _showInputTextDialog(context, state),
