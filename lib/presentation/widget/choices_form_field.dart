@@ -114,7 +114,7 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
                       );
                     },
                     secondary: IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.delete,
                       ),
                       onPressed: () {
