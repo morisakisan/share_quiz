@@ -14,7 +14,7 @@ class QuizNewStateMapper {
       (list) => list.map(
           (dto) {
             return Quiz(
-              quizId: dto.docId!,
+              documentId: dto.docId!,
               title: dto.title,
               question: dto.question,
               choices: dto.choices,

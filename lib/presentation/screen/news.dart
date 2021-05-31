@@ -92,7 +92,7 @@ class News extends HookWidget {
                 onPressed: () {
                   Navigator.of(context).pushNamed(
                     Nav.QUIZ_ANSWER,
-                    arguments: quiz,
+                    arguments: quiz.documentId,
                   );
                 },
                 child: const Text('クイズに答える'),

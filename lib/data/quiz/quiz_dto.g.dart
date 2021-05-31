@@ -16,7 +16,7 @@ _$_QuizDto _$_$_QuizDtoFromJson(Map<String, dynamic> json) {
         (json['choices'] as List<dynamic>).map((e) => e as String).toList(),
     createdAt:
         const TimestampConverter().fromJson(json['created_at'] as Timestamp),
-    userId: json['user_id'] as String
+    userId: json['user_id'] as String,
   );
 }
 

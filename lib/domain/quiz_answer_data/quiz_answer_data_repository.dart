@@ -18,7 +18,7 @@ class QuizAnswerDataRepository {
     final user = await _userDataStore.gerCurrentUser();
     final answer = await _answerDataStore.fetchMyAnswers(quizId, user!.uid);
     final quiz = Quiz(
-      quizId: quizDto!.docId!,
+      documentId: quizDto!.docId!,
       title: quizDto.title,
       question: quizDto.question,
       choices: quizDto.choices,
