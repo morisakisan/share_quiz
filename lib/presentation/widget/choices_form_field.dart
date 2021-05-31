@@ -15,6 +15,12 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
             if (list.length < 2) {
               return "選択肢は二つ以上いれてね";
             }
+            final a = list.toSet().toList();
+            var isDistinct = list.length != a.length;
+            if (isDistinct) {
+              return "重複する選択肢があるよ";
+            }
+
             return null;
           },
           builder: (FormFieldState<Tuple2<List<String>, int>> state) {
