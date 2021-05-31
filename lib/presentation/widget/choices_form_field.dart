@@ -27,7 +27,7 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
             final selectedRadioTile = state.value!.item2;
             final headerChildren = <Widget>[];
             headerChildren.add(
-              Text(
+              const Text(
                 "選択肢",
               ),
             );
@@ -39,7 +39,7 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
               );
               headerChildren.add(
                 ElevatedButton.icon(
-                  label: Text('選択肢を追加する'),
+                  label: const Text('選択肢を追加する'),
                   icon: Icon(Icons.add),
                   onPressed: () => _showInputTextDialog(context, state),
                 ),
@@ -52,7 +52,7 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
                 ),
               );
               headerChildren.add(
-                Text(
+                const Text(
                   "正解の選択肢にチェックを入れてください",
                 ),
               );
@@ -135,7 +135,7 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
         String? choice;
         final _formKey = GlobalKey<FormState>();
         return AlertDialog(
-          title: Text("選択肢を入力してね"),
+          title: const Text("選択肢を入力してね"),
           content: Form(
             key: _formKey,
             child: TextFormField(
@@ -159,11 +159,11 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text("Cancel"),
+              child: const Text("Cancel"),
               onPressed: () => Navigator.pop(context),
             ),
             TextButton(
-              child: Text("OK"),
+              child: const Text("OK"),
               onPressed: () {
                 if (!_formKey.currentState!.validate()) return;
                 // 入力データが正常な場合の処理
