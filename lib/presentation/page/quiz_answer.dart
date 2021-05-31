@@ -74,7 +74,7 @@ class QuizAnswer extends HookWidget {
                     child: const Text('回答する'),
                     onPressed: () {
                       final String text;
-                      if (state == quiz.answer) {
+                      if (state == quiz.correctAnswer) {
                         text = "正解です。";
                       } else {
                         text = "間違いです。";

@@ -10,9 +10,22 @@ class AnswerFirebaseStore {
 
   Future<List<AnswerDto>> fetchAnswers(String docId) =>
       _getCollection(docId).get().then(
-            (snapshot) => snapshot.docs.map(
-              (e) => AnswerDto.fromJson(e.data()).copyWith(id: e.id),
-            ).toList(),
+            (snapshot) => snapshot.docs
+                .map(
+                  (e) => AnswerDto.fromJson(e.data()).copyWith(id: e.id),
+                )
+                .toList(),
+          );
+
+  Future<AnswerDto> fetchMyAnswers(String docId, String userId) =>
+      _getCollection(docId).where("userId", isEqualTo: userId).get()
+          .then(
+            (snapshot) => snapshot.docs
+                .map(
+                  (e) => AnswerDto.fromJson(e.data()).copyWith(id: e.id),
+                )
+                .toList()
+                .first,
           );
 
   Future<void> post(String docId, AnswerDto dto) =>

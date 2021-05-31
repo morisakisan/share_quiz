@@ -10,5 +10,5 @@ class QuizNewRepository {
   final _dataStore = QuizFirebaseStore();
 
   Stream<List<Quiz>> fetch() =>
-    QuizNewStateMapper.transform(_dataStore.fetchNews());
+    QuizNewStateMapper.transform(_dataStore.fetchOrderByCreatedAtDesc());
 }

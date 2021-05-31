@@ -21,15 +21,15 @@ class _$QuizTearOff {
       required String title,
       required String question,
       required List<String> choices,
-      required int answer,
-      required Timestamp createdAt,
+      required int correctAnswer,
+      required DateTime createdAt,
       String? imageUrl = null}) {
     return _Quiz(
       quizId: quizId,
       title: title,
       question: question,
       choices: choices,
-      answer: answer,
+      correctAnswer: correctAnswer,
       createdAt: createdAt,
       imageUrl: imageUrl,
     );
@@ -45,8 +45,8 @@ mixin _$Quiz {
   String get title => throw _privateConstructorUsedError;
   String get question => throw _privateConstructorUsedError;
   List<String> get choices => throw _privateConstructorUsedError;
-  int get answer => throw _privateConstructorUsedError;
-  Timestamp get createdAt => throw _privateConstructorUsedError;
+  int get correctAnswer => throw _privateConstructorUsedError;
+  DateTime get createdAt => throw _privateConstructorUsedError;
   String? get imageUrl => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -62,8 +62,8 @@ abstract class $QuizCopyWith<$Res> {
       String title,
       String question,
       List<String> choices,
-      int answer,
-      Timestamp createdAt,
+      int correctAnswer,
+      DateTime createdAt,
       String? imageUrl});
 }
 
@@ -81,7 +81,7 @@ class _$QuizCopyWithImpl<$Res> implements $QuizCopyWith<$Res> {
     Object? title = freezed,
     Object? question = freezed,
     Object? choices = freezed,
-    Object? answer = freezed,
+    Object? correctAnswer = freezed,
     Object? createdAt = freezed,
     Object? imageUrl = freezed,
   }) {
@@ -102,14 +102,14 @@ class _$QuizCopyWithImpl<$Res> implements $QuizCopyWith<$Res> {
           ? _value.choices
           : choices // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      answer: answer == freezed
-          ? _value.answer
-          : answer // ignore: cast_nullable_to_non_nullable
+      correctAnswer: correctAnswer == freezed
+          ? _value.correctAnswer
+          : correctAnswer // ignore: cast_nullable_to_non_nullable
               as int,
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as Timestamp,
+              as DateTime,
       imageUrl: imageUrl == freezed
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
@@ -128,8 +128,8 @@ abstract class _$QuizCopyWith<$Res> implements $QuizCopyWith<$Res> {
       String title,
       String question,
       List<String> choices,
-      int answer,
-      Timestamp createdAt,
+      int correctAnswer,
+      DateTime createdAt,
       String? imageUrl});
 }
 
@@ -148,7 +148,7 @@ class __$QuizCopyWithImpl<$Res> extends _$QuizCopyWithImpl<$Res>
     Object? title = freezed,
     Object? question = freezed,
     Object? choices = freezed,
-    Object? answer = freezed,
+    Object? correctAnswer = freezed,
     Object? createdAt = freezed,
     Object? imageUrl = freezed,
   }) {
@@ -169,14 +169,14 @@ class __$QuizCopyWithImpl<$Res> extends _$QuizCopyWithImpl<$Res>
           ? _value.choices
           : choices // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      answer: answer == freezed
-          ? _value.answer
-          : answer // ignore: cast_nullable_to_non_nullable
+      correctAnswer: correctAnswer == freezed
+          ? _value.correctAnswer
+          : correctAnswer // ignore: cast_nullable_to_non_nullable
               as int,
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as Timestamp,
+              as DateTime,
       imageUrl: imageUrl == freezed
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
@@ -193,7 +193,7 @@ class _$_Quiz with DiagnosticableTreeMixin implements _Quiz {
       required this.title,
       required this.question,
       required this.choices,
-      required this.answer,
+      required this.correctAnswer,
       required this.createdAt,
       this.imageUrl = null});
 
@@ -206,16 +206,16 @@ class _$_Quiz with DiagnosticableTreeMixin implements _Quiz {
   @override
   final List<String> choices;
   @override
-  final int answer;
+  final int correctAnswer;
   @override
-  final Timestamp createdAt;
+  final DateTime createdAt;
   @JsonKey(defaultValue: null)
   @override
   final String? imageUrl;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Quiz(quizId: $quizId, title: $title, question: $question, choices: $choices, answer: $answer, createdAt: $createdAt, imageUrl: $imageUrl)';
+    return 'Quiz(quizId: $quizId, title: $title, question: $question, choices: $choices, correctAnswer: $correctAnswer, createdAt: $createdAt, imageUrl: $imageUrl)';
   }
 
   @override
@@ -227,7 +227,7 @@ class _$_Quiz with DiagnosticableTreeMixin implements _Quiz {
       ..add(DiagnosticsProperty('title', title))
       ..add(DiagnosticsProperty('question', question))
       ..add(DiagnosticsProperty('choices', choices))
-      ..add(DiagnosticsProperty('answer', answer))
+      ..add(DiagnosticsProperty('correctAnswer', correctAnswer))
       ..add(DiagnosticsProperty('createdAt', createdAt))
       ..add(DiagnosticsProperty('imageUrl', imageUrl));
   }
@@ -246,8 +246,9 @@ class _$_Quiz with DiagnosticableTreeMixin implements _Quiz {
             (identical(other.choices, choices) ||
                 const DeepCollectionEquality()
                     .equals(other.choices, choices)) &&
-            (identical(other.answer, answer) ||
-                const DeepCollectionEquality().equals(other.answer, answer)) &&
+            (identical(other.correctAnswer, correctAnswer) ||
+                const DeepCollectionEquality()
+                    .equals(other.correctAnswer, correctAnswer)) &&
             (identical(other.createdAt, createdAt) ||
                 const DeepCollectionEquality()
                     .equals(other.createdAt, createdAt)) &&
@@ -263,7 +264,7 @@ class _$_Quiz with DiagnosticableTreeMixin implements _Quiz {
       const DeepCollectionEquality().hash(title) ^
       const DeepCollectionEquality().hash(question) ^
       const DeepCollectionEquality().hash(choices) ^
-      const DeepCollectionEquality().hash(answer) ^
+      const DeepCollectionEquality().hash(correctAnswer) ^
       const DeepCollectionEquality().hash(createdAt) ^
       const DeepCollectionEquality().hash(imageUrl);
 
@@ -279,8 +280,8 @@ abstract class _Quiz implements Quiz {
       required String title,
       required String question,
       required List<String> choices,
-      required int answer,
-      required Timestamp createdAt,
+      required int correctAnswer,
+      required DateTime createdAt,
       String? imageUrl}) = _$_Quiz;
 
   @override
@@ -292,9 +293,9 @@ abstract class _Quiz implements Quiz {
   @override
   List<String> get choices => throw _privateConstructorUsedError;
   @override
-  int get answer => throw _privateConstructorUsedError;
+  int get correctAnswer => throw _privateConstructorUsedError;
   @override
-  Timestamp get createdAt => throw _privateConstructorUsedError;
+  DateTime get createdAt => throw _privateConstructorUsedError;
   @override
   String? get imageUrl => throw _privateConstructorUsedError;
   @override

@@ -20,6 +20,7 @@ class News extends HookWidget {
       stream: _repository.fetch(),
       builder: (BuildContext context, AsyncSnapshot<List<Quiz>> snapShot) {
         if (snapShot.hasError) {
+          print(snapShot.error);
           return Text("error");
         } else if (!snapShot.hasData) {
           return Center(
@@ -46,7 +47,7 @@ class News extends HookWidget {
   Widget _getQuizView(BuildContext context, Quiz quiz) {
     final theme = Theme.of(context);
     final formatter = DateFormat('yyyy/MM/dd(E) HH:mm', "ja_JP");
-    final formatted = formatter.format(quiz.createdAt.toDate()); // Dateから
+    final formatted = formatter.format(quiz.createdAt); // Dateから
 
     final Widget image;
     if (quiz.imageUrl != null) {
