@@ -45,7 +45,7 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
                 ),
               );
             }
-            if (state.value!.item1.isNotEmpty) {
+            if (state.value!.item1.length > 1) {
               headerChildren.add(
                 SizedBox(
                   height: 8,
