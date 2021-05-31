@@ -17,16 +17,22 @@ class AnswerFirebaseStore {
                 .toList(),
           );
 
-  Future<AnswerDto> fetchMyAnswers(String docId, String userId) =>
-      _getCollection(docId).where("userId", isEqualTo: userId).get()
-          .then(
-            (snapshot) => snapshot.docs
-                .map(
-                  (e) => AnswerDto.fromJson(e.data()).copyWith(id: e.id),
-                )
-                .toList()
-                .first,
-          );
+  Future<AnswerDto?> fetchMyAnswers(String docId, String userId) =>
+      _getCollection(docId)
+          .where("userId", isEqualTo: userId)
+          .get()
+          .then((snapshot) {
+        final list = snapshot.docs
+            .map(
+              (e) => AnswerDto.fromJson(e.data()).copyWith(id: e.id),
+            )
+            .toList();
+        if(list.isEmpty) {
+          return null;
+        }
+
+        return list.first;
+      });
 
   Future<void> post(String docId, AnswerDto dto) =>
       _getCollection(docId).doc().set(dto.toJson());

@@ -15,8 +15,7 @@ class QuizAnswerDataRepository {
 
   Future<QuizAnswerData> fetch(String quizId) async {
     final quizDto = await _quizDataStore.fetchWhereByQuizId(quizId);
-    final user = await _userDataStore.gerCurrentUser();
-    final answer = await _answerDataStore.fetchMyAnswers(quizId, user!.uid);
+
     final quiz = Quiz(
       documentId: quizDto!.docId!,
       title: quizDto.title,
@@ -26,7 +25,9 @@ class QuizAnswerDataRepository {
       imageUrl: quizDto.imageUrl,
       createdAt: quizDto.createdAt,
     );
-    return QuizAnswerData(quiz: quiz, select_anser: answer.select);
+    final user = await _userDataStore.gerCurrentUser();
+    final answer = await _answerDataStore.fetchMyAnswers(quizId, user!.uid);
+    return QuizAnswerData(quiz: quiz, select_anser: answer?.select ?? null);
   }
 
 }

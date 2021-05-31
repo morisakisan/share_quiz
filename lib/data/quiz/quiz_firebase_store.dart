@@ -13,26 +13,23 @@ class QuizFirebaseStore {
         .limit(100)
         .snapshots()
         .map(
-          (event) =>
-          event.docs
-              .map(
-                (e) {
-                  print(e.data());
-                  return QuizDto.fromJson(e.data()).copyWith(docId: e.id);
-                },
-          )
-              .toList(),
-    );
+          (event) => event.docs.map(
+            (e) {
+              return QuizDto.fromJson(e.data()).copyWith(docId: e.id);
+            },
+          ).toList(),
+        );
   }
 
-  Future<QuizDto?> fetchWhereByQuizId(String quizId) {
-    return getCollection().doc(quizId).get().then((e) {
-      final json = e.data();
-      if(json == null) {
-        return null;
-      }
-      QuizDto.fromJson(json).copyWith(docId: e.id);
-    });
+  Future<QuizDto?> fetchWhereByQuizId(String quizId) async {
+    final doc = await getCollection().doc(quizId).get();
+    final json = doc.data();
+    if (json == null) {
+      return null;
+    }
+
+    final dto = QuizDto.fromJson(json);
+    return dto.copyWith(docId: doc.id);
   }
 
   Future<void> post(Map<String, dynamic> json) {

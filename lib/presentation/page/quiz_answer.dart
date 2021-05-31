@@ -5,19 +5,42 @@ import 'package:flutter/src/widgets/framework.dart';
 // Package imports:
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:share_quiz/domain/common/resource.dart';
 
 // Project imports:
 import 'package:share_quiz/domain/quiz/quiz.dart';
+import 'package:share_quiz/domain/quiz_answer_data/quiz_answer_data.dart';
+import 'package:share_quiz/domain/quiz_answer_data/quiz_answer_data_notifer.dart';
 
 class QuizAnswer extends HookWidget {
   final counterProvider = StateNotifierProvider((_) => Select());
+  final quizAnswerProvider =
+      StateNotifierProvider((_) => QuizAnswerDataNotifier());
 
   @override
   Widget build(BuildContext context) {
-    final state = useProvider(counterProvider.select((value) => value));
+    print("build");
+    final selectNotifier =
+        useProvider(counterProvider.select((value) => value));
     final select = useProvider(counterProvider.notifier);
-    final quiz = ModalRoute.of(context)!.settings.arguments as Quiz;
+    final quizId = ModalRoute.of(context)!.settings.arguments as String;
+    final quizAnswerNotifier = useProvider(quizAnswerProvider.notifier);
+
+    final quizAnswer = useProvider(quizAnswerProvider.select((value) => value));
     final theme = Theme.of(context);
+
+    final QuizAnswerData quizAnswerData;
+    if (quizAnswer is Loading) {
+      quizAnswerNotifier.fetch(quizId);
+      return Container();
+    } else if (quizAnswer is Error) {
+      return Container();
+    } else if (quizAnswer is Success) {
+      quizAnswerData = quizAnswer.value;
+    } else {
+      throw Exception();
+    }
+    final quiz = quizAnswerData.quiz;
 
     final Widget image;
     if (quiz.imageUrl != null) {
@@ -61,7 +84,7 @@ class QuizAnswer extends HookWidget {
                     return RadioListTile(
                       key: Key(idx.toString()),
                       value: idx,
-                      groupValue: state,
+                      groupValue: selectNotifier,
                       title: Text(val),
                       onChanged: (v) {
                         select.select = v as int;
@@ -74,7 +97,7 @@ class QuizAnswer extends HookWidget {
                     child: const Text('回答する'),
                     onPressed: () {
                       final String text;
-                      if (state == quiz.correctAnswer) {
+                      if (selectNotifier == quiz.correctAnswer) {
                         text = "正解です。";
                       } else {
                         text = "間違いです。";

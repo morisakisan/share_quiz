@@ -20,7 +20,6 @@ class News extends HookWidget {
       stream: _repository.fetch(),
       builder: (BuildContext context, AsyncSnapshot<List<Quiz>> snapShot) {
         if (snapShot.hasError) {
-          print(snapShot.error);
           return Text("error");
         } else if (!snapShot.hasData) {
           return Center(
