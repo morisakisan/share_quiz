@@ -41,13 +41,13 @@ class QuizAnswer extends HookWidget {
       ),
       body: SingleChildScrollView(
         child: Container(
-          margin: EdgeInsets.all(16.0),
+          margin: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
+            children: [
                   image,
                   Padding(
-                    padding: EdgeInsets.only(top: 16),
+                    padding: const EdgeInsets.only(top: 16),
                     child: Text(
                       "問題　${quiz.question}",
                       style: theme.textTheme.bodyText1,
@@ -70,7 +70,7 @@ class QuizAnswer extends HookWidget {
                   },
                 ).toList() +
                 [
-                  TextButton(
+                  ElevatedButton(
                     child: const Text('回答する'),
                     onPressed: () {
                       final String text;

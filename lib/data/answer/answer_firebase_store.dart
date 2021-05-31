@@ -14,10 +14,4 @@ class AnswerFirebaseStore {
   Future<void> post(String docId, Map<String, dynamic> json) =>
       _getCollection(docId).doc().set(json);
 
-  Future<void> update(
-          String quizDocId, String goodDogId, Map<String, dynamic> json) =>
-      _getCollection(quizDocId).doc(goodDogId).update(json);
-
-  Future<void> delete(String quizDocId, String goodDogId) =>
-      _getCollection(quizDocId).doc(goodDogId).delete();
 }
