@@ -60,7 +60,7 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
 
             if (state.hasError) {
               headerChildren.add(
-                SizedBox(
+                const SizedBox(
                   height: 8,
                 ),
               );
@@ -79,7 +79,6 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               header: Container(
-                margin: EdgeInsets.only(),
                 alignment: Alignment.topLeft,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -162,7 +161,7 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
               },
             ),
           ),
-          actions: <Widget>[
+          actions: [
             TextButton(
               child: const Text("Cancel"),
               onPressed: () => Navigator.pop(context),
