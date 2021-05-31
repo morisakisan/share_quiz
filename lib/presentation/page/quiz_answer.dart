@@ -31,7 +31,7 @@ class QuizAnswer extends HookWidget {
     } else {
       image = Padding(
         padding: const EdgeInsets.only(left: 16.0),
-        child: Text("no image"),
+        child: const Text("no image"),
       );
     }
 
