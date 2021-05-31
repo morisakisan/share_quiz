@@ -1,29 +1,23 @@
 // Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:share_quiz/data/quiz/quiz_firebase_store.dart';
 
 class AnswerFirebaseStore {
   CollectionReference<Map<String, dynamic>> _getCollection(String docId) {
-    return FirebaseFirestore.instance
-        .collection('quiz')
-        .doc(docId)
-        .collection("answer");
+    return QuizFirebaseStore.getCollection().doc(docId).collection("answer");
   }
 
   Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> fetchAnswers(
-      String docId) {
-    return _getCollection(docId).get().then((snapshot) => snapshot.docs);
-  }
+          String docId) =>
+      _getCollection(docId).get().then((snapshot) => snapshot.docs);
 
-  Future<void> post(String docId, Map<String, dynamic> json) {
-    return _getCollection(docId).doc().set(json);
-  }
+  Future<void> post(String docId, Map<String, dynamic> json) =>
+      _getCollection(docId).doc().set(json);
 
   Future<void> update(
-      String quizDocId, String goodDogId, Map<String, dynamic> json) {
-    return _getCollection(quizDocId).doc(goodDogId).update(json);
-  }
+          String quizDocId, String goodDogId, Map<String, dynamic> json) =>
+      _getCollection(quizDocId).doc(goodDogId).update(json);
 
-  Future<void> delete(String quizDocId, String goodDogId) {
-    return _getCollection(quizDocId).doc(goodDogId).delete();
-  }
+  Future<void> delete(String quizDocId, String goodDogId) =>
+      _getCollection(quizDocId).doc(goodDogId).delete();
 }
