@@ -90,7 +90,7 @@ class News extends HookWidget {
               TextButton(
                 onPressed: () {
                   Navigator.of(context).pushNamed(
-                    Nav.QUIZ_DETAIL,
+                    Nav.QUIZ_ANSWER,
                     arguments: quiz,
                   );
                 },

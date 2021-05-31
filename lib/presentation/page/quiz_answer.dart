@@ -9,7 +9,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Project imports:
 import 'package:share_quiz/domain/quiz/quiz.dart';
 
-class QuizDetail extends HookWidget {
+class QuizAnswer extends HookWidget {
   final counterProvider = StateNotifierProvider((_) => Select());
 
   @override
@@ -71,7 +71,7 @@ class QuizDetail extends HookWidget {
                 ).toList() +
                 [
                   TextButton(
-                    child: Text('回答する'),
+                    child: const Text('回答する'),
                     onPressed: () {
                       final String text;
                       if (state == quiz.answer) {
