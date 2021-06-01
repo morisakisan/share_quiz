@@ -89,7 +89,7 @@ class QuizAnswer extends HookWidget {
           },
         ).catchError(
           (error) {
-            print(error);
+            
           },
         );
       };
