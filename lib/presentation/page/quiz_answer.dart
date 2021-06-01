@@ -13,7 +13,6 @@ import 'package:share_quiz/domain/quiz_answer_data/quiz_answer_data_notifer.dart
 import 'package:share_quiz/domain/quiz_answer_post/quiz_answer_post_repository.dart';
 
 class QuizAnswer extends HookWidget {
-  final selectProvider = StateNotifierProvider((_) => Select());
   final quizAnswerProvider =
       StateNotifierProvider((_) => QuizAnswerDataNotifier());
 
@@ -21,32 +20,43 @@ class QuizAnswer extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final selectNotifier = useProvider(selectProvider.notifier);
-    final selectValue = useProvider(selectProvider.select((value) => value));
 
-    final quizId = ModalRoute.of(context)!.settings.arguments as String;
-    final quizAnswerNotifier = useProvider(quizAnswerProvider.notifier);
     final quizAnswer = useProvider(quizAnswerProvider.select((value) => value));
+    final quizAnswerNotifier = useProvider(quizAnswerProvider.notifier);
 
-    final theme = Theme.of(context);
-
-    final QuizAnswerData quizAnswerData;
     if (quizAnswer is Loading) {
+      final quizId = ModalRoute.of(context)!.settings.arguments as String;
       quizAnswerNotifier.fetch(quizId);
-      return Center(
+      return _loading();
+    } else if (quizAnswer is Error) {
+      return Container();
+    } else if (quizAnswer is Success) {
+      return _success(context, quizAnswer as Success<QuizAnswerData>);
+    } else {
+      throw Exception();
+    }
+  }
+
+  Widget _loading() {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Center(
         child: const SizedBox(
           height: 100,
           width: 100,
           child: const CircularProgressIndicator(),
         ),
-      );
-    } else if (quizAnswer is Error) {
-      return Container();
-    } else if (quizAnswer is Success) {
-      quizAnswerData = quizAnswer.value;
-    } else {
-      throw Exception();
-    }
+      ),
+    );
+  }
+
+  final selectProvider = StateNotifierProvider((_) => _Select());
+
+  Widget _success(BuildContext context, Success<QuizAnswerData> quizAnswer) {
+    final selectNotifier = useProvider(selectProvider.notifier);
+    var selectValue = useProvider(selectProvider.select((value) => value));
+    final theme = Theme.of(context);
+    final QuizAnswerData quizAnswerData = quizAnswer.value;
     final quiz = quizAnswerData.quiz;
 
     final Widget image;
@@ -67,40 +77,24 @@ class QuizAnswer extends HookWidget {
 
     final Function()? answerOnPressed;
     final ValueChanged<int?>? onChanged;
+    print(quizAnswerData.select_anser);
     if (quizAnswerData.select_anser == null) {
       answerOnPressed = () {
         repository
             .post(quiz.documentId, selectValue)
             .then(
-              (value) {
-
-              },
-            )
+              (value) {},
+        )
             .catchError(
-              (error) {
-
-              },
-            );
-
-        // final String text;
-        // if (selectValue == quiz.correctAnswer) {
-        //   text = "正解です。";
-        // } else {
-        //   text = "間違いです。";
-        // }
-        //
-        // ScaffoldMessenger.of(context).showSnackBar(
-        //   SnackBar(
-        //     content: Text(text),
-        //   ),
-        // );
+              (error) {},
+        );
       };
 
       onChanged = (v) {
         selectNotifier.select = v!;
       };
     } else {
-      selectNotifier.select = quizAnswerData.select_anser!;
+      selectValue = quizAnswerData.select_anser!;
       answerOnPressed = null;
       onChanged = null;
     }
@@ -115,17 +109,17 @@ class QuizAnswer extends HookWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-                  image,
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16),
-                    child: Text(
-                      "問題　${quiz.question}",
-                      style: theme.textTheme.bodyText1,
-                    ),
-                  ),
-                ] +
+              image,
+              Padding(
+                padding: const EdgeInsets.only(top: 16),
+                child: Text(
+                  "問題　${quiz.question}",
+                  style: theme.textTheme.bodyText1,
+                ),
+              ),
+            ] +
                 quiz.choices.asMap().entries.map(
-                  (entry) {
+                      (entry) {
                     final idx = entry.key;
                     final val = entry.value;
                     return RadioListTile<int>(
@@ -150,8 +144,8 @@ class QuizAnswer extends HookWidget {
   }
 }
 
-class Select extends StateNotifier<int> {
-  Select() : super(0);
+class _Select extends StateNotifier<int> {
+  _Select() : super(0);
 
   set select(int select) {
     state = select;
