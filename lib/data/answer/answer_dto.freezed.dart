@@ -23,7 +23,7 @@ class _$AnswerDtoTearOff {
   _AnswerDto call(
       {@JsonKey(ignore: true) String? id,
       @JsonKey(name: 'answer') required int answer,
-      @JsonKey(name: 'user_id') required int userId}) {
+      @JsonKey(name: 'user_id') required String userId}) {
     return _AnswerDto(
       id: id,
       answer: answer,
@@ -46,7 +46,7 @@ mixin _$AnswerDto {
   @JsonKey(name: 'answer')
   int get answer => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_id')
-  int get userId => throw _privateConstructorUsedError;
+  String get userId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -61,7 +61,7 @@ abstract class $AnswerDtoCopyWith<$Res> {
   $Res call(
       {@JsonKey(ignore: true) String? id,
       @JsonKey(name: 'answer') int answer,
-      @JsonKey(name: 'user_id') int userId});
+      @JsonKey(name: 'user_id') String userId});
 }
 
 /// @nodoc
@@ -90,7 +90,7 @@ class _$AnswerDtoCopyWithImpl<$Res> implements $AnswerDtoCopyWith<$Res> {
       userId: userId == freezed
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
     ));
   }
 }
@@ -104,7 +104,7 @@ abstract class _$AnswerDtoCopyWith<$Res> implements $AnswerDtoCopyWith<$Res> {
   $Res call(
       {@JsonKey(ignore: true) String? id,
       @JsonKey(name: 'answer') int answer,
-      @JsonKey(name: 'user_id') int userId});
+      @JsonKey(name: 'user_id') String userId});
 }
 
 /// @nodoc
@@ -134,7 +134,7 @@ class __$AnswerDtoCopyWithImpl<$Res> extends _$AnswerDtoCopyWithImpl<$Res>
       userId: userId == freezed
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
     ));
   }
 }
@@ -158,7 +158,7 @@ class _$_AnswerDto with DiagnosticableTreeMixin implements _AnswerDto {
   final int answer;
   @override
   @JsonKey(name: 'user_id')
-  final int userId;
+  final String userId;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -209,7 +209,7 @@ abstract class _AnswerDto implements AnswerDto {
   const factory _AnswerDto(
       {@JsonKey(ignore: true) String? id,
       @JsonKey(name: 'answer') required int answer,
-      @JsonKey(name: 'user_id') required int userId}) = _$_AnswerDto;
+      @JsonKey(name: 'user_id') required String userId}) = _$_AnswerDto;
 
   factory _AnswerDto.fromJson(Map<String, dynamic> json) =
       _$_AnswerDto.fromJson;
@@ -222,7 +222,7 @@ abstract class _AnswerDto implements AnswerDto {
   int get answer => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'user_id')
-  int get userId => throw _privateConstructorUsedError;
+  String get userId => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$AnswerDtoCopyWith<_AnswerDto> get copyWith =>

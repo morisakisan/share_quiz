@@ -35,23 +35,27 @@ class AnswerFirebaseStore {
         return list.first;
       });
 
-  Future<void> post(String quizDocId, AnswerDto dto) {
+  Future<void> post(String quizDocId, Map<String, dynamic> dto) {
     return FirebaseFirestore.instance.runTransaction((transaction) async {
-      var t = transaction.set(_getCollection(quizDocId).doc(), dto.toJson());
-      final updateQuiz =
-          await t.get(QuizFirebaseStore.getCollection().doc(quizDocId));
+      final updateQuiz = await transaction
+          .get(QuizFirebaseStore.getCollection().doc(quizDocId));
       final updateQuizDto = QuizDto.fromJson(updateQuiz.data()!);
+
       final answers = (await updateQuiz.reference.collection("answer").get())
           .docs
-          .map((e) => AnswerDto.fromJson(e.data()));
+          .map((e) => AnswerDto.fromJson(e.data()))
+          .toList();
+      answers.add(AnswerDto.fromJson(dto));
       final answerCount = answers.length;
       var correctAnswerCount = 0;
       answers.forEach((dto) {
-        if(dto.answer == updateQuizDto.correctAnswer) {
+        if (dto.answer == updateQuizDto.correctAnswer) {
           correctAnswerCount++;
         }
       });
       final rate = correctAnswerCount / answerCount;
+
+      transaction.set(_getCollection(quizDocId).doc(), dto);
       updateQuiz.reference.update({"correct_answer_rate": rate});
     });
   }

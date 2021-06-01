@@ -8,19 +8,19 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_quiz/domain/common/resource.dart';
 
 // Project imports:
-import 'package:share_quiz/domain/quiz/quiz.dart';
 import 'package:share_quiz/domain/quiz_answer_data/quiz_answer_data.dart';
 import 'package:share_quiz/domain/quiz_answer_data/quiz_answer_data_notifer.dart';
+import 'package:share_quiz/domain/quiz_answer_post/quiz_answer_post_repository.dart';
 
 class QuizAnswer extends HookWidget {
   final selectProvider = StateNotifierProvider((_) => Select());
   final quizAnswerProvider =
       StateNotifierProvider((_) => QuizAnswerDataNotifier());
 
+  final repository = QuizAnswerPostRepository();
+
   @override
   Widget build(BuildContext context) {
-    print("build");
-
     final selectNotifier = useProvider(selectProvider.notifier);
     final selectValue = useProvider(selectProvider.select((value) => value));
 
@@ -67,26 +67,40 @@ class QuizAnswer extends HookWidget {
 
     final Function()? answerOnPressed;
     final ValueChanged<int?>? onChanged;
-    if (quizAnswerData.select_anser != null) {
-      selectNotifier.select = quizAnswerData.select_anser!;
+    if (quizAnswerData.select_anser == null) {
       answerOnPressed = () {
-        final String text;
-        if (selectValue == quiz.correctAnswer) {
-          text = "正解です。";
-        } else {
-          text = "間違いです。";
-        }
+        repository
+            .post(quiz.documentId, selectValue)
+            .then(
+              (value) {
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(text),
-          ),
-        );
+              },
+            )
+            .catchError(
+              (error) {
+
+              },
+            );
+
+        // final String text;
+        // if (selectValue == quiz.correctAnswer) {
+        //   text = "正解です。";
+        // } else {
+        //   text = "間違いです。";
+        // }
+        //
+        // ScaffoldMessenger.of(context).showSnackBar(
+        //   SnackBar(
+        //     content: Text(text),
+        //   ),
+        // );
       };
+
       onChanged = (v) {
         selectNotifier.select = v!;
       };
     } else {
+      selectNotifier.select = quizAnswerData.select_anser!;
       answerOnPressed = null;
       onChanged = null;
     }

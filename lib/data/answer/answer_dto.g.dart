@@ -9,7 +9,7 @@ part of 'answer_dto.dart';
 _$_AnswerDto _$_$_AnswerDtoFromJson(Map<String, dynamic> json) {
   return _$_AnswerDto(
     answer: json['answer'] as int,
-    userId: json['user_id'] as int,
+    userId: json['user_id'] as String,
   );
 }
 

@@ -12,7 +12,7 @@ abstract class AnswerDto with _$AnswerDto {
   const factory AnswerDto({
     @JsonKey(ignore: true) String? id,
     @JsonKey(name: 'answer') required int answer,
-    @JsonKey(name: 'user_id') required int userId,
+    @JsonKey(name: 'user_id') required String userId,
   }) = _AnswerDto;
 
   factory AnswerDto.fromJson(Map<String, dynamic> json) =>
