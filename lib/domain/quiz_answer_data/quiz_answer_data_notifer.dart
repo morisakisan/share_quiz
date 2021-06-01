@@ -11,7 +11,6 @@ class QuizAnswerDataNotifier extends StateNotifier<Resource<QuizAnswerData>> {
   fetch(String quizId) {
     repository.fetch(quizId).catchError(
       (error) {
-        print(error);
         state = Resource.error(error);
       },
     ).then(

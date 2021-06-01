@@ -20,7 +20,7 @@ class AnswerFirebaseStore {
 
   Future<AnswerDto?> fetchMyAnswers(String docId, String userId) =>
       _getCollection(docId)
-          .where("userId", isEqualTo: userId)
+          .where("user_id", isEqualTo: userId)
           .get()
           .then((snapshot) {
         final list = snapshot.docs

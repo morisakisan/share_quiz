@@ -47,7 +47,7 @@ class QuizPost extends HookWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('クイズを入力してね'),
+        title: const Text('クイズを入力してね'),
       ),
       body: Stack(
         children: children,
@@ -58,7 +58,7 @@ class QuizPost extends HookWidget {
   Widget _form(BuildContext context) {
     final notifier = useProvider(provider.notifier);
     return Container(
-      margin: EdgeInsets.all(16.0),
+      margin: const EdgeInsets.all(16.0),
       child: Form(
         key: _formKey,
         child: Column(
@@ -130,7 +130,7 @@ class QuizPost extends HookWidget {
                 );
                 notifier.post(postData);
               },
-              child: Text('クイズを投稿する'),
+              child: const Text('クイズを投稿する'),
             ),
           ],
         ),
@@ -140,10 +140,10 @@ class QuizPost extends HookWidget {
 
   Widget _loading() {
     return Center(
-      child: SizedBox(
+      child: const SizedBox(
         height: 100,
         width: 100,
-        child: CircularProgressIndicator(),
+        child: const CircularProgressIndicator(),
       ),
     );
   }
