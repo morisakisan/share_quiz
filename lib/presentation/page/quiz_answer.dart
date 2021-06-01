@@ -31,7 +31,8 @@ class QuizAnswer extends HookWidget {
     } else if (quizAnswer is Error) {
       return Container();
     } else if (quizAnswer is Success) {
-      return _success(context, quizAnswer as Success<QuizAnswerData>);
+      return _success(
+          context, quizAnswer as Success<QuizAnswerData>, quizAnswerNotifier);
     } else {
       throw Exception();
     }
@@ -52,7 +53,8 @@ class QuizAnswer extends HookWidget {
 
   final selectProvider = StateNotifierProvider((_) => _Select());
 
-  Widget _success(BuildContext context, Success<QuizAnswerData> quizAnswer) {
+  Widget _success(BuildContext context, Success<QuizAnswerData> quizAnswer,
+      QuizAnswerDataNotifier notifier) {
     final selectNotifier = useProvider(selectProvider.notifier);
     var selectValue = useProvider(selectProvider.select((value) => value));
     final theme = Theme.of(context);
@@ -77,16 +79,18 @@ class QuizAnswer extends HookWidget {
 
     final Function()? answerOnPressed;
     final ValueChanged<int?>? onChanged;
-    print(quizAnswerData.select_anser);
+    final List<Widget> answer = [];
     if (quizAnswerData.select_anser == null) {
       answerOnPressed = () {
-        repository
-            .post(quiz.documentId, selectValue)
-            .then(
-              (value) {},
-        )
-            .catchError(
-              (error) {},
+        repository.post(quiz.documentId, selectValue).then(
+          (value) {
+            final quizId = ModalRoute.of(context)!.settings.arguments as String;
+            notifier.fetch(quizId);
+          },
+        ).catchError(
+          (error) {
+            print(error);
+          },
         );
       };
 
@@ -97,6 +101,13 @@ class QuizAnswer extends HookWidget {
       selectValue = quizAnswerData.select_anser!;
       answerOnPressed = null;
       onChanged = null;
+      String text;
+      if(selectValue == quiz.correctAnswer) {
+        text = "正解";
+      } else {
+        text = "不正解";
+      }
+      answer.add(Text(text));
     }
 
     return Scaffold(
@@ -109,17 +120,17 @@ class QuizAnswer extends HookWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              image,
-              Padding(
-                padding: const EdgeInsets.only(top: 16),
-                child: Text(
-                  "問題　${quiz.question}",
-                  style: theme.textTheme.bodyText1,
-                ),
-              ),
-            ] +
+                  image,
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: Text(
+                      "問題　${quiz.question}",
+                      style: theme.textTheme.bodyText1,
+                    ),
+                  ),
+                ] +
                 quiz.choices.asMap().entries.map(
-                      (entry) {
+                  (entry) {
                     final idx = entry.key;
                     final val = entry.value;
                     return RadioListTile<int>(
@@ -136,7 +147,8 @@ class QuizAnswer extends HookWidget {
                     child: const Text('回答する'),
                     onPressed: answerOnPressed,
                   ),
-                ],
+                ] +
+                answer,
           ),
         ),
       ),

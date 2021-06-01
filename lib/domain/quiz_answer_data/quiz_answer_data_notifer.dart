@@ -4,17 +4,19 @@ import 'package:share_quiz/domain/quiz_answer_data/quiz_answer_data.dart';
 import 'package:share_quiz/domain/quiz_answer_data/quiz_answer_data_repository.dart';
 
 class QuizAnswerDataNotifier extends StateNotifier<Resource<QuizAnswerData>> {
-  final repository = QuizAnswerDataRepository();
+  final _repository = QuizAnswerDataRepository();
 
   QuizAnswerDataNotifier() : super(Resource.loading());
 
   fetch(String quizId) {
-    repository.fetch(quizId).catchError(
+    _repository.fetch(quizId).catchError(
       (error) {
+        print(error);
         state = Resource.error(error);
       },
     ).then(
       (value) {
+        print(value);
         state = Resource(value);
       },
     );

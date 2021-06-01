@@ -9,7 +9,7 @@ class QuizAnswerPostRepository {
 
   Future<void> post(String quizDocId, int select) async {
     final user = await userDatastore.gerCurrentUser();
-    answerDatastore.post(quizDocId, {
+    await answerDatastore.post(quizDocId, {
       "answer" : select,
       "user_id" : user!.uid
     });

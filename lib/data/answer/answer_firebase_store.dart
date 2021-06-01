@@ -18,22 +18,20 @@ class AnswerFirebaseStore {
                 .toList(),
           );
 
-  Future<AnswerDto?> fetchMyAnswers(String docId, String userId) =>
-      _getCollection(docId)
-          .where("user_id", isEqualTo: userId)
-          .get()
-          .then((snapshot) {
-        final list = snapshot.docs
-            .map(
-              (e) => AnswerDto.fromJson(e.data()).copyWith(id: e.id),
-            )
-            .toList();
-        if (list.isEmpty) {
-          return null;
-        }
-
-        return list.first;
-      });
+  Future<AnswerDto?> fetchMyAnswers(String docId, String userId) async {
+    final snapshot =
+        await _getCollection(docId).where("user_id", isEqualTo: userId).get();
+    final list = snapshot.docs
+        .map(
+          (e) => AnswerDto.fromJson(e.data()).copyWith(id: e.id),
+        )
+        .toList();
+    if (list.isEmpty) {
+      return null;
+    } else {
+      return list.first;
+    }
+  }
 
   Future<void> post(String quizDocId, Map<String, dynamic> dto) {
     return FirebaseFirestore.instance.runTransaction((transaction) async {
