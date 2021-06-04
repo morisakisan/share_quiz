@@ -152,7 +152,7 @@ class QuizAnswer extends HookWidget {
       context: context,
       builder: (_) {
         return AlertDialog(
-          content: Text("問題：${quiz.question}\n回答：${quiz.choices[select]}\nこちらでよろしいですか？"),
+          content: Text("問題：${quiz.question}\n回答：${quiz.choices[select]}\nこちらの回答でよろしいですか？"),
           actions: [
             TextButton(
               child: const Text("Cancel"),
