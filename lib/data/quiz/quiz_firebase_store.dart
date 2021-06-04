@@ -7,6 +7,20 @@ class QuizFirebaseStore {
     return FirebaseFirestore.instance.collection('quiz');
   }
 
+  Stream<List<QuizDto>> fetchOrderByAnswerCountDesc() {
+    return getCollection()
+        .orderBy("answer_count", descending: true)
+        .limit(100)
+        .snapshots()
+        .map(
+          (event) => event.docs.map(
+            (e) {
+          return QuizDto.fromJson(e.data()).copyWith(docId: e.id);
+        },
+      ).toList(),
+    );
+  }
+
   Stream<List<QuizDto>> fetchOrderByCreatedAtDesc() {
     return getCollection()
         .orderBy("created_at", descending: true)
