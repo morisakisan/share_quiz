@@ -13,8 +13,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_quiz/domain/common/resource.dart';
 import 'package:share_quiz/domain/quiz_post/quiz_post_data.dart';
 import 'package:share_quiz/domain/quiz_post/quiz_post_state_notifer.dart';
-import 'package:share_quiz/presentation/widget/choices_form_field.dart';
-import 'package:share_quiz/presentation/widget/image_form_field.dart';
+import 'package:share_quiz/presentation/widget/form/choices_form_field.dart';
+import 'package:share_quiz/presentation/widget/form/image_form_field.dart';
 
 class QuizPost extends HookWidget {
   final _formKey = GlobalKey<FormState>();

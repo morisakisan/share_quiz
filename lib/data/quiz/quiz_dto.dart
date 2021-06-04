@@ -24,6 +24,7 @@ abstract class QuizDto with _$QuizDto {
         required DateTime createdAt,
     @JsonKey(name: 'user_id') required String userId,
     @JsonKey(name: 'correct_answer_rate') required double? car,
+    @JsonKey(name: 'answer_count') required int? answerCount,
   }) = _QuizDto;
 
   factory QuizDto.fromJson(Map<String, dynamic> json) =>

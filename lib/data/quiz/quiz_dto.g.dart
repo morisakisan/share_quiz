@@ -18,6 +18,7 @@ _$_QuizDto _$_$_QuizDtoFromJson(Map<String, dynamic> json) {
         const TimestampConverter().fromJson(json['created_at'] as Timestamp),
     userId: json['user_id'] as String,
     car: (json['correct_answer_rate'] as num?)?.toDouble(),
+    answerCount: json['answer_count'] as int?,
   );
 }
 
@@ -31,4 +32,5 @@ Map<String, dynamic> _$_$_QuizDtoToJson(_$_QuizDto instance) =>
       'created_at': const TimestampConverter().toJson(instance.createdAt),
       'user_id': instance.userId,
       'correct_answer_rate': instance.car,
+      'answer_count': instance.answerCount,
     };
