@@ -48,7 +48,7 @@ jobs:
           echo ${{ secrets.DEBUG_KEY_PROPERTIES }} | base64 -d > ./android/debug_key.properties
 
       - name: Build APK
-        run: flutter build appbundle --debug --build-number=$GITHUB_RUN_NUMBER
+        run: flutter build apk --debug --build-number=$GITHUB_RUN_NUMBER
 
       # Firebase にデプロイ
       - name: Firebase App Distribution
@@ -57,4 +57,4 @@ jobs:
           appId: ${{secrets.FIREBASE_APP_ID_ANDROID}}
           token: ${{secrets.FIREBASE_TOKEN}}
           groups: testers
-          file: ./build/app/outputs/bundle/debug/app-debug.aab
+          file: ./build/app/outputs/bundle/debug/app-debug.apk
