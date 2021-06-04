@@ -10,12 +10,14 @@ part 'quiz.freezed.dart';
 @freezed
 abstract class Quiz with _$Quiz {
   const factory Quiz({
-    required String quizId,
+    required String documentId,
     required String title,
     required String question,
     required List<String> choices,
-    required int answer,
-    required Timestamp createdAt,
+    required int correctAnswer,
+    required DateTime createdAt,
+    required double? car,
+    required int? answerCount,
     @Default(null) String? imageUrl,
   }) = _Quiz;
 }

@@ -15,44 +15,55 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
             if (list.length < 2) {
               return "選択肢は二つ以上いれてね";
             }
+            final a = list.toSet().toList();
+            var isDistinct = list.length != a.length;
+            if (isDistinct) {
+              return "重複する選択肢があるよ";
+            }
+
             return null;
           },
           builder: (FormFieldState<Tuple2<List<String>, int>> state) {
             final selectedRadioTile = state.value!.item2;
             final headerChildren = <Widget>[];
             headerChildren.add(
-              Text(
+              const Text(
                 "選択肢",
               ),
             );
             if (state.value!.item1.length < 5) {
               headerChildren.add(
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
               );
               headerChildren.add(
-                ElevatedButton.icon(
-                  label: Text('選択肢を追加する'),
-                  icon: Icon(Icons.add),
+                TextButton.icon(
+                  label: const Text('選択肢を追加する'),
+                  icon: const Icon(Icons.add),
                   onPressed: () => _showInputTextDialog(context, state),
                 ),
               );
             }
-            if (state.value!.item1.isNotEmpty) {
+            if (state.value!.item1.length > 1) {
               headerChildren.add(
-                SizedBox(
-                  height: 16,
+                const SizedBox(
+                  height: 8,
                 ),
               );
               headerChildren.add(
-                Text(
+                const Text(
                   "正解の選択肢にチェックを入れてください",
                 ),
               );
             }
 
             if (state.hasError) {
+              headerChildren.add(
+                const SizedBox(
+                  height: 8,
+                ),
+              );
               headerChildren.add(
                 Text(
                   state.errorText!,
@@ -68,7 +79,6 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               header: Container(
-                margin: EdgeInsets.only(),
                 alignment: Alignment.topLeft,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -103,7 +113,7 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
                       );
                     },
                     secondary: IconButton(
-                      icon: Icon(
+                      icon: const Icon(
                         Icons.delete,
                       ),
                       onPressed: () {
@@ -129,7 +139,7 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
         String? choice;
         final _formKey = GlobalKey<FormState>();
         return AlertDialog(
-          title: Text("選択肢を入力してね"),
+          title: const Text("選択肢を入力してね"),
           content: Form(
             key: _formKey,
             child: TextFormField(
@@ -151,13 +161,13 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
               },
             ),
           ),
-          actions: <Widget>[
+          actions: [
             TextButton(
-              child: Text("Cancel"),
+              child: const Text("Cancel"),
               onPressed: () => Navigator.pop(context),
             ),
             TextButton(
-              child: Text("OK"),
+              child: const Text("OK"),
               onPressed: () {
                 if (!_formKey.currentState!.validate()) return;
                 // 入力データが正常な場合の処理

@@ -9,14 +9,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_quiz/domain/common/resource.dart';
 import 'package:share_quiz/domain/user/user_data.dart';
 import 'package:share_quiz/domain/user_login/user_login_state_notifier.dart';
+import 'package:share_quiz/presentation/screen/answers_count.dart';
 import 'package:share_quiz/presentation/screen/news.dart';
-import 'package:share_quiz/presentation/screen/ranking.dart';
 import '../nav.dart';
 
 class Home extends HookWidget {
   final _tab = <Tab>[
     Tab(text: '新着'),
-    Tab(text: 'ランキング'),
+    Tab(text: '回答数'),
   ];
 
   final provider = StateNotifierProvider((ref) => UserLoginStateNotifier());
@@ -40,7 +40,7 @@ class Home extends HookWidget {
         body: TabBarView(
           children: [
             News(),
-            Ranking(),
+            AnswersCount(),
           ],
         ),
         floatingActionButton: FloatingActionButton(

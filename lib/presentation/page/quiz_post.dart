@@ -13,8 +13,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_quiz/domain/common/resource.dart';
 import 'package:share_quiz/domain/quiz_post/quiz_post_data.dart';
 import 'package:share_quiz/domain/quiz_post/quiz_post_state_notifer.dart';
-import 'package:share_quiz/presentation/widget/choices_form_field.dart';
-import 'package:share_quiz/presentation/widget/image_form_field.dart';
+import 'package:share_quiz/presentation/widget/form/choices_form_field.dart';
+import 'package:share_quiz/presentation/widget/form/image_form_field.dart';
+import 'package:share_quiz/presentation/widget/widget_utils.dart';
 
 class QuizPost extends HookWidget {
   final _formKey = GlobalKey<FormState>();
@@ -39,7 +40,7 @@ class QuizPost extends HookWidget {
       )
     ];
     if (state is Loading) {
-      children.add(_loading());
+      children.add(WidgetUtils.loading());
     } else if (state is Error) {
     } else if (state is Success) {
       Navigator.pop(context);
@@ -47,7 +48,7 @@ class QuizPost extends HookWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('クイズを入力してね'),
+        title: const Text('クイズを入力してね'),
       ),
       body: Stack(
         children: children,
@@ -58,7 +59,7 @@ class QuizPost extends HookWidget {
   Widget _form(BuildContext context) {
     final notifier = useProvider(provider.notifier);
     return Container(
-      margin: EdgeInsets.all(16.0),
+      margin: const EdgeInsets.all(16.0),
       child: Form(
         key: _formKey,
         child: Column(
@@ -130,20 +131,10 @@ class QuizPost extends HookWidget {
                 );
                 notifier.post(postData);
               },
-              child: Text('クイズを投稿する'),
+              child: const Text('クイズを投稿する'),
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _loading() {
-    return Center(
-      child: SizedBox(
-        height: 100,
-        width: 100,
-        child: CircularProgressIndicator(),
       ),
     );
   }

@@ -19,10 +19,11 @@ class QuizPostRepository {
       "title": post.title,
       "question": post.question,
       "choices": post.choices,
-      "answer": post.answer,
+      "correct_answer": post.answer,
       "image_url": imageUrl,
       "created_at": FieldValue.serverTimestamp(),
-      "uid": user!.uid
+      "user_id": user!.uid,
+      "answer_count": 0,
     };
     return _quizFireStore.post(json);
   }
