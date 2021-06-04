@@ -34,27 +34,36 @@ class AnswerFirebaseStore {
   }
 
   Future<void> post(String quizDocId, Map<String, dynamic> dto) {
-    return FirebaseFirestore.instance.runTransaction((transaction) async {
-      final updateQuiz = await transaction
-          .get(QuizFirebaseStore.getCollection().doc(quizDocId));
-      final updateQuizDto = QuizDto.fromJson(updateQuiz.data()!);
+    return FirebaseFirestore.instance.runTransaction(
+      (transaction) async {
+        final updateQuiz = await transaction
+            .get(QuizFirebaseStore.getCollection().doc(quizDocId));
+        final updateQuizDto = QuizDto.fromJson(updateQuiz.data()!);
 
-      final answers = (await updateQuiz.reference.collection("answer").get())
-          .docs
-          .map((e) => AnswerDto.fromJson(e.data()))
-          .toList();
-      answers.add(AnswerDto.fromJson(dto));
-      final answerCount = answers.length;
-      var correctAnswerCount = 0;
-      answers.forEach((dto) {
-        if (dto.answer == updateQuizDto.correctAnswer) {
-          correctAnswerCount++;
-        }
-      });
-      final rate = correctAnswerCount / answerCount;
+        final answers = (await updateQuiz.reference.collection("answer").get())
+            .docs
+            .map((e) => AnswerDto.fromJson(e.data()))
+            .toList();
+        answers.add(AnswerDto.fromJson(dto));
+        final answerCount = answers.length;
+        var correctAnswerCount = 0;
+        answers.forEach(
+          (dto) {
+            if (dto.answer == updateQuizDto.correctAnswer) {
+              correctAnswerCount++;
+            }
+          },
+        );
+        final rate = correctAnswerCount / answerCount;
 
-      transaction.set(_getCollection(quizDocId).doc(), dto);
-      updateQuiz.reference.update({"correct_answer_rate": rate});
-    });
+        transaction.set(_getCollection(quizDocId).doc(), dto);
+        updateQuiz.reference.update(
+          {
+            "correct_answer_rate": rate,
+            "answer_count": answerCount,
+          },
+        );
+      },
+    );
   }
 }
