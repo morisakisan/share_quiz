@@ -41,7 +41,7 @@ class QuizAnswer extends HookWidget {
   Widget _loading() {
     return Scaffold(
       appBar: AppBar(),
-      body: Center(
+      body: const Center(
         child: const SizedBox(
           height: 100,
           width: 100,
