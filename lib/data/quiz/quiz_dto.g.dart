@@ -11,14 +11,14 @@ _$_QuizDto _$_$_QuizDtoFromJson(Map<String, dynamic> json) {
     correctAnswer: json['correct_answer'] as int,
     title: json['title'] as String,
     question: json['question'] as String,
-    imageUrl: json['image_url'] as String,
+    imageUrl: json['image_url'] as String?,
     choices:
         (json['choices'] as List<dynamic>).map((e) => e as String).toList(),
     createdAt:
         const TimestampConverter().fromJson(json['created_at'] as Timestamp),
     userId: json['user_id'] as String,
     car: (json['correct_answer_rate'] as num?)?.toDouble(),
-    answerCount: json['answer_count'] as int?,
+    answerCount: json['answer_count'] as int,
   );
 }
 

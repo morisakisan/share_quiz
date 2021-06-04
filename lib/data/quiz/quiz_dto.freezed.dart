@@ -30,7 +30,7 @@ class _$QuizDtoTearOff {
       @JsonKey(name: 'question')
           required String question,
       @JsonKey(name: 'image_url')
-          required String imageUrl,
+          required String? imageUrl,
       @JsonKey(name: 'choices')
           required List<String> choices,
       @TimestampConverter()
@@ -41,7 +41,7 @@ class _$QuizDtoTearOff {
       @JsonKey(name: 'correct_answer_rate')
           required double? car,
       @JsonKey(name: 'answer_count')
-          required int? answerCount}) {
+          required int answerCount}) {
     return _QuizDto(
       docId: docId,
       correctAnswer: correctAnswer,
@@ -75,7 +75,7 @@ mixin _$QuizDto {
   @JsonKey(name: 'question')
   String get question => throw _privateConstructorUsedError;
   @JsonKey(name: 'image_url')
-  String get imageUrl => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
   @JsonKey(name: 'choices')
   List<String> get choices => throw _privateConstructorUsedError;
   @TimestampConverter()
@@ -86,7 +86,7 @@ mixin _$QuizDto {
   @JsonKey(name: 'correct_answer_rate')
   double? get car => throw _privateConstructorUsedError;
   @JsonKey(name: 'answer_count')
-  int? get answerCount => throw _privateConstructorUsedError;
+  int get answerCount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -102,12 +102,12 @@ abstract class $QuizDtoCopyWith<$Res> {
       @JsonKey(name: 'correct_answer') int correctAnswer,
       @JsonKey(name: 'title') String title,
       @JsonKey(name: 'question') String question,
-      @JsonKey(name: 'image_url') String imageUrl,
+      @JsonKey(name: 'image_url') String? imageUrl,
       @JsonKey(name: 'choices') List<String> choices,
       @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt,
       @JsonKey(name: 'user_id') String userId,
       @JsonKey(name: 'correct_answer_rate') double? car,
-      @JsonKey(name: 'answer_count') int? answerCount});
+      @JsonKey(name: 'answer_count') int answerCount});
 }
 
 /// @nodoc
@@ -151,7 +151,7 @@ class _$QuizDtoCopyWithImpl<$Res> implements $QuizDtoCopyWith<$Res> {
       imageUrl: imageUrl == freezed
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       choices: choices == freezed
           ? _value.choices
           : choices // ignore: cast_nullable_to_non_nullable
@@ -171,7 +171,7 @@ class _$QuizDtoCopyWithImpl<$Res> implements $QuizDtoCopyWith<$Res> {
       answerCount: answerCount == freezed
           ? _value.answerCount
           : answerCount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
     ));
   }
 }
@@ -186,12 +186,12 @@ abstract class _$QuizDtoCopyWith<$Res> implements $QuizDtoCopyWith<$Res> {
       @JsonKey(name: 'correct_answer') int correctAnswer,
       @JsonKey(name: 'title') String title,
       @JsonKey(name: 'question') String question,
-      @JsonKey(name: 'image_url') String imageUrl,
+      @JsonKey(name: 'image_url') String? imageUrl,
       @JsonKey(name: 'choices') List<String> choices,
       @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt,
       @JsonKey(name: 'user_id') String userId,
       @JsonKey(name: 'correct_answer_rate') double? car,
-      @JsonKey(name: 'answer_count') int? answerCount});
+      @JsonKey(name: 'answer_count') int answerCount});
 }
 
 /// @nodoc
@@ -236,7 +236,7 @@ class __$QuizDtoCopyWithImpl<$Res> extends _$QuizDtoCopyWithImpl<$Res>
       imageUrl: imageUrl == freezed
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       choices: choices == freezed
           ? _value.choices
           : choices // ignore: cast_nullable_to_non_nullable
@@ -256,7 +256,7 @@ class __$QuizDtoCopyWithImpl<$Res> extends _$QuizDtoCopyWithImpl<$Res>
       answerCount: answerCount == freezed
           ? _value.answerCount
           : answerCount // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
     ));
   }
 }
@@ -304,7 +304,7 @@ class _$_QuizDto with DiagnosticableTreeMixin implements _QuizDto {
   final String question;
   @override
   @JsonKey(name: 'image_url')
-  final String imageUrl;
+  final String? imageUrl;
   @override
   @JsonKey(name: 'choices')
   final List<String> choices;
@@ -320,7 +320,7 @@ class _$_QuizDto with DiagnosticableTreeMixin implements _QuizDto {
   final double? car;
   @override
   @JsonKey(name: 'answer_count')
-  final int? answerCount;
+  final int answerCount;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -412,7 +412,7 @@ abstract class _QuizDto implements QuizDto {
       @JsonKey(name: 'question')
           required String question,
       @JsonKey(name: 'image_url')
-          required String imageUrl,
+          required String? imageUrl,
       @JsonKey(name: 'choices')
           required List<String> choices,
       @TimestampConverter()
@@ -423,7 +423,7 @@ abstract class _QuizDto implements QuizDto {
       @JsonKey(name: 'correct_answer_rate')
           required double? car,
       @JsonKey(name: 'answer_count')
-          required int? answerCount}) = _$_QuizDto;
+          required int answerCount}) = _$_QuizDto;
 
   factory _QuizDto.fromJson(Map<String, dynamic> json) = _$_QuizDto.fromJson;
 
@@ -441,7 +441,7 @@ abstract class _QuizDto implements QuizDto {
   String get question => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'image_url')
-  String get imageUrl => throw _privateConstructorUsedError;
+  String? get imageUrl => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'choices')
   List<String> get choices => throw _privateConstructorUsedError;
@@ -457,7 +457,7 @@ abstract class _QuizDto implements QuizDto {
   double? get car => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'answer_count')
-  int? get answerCount => throw _privateConstructorUsedError;
+  int get answerCount => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$QuizDtoCopyWith<_QuizDto> get copyWith =>

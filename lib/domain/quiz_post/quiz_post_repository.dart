@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 // Project imports:
 import 'package:share_quiz/data/image/firebase_storage_data_store.dart';
+import 'package:share_quiz/data/quiz/quiz_dto.dart';
 import 'package:share_quiz/data/quiz/quiz_firebase_store.dart';
 import 'package:share_quiz/data/user/user_firebase_store.dart';
 import 'package:share_quiz/domain/quiz_post/quiz_post_data.dart';
@@ -22,7 +23,8 @@ class QuizPostRepository {
       "correct_answer": post.answer,
       "image_url": imageUrl,
       "created_at": FieldValue.serverTimestamp(),
-      "user_id": user!.uid
+      "user_id": user!.uid,
+      "answer_count": 0,
     };
     return _quizFireStore.post(json);
   }
