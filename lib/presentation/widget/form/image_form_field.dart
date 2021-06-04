@@ -15,26 +15,26 @@ class ImageFormField extends FormField<File> {
             final theme = Theme.of(state.context);
             final icons = [
               IconButton(
-                icon: Icon(Icons.photo_camera),
+                icon: const Icon(Icons.photo_camera),
                 onPressed: () {
                   _pickImage(ImageSource.camera, state);
                 },
               ),
               IconButton(
-                icon: Icon(Icons.photo_album),
+                icon: const Icon(Icons.photo_album),
                 onPressed: () {
                   _pickImage(ImageSource.gallery, state);
                 },
               ),
             ];
             final List<Widget> children = [
-              Text(
+              const Text(
                 "画像",
               ),
             ];
             if (state.value != null) {
               children.add(
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
               );
@@ -43,7 +43,7 @@ class ImageFormField extends FormField<File> {
               children.add(widget);
               icons.add(
                 IconButton(
-                  icon: Icon(Icons.delete),
+                  icon: const Icon(Icons.delete),
                   onPressed: () {
                     state.didChange(null);
                   },
