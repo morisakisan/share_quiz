@@ -6,6 +6,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_quiz/domain/common/resource.dart';
+import 'package:share_quiz/domain/quiz/quiz.dart';
 
 // Project imports:
 import 'package:share_quiz/domain/quiz_answer_data/quiz_answer_data.dart';
@@ -20,7 +21,6 @@ class QuizAnswer extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final quizAnswer = useProvider(quizAnswerProvider.select((value) => value));
     final quizAnswerNotifier = useProvider(quizAnswerProvider.notifier);
 
@@ -82,16 +82,7 @@ class QuizAnswer extends HookWidget {
     final List<Widget> answer = [];
     if (quizAnswerData.select_anser == null) {
       answerOnPressed = () {
-        repository.post(quiz.documentId, selectValue).then(
-          (value) {
-            final quizId = ModalRoute.of(context)!.settings.arguments as String;
-            notifier.fetch(quizId);
-          },
-        ).catchError(
-          (error) {
-            
-          },
-        );
+        _showAnswerDialog(context, selectValue, quiz, notifier);
       };
 
       onChanged = (v) {
@@ -102,7 +93,7 @@ class QuizAnswer extends HookWidget {
       answerOnPressed = null;
       onChanged = null;
       String text;
-      if(selectValue == quiz.correctAnswer) {
+      if (selectValue == quiz.correctAnswer) {
         text = "正解";
       } else {
         text = "不正解";
@@ -152,6 +143,41 @@ class QuizAnswer extends HookWidget {
           ),
         ),
       ),
+    );
+  }
+
+  _showAnswerDialog(BuildContext context, int select, Quiz quiz,
+      QuizAnswerDataNotifier notifier) {
+    showDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          content: Text("問題：${quiz.question}\n回答：${quiz.choices[select]}\nこちらでよろしいですか？"),
+          actions: [
+            TextButton(
+              child: const Text("Cancel"),
+              onPressed: () => Navigator.pop(context),
+            ),
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                repository.post(quiz.documentId, select).then(
+                  (value) {
+                    final quizId =
+                        ModalRoute.of(context)!.settings.arguments as String;
+                    notifier.fetch(quizId);
+                    Navigator.pop(context);
+                  },
+                ).catchError(
+                  (error) {
+                    Navigator.pop(context);
+                  },
+                );
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
