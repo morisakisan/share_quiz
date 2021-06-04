@@ -1,9 +1,11 @@
 // Flutter imports:
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 
 // Package imports:
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+// Project imports:
 import 'package:share_quiz/data/json_converter/timestamp_converter.dart';
 
 part 'quiz_dto.freezed.dart';

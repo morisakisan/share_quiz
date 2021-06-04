@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 // Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+
+// Project imports:
 import 'package:share_quiz/domain/quiz/quiz.dart';
 
 part 'quiz_answer_data.freezed.dart';

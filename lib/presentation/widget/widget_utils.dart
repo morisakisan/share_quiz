@@ -1,8 +1,11 @@
-
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:share_quiz/domain/quiz/quiz.dart';
+
+// Package imports:
 import "package:intl/intl.dart";
 
+// Project imports:
+import 'package:share_quiz/domain/quiz/quiz.dart';
 import '../nav.dart';
 
 class WidgetUtils {

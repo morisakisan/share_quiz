@@ -5,10 +5,10 @@ import 'package:flutter/src/widgets/framework.dart';
 // Package imports:
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:share_quiz/domain/common/resource.dart';
-import 'package:share_quiz/domain/quiz/quiz.dart';
 
 // Project imports:
+import 'package:share_quiz/domain/common/resource.dart';
+import 'package:share_quiz/domain/quiz/quiz.dart';
 import 'package:share_quiz/domain/quiz_answer_data/quiz_answer_data.dart';
 import 'package:share_quiz/domain/quiz_answer_data/quiz_answer_data_notifer.dart';
 import 'package:share_quiz/domain/quiz_answer_post/quiz_answer_post_repository.dart';
