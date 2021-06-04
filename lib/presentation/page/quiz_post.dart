@@ -15,6 +15,7 @@ import 'package:share_quiz/domain/quiz_post/quiz_post_data.dart';
 import 'package:share_quiz/domain/quiz_post/quiz_post_state_notifer.dart';
 import 'package:share_quiz/presentation/widget/form/choices_form_field.dart';
 import 'package:share_quiz/presentation/widget/form/image_form_field.dart';
+import 'package:share_quiz/presentation/widget/widget_utils.dart';
 
 class QuizPost extends HookWidget {
   final _formKey = GlobalKey<FormState>();
@@ -39,7 +40,7 @@ class QuizPost extends HookWidget {
       )
     ];
     if (state is Loading) {
-      children.add(_loading());
+      children.add(WidgetUtils.loading());
     } else if (state is Error) {
     } else if (state is Success) {
       Navigator.pop(context);
@@ -134,16 +135,6 @@ class QuizPost extends HookWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _loading() {
-    return Center(
-      child: const SizedBox(
-        height: 100,
-        width: 100,
-        child: const CircularProgressIndicator(),
       ),
     );
   }

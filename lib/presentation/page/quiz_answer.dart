@@ -12,6 +12,7 @@ import 'package:share_quiz/domain/quiz/quiz.dart';
 import 'package:share_quiz/domain/quiz_answer_data/quiz_answer_data.dart';
 import 'package:share_quiz/domain/quiz_answer_data/quiz_answer_data_notifer.dart';
 import 'package:share_quiz/domain/quiz_answer_post/quiz_answer_post_repository.dart';
+import 'package:share_quiz/presentation/widget/widget_utils.dart';
 
 class QuizAnswer extends HookWidget {
   final quizAnswerProvider =
@@ -41,13 +42,7 @@ class QuizAnswer extends HookWidget {
   Widget _loading() {
     return Scaffold(
       appBar: AppBar(),
-      body: const Center(
-        child: const SizedBox(
-          height: 100,
-          width: 100,
-          child: const CircularProgressIndicator(),
-        ),
-      ),
+      body: WidgetUtils.loading()
     );
   }
 
