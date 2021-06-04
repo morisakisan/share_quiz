@@ -17,7 +17,7 @@ class News extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: _repository.fetch(),
+      stream: _repository.fetch().quizzes,
       builder: (BuildContext context, AsyncSnapshot<List<Quiz>> snapShot) {
         if (snapShot.hasError) {
           return Text("error");

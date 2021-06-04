@@ -23,6 +23,8 @@ class _$QuizTearOff {
       required List<String> choices,
       required int correctAnswer,
       required DateTime createdAt,
+      required double? car,
+      required int? answerCount,
       String? imageUrl = null}) {
     return _Quiz(
       documentId: documentId,
@@ -31,6 +33,8 @@ class _$QuizTearOff {
       choices: choices,
       correctAnswer: correctAnswer,
       createdAt: createdAt,
+      car: car,
+      answerCount: answerCount,
       imageUrl: imageUrl,
     );
   }
@@ -47,6 +51,8 @@ mixin _$Quiz {
   List<String> get choices => throw _privateConstructorUsedError;
   int get correctAnswer => throw _privateConstructorUsedError;
   DateTime get createdAt => throw _privateConstructorUsedError;
+  double? get car => throw _privateConstructorUsedError;
+  int? get answerCount => throw _privateConstructorUsedError;
   String? get imageUrl => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -64,6 +70,8 @@ abstract class $QuizCopyWith<$Res> {
       List<String> choices,
       int correctAnswer,
       DateTime createdAt,
+      double? car,
+      int? answerCount,
       String? imageUrl});
 }
 
@@ -83,6 +91,8 @@ class _$QuizCopyWithImpl<$Res> implements $QuizCopyWith<$Res> {
     Object? choices = freezed,
     Object? correctAnswer = freezed,
     Object? createdAt = freezed,
+    Object? car = freezed,
+    Object? answerCount = freezed,
     Object? imageUrl = freezed,
   }) {
     return _then(_value.copyWith(
@@ -110,6 +120,14 @@ class _$QuizCopyWithImpl<$Res> implements $QuizCopyWith<$Res> {
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      car: car == freezed
+          ? _value.car
+          : car // ignore: cast_nullable_to_non_nullable
+              as double?,
+      answerCount: answerCount == freezed
+          ? _value.answerCount
+          : answerCount // ignore: cast_nullable_to_non_nullable
+              as int?,
       imageUrl: imageUrl == freezed
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
@@ -130,6 +148,8 @@ abstract class _$QuizCopyWith<$Res> implements $QuizCopyWith<$Res> {
       List<String> choices,
       int correctAnswer,
       DateTime createdAt,
+      double? car,
+      int? answerCount,
       String? imageUrl});
 }
 
@@ -150,6 +170,8 @@ class __$QuizCopyWithImpl<$Res> extends _$QuizCopyWithImpl<$Res>
     Object? choices = freezed,
     Object? correctAnswer = freezed,
     Object? createdAt = freezed,
+    Object? car = freezed,
+    Object? answerCount = freezed,
     Object? imageUrl = freezed,
   }) {
     return _then(_Quiz(
@@ -177,6 +199,14 @@ class __$QuizCopyWithImpl<$Res> extends _$QuizCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      car: car == freezed
+          ? _value.car
+          : car // ignore: cast_nullable_to_non_nullable
+              as double?,
+      answerCount: answerCount == freezed
+          ? _value.answerCount
+          : answerCount // ignore: cast_nullable_to_non_nullable
+              as int?,
       imageUrl: imageUrl == freezed
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
@@ -195,6 +225,8 @@ class _$_Quiz with DiagnosticableTreeMixin implements _Quiz {
       required this.choices,
       required this.correctAnswer,
       required this.createdAt,
+      required this.car,
+      required this.answerCount,
       this.imageUrl = null});
 
   @override
@@ -209,13 +241,17 @@ class _$_Quiz with DiagnosticableTreeMixin implements _Quiz {
   final int correctAnswer;
   @override
   final DateTime createdAt;
+  @override
+  final double? car;
+  @override
+  final int? answerCount;
   @JsonKey(defaultValue: null)
   @override
   final String? imageUrl;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Quiz(documentId: $documentId, title: $title, question: $question, choices: $choices, correctAnswer: $correctAnswer, createdAt: $createdAt, imageUrl: $imageUrl)';
+    return 'Quiz(documentId: $documentId, title: $title, question: $question, choices: $choices, correctAnswer: $correctAnswer, createdAt: $createdAt, car: $car, answerCount: $answerCount, imageUrl: $imageUrl)';
   }
 
   @override
@@ -229,6 +265,8 @@ class _$_Quiz with DiagnosticableTreeMixin implements _Quiz {
       ..add(DiagnosticsProperty('choices', choices))
       ..add(DiagnosticsProperty('correctAnswer', correctAnswer))
       ..add(DiagnosticsProperty('createdAt', createdAt))
+      ..add(DiagnosticsProperty('car', car))
+      ..add(DiagnosticsProperty('answerCount', answerCount))
       ..add(DiagnosticsProperty('imageUrl', imageUrl));
   }
 
@@ -253,6 +291,11 @@ class _$_Quiz with DiagnosticableTreeMixin implements _Quiz {
             (identical(other.createdAt, createdAt) ||
                 const DeepCollectionEquality()
                     .equals(other.createdAt, createdAt)) &&
+            (identical(other.car, car) ||
+                const DeepCollectionEquality().equals(other.car, car)) &&
+            (identical(other.answerCount, answerCount) ||
+                const DeepCollectionEquality()
+                    .equals(other.answerCount, answerCount)) &&
             (identical(other.imageUrl, imageUrl) ||
                 const DeepCollectionEquality()
                     .equals(other.imageUrl, imageUrl)));
@@ -267,6 +310,8 @@ class _$_Quiz with DiagnosticableTreeMixin implements _Quiz {
       const DeepCollectionEquality().hash(choices) ^
       const DeepCollectionEquality().hash(correctAnswer) ^
       const DeepCollectionEquality().hash(createdAt) ^
+      const DeepCollectionEquality().hash(car) ^
+      const DeepCollectionEquality().hash(answerCount) ^
       const DeepCollectionEquality().hash(imageUrl);
 
   @JsonKey(ignore: true)
@@ -283,6 +328,8 @@ abstract class _Quiz implements Quiz {
       required List<String> choices,
       required int correctAnswer,
       required DateTime createdAt,
+      required double? car,
+      required int? answerCount,
       String? imageUrl}) = _$_Quiz;
 
   @override
@@ -297,6 +344,10 @@ abstract class _Quiz implements Quiz {
   int get correctAnswer => throw _privateConstructorUsedError;
   @override
   DateTime get createdAt => throw _privateConstructorUsedError;
+  @override
+  double? get car => throw _privateConstructorUsedError;
+  @override
+  int? get answerCount => throw _privateConstructorUsedError;
   @override
   String? get imageUrl => throw _privateConstructorUsedError;
   @override
