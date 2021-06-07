@@ -93,7 +93,7 @@ class QuizAnswer extends HookWidget {
         ),
       );
 
-      answer.add(Text("正解は${quiz.choices[selectValue]}です！"));
+      answer.add(Text("答えは「${quiz.choices[selectValue]}」です！"));
 
       answer.add(
         const SizedBox(
