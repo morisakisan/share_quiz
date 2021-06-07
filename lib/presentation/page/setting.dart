@@ -11,7 +11,7 @@ class Setting extends HookWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('設定'),
+        title: const Text('設定'),
       ),
       body: FutureBuilder<PackageInfo>(
         future: PackageInfo.fromPlatform(),
@@ -27,7 +27,7 @@ class Setting extends HookWidget {
       sections: [
         SettingsSection(
           title: 'その他',
-          titlePadding: EdgeInsets.only(
+          titlePadding: const EdgeInsets.only(
             top: 12,
             left: 15.0,
             right: 15.0,
