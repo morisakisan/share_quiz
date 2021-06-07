@@ -54,20 +54,12 @@ class WidgetUtils {
       );
     }
 
-    go() {
-      Navigator.of(context).pushNamed(
-        Nav.QUIZ_ANSWER,
-        arguments: quiz.documentId,
-      );
-    }
-
     final String correctRate;
-    if(quiz.car != null) {
+    if (quiz.car != null) {
       correctRate = "正解率：${(quiz.car! * 100).toInt()}％";
     } else {
       correctRate = "";
     }
-
 
     list.add(
       Column(
@@ -95,22 +87,42 @@ class WidgetUtils {
             "回答数：${quiz.answerCount}　$correctRate",
             style: theme.textTheme.bodyText2,
           ),
-          SizedBox(
-            height: 8,
-          ),
-          Text(
-            formatted,
-            style: theme.textTheme.caption,
-          ),
         ],
       ),
     );
 
     return Card(
       clipBehavior: Clip.antiAlias,
-      child: Row(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: list,
+        children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: list,
+          ),
+          ButtonBar(
+            alignment: MainAxisAlignment.start,
+            children: [
+              TextButton.icon(
+                icon: Icon(Icons.question_answer_rounded),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(
+                    Nav.QUIZ_ANSWER,
+                    arguments: quiz.documentId,
+                  );
+                },
+                label: const Text('クイズに答える'),
+              ),
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(8, 8, 0, 8),
+            child: Text(
+              formatted,
+              style: theme.textTheme.caption,
+            ),
+          ),
+        ],
       ),
     );
   }
