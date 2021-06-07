@@ -181,6 +181,7 @@ class QuizAnswer extends HookWidget {
   ) {
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (_) {
         return AlertDialog(
           content: Text(

@@ -77,6 +77,7 @@ class Home extends HookWidget {
     UserLoginStateNotifier notifier,
   ) {
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (_) {
         return AlertDialog(
@@ -191,6 +192,7 @@ class Home extends HookWidget {
           ),
           onTap: () {
             showDialog(
+              barrierDismissible: false,
               context: context,
               builder: (_) {
                 return AlertDialog(

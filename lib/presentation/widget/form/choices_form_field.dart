@@ -134,6 +134,7 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
   static _showInputTextDialog(
       BuildContext context, FormFieldState<Tuple2<List<String>, int>> state) {
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (context) {
         String? choice;
