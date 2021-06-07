@@ -6,11 +6,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 
 // Project imports:
 import 'package:share_quiz/domain/quiz/quiz.dart';
-import 'package:share_quiz/domain/quiz_answers_count/quiz_ansewers_count_repository.dart';
+import 'package:share_quiz/domain/quiz_list/quiz_list_repository.dart';
 import 'package:share_quiz/presentation/widget/widget_utils.dart';
 
-class AnswersCount extends HookWidget {
-  final _repository = QuizAnswersCountRepository();
+class QuizListScreen extends HookWidget {
+  final QuizListRepository _repository;
+
+  QuizListScreen(this._repository);
 
   @override
   Widget build(BuildContext context) {
@@ -24,11 +26,11 @@ class AnswersCount extends HookWidget {
         } else {
           return ListView(
             children: snapShot.data!.map(
-                  (value) {
+              (value) {
                 return WidgetUtils.getQuizView(context, value);
               },
             ).toList(),
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(8.0),
           );
         }
       },

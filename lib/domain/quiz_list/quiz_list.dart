@@ -7,11 +7,11 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 // Project imports:
 import 'package:share_quiz/domain/quiz/quiz.dart';
 
-part 'quiz_answers_count.freezed.dart';
+part 'quiz_list.freezed.dart';
 
 @freezed
-abstract class QuizAnswersCount with _$QuizAnswersCount {
-  const factory QuizAnswersCount({
+abstract class QuizList with _$QuizList {
+  const factory QuizList({
     required Stream<List<Quiz>> quizzes,
-  }) = _QuizAnswersCount;
+  }) = _QuizList;
 }

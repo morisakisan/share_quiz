@@ -1,7 +1,7 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
-part of 'quiz_answers_count.dart';
+part of 'quiz_list.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -13,44 +13,42 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-class _$QuizAnswersCountTearOff {
-  const _$QuizAnswersCountTearOff();
+class _$QuizListTearOff {
+  const _$QuizListTearOff();
 
-  _QuizAnswersCount call({required Stream<List<Quiz>> quizzes}) {
-    return _QuizAnswersCount(
+  _QuizList call({required Stream<List<Quiz>> quizzes}) {
+    return _QuizList(
       quizzes: quizzes,
     );
   }
 }
 
 /// @nodoc
-const $QuizAnswersCount = _$QuizAnswersCountTearOff();
+const $QuizList = _$QuizListTearOff();
 
 /// @nodoc
-mixin _$QuizAnswersCount {
+mixin _$QuizList {
   Stream<List<Quiz>> get quizzes => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $QuizAnswersCountCopyWith<QuizAnswersCount> get copyWith =>
+  $QuizListCopyWith<QuizList> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $QuizAnswersCountCopyWith<$Res> {
-  factory $QuizAnswersCountCopyWith(
-          QuizAnswersCount value, $Res Function(QuizAnswersCount) then) =
-      _$QuizAnswersCountCopyWithImpl<$Res>;
+abstract class $QuizListCopyWith<$Res> {
+  factory $QuizListCopyWith(QuizList value, $Res Function(QuizList) then) =
+      _$QuizListCopyWithImpl<$Res>;
   $Res call({Stream<List<Quiz>> quizzes});
 }
 
 /// @nodoc
-class _$QuizAnswersCountCopyWithImpl<$Res>
-    implements $QuizAnswersCountCopyWith<$Res> {
-  _$QuizAnswersCountCopyWithImpl(this._value, this._then);
+class _$QuizListCopyWithImpl<$Res> implements $QuizListCopyWith<$Res> {
+  _$QuizListCopyWithImpl(this._value, this._then);
 
-  final QuizAnswersCount _value;
+  final QuizList _value;
   // ignore: unused_field
-  final $Res Function(QuizAnswersCount) _then;
+  final $Res Function(QuizList) _then;
 
   @override
   $Res call({
@@ -66,31 +64,27 @@ class _$QuizAnswersCountCopyWithImpl<$Res>
 }
 
 /// @nodoc
-abstract class _$QuizAnswersCountCopyWith<$Res>
-    implements $QuizAnswersCountCopyWith<$Res> {
-  factory _$QuizAnswersCountCopyWith(
-          _QuizAnswersCount value, $Res Function(_QuizAnswersCount) then) =
-      __$QuizAnswersCountCopyWithImpl<$Res>;
+abstract class _$QuizListCopyWith<$Res> implements $QuizListCopyWith<$Res> {
+  factory _$QuizListCopyWith(_QuizList value, $Res Function(_QuizList) then) =
+      __$QuizListCopyWithImpl<$Res>;
   @override
   $Res call({Stream<List<Quiz>> quizzes});
 }
 
 /// @nodoc
-class __$QuizAnswersCountCopyWithImpl<$Res>
-    extends _$QuizAnswersCountCopyWithImpl<$Res>
-    implements _$QuizAnswersCountCopyWith<$Res> {
-  __$QuizAnswersCountCopyWithImpl(
-      _QuizAnswersCount _value, $Res Function(_QuizAnswersCount) _then)
-      : super(_value, (v) => _then(v as _QuizAnswersCount));
+class __$QuizListCopyWithImpl<$Res> extends _$QuizListCopyWithImpl<$Res>
+    implements _$QuizListCopyWith<$Res> {
+  __$QuizListCopyWithImpl(_QuizList _value, $Res Function(_QuizList) _then)
+      : super(_value, (v) => _then(v as _QuizList));
 
   @override
-  _QuizAnswersCount get _value => super._value as _QuizAnswersCount;
+  _QuizList get _value => super._value as _QuizList;
 
   @override
   $Res call({
     Object? quizzes = freezed,
   }) {
-    return _then(_QuizAnswersCount(
+    return _then(_QuizList(
       quizzes: quizzes == freezed
           ? _value.quizzes
           : quizzes // ignore: cast_nullable_to_non_nullable
@@ -101,31 +95,29 @@ class __$QuizAnswersCountCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_QuizAnswersCount
-    with DiagnosticableTreeMixin
-    implements _QuizAnswersCount {
-  const _$_QuizAnswersCount({required this.quizzes});
+class _$_QuizList with DiagnosticableTreeMixin implements _QuizList {
+  const _$_QuizList({required this.quizzes});
 
   @override
   final Stream<List<Quiz>> quizzes;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'QuizAnswersCount(quizzes: $quizzes)';
+    return 'QuizList(quizzes: $quizzes)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'QuizAnswersCount'))
+      ..add(DiagnosticsProperty('type', 'QuizList'))
       ..add(DiagnosticsProperty('quizzes', quizzes));
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _QuizAnswersCount &&
+        (other is _QuizList &&
             (identical(other.quizzes, quizzes) ||
                 const DeepCollectionEquality().equals(other.quizzes, quizzes)));
   }
@@ -136,18 +128,17 @@ class _$_QuizAnswersCount
 
   @JsonKey(ignore: true)
   @override
-  _$QuizAnswersCountCopyWith<_QuizAnswersCount> get copyWith =>
-      __$QuizAnswersCountCopyWithImpl<_QuizAnswersCount>(this, _$identity);
+  _$QuizListCopyWith<_QuizList> get copyWith =>
+      __$QuizListCopyWithImpl<_QuizList>(this, _$identity);
 }
 
-abstract class _QuizAnswersCount implements QuizAnswersCount {
-  const factory _QuizAnswersCount({required Stream<List<Quiz>> quizzes}) =
-      _$_QuizAnswersCount;
+abstract class _QuizList implements QuizList {
+  const factory _QuizList({required Stream<List<Quiz>> quizzes}) = _$_QuizList;
 
   @override
   Stream<List<Quiz>> get quizzes => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
-  _$QuizAnswersCountCopyWith<_QuizAnswersCount> get copyWith =>
+  _$QuizListCopyWith<_QuizList> get copyWith =>
       throw _privateConstructorUsedError;
 }

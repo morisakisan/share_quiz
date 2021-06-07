@@ -81,7 +81,7 @@ class WidgetUtils {
             style: theme.textTheme.bodyText2,
           ),
           SizedBox(
-            height: 8,
+            height: 4,
           ),
           Text(
             "回答数：${quiz.answerCount}　$correctRate",

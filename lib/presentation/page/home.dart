@@ -4,13 +4,14 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:share_quiz/data/repository_impl/quiz_ansewers_count_repository.dart';
+import 'package:share_quiz/data/repository_impl/quiz_new_repository.dart';
 
 // Project imports:
 import 'package:share_quiz/domain/common/resource.dart';
 import 'package:share_quiz/domain/user/user_data.dart';
 import 'package:share_quiz/domain/user_login/user_login_state_notifier.dart';
-import 'package:share_quiz/presentation/screen/answers_count.dart';
-import 'package:share_quiz/presentation/screen/news.dart';
+import 'package:share_quiz/presentation/screen/quiz_list_screen.dart';
 import '../nav.dart';
 
 class Home extends HookWidget {
@@ -29,7 +30,7 @@ class Home extends HookWidget {
       length: _tab.length,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('ShareQuiz'),
+          title: Text('みんなのクイズ'),
           bottom: TabBar(
             tabs: _tab,
           ),
@@ -37,8 +38,8 @@ class Home extends HookWidget {
         drawer: _createDrawer(context, state, notifier),
         body: TabBarView(
           children: [
-            News(),
-            AnswersCount(),
+            QuizListScreen(QuizNewRepository()),
+            QuizListScreen(QuizAnswersCountRepository()),
           ],
         ),
         floatingActionButton: FloatingActionButton(
