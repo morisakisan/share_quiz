@@ -84,14 +84,14 @@ class QuizListScreen extends HookWidget {
             style: theme.textTheme.headline5,
           ),
           SizedBox(
-            height: 8,
+            height: 16,
           ),
           Text(
             "問題　${quiz.question}",
-            style: theme.textTheme.bodyText2,
+            style: theme.textTheme.headline6,
           ),
           SizedBox(
-            height: 4,
+            height: 16,
           ),
           Text(
             "回答数：${quiz.answerCount}　$correctRate",

@@ -73,16 +73,29 @@ class QuizAnswer extends HookWidget {
         padding: const EdgeInsets.only(top: 16),
         child: Text(
           "問題　${quiz.question}",
-          style: theme.textTheme.bodyText1,
+          style: theme.textTheme.headline5,
         ),
       ),
     );
 
+    final correctRate = quiz.car;
+    if (correctRate != null) {
+      list.add(
+        Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: Text(
+            "正解率は${(correctRate * 100).toInt()}％だよ",
+            style: theme.textTheme.caption,
+          ),
+        ),
+      );
+    }
+
     list.add(
       Padding(
-        padding: const EdgeInsets.only(top: 8),
+        padding: const EdgeInsets.only(top: 24),
         child: Text(
-          "答えだと思う選択肢にチェックをいれてね",
+          "正解だと思う選択肢にチェックをいれてね",
           style: theme.textTheme.bodyText1,
         ),
       ),
@@ -163,7 +176,7 @@ class QuizAnswer extends HookWidget {
       TextButton.icon(
         icon: Icon(Icons.share),
         onPressed: () {
-          Share.share("タイトル：${quiz.title}\n問題：${quiz.question}");
+          Share.share("タイトル：${quiz.title}\n問題：${quiz.question}\n#みんなのクイズ");
         },
         label: Text("シェア"),
       ),
@@ -221,17 +234,15 @@ class QuizAnswer extends HookWidget {
             TextButton(
               child: const Text("OK"),
               onPressed: () {
+                Navigator.pop(context);
                 repository.post(quiz.documentId, select).then(
                   (value) {
                     final quizId =
                         ModalRoute.of(context)!.settings.arguments as String;
                     notifier.fetch(quizId);
-                    Navigator.pop(context);
                   },
                 ).catchError(
-                  (error) {
-                    Navigator.pop(context);
-                  },
+                  (error) {},
                 );
               },
             ),
