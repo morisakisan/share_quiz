@@ -80,7 +80,7 @@ class Home extends HookWidget {
       context: context,
       builder: (_) {
         return AlertDialog(
-          content: Text("クイズを投稿するにはログインが必要です。ログインします。"),
+          content: Text("クイズを投稿するにはログインが必要です。ログインしますか？"),
           actions: [
             // ボタン領域
             TextButton(
