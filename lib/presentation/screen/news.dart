@@ -28,7 +28,7 @@ class News extends HookWidget {
                 return WidgetUtils.getQuizView(context, value);
               },
             ).toList(),
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(8.0),
           );
         }
       },

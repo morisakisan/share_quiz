@@ -16,73 +16,110 @@ class WidgetUtils {
     final formatter = DateFormat('yyyy/MM/dd(E) HH:mm', "ja_JP");
     final formatted = formatter.format(quiz.createdAt); // Dateから
 
-    final Widget image;
+    final List<Widget> list = [];
+
+    createImage(image) => Padding(
+          padding: const EdgeInsets.fromLTRB(8, 8, 16, 8),
+          child: image,
+        );
+
     if (quiz.imageUrl != null) {
-      image = AspectRatio(
-        aspectRatio: 1.0,
-        child: Hero(
-          tag: quiz.imageUrl!,
-          child: Image.network(quiz.imageUrl!, fit: BoxFit.cover),
+      list.add(
+        createImage(
+          Hero(
+            tag: quiz.imageUrl!,
+            child: Image.network(
+              quiz.imageUrl!,
+              fit: BoxFit.cover,
+              height: 125,
+              width: 125,
+            ),
+          ),
         ),
       );
     } else {
-      image = Padding(
-        padding: const EdgeInsets.only(left: 16.0),
-        child: Text("no image"),
+      list.add(
+        createImage(Container(
+          height: 125,
+          width: 125,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.black54),
+          ),
+          child: Center(
+            child: const Text(
+              "No image",
+            ),
+          ),
+        )),
       );
     }
 
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      child: Column(
+    go() {
+      Navigator.of(context).pushNamed(
+        Nav.QUIZ_ANSWER,
+        arguments: quiz.documentId,
+      );
+    }
+
+    final String correctRate;
+    if(quiz.car != null) {
+      correctRate = "正解率：${(quiz.car! * 100).toInt()}％";
+    } else {
+      correctRate = "";
+    }
+
+
+    list.add(
+      Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              quiz.title,
-              style: theme.textTheme.headline5,
-            ),
+          SizedBox(
+            height: 8,
           ),
-          image,
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
-            child: Text(
-              "問題　${quiz.question}",
-              style: theme.textTheme.bodyText2,
-            ),
+          Text(
+            quiz.title,
+            style: theme.textTheme.headline5,
           ),
-          ButtonBar(
-            alignment: MainAxisAlignment.start,
-            children: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed(
-                    Nav.QUIZ_ANSWER,
-                    arguments: quiz.documentId,
-                  );
-                },
-                child: const Text('クイズに答える'),
-              ),
-            ],
+          SizedBox(
+            height: 8,
           ),
-          Padding(
-            padding: const EdgeInsets.fromLTRB(16, 0, 0, 8),
-            child: Text(
-              formatted,
-              style: theme.textTheme.caption,
-            ),
+          Text(
+            "問題　${quiz.question}",
+            style: theme.textTheme.bodyText2,
+          ),
+          SizedBox(
+            height: 8,
+          ),
+          Text(
+            "回答数：${quiz.answerCount}　$correctRate",
+            style: theme.textTheme.bodyText2,
+          ),
+          SizedBox(
+            height: 8,
+          ),
+          Text(
+            formatted,
+            style: theme.textTheme.caption,
           ),
         ],
+      ),
+    );
+
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: list,
       ),
     );
   }
 
   static Widget loading() => const Center(
-      child: const SizedBox(
-        height: 100,
-        width: 100,
-        child: const CircularProgressIndicator(),
-      ),
-    );
+        child: const SizedBox(
+          height: 100,
+          width: 100,
+          child: const CircularProgressIndicator(),
+        ),
+      );
 }

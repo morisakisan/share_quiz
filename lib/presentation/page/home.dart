@@ -34,9 +34,7 @@ class Home extends HookWidget {
             tabs: _tab,
           ),
         ),
-        drawer: SafeArea(
-          child: _createDrawer(context, state, notifier),
-        ),
+        drawer: _createDrawer(context, state, notifier),
         body: TabBarView(
           children: [
             News(),
@@ -92,7 +90,7 @@ class Home extends HookWidget {
     );
   }
 
-  Drawer _createDrawer(BuildContext context, Resource<UserData?> state,
+  Widget _createDrawer(BuildContext context, Resource<UserData?> state,
       UserLoginStateNotifier notifier) {
     final theme = Theme.of(context);
 
@@ -236,9 +234,11 @@ class Home extends HookWidget {
       ),
     );
 
-    return Drawer(
-      child: ListView(
-        children: list,
+    return SafeArea(
+      child: Drawer(
+        child: ListView(
+          children: list,
+        ),
       ),
     );
   }
