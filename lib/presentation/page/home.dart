@@ -50,7 +50,10 @@ class Home extends HookWidget {
               if (user != null) {
                 Navigator.of(context).pushNamed(Nav.QUIZ_POST);
               } else {
-                notifier.signInWithGoogle();
+                _showLoginDialog(
+                  context,
+                  notifier,
+                );
               }
             }
           },
@@ -61,112 +64,181 @@ class Home extends HookWidget {
     );
   }
 
+  _showLoginDialog(
+    BuildContext context,
+    UserLoginStateNotifier notifier,
+  ) {
+    showDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          content: Text("クイズを投稿するにはログインが必要です。ログインします。"),
+          actions: [
+            // ボタン領域
+            TextButton(
+              child: Text("Cancel"),
+              onPressed: () => Navigator.pop(context),
+            ),
+            TextButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.pop(context);
+                notifier.signInWithGoogle();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Drawer _createDrawer(BuildContext context, Resource<UserData?> state,
       UserLoginStateNotifier notifier) {
     final theme = Theme.of(context);
-    final Widget profile;
+
+    Widget createHeader(Widget profile) {
+      return DrawerHeader(
+        child: Center(
+          child: profile,
+        ),
+        decoration: BoxDecoration(
+          color: theme.primaryColor,
+        ),
+      );
+    }
+
+    final List<Widget> list = [];
     if (state is Loading) {
-      profile = Center(
-        child: SizedBox(
-          height: 50,
-          width: 50,
-          child: CircularProgressIndicator(),
+      list.add(
+        createHeader(
+          const SizedBox(
+            height: 50,
+            width: 50,
+            child: const CircularProgressIndicator(),
+          ),
         ),
       );
     } else if (state is Error) {
-      profile = Column();
+      list.add(createHeader(Column()));
     } else if (state is Success) {
       final user = (state as Success).value;
       if (user != null) {
         final name = user?.name ?? "";
         final photoUrl = user?.photoUrl ?? "";
-        profile = Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CircleAvatar(
-              radius: 30.0,
-              backgroundImage: NetworkImage(photoUrl),
-              backgroundColor: Colors.transparent,
+        list.add(
+          createHeader(
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircleAvatar(
+                  radius: 30.0,
+                  backgroundImage: NetworkImage(photoUrl),
+                  backgroundColor: Colors.transparent,
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Text(
+                  name,
+                  style: theme.primaryTextTheme.headline6,
+                ),
+              ],
             ),
-            SizedBox(
-              height: 16,
-            ),
-            Text(
-              name,
-              style: theme.primaryTextTheme.headline6,
-            ),
-          ],
+          ),
         );
       } else {
-        profile = Text(
-          "未ログインです。ログインしてください。",
-          style: theme.primaryTextTheme.headline6,
+        list.add(
+          createHeader(
+            Text(
+              "未ログインです。ログインしてください。",
+              style: theme.primaryTextTheme.headline6,
+            ),
+          ),
         );
       }
     } else {
       throw Exception();
     }
 
+    // list.add(
+    //   ListTile(
+    //     leading: Icon(Icons.account_circle),
+    //     title: Text(
+    //       'プロフィール',
+    //       style: theme.textTheme.bodyText1,
+    //     ),
+    //     onTap: () {},
+    //   ),
+    // );
+
+    if (state is Success) {
+      final user = (state as Success).value;
+      final Widget login;
+      if (user != null) {
+        login = ListTile(
+          leading: Icon(Icons.logout),
+          title: Text(
+            'ログアウト',
+            style: theme.textTheme.bodyText1,
+          ),
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (_) {
+                return AlertDialog(
+                  content: Text("ログアウトを行います"),
+                  actions: [
+                    TextButton(
+                      child: Text("Cancel"),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    TextButton(
+                      child: Text("OK"),
+                      onPressed: () {
+                        notifier.logout();
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
+                );
+              },
+            );
+          },
+        );
+      } else {
+        login = ListTile(
+          leading: const Icon(Icons.login),
+          title: Text(
+            'ログイン',
+            style: theme.textTheme.bodyText1,
+          ),
+          onTap: () {
+            _showLoginDialog(
+              context,
+              notifier,
+            );
+          },
+        );
+      }
+      list.add(login);
+    }
+
+    list.add(
+      ListTile(
+        leading: Icon(Icons.settings),
+        title: Text(
+          '設定',
+          style: theme.textTheme.bodyText1,
+        ),
+        onTap: () {
+          Navigator.of(context).pushNamed(Nav.SETTING);
+        },
+      ),
+    );
+
     return Drawer(
       child: ListView(
-        children: <Widget>[
-          DrawerHeader(
-            child: Center(
-              child: profile,
-            ),
-            decoration: BoxDecoration(
-              color: theme.primaryColor,
-            ),
-          ),
-          // ListTile(
-          //   leading: Icon(Icons.account_circle),
-          //   title: Text(
-          //     'プロフィール',
-          //     style: theme.textTheme.bodyText1,
-          //   ),
-          //   onTap: () {},
-          // ),
-          ListTile(
-            leading: Icon(Icons.settings),
-            title: Text(
-              '設定',
-              style: theme.textTheme.bodyText1,
-            ),
-            onTap: () {
-              Navigator.of(context).pushNamed(Nav.SETTING);
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.login_outlined),
-            title: Text(
-              'ログアウト',
-              style: theme.textTheme.bodyText1,
-            ),
-            onTap: () {
-              showDialog(
-                context: context,
-                builder: (_) {
-                  return AlertDialog(
-                    content: Text("ログアウトを行います"),
-                    actions: [
-                      TextButton(
-                        child: Text("Cancel"),
-                        onPressed: () => Navigator.pop(context),
-                      ),
-                      TextButton(
-                        child: Text("OK"),
-                        onPressed: () {
-                          notifier.logout();
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
-          ),
-        ],
+        children: list,
       ),
     );
   }
