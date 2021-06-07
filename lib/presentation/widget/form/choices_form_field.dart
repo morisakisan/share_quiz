@@ -34,7 +34,7 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
             if (state.value!.item1.length < 5) {
               headerChildren.add(
                 const SizedBox(
-                  height: 16,
+                  height: 8,
                 ),
               );
               headerChildren.add(
