@@ -13,7 +13,7 @@ class QuizPostStateNotifier extends StateNotifier<Resource<Object?>?> {
 
   QuizPostStateNotifier() : super(null);
 
-  post(QuizPostData post, BuildContext context) async {
+  post(QuizPostData post, BuildContext context) {
     state = Resource.loading();
     _repository.store(post).then((value) {
       state = Resource(null);
