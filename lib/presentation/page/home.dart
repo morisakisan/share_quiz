@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_quiz/data/repository_impl/quiz_ansewers_count_repository.dart';
+import 'package:share_quiz/data/repository_impl/quiz_correct_rate_repository.dart';
 import 'package:share_quiz/data/repository_impl/quiz_new_repository.dart';
 
 // Project imports:
@@ -15,9 +16,10 @@ import 'package:share_quiz/presentation/screen/quiz_list_screen.dart';
 import '../nav.dart';
 
 class Home extends HookWidget {
-  final _tab = <Tab>[
+  final _tab = [
     Tab(text: '新着'),
     Tab(text: '回答数'),
+    Tab(text: '正解率'),
   ];
 
   final provider = StateNotifierProvider((ref) => UserLoginStateNotifier());
@@ -38,8 +40,15 @@ class Home extends HookWidget {
         drawer: _createDrawer(context, state, notifier),
         body: TabBarView(
           children: [
-            QuizListScreen(QuizNewRepository()),
-            QuizListScreen(QuizAnswersCountRepository()),
+            QuizListScreen(
+              QuizNewRepository(),
+            ),
+            QuizListScreen(
+              QuizAnswersCountRepository(),
+            ),
+            QuizListScreen(
+              QuizCorrectRateRepository(),
+            ),
           ],
         ),
         floatingActionButton: FloatingActionButton(
