@@ -47,8 +47,11 @@ class QuizAnswer extends HookWidget {
 
   final selectProvider = StateNotifierProvider((_) => _Select());
 
-  Widget _success(BuildContext context, Success<QuizAnswerData> quizAnswer,
-      QuizAnswerDataNotifier notifier) {
+  Widget _success(
+    BuildContext context,
+    Success<QuizAnswerData> quizAnswer,
+    QuizAnswerDataNotifier notifier,
+  ) {
     final selectNotifier = useProvider(selectProvider.notifier);
     var selectValue = useProvider(selectProvider.select((value) => value));
     final theme = Theme.of(context);
@@ -56,19 +59,11 @@ class QuizAnswer extends HookWidget {
     final quiz = quizAnswerData.quiz;
 
     final Widget image;
+    const imageSize = 250.0;
     if (quiz.imageUrl != null) {
-      image = AspectRatio(
-        aspectRatio: 1.0,
-        child: Hero(
-          tag: quiz.imageUrl!,
-          child: Image.network(quiz.imageUrl!, fit: BoxFit.cover),
-        ),
-      );
+      image = WidgetUtils.getQuizImage(imageSize, quiz.imageUrl!);
     } else {
-      image = Padding(
-        padding: const EdgeInsets.only(left: 16.0),
-        child: const Text("no image"),
-      );
+      image = WidgetUtils.getNoImage(imageSize);
     }
 
     final Function()? answerOnPressed;
@@ -154,8 +149,12 @@ class QuizAnswer extends HookWidget {
     );
   }
 
-  _showAnswerDialog(BuildContext context, int select, Quiz quiz,
-      QuizAnswerDataNotifier notifier) {
+  _showAnswerDialog(
+    BuildContext context,
+    int select,
+    Quiz quiz,
+    QuizAnswerDataNotifier notifier,
+  ) {
     showDialog(
       context: context,
       builder: (_) {

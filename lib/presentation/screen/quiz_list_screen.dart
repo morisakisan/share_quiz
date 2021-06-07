@@ -47,40 +47,20 @@ class QuizListScreen extends HookWidget {
     final List<Widget> list = [];
 
     createImage(image) => Padding(
-      padding: const EdgeInsets.fromLTRB(8, 8, 16, 8),
-      child: image,
-    );
+          padding: const EdgeInsets.fromLTRB(8, 8, 16, 8),
+          child: image,
+        );
 
+    const imageSize = 125.0;
     if (quiz.imageUrl != null) {
       list.add(
         createImage(
-          Hero(
-            tag: quiz.imageUrl!,
-            child: Image.network(
-              quiz.imageUrl!,
-              fit: BoxFit.cover,
-              height: 125,
-              width: 125,
-            ),
-          ),
+          WidgetUtils.getQuizImage(imageSize, quiz.imageUrl!)
         ),
       );
     } else {
       list.add(
-        createImage(
-          Container(
-            height: 125,
-            width: 125,
-            decoration: BoxDecoration(
-              border: Border.all(color: Colors.black54),
-            ),
-            child: Center(
-              child: const Text(
-                "No image",
-              ),
-            ),
-          ),
-        ),
+        createImage(WidgetUtils.getNoImage(imageSize)),
       );
     }
 
