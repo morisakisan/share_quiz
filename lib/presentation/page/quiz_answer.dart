@@ -77,6 +77,16 @@ class QuizAnswer extends HookWidget {
       ),
     );
 
+    list.add(
+      Padding(
+        padding: const EdgeInsets.only(top: 8),
+        child: Text(
+          "答えだと思う選択肢にチェックをいれてね",
+          style: theme.textTheme.bodyText1,
+        ),
+      ),
+    );
+
     var selectValue = useProvider(selectProvider.select((value) => value));
 
     createChoices(ValueChanged<int?>? onChanged) =>
@@ -120,7 +130,7 @@ class QuizAnswer extends HookWidget {
 
       list.add(
         Text(
-          "答えは「${quiz.choices[quiz.correctAnswer]}」です！",
+          "答えは「${quiz.choices[quiz.correctAnswer]}」！",
         ),
       );
 
@@ -131,9 +141,9 @@ class QuizAnswer extends HookWidget {
       );
       String text;
       if (selectValue == quiz.correctAnswer) {
-        text = "正解です！";
+        text = "正解だよ！";
       } else {
-        text = "不正解です！";
+        text = "不正解だよ！";
       }
       list.add(
         Text(

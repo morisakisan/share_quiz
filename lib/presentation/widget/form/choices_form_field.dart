@@ -53,7 +53,7 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
               );
               headerChildren.add(
                 const Text(
-                  "正解の選択肢にチェックを入れてください",
+                  "正解の選択肢にチェックを入れてね",
                 ),
               );
             }
