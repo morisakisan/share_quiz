@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:package_info/package_info.dart';
 import 'package:settings_ui/settings_ui.dart';
+import 'package:share_quiz/presentation/widget/widget_utils.dart';
 
 class Setting extends HookWidget {
   @override
@@ -16,7 +17,11 @@ class Setting extends HookWidget {
       body: FutureBuilder<PackageInfo>(
         future: PackageInfo.fromPlatform(),
         builder: (context, snapshot) {
-          return _buildSettingsList(snapshot.data!);
+          if(!snapshot.hasData) {
+            return WidgetUtils.loading();
+          } else {
+            return _buildSettingsList(snapshot.data!);
+          }
         },
       ),
     );
