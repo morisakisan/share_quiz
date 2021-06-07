@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:state_notifier/state_notifier.dart';
 
@@ -12,10 +13,11 @@ class QuizPostStateNotifier extends StateNotifier<Resource<Object?>?> {
 
   QuizPostStateNotifier() : super(null);
 
-  post(QuizPostData post) async {
+  post(QuizPostData post, BuildContext context) async {
     state = Resource.loading();
-    await _repository.store(post).then((value) {
+    _repository.store(post).then((value) {
       state = Resource(null);
+      Navigator.pop(context);
     }).catchError((onError) {
       state = Resource.error(onError);
     });

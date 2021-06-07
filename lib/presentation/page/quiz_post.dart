@@ -41,8 +41,9 @@ class QuizPost extends HookWidget {
     if (state is Loading) {
       children.add(WidgetUtils.loading());
     } else if (state is Error) {
+
     } else if (state is Success) {
-      Navigator.pop(context);
+
     }
 
     return Scaffold(
@@ -128,7 +129,7 @@ class QuizPost extends HookWidget {
                   answer: _answer!,
                   imageFile: _image,
                 );
-                notifier.post(postData);
+                notifier.post(postData, context);
               },
               child: const Text('クイズを投稿する'),
             ),

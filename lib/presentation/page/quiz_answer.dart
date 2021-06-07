@@ -32,7 +32,10 @@ class QuizAnswer extends HookWidget {
       return Container();
     } else if (quizAnswer is Success) {
       return _success(
-          context, quizAnswer as Success<QuizAnswerData>, quizAnswerNotifier);
+        context,
+        (quizAnswer as Success<QuizAnswerData>).value,
+        quizAnswerNotifier,
+      );
     } else {
       throw Exception();
     }
@@ -49,50 +52,81 @@ class QuizAnswer extends HookWidget {
 
   Widget _success(
     BuildContext context,
-    Success<QuizAnswerData> quizAnswer,
+    QuizAnswerData quizAnswerData,
     QuizAnswerDataNotifier notifier,
   ) {
     final selectNotifier = useProvider(selectProvider.notifier);
-    var selectValue = useProvider(selectProvider.select((value) => value));
+
     final theme = Theme.of(context);
-    final QuizAnswerData quizAnswerData = quizAnswer.value;
     final quiz = quizAnswerData.quiz;
 
-    final Widget image;
-    const imageSize = 250.0;
+    List<Widget> list = [];
     if (quiz.imageUrl != null) {
-      image = WidgetUtils.getQuizImage(imageSize, quiz.imageUrl!);
+      list.add(WidgetUtils.getQuizImage(250.0, quiz.imageUrl!));
     } else {
-      image = WidgetUtils.getNoImage(imageSize);
+      list.add(WidgetUtils.getNoImage(100));
     }
 
-    final Function()? answerOnPressed;
-    final ValueChanged<int?>? onChanged;
-    final List<Widget> answer = [];
-    if (quizAnswerData.select_anser == null) {
-      answerOnPressed = () {
-        _showAnswerDialog(context, selectValue, quiz, notifier);
-      };
+    list.add(
+      Padding(
+        padding: const EdgeInsets.only(top: 16),
+        child: Text(
+          "問題　${quiz.question}",
+          style: theme.textTheme.bodyText1,
+        ),
+      ),
+    );
 
-      onChanged = (v) {
-        selectNotifier.select = v!;
-      };
+    var selectValue = useProvider(selectProvider.select((value) => value));
+
+    createChoices(ValueChanged<int?>? onChanged) =>
+        quiz.choices.asMap().entries.map(
+          (entry) {
+            final idx = entry.key;
+            final val = entry.value;
+            return RadioListTile<int>(
+              key: Key(idx.toString()),
+              value: idx,
+              groupValue: selectValue,
+              title: Text(val),
+              onChanged: onChanged,
+            );
+          },
+        );
+
+    final Function()? answerOnPressed;
+    if (quizAnswerData.select_anser == null) {
+      list.addAll(
+        createChoices(
+          (v) {
+            selectNotifier.select = v!;
+          },
+        ),
+      );
+
+      answerOnPressed =
+          () => _showAnswerDialog(context, selectValue, quiz, notifier);
     } else {
       selectValue = quizAnswerData.select_anser!;
       answerOnPressed = null;
-      onChanged = null;
 
-      answer.add(
+      list.addAll(createChoices(null));
+
+      list.add(
         const SizedBox(
           height: 16,
         ),
       );
 
-      answer.add(Text("答えは「${quiz.choices[selectValue]}」です！"));
+      list.add(
+        Text(
+          "答えは「${quiz.choices[quiz.correctAnswer]}」です！",
+        ),
+      );
 
-      answer.add(
+      list.add(
         const SizedBox(
-          height: 16,
+          height: 8,
         ),
       );
       String text;
@@ -101,50 +135,40 @@ class QuizAnswer extends HookWidget {
       } else {
         text = "不正解です！";
       }
-      answer.add(Text(text));
+      list.add(
+        Text(
+          text,
+        ),
+      );
     }
 
     return Scaffold(
       appBar: AppBar(
         title: Text(quiz.title),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          margin: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-                  image,
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16),
-                    child: Text(
-                      "問題　${quiz.question}",
-                      style: theme.textTheme.bodyText1,
-                    ),
-                  ),
-                ] +
-                quiz.choices.asMap().entries.map(
-                  (entry) {
-                    final idx = entry.key;
-                    final val = entry.value;
-                    return RadioListTile<int>(
-                      key: Key(idx.toString()),
-                      value: idx,
-                      groupValue: selectValue,
-                      title: Text(val),
-                      onChanged: onChanged,
-                    );
-                  },
-                ).toList() +
-                [
-                  ElevatedButton(
-                    child: const Text('回答する'),
-                    onPressed: answerOnPressed,
-                  ),
-                ] +
-                answer,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Container(
+                margin: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: list,
+                ),
+              ),
+            ),
           ),
-        ),
+          ElevatedButton.icon(
+            icon: const Icon(Icons.question_answer_rounded),
+            label: const Text('　　回答する　　'),
+            onPressed: answerOnPressed,
+          ),
+          const SizedBox(
+            height: 8,
+          )
+        ],
       ),
     );
   }
