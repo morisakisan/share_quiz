@@ -41,7 +41,7 @@ class QuizAnswer extends HookWidget {
   Widget _loading() {
     return Scaffold(
       appBar: AppBar(),
-      body: WidgetUtils.loading()
+      body: WidgetUtils.loading(),
     );
   }
 
@@ -86,11 +86,25 @@ class QuizAnswer extends HookWidget {
       selectValue = quizAnswerData.select_anser!;
       answerOnPressed = null;
       onChanged = null;
+
+      answer.add(
+        const SizedBox(
+          height: 16,
+        ),
+      );
+
+      answer.add(Text("正解は${quiz.choices[selectValue]}です！"));
+
+      answer.add(
+        const SizedBox(
+          height: 16,
+        ),
+      );
       String text;
       if (selectValue == quiz.correctAnswer) {
-        text = "正解";
+        text = "正解です！";
       } else {
-        text = "不正解";
+        text = "不正解です！";
       }
       answer.add(Text(text));
     }
@@ -146,7 +160,8 @@ class QuizAnswer extends HookWidget {
       context: context,
       builder: (_) {
         return AlertDialog(
-          content: Text("問題：${quiz.question}\n回答：${quiz.choices[select]}\nこちらの回答でよろしいですか？"),
+          content: Text(
+              "問題：${quiz.question}\n回答：${quiz.choices[select]}\nこちらの回答でよろしいですか？"),
           actions: [
             TextButton(
               child: const Text("Cancel"),
