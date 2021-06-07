@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:share/share.dart';
 
 // Project imports:
 import 'package:share_quiz/domain/common/resource.dart';
@@ -151,6 +152,22 @@ class QuizAnswer extends HookWidget {
         ),
       );
     }
+
+    list.add(
+      const SizedBox(
+        height: 16,
+      ),
+    );
+
+    list.add(
+      TextButton.icon(
+        icon: Icon(Icons.share),
+        onPressed: () {
+          Share.share("タイトル：${quiz.title}\n問題：${quiz.question}");
+        },
+        label: Text("シェア"),
+      ),
+    );
 
     return Scaffold(
       appBar: AppBar(

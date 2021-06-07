@@ -26,6 +26,7 @@ dependencies:
   package_info: ^2.0.0
   import_sorter: ^4.5.1
   image_picker: ^0.7.4
+  share: ^2.0.4
 
 
 dev_dependencies:
