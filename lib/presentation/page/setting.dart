@@ -40,7 +40,7 @@ class Setting extends HookWidget {
             // ),
             SettingsTile(
               title: 'ライセンス',
-              leading: Icon(Icons.collections_bookmark),
+              leading: const Icon(Icons.collections_bookmark),
               onPressed: (context) {
                 showLicensePage(
                   context: context,
@@ -56,7 +56,7 @@ class Setting extends HookWidget {
           tiles: [
             SettingsTile(
               title: 'バージョン',
-              leading: Icon(Icons.info_outline),
+              leading: const Icon(Icons.info_outline),
               trailing: Text(info.version),
             ),
           ],

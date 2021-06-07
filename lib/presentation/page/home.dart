@@ -65,7 +65,7 @@ class Home extends HookWidget {
               }
             }
           },
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
           backgroundColor: Colors.green,
         ),
       ),
@@ -184,7 +184,7 @@ class Home extends HookWidget {
       final Widget login;
       if (user != null) {
         login = ListTile(
-          leading: Icon(Icons.logout),
+          leading: const Icon(Icons.logout),
           title: Text(
             'ログアウト',
             style: theme.textTheme.bodyText1,
@@ -220,12 +220,7 @@ class Home extends HookWidget {
             'ログイン',
             style: theme.textTheme.bodyText1,
           ),
-          onTap: () {
-            _showLoginDialog(
-              context,
-              notifier,
-            );
-          },
+          onTap: () => notifier.signInWithGoogle(),
         );
       }
       list.add(login);
@@ -233,7 +228,7 @@ class Home extends HookWidget {
 
     list.add(
       ListTile(
-        leading: Icon(Icons.settings),
+        leading: const Icon(Icons.settings),
         title: Text(
           '設定',
           style: theme.textTheme.bodyText1,

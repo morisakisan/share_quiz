@@ -114,7 +114,7 @@ class QuizListScreen extends HookWidget {
             alignment: MainAxisAlignment.start,
             children: [
               TextButton.icon(
-                icon: Icon(Icons.question_answer_rounded),
+                icon: const Icon(Icons.question_answer_rounded),
                 onPressed: () {
                   Navigator.of(context).pushNamed(
                     Nav.QUIZ_ANSWER,
