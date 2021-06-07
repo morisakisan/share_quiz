@@ -17,9 +17,9 @@ import '../nav.dart';
 
 class Home extends HookWidget {
   final _tab = [
-    Tab(text: '新着'),
-    Tab(text: '回答数'),
-    Tab(text: '正解率'),
+    const Tab(text: '新着'),
+    const Tab(text: '回答数'),
+    const Tab(text: '正解率'),
   ];
 
   final provider = StateNotifierProvider((ref) => UserLoginStateNotifier());
@@ -32,7 +32,7 @@ class Home extends HookWidget {
       length: _tab.length,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('みんなのクイズ'),
+          title: const Text('みんなのクイズ'),
           bottom: TabBar(
             tabs: _tab,
           ),
@@ -80,15 +80,15 @@ class Home extends HookWidget {
       context: context,
       builder: (_) {
         return AlertDialog(
-          content: Text("クイズを投稿するにはログインが必要です。ログインしますか？"),
+          content: const Text("クイズを投稿するにはログインが必要です。ログインしますか？"),
           actions: [
             // ボタン領域
             TextButton(
-              child: Text("Cancel"),
+              child: const Text("Cancel"),
               onPressed: () => Navigator.pop(context),
             ),
             TextButton(
-              child: Text("OK"),
+              child: const Text("OK"),
               onPressed: () {
                 Navigator.pop(context);
                 notifier.signInWithGoogle();
