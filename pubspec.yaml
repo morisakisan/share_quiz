@@ -2,7 +2,7 @@ name: share_quiz
 description: A new Flutter application.
 version: 1.0.0+1
 environment:
-  sdk: ">=2.12.3 <3.0.0"
+  sdk: ">=2.13.1 <3.0.0"
 
 dependencies:
   flutter:
