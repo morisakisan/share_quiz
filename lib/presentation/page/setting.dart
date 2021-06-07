@@ -35,10 +35,10 @@ class Setting extends HookWidget {
             bottom: 6.0,
           ),
           tiles: [
-            SettingsTile(
-              title: '利用規約',
-              leading: Icon(Icons.description),
-            ),
+            // SettingsTile(
+            //   title: '利用規約',
+            //   leading: Icon(Icons.description),
+            // ),
             SettingsTile(
               title: 'ライセンス',
               leading: Icon(Icons.collections_bookmark),

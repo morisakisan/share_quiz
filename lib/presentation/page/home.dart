@@ -118,6 +118,14 @@ class Home extends HookWidget {
               color: theme.primaryColor,
             ),
           ),
+          // ListTile(
+          //   leading: Icon(Icons.account_circle),
+          //   title: Text(
+          //     'プロフィール',
+          //     style: theme.textTheme.bodyText1,
+          //   ),
+          //   onTap: () {},
+          // ),
           ListTile(
             leading: Icon(Icons.settings),
             title: Text(
