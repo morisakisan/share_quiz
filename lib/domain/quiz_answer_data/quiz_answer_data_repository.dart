@@ -18,7 +18,10 @@ class QuizAnswerDataRepository {
 
     final quiz = QuizMapper.transform(quizDto!);
     final user = await _userDataStore.gerCurrentUser();
-    final answer = await _answerDataStore.fetchMyAnswers(quizId, user!.uid);
+    if(user == null) {
+      throw Exception();
+    }
+    final answer = await _answerDataStore.fetchMyAnswers(quizId, user.uid);
     return QuizAnswerData(quiz: quiz, select_anser: answer?.answer ?? null);
   }
 

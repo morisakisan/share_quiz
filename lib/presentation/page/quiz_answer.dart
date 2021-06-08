@@ -29,8 +29,8 @@ class QuizAnswer extends HookWidget {
       final quizId = ModalRoute.of(context)!.settings.arguments as String;
       quizAnswerNotifier.fetch(quizId);
       return _loading();
-    } else if (quizAnswer is Error) {
-      return Container();
+    } else if (quizAnswer is Failure) {
+      return _error();
     } else if (quizAnswer is Success) {
       return _success(
         context,
@@ -46,6 +46,13 @@ class QuizAnswer extends HookWidget {
     return Scaffold(
       appBar: AppBar(),
       body: WidgetUtils.loading(),
+    );
+  }
+
+  Widget _error() {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Text("error"),
     );
   }
 

@@ -127,7 +127,7 @@ class Home extends HookWidget {
           ),
         ),
       );
-    } else if (state is Error) {
+    } else if (state is Failure) {
       list.add(createHeader(Column()));
     } else if (state is Success) {
       final user = (state as Success).value;
