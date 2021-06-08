@@ -1,10 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 // Package imports:
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:share/share.dart';
 
 // Project imports:
 import 'package:share_quiz/domain/common/resource.dart';
@@ -33,7 +33,10 @@ class QuizAnswer extends HookWidget {
       return Container();
     } else if (quizAnswer is Success) {
       return _success(
-          context, quizAnswer as Success<QuizAnswerData>, quizAnswerNotifier);
+        context,
+        (quizAnswer as Success<QuizAnswerData>).value,
+        quizAnswerNotifier,
+      );
     } else {
       throw Exception();
     }
@@ -42,112 +45,187 @@ class QuizAnswer extends HookWidget {
   Widget _loading() {
     return Scaffold(
       appBar: AppBar(),
-      body: WidgetUtils.loading()
+      body: WidgetUtils.loading(),
     );
   }
 
   final selectProvider = StateNotifierProvider((_) => _Select());
 
-  Widget _success(BuildContext context, Success<QuizAnswerData> quizAnswer,
-      QuizAnswerDataNotifier notifier) {
+  Widget _success(
+    BuildContext context,
+    QuizAnswerData quizAnswerData,
+    QuizAnswerDataNotifier notifier,
+  ) {
     final selectNotifier = useProvider(selectProvider.notifier);
-    var selectValue = useProvider(selectProvider.select((value) => value));
+
     final theme = Theme.of(context);
-    final QuizAnswerData quizAnswerData = quizAnswer.value;
     final quiz = quizAnswerData.quiz;
 
-    final Widget image;
+    List<Widget> list = [];
     if (quiz.imageUrl != null) {
-      image = AspectRatio(
-        aspectRatio: 1.0,
-        child: Hero(
-          tag: quiz.imageUrl!,
-          child: Image.network(quiz.imageUrl!, fit: BoxFit.cover),
-        ),
-      );
+      list.add(WidgetUtils.getQuizImage(250.0, quiz.imageUrl!));
     } else {
-      image = Padding(
-        padding: const EdgeInsets.only(left: 16.0),
-        child: const Text("no image"),
+      list.add(WidgetUtils.getNoImage(100));
+    }
+
+    list.add(
+      Padding(
+        padding: const EdgeInsets.only(top: 16),
+        child: Text(
+          "問題　${quiz.question}",
+          style: theme.textTheme.headline5,
+        ),
+      ),
+    );
+
+    final correctRate = quiz.car;
+    if (correctRate != null) {
+      list.add(
+        Padding(
+          padding: const EdgeInsets.only(top: 8),
+          child: Text(
+            "正解率は${(correctRate * 100).toInt()}％だよ",
+            style: theme.textTheme.caption,
+          ),
+        ),
       );
     }
 
-    final Function()? answerOnPressed;
-    final ValueChanged<int?>? onChanged;
-    final List<Widget> answer = [];
-    if (quizAnswerData.select_anser == null) {
-      answerOnPressed = () {
-        _showAnswerDialog(context, selectValue, quiz, notifier);
-      };
+    list.add(
+      Padding(
+        padding: const EdgeInsets.only(top: 24),
+        child: Text(
+          "正解だと思う選択肢にチェックをいれてね",
+          style: theme.textTheme.bodyText1,
+        ),
+      ),
+    );
 
-      onChanged = (v) {
-        selectNotifier.select = v!;
-      };
+    var selectValue = useProvider(selectProvider.select((value) => value));
+
+    createChoices(ValueChanged<int?>? onChanged) =>
+        quiz.choices.asMap().entries.map(
+          (entry) {
+            final idx = entry.key;
+            final val = entry.value;
+            return RadioListTile<int>(
+              key: Key(idx.toString()),
+              value: idx,
+              groupValue: selectValue,
+              title: Text(val),
+              onChanged: onChanged,
+            );
+          },
+        );
+
+    final Function()? answerOnPressed;
+    if (quizAnswerData.select_anser == null) {
+      list.addAll(
+        createChoices(
+          (v) {
+            selectNotifier.select = v!;
+          },
+        ),
+      );
+
+      answerOnPressed =
+          () => _showAnswerDialog(context, selectValue, quiz, notifier);
     } else {
       selectValue = quizAnswerData.select_anser!;
       answerOnPressed = null;
-      onChanged = null;
+
+      list.addAll(createChoices(null));
+
+      list.add(
+        const SizedBox(
+          height: 16,
+        ),
+      );
+
+      list.add(
+        Text(
+          "答えは「${quiz.choices[quiz.correctAnswer]}」！",
+        ),
+      );
+
+      list.add(
+        const SizedBox(
+          height: 8,
+        ),
+      );
       String text;
       if (selectValue == quiz.correctAnswer) {
-        text = "正解";
+        text = "正解だよ！";
       } else {
-        text = "不正解";
+        text = "不正解だよ！";
       }
-      answer.add(Text(text));
+      list.add(
+        Text(
+          text,
+        ),
+      );
     }
+
+    list.add(
+      const SizedBox(
+        height: 16,
+      ),
+    );
+
+    list.add(
+      TextButton.icon(
+        icon: Icon(Icons.share),
+        onPressed: () {
+          Share.share("タイトル：${quiz.title}\n問題：${quiz.question}\n#みんなのクイズ");
+        },
+        label: Text("シェア"),
+      ),
+    );
 
     return Scaffold(
       appBar: AppBar(
         title: Text(quiz.title),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          margin: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-                  image,
-                  Padding(
-                    padding: const EdgeInsets.only(top: 16),
-                    child: Text(
-                      "問題　${quiz.question}",
-                      style: theme.textTheme.bodyText1,
-                    ),
-                  ),
-                ] +
-                quiz.choices.asMap().entries.map(
-                  (entry) {
-                    final idx = entry.key;
-                    final val = entry.value;
-                    return RadioListTile<int>(
-                      key: Key(idx.toString()),
-                      value: idx,
-                      groupValue: selectValue,
-                      title: Text(val),
-                      onChanged: onChanged,
-                    );
-                  },
-                ).toList() +
-                [
-                  ElevatedButton(
-                    child: const Text('回答する'),
-                    onPressed: answerOnPressed,
-                  ),
-                ] +
-                answer,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Container(
+                margin: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: list,
+                ),
+              ),
+            ),
           ),
-        ),
+          ElevatedButton.icon(
+            icon: const Icon(Icons.question_answer_rounded),
+            label: const Text('　　回答する　　'),
+            onPressed: answerOnPressed,
+          ),
+          const SizedBox(
+            height: 8,
+          )
+        ],
       ),
     );
   }
 
-  _showAnswerDialog(BuildContext context, int select, Quiz quiz,
-      QuizAnswerDataNotifier notifier) {
+  _showAnswerDialog(
+    BuildContext context,
+    int select,
+    Quiz quiz,
+    QuizAnswerDataNotifier notifier,
+  ) {
     showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (_) {
         return AlertDialog(
-          content: Text("問題：${quiz.question}\n回答：${quiz.choices[select]}\nこちらの回答でよろしいですか？"),
+          content: Text(
+              "問題：${quiz.question}\n回答：${quiz.choices[select]}\nこちらの回答でよろしいですか？"),
           actions: [
             TextButton(
               child: const Text("Cancel"),
@@ -156,17 +234,15 @@ class QuizAnswer extends HookWidget {
             TextButton(
               child: const Text("OK"),
               onPressed: () {
+                Navigator.pop(context);
                 repository.post(quiz.documentId, select).then(
                   (value) {
                     final quizId =
                         ModalRoute.of(context)!.settings.arguments as String;
                     notifier.fetch(quizId);
-                    Navigator.pop(context);
                   },
                 ).catchError(
-                  (error) {
-                    Navigator.pop(context);
-                  },
+                  (error) {},
                 );
               },
             ),

@@ -9,6 +9,20 @@ class QuizFirebaseStore {
     return FirebaseFirestore.instance.collection('quiz');
   }
 
+  Stream<List<QuizDto>> fetchOrderByCorrectRateDesc() {
+    return getCollection()
+        .orderBy("correct_answer_rate", descending: false)
+        .limit(100)
+        .snapshots()
+        .map(
+          (event) => event.docs.map(
+            (e) {
+              return QuizDto.fromJson(e.data()).copyWith(docId: e.id);
+            },
+          ).toList(),
+        );
+  }
+
   Stream<List<QuizDto>> fetchOrderByAnswerCountDesc() {
     return getCollection()
         .orderBy("answer_count", descending: true)
@@ -17,10 +31,10 @@ class QuizFirebaseStore {
         .map(
           (event) => event.docs.map(
             (e) {
-          return QuizDto.fromJson(e.data()).copyWith(docId: e.id);
-        },
-      ).toList(),
-    );
+              return QuizDto.fromJson(e.data()).copyWith(docId: e.id);
+            },
+          ).toList(),
+        );
   }
 
   Stream<List<QuizDto>> fetchOrderByCreatedAtDesc() {

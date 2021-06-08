@@ -13,7 +13,7 @@ class Application extends HookWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primarySwatch: Colors.green,
+        primaryColor: Colors.lime[800],
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textButtonTheme: TextButtonThemeData(
           style: TextButton.styleFrom(primary: Colors.blueAccent),

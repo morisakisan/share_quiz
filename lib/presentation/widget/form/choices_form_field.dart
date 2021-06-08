@@ -34,7 +34,7 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
             if (state.value!.item1.length < 5) {
               headerChildren.add(
                 const SizedBox(
-                  height: 16,
+                  height: 8,
                 ),
               );
               headerChildren.add(
@@ -53,7 +53,7 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
               );
               headerChildren.add(
                 const Text(
-                  "正解の選択肢にチェックを入れてください",
+                  "正解の選択肢にチェックを入れてね",
                 ),
               );
             }
@@ -134,6 +134,7 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
   static _showInputTextDialog(
       BuildContext context, FormFieldState<Tuple2<List<String>, int>> state) {
     showDialog(
+      barrierDismissible: false,
       context: context,
       builder: (context) {
         String? choice;
