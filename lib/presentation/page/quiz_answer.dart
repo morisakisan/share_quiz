@@ -52,7 +52,13 @@ class QuizAnswer extends HookWidget {
   Widget _error() {
     return Scaffold(
       appBar: AppBar(),
-      body: Text("error"),
+      body: Container(
+        padding: EdgeInsets.all(16),
+        child: Text(
+          "未ログインです。クイズに答えるにはホームからログインしてください。",
+          style: TextStyle(fontSize: 20),
+        ),
+      ),
     );
   }
 
