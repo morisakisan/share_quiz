@@ -15,8 +15,7 @@ class FirebaseStorageDataStore {
       return null;
     }
 
-    final hash = sha256;
-    var value = await hash.bind(file.openRead()).first;
+    final value = await sha256.bind(file.openRead()).first;
 
     final ref = FirebaseStorage.instance
         .ref()
