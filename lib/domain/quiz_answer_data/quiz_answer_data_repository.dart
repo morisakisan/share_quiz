@@ -7,6 +7,7 @@ import 'package:share_quiz/data/mapper/quiz_mapper.dart';
 import 'package:share_quiz/data/quiz/quiz_firebase_store.dart';
 import 'package:share_quiz/data/user/user_firebase_store.dart';
 import 'package:share_quiz/domain/quiz_answer_data/quiz_answer_data.dart';
+import 'package:share_quiz/domain/user/not_sign_In_exception.dart';
 
 class QuizAnswerDataRepository {
   final _quizDataStore = QuizFirebaseStore();
@@ -19,7 +20,7 @@ class QuizAnswerDataRepository {
     final quiz = QuizMapper.transform(quizDto!);
     final user = await _userDataStore.gerCurrentUser();
     if(user == null) {
-      throw Exception();
+      throw NotSignInException();
     }
     final answer = await _answerDataStore.fetchMyAnswers(quizId, user.uid);
     return QuizAnswerData(quiz: quiz, select_anser: answer?.answer ?? null);
