@@ -11,7 +11,6 @@ class UserDataRepositoryImpl extends UserDataRepository {
     final user = await _dataStore.gerCurrentUser();
     if(user != null) {
       final dto = await _dataStore.fetchWhereUid(user.uid);
-      print(dto);
       return UserStateMapper.transform(dto);
     } else {
       return null;
