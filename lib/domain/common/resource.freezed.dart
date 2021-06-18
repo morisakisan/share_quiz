@@ -26,8 +26,8 @@ class _$ResourceTearOff {
     return Loading<T>();
   }
 
-  Error<T> error<T>(Exception error) {
-    return Error<T>(
+  Failure<T> error<T>(Exception error) {
+    return Failure<T>(
       error,
     );
   }
@@ -57,14 +57,14 @@ mixin _$Resource<T> {
   TResult map<TResult extends Object?>(
     TResult Function(Success<T> value) $default, {
     required TResult Function(Loading<T> value) loading,
-    required TResult Function(Error<T> value) error,
+    required TResult Function(Failure<T> value) error,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>(
     TResult Function(Success<T> value)? $default, {
     TResult Function(Loading<T> value)? loading,
-    TResult Function(Error<T> value)? error,
+    TResult Function(Failure<T> value)? error,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -174,7 +174,7 @@ class _$Success<T> implements Success<T> {
   TResult map<TResult extends Object?>(
     TResult Function(Success<T> value) $default, {
     required TResult Function(Loading<T> value) loading,
-    required TResult Function(Error<T> value) error,
+    required TResult Function(Failure<T> value) error,
   }) {
     return $default(this);
   }
@@ -184,7 +184,7 @@ class _$Success<T> implements Success<T> {
   TResult maybeMap<TResult extends Object?>(
     TResult Function(Success<T> value)? $default, {
     TResult Function(Loading<T> value)? loading,
-    TResult Function(Error<T> value)? error,
+    TResult Function(Failure<T> value)? error,
     required TResult orElse(),
   }) {
     if ($default != null) {
@@ -266,7 +266,7 @@ class _$Loading<T> implements Loading<T> {
   TResult map<TResult extends Object?>(
     TResult Function(Success<T> value) $default, {
     required TResult Function(Loading<T> value) loading,
-    required TResult Function(Error<T> value) error,
+    required TResult Function(Failure<T> value) error,
   }) {
     return loading(this);
   }
@@ -276,7 +276,7 @@ class _$Loading<T> implements Loading<T> {
   TResult maybeMap<TResult extends Object?>(
     TResult Function(Success<T> value)? $default, {
     TResult Function(Loading<T> value)? loading,
-    TResult Function(Error<T> value)? error,
+    TResult Function(Failure<T> value)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -291,26 +291,26 @@ abstract class Loading<T> implements Resource<T> {
 }
 
 /// @nodoc
-abstract class $ErrorCopyWith<T, $Res> {
-  factory $ErrorCopyWith(Error<T> value, $Res Function(Error<T>) then) =
-      _$ErrorCopyWithImpl<T, $Res>;
+abstract class $FailureCopyWith<T, $Res> {
+  factory $FailureCopyWith(Failure<T> value, $Res Function(Failure<T>) then) =
+      _$FailureCopyWithImpl<T, $Res>;
   $Res call({Exception error});
 }
 
 /// @nodoc
-class _$ErrorCopyWithImpl<T, $Res> extends _$ResourceCopyWithImpl<T, $Res>
-    implements $ErrorCopyWith<T, $Res> {
-  _$ErrorCopyWithImpl(Error<T> _value, $Res Function(Error<T>) _then)
-      : super(_value, (v) => _then(v as Error<T>));
+class _$FailureCopyWithImpl<T, $Res> extends _$ResourceCopyWithImpl<T, $Res>
+    implements $FailureCopyWith<T, $Res> {
+  _$FailureCopyWithImpl(Failure<T> _value, $Res Function(Failure<T>) _then)
+      : super(_value, (v) => _then(v as Failure<T>));
 
   @override
-  Error<T> get _value => super._value as Error<T>;
+  Failure<T> get _value => super._value as Failure<T>;
 
   @override
   $Res call({
     Object? error = freezed,
   }) {
-    return _then(Error<T>(
+    return _then(Failure<T>(
       error == freezed
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -321,8 +321,8 @@ class _$ErrorCopyWithImpl<T, $Res> extends _$ResourceCopyWithImpl<T, $Res>
 
 /// @nodoc
 
-class _$Error<T> implements Error<T> {
-  _$Error(this.error);
+class _$Failure<T> implements Failure<T> {
+  _$Failure(this.error);
 
   @override
   final Exception error;
@@ -335,7 +335,7 @@ class _$Error<T> implements Error<T> {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is Error<T> &&
+        (other is Failure<T> &&
             (identical(other.error, error) ||
                 const DeepCollectionEquality().equals(other.error, error)));
   }
@@ -346,8 +346,8 @@ class _$Error<T> implements Error<T> {
 
   @JsonKey(ignore: true)
   @override
-  $ErrorCopyWith<T, Error<T>> get copyWith =>
-      _$ErrorCopyWithImpl<T, Error<T>>(this, _$identity);
+  $FailureCopyWith<T, Failure<T>> get copyWith =>
+      _$FailureCopyWithImpl<T, Failure<T>>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -378,7 +378,7 @@ class _$Error<T> implements Error<T> {
   TResult map<TResult extends Object?>(
     TResult Function(Success<T> value) $default, {
     required TResult Function(Loading<T> value) loading,
-    required TResult Function(Error<T> value) error,
+    required TResult Function(Failure<T> value) error,
   }) {
     return error(this);
   }
@@ -388,7 +388,7 @@ class _$Error<T> implements Error<T> {
   TResult maybeMap<TResult extends Object?>(
     TResult Function(Success<T> value)? $default, {
     TResult Function(Loading<T> value)? loading,
-    TResult Function(Error<T> value)? error,
+    TResult Function(Failure<T> value)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -398,11 +398,11 @@ class _$Error<T> implements Error<T> {
   }
 }
 
-abstract class Error<T> implements Resource<T> {
-  factory Error(Exception error) = _$Error<T>;
+abstract class Failure<T> implements Resource<T> {
+  factory Failure(Exception error) = _$Failure<T>;
 
   Exception get error => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $ErrorCopyWith<T, Error<T>> get copyWith =>
+  $FailureCopyWith<T, Failure<T>> get copyWith =>
       throw _privateConstructorUsedError;
 }

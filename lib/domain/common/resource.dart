@@ -7,5 +7,5 @@ part 'resource.freezed.dart';
 abstract class Resource<T> with _$Resource {
   factory Resource(T value) = Success;
   factory Resource.loading() = Loading;
-  factory Resource.error(Exception error) = Error;
+  factory Resource.error(Exception error) = Failure;
 }

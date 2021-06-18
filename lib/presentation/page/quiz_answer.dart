@@ -12,6 +12,7 @@ import 'package:share_quiz/domain/quiz/quiz.dart';
 import 'package:share_quiz/domain/quiz_answer_data/quiz_answer_data.dart';
 import 'package:share_quiz/domain/quiz_answer_data/quiz_answer_data_notifer.dart';
 import 'package:share_quiz/domain/quiz_answer_post/quiz_answer_post_repository.dart';
+import 'package:share_quiz/domain/user/not_sign_In_exception.dart';
 import 'package:share_quiz/presentation/widget/widget_utils.dart';
 
 class QuizAnswer extends HookWidget {
@@ -29,8 +30,12 @@ class QuizAnswer extends HookWidget {
       final quizId = ModalRoute.of(context)!.settings.arguments as String;
       quizAnswerNotifier.fetch(quizId);
       return _loading();
-    } else if (quizAnswer is Error) {
-      return Container();
+    } else if (quizAnswer is Failure) {
+      if (quizAnswer.error is NotSignInException) {
+        return _error();
+      } else {
+        throw quizAnswer.error;
+      }
     } else if (quizAnswer is Success) {
       return _success(
         context,
@@ -46,6 +51,19 @@ class QuizAnswer extends HookWidget {
     return Scaffold(
       appBar: AppBar(),
       body: WidgetUtils.loading(),
+    );
+  }
+
+  Widget _error() {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Container(
+        padding: EdgeInsets.all(16),
+        child: Text(
+          "未ログインです。クイズに答えるにはホームからログインしてください。",
+          style: TextStyle(fontSize: 20),
+        ),
+      ),
     );
   }
 

@@ -40,7 +40,7 @@ class QuizPost extends HookWidget {
     ];
     if (state is Loading) {
       children.add(WidgetUtils.loading());
-    } else if (state is Error) {
+    } else if (state is Failure) {
 
     } else if (state is Success) {
 
