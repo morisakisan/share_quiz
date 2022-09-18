@@ -1,6 +1,7 @@
 name: Android Dev CD
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - dev
