@@ -1,6 +1,7 @@
 name: Android Dev CD
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - dev
@@ -12,7 +13,7 @@ jobs:
 
     steps:
       - name: checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: install java 11.x
         uses: actions/setup-java@v2
@@ -27,9 +28,8 @@ jobs:
           key: ${{ runner.OS }}-flutter-install-cache
 
       - name: install flutter
-        uses: subosito/flutter-action@v1
+        uses: subosito/flutter-action@v2
         with:
-          flutter-version: '2.2.1'
           channel: 'stable'
 
       - name: flutter dependencies install
@@ -52,7 +52,7 @@ jobs:
 
       # Firebase にデプロイ
       - name: Firebase App Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1.3.2
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.3.4
         with:
           appId: ${{secrets.FIREBASE_APP_ID_ANDROID}}
           token: ${{secrets.FIREBASE_TOKEN}}
