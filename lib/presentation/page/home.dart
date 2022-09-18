@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_quiz/data/repository_impl/quiz_ansewers_count_repository.dart';
 import 'package:share_quiz/data/repository_impl/quiz_correct_rate_repository.dart';
@@ -15,19 +14,21 @@ import 'package:share_quiz/domain/user_login/user_login_state_notifier.dart';
 import 'package:share_quiz/presentation/screen/quiz_list_screen.dart';
 import '../nav.dart';
 
-class Home extends HookWidget {
+class Home extends HookConsumerWidget {
   final _tab = [
     const Tab(text: '新着'),
     const Tab(text: '回答数'),
     const Tab(text: '正解率'),
   ];
 
-  final provider = StateNotifierProvider((ref) => UserLoginStateNotifier());
+  final provider =
+      StateNotifierProvider<UserLoginStateNotifier, Resource<UserData?>>(
+          (ref) => UserLoginStateNotifier());
 
   @override
-  Widget build(BuildContext context) {
-    var state = useProvider(provider.select((s) => s));
-    var notifier = useProvider(provider.notifier);
+  Widget build(BuildContext context, WidgetRef ref) {
+    var state = ref.watch(provider.select((s) => s));
+    var notifier = ref.watch(provider.notifier);
     return DefaultTabController(
       length: _tab.length,
       child: Scaffold(
@@ -54,7 +55,7 @@ class Home extends HookWidget {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             if (state is Success) {
-              final user = state.value;
+              final user = (state as Success).value;
               if (user != null) {
                 Navigator.of(context).pushNamed(Nav.QUIZ_POST);
               } else {

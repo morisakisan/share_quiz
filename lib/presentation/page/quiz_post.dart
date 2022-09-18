@@ -16,7 +16,7 @@ import 'package:share_quiz/presentation/widget/form/choices_form_field.dart';
 import 'package:share_quiz/presentation/widget/form/image_form_field.dart';
 import 'package:share_quiz/presentation/widget/widget_utils.dart';
 
-class QuizPost extends HookWidget {
+class QuizPost extends HookConsumerWidget {
   final _formKey = GlobalKey<FormState>();
 
   String? _title;
@@ -25,17 +25,17 @@ class QuizPost extends HookWidget {
   List<String>? _choices;
   int? _answer;
 
-  final provider = StateNotifierProvider(
+  final provider = StateNotifierProvider<QuizPostStateNotifier, Resource<Object?>?>(
     (ref) => QuizPostStateNotifier(),
   );
 
   @override
-  Widget build(BuildContext context) {
-    final state = useProvider(provider.select((s) => s));
-
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(provider.select((s) => s));
+    final notifier = ref.watch(provider.notifier);
     final List<Widget> children = [
       SingleChildScrollView(
-        child: _form(context),
+        child: _form(context, notifier),
       )
     ];
     if (state is Loading) {
@@ -56,8 +56,8 @@ class QuizPost extends HookWidget {
     );
   }
 
-  Widget _form(BuildContext context) {
-    final notifier = useProvider(provider.notifier);
+  Widget _form(BuildContext context, QuizPostStateNotifier notifier) {
+
     return Container(
       margin: const EdgeInsets.all(16.0),
       child: Form(

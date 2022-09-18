@@ -15,33 +15,33 @@ import 'package:share_quiz/domain/quiz_answer_post/quiz_answer_post_repository.d
 import 'package:share_quiz/domain/user/not_sign_In_exception.dart';
 import 'package:share_quiz/presentation/widget/widget_utils.dart';
 
-class QuizAnswer extends HookWidget {
+class QuizAnswer extends HookConsumerWidget {
   final quizAnswerProvider =
-      StateNotifierProvider((_) => QuizAnswerDataNotifier());
-
+      StateNotifierProvider<QuizAnswerDataNotifier, Resource<QuizAnswerData>>(
+          (_) => QuizAnswerDataNotifier());
+  final selectProvider = StateNotifierProvider<_Select, int>((_) => _Select());
   final repository = QuizAnswerPostRepository();
 
   @override
-  Widget build(BuildContext context) {
-    final quizAnswer = useProvider(quizAnswerProvider.select((value) => value));
-    final quizAnswerNotifier = useProvider(quizAnswerProvider.notifier);
-
+  Widget build(BuildContext context, WidgetRef ref) {
+    final quizAnswer = ref.watch(quizAnswerProvider.select((value) => value));
+    final quizAnswerNotifier = ref.watch(quizAnswerProvider.notifier);
+    final selectNotifier = ref.watch(selectProvider.notifier);
+    var selectValue = ref.watch(selectProvider.select((value) => value));
     if (quizAnswer is Loading) {
       final quizId = ModalRoute.of(context)!.settings.arguments as String;
       quizAnswerNotifier.fetch(quizId);
       return _loading();
     } else if (quizAnswer is Failure) {
-      if (quizAnswer.error is NotSignInException) {
+      final error = (quizAnswer as Failure).error;
+      if (error is NotSignInException) {
         return _error();
       } else {
-        throw quizAnswer.error;
+        throw error;
       }
     } else if (quizAnswer is Success) {
-      return _success(
-        context,
-        (quizAnswer as Success<QuizAnswerData>).value,
-        quizAnswerNotifier,
-      );
+      return _success(context, (quizAnswer as Success<QuizAnswerData>).value,
+          quizAnswerNotifier, selectNotifier, selectValue);
     } else {
       throw Exception();
     }
@@ -67,15 +67,12 @@ class QuizAnswer extends HookWidget {
     );
   }
 
-  final selectProvider = StateNotifierProvider((_) => _Select());
-
   Widget _success(
-    BuildContext context,
-    QuizAnswerData quizAnswerData,
-    QuizAnswerDataNotifier notifier,
-  ) {
-    final selectNotifier = useProvider(selectProvider.notifier);
-
+      BuildContext context,
+      QuizAnswerData quizAnswerData,
+      QuizAnswerDataNotifier notifier,
+      _Select selectNotifier,
+      int selectValue) {
     final theme = Theme.of(context);
     final quiz = quizAnswerData.quiz;
 
@@ -118,8 +115,6 @@ class QuizAnswer extends HookWidget {
         ),
       ),
     );
-
-    var selectValue = useProvider(selectProvider.select((value) => value));
 
     createChoices(ValueChanged<int?>? onChanged) =>
         quiz.choices.asMap().entries.map(
