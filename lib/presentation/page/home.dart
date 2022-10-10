@@ -10,8 +10,9 @@ import 'package:share_quiz/data/repository_impl/quiz_new_repository.dart';
 // Project imports:
 import 'package:share_quiz/domain/common/resource.dart';
 import 'package:share_quiz/domain/user/user_data.dart';
-import 'package:share_quiz/domain/user_login/user_login_state_notifier.dart';
+import 'package:share_quiz/domain/user_login/user_login_usecase.dart';
 import 'package:share_quiz/presentation/screen/quiz_list_screen.dart';
+import '../../domain/di/UseCaseModule.dart';
 import '../nav.dart';
 
 class Home extends HookConsumerWidget {
@@ -21,14 +22,10 @@ class Home extends HookConsumerWidget {
     const Tab(text: '正解率'),
   ];
 
-  final provider =
-      StateNotifierProvider<UserLoginStateNotifier, Resource<UserData?>>(
-          (ref) => UserLoginStateNotifier());
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var state = ref.watch(provider.select((s) => s));
-    var notifier = ref.watch(provider.notifier);
+    var state = ref.watch(userLoginUseCaseProvider.select((value) => value.));
+    var notifier = ref.watch(userLoginUseCaseProvider.notifier);
     return DefaultTabController(
       length: _tab.length,
       child: Scaffold(
@@ -75,7 +72,7 @@ class Home extends HookConsumerWidget {
 
   _showLoginDialog(
     BuildContext context,
-    UserLoginStateNotifier notifier,
+    UserLoginUseCase notifier,
   ) {
     showDialog(
       barrierDismissible: false,
@@ -103,7 +100,7 @@ class Home extends HookConsumerWidget {
   }
 
   Widget _createDrawer(BuildContext context, Resource<UserData?> state,
-      UserLoginStateNotifier notifier) {
+      UserLoginUseCase notifier) {
     final theme = Theme.of(context);
 
     Widget createHeader(Widget profile) {

@@ -4,14 +4,15 @@ import 'package:share_quiz/data/repository_impl/user_data_repository_impl.dart';
 
 // Project imports:
 import 'package:share_quiz/data/user/user_firebase_store.dart';
-import 'package:share_quiz/data/mapper/user_state_mapper.dart';
 import 'package:share_quiz/domain/common/resource.dart';
 import 'package:share_quiz/domain/user/user_data.dart';
 
-class UserLoginStateNotifier extends StateNotifier<Resource<UserData?>> {
-  final _repository = UserDataRepositoryImpl();
+import '../user/user_data_repository.dart';
 
-  UserLoginStateNotifier() : super(Resource.loading()) {
+class UserLoginUseCase extends StateNotifier<Resource<UserData?>> {
+  final UserDataRepository _repository;
+
+  UserLoginUseCase(this._repository) : super(Resource.loading()) {
     _repository.getCurrentUserData().then(
       (value) {
         state = Resource(value);
