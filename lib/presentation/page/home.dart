@@ -24,7 +24,7 @@ class Home extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var state = ref.watch(userLoginUseCaseProvider.select((value) => value.));
+    var state = ref.watch(userLoginUseCaseProvider.notifier.select((value) => value.state));
     var notifier = ref.watch(userLoginUseCaseProvider.notifier);
     return DefaultTabController(
       length: _tab.length,
