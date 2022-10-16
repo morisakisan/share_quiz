@@ -5,6 +5,6 @@ import '../../data/di/repository_module.dart';
 import '../common/resource.dart';
 import '../user/user_data.dart';
 
-final userLoginUseCaseProvider = StateNotifierProvider.autoDispose(
+final userLoginUseCaseProvider = StateNotifierProvider.autoDispose<UserLoginUseCase, Resource<UserData?>>(
       (ref) => UserLoginUseCase(ref.read(userDataRepositoryProvider)),
 );
