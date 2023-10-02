@@ -1,5 +1,4 @@
 // Dart imports:
-import 'dart:async';
 
 // Project imports:
 import 'package:share_quiz/data/mapper/quiz_mapper.dart';
