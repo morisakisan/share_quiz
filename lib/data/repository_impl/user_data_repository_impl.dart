@@ -37,7 +37,7 @@ class UserDataRepositoryImpl extends UserDataRepository {
   }
 
   @override
-  Future<void> signOutWithGoogle() async {
-    await _dataStore.signOutGoogle();
+  Future<void> signOutWithGoogle() {
+    return _dataStore.signOutGoogle();
   }
 }

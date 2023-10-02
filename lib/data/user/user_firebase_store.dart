@@ -28,8 +28,8 @@ class UserFirebaseStore {
     return user;
   }
 
-  signOutGoogle() async {
-    await GoogleSignIn().signOut();
+  Future<void> signOutGoogle() {
+    return GoogleSignIn().signOut();
   }
 
   CollectionReference<Map<String, dynamic>> _getCollection() =>
