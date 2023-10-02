@@ -9,7 +9,7 @@ import 'package:share_quiz/data/repository_impl/quiz_new_repository.dart';
 
 // Project imports:
 import 'package:share_quiz/domain/usecases/user_login_usecase.dart';
-import 'package:share_quiz/presentation/screen/quiz_list_screen.dart';
+import 'package:share_quiz/presentation/page/quiz_list_screen.dart';
 import '../../domain/di/UseCaseModule.dart';
 import '../../domain/models/user/user_data.dart';
 import '../nav.dart';
@@ -37,13 +37,13 @@ class Home extends HookConsumerWidget {
         drawer: _createDrawer(context, state, notifier),
         body: TabBarView(
           children: [
-            QuizListScreen(
+            QuizListPage(
               QuizNewRepository(),
             ),
-            QuizListScreen(
+            QuizListPage(
               QuizAnswersCountRepository(),
             ),
-            QuizListScreen(
+            QuizListPage(
               QuizCorrectRateRepository(),
             ),
           ],

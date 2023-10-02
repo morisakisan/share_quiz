@@ -11,10 +11,10 @@ import 'package:share_quiz/presentation/widget/widget_utils.dart';
 import '../../domain/models/quiz/quiz.dart';
 import '../nav.dart';
 
-class QuizListScreen extends HookWidget {
+class QuizListPage extends HookWidget {
   final QuizListRepository _repository;
 
-  QuizListScreen(this._repository);
+  QuizListPage(this._repository);
 
   @override
   Widget build(BuildContext context) {
