@@ -8,11 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
-import 'package:share_quiz/domain/quiz_post/quiz_post_data.dart';
-import 'package:share_quiz/domain/quiz_post/quiz_post_state_notifer.dart';
+import 'package:share_quiz/domain/usecases/quiz_post_use_case.dart';
 import 'package:share_quiz/presentation/widget/form/choices_form_field.dart';
 import 'package:share_quiz/presentation/widget/form/image_form_field.dart';
 import 'package:share_quiz/presentation/widget/widget_utils.dart';
+
+import '../../domain/models/quiz_post/quiz_post_data.dart';
 
 class QuizPost extends HookConsumerWidget {
   final _formKey = GlobalKey<FormState>();
@@ -23,8 +24,8 @@ class QuizPost extends HookConsumerWidget {
   List<String>? _choices;
   int? _answer;
 
-  final provider = StateNotifierProvider<QuizPostStateNotifier, AsyncValue<Object?>?>(
-    (ref) => QuizPostStateNotifier(),
+  final provider = StateNotifierProvider<QuizPostUseCase, AsyncValue<Object?>?>(
+    (ref) => QuizPostUseCase(),
   );
 
   @override
@@ -54,7 +55,7 @@ class QuizPost extends HookConsumerWidget {
     );
   }
 
-  Widget _form(BuildContext context, QuizPostStateNotifier notifier) {
+  Widget _form(BuildContext context, QuizPostUseCase notifier) {
 
     return Container(
       margin: const EdgeInsets.all(16.0),

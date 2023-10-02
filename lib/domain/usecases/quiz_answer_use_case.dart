@@ -2,13 +2,14 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
-import 'package:share_quiz/domain/quiz_answer_data/quiz_answer_data.dart';
-import 'package:share_quiz/domain/quiz_answer_data/quiz_answer_data_repository.dart';
+import 'package:share_quiz/domain/repository/quiz_answer_data_repository.dart';
 
-class QuizAnswerDataNotifier extends StateNotifier<AsyncValue<QuizAnswerData>> {
+import '../models/quiz_answer_data/quiz_answer_data.dart';
+
+class QuizAnswerUseCase extends StateNotifier<AsyncValue<QuizAnswerData>> {
   final _repository = QuizAnswerDataRepository();
 
-  QuizAnswerDataNotifier() : super(AsyncValue.loading());
+  QuizAnswerUseCase() : super(AsyncValue.loading());
 
   fetch(String quizId) async {
     try {

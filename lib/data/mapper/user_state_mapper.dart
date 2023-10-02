@@ -1,9 +1,8 @@
 // Package imports:
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:share_quiz/data/user/user_dto.dart';
 
-// Project imports:
-import 'package:share_quiz/domain/user/user_data.dart';
+import '../../domain/models/user/user_data.dart';
+
 
 class UserStateMapper {
   UserStateMapper._();

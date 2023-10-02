@@ -1,16 +1,16 @@
 // Package imports:
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:state_notifier/state_notifier.dart';
 
 // Project imports:
-import 'package:share_quiz/domain/quiz_post/quiz_post_data.dart';
-import 'package:share_quiz/domain/quiz_post/quiz_post_repository.dart';
+import 'package:share_quiz/domain/repository/quiz_post_repository.dart';
 
-class QuizPostStateNotifier extends StateNotifier<AsyncValue<Object?>?> {
+import '../models/quiz_post/quiz_post_data.dart';
+
+class QuizPostUseCase extends StateNotifier<AsyncValue<Object?>?> {
   final _repository = QuizPostRepository();
 
-  QuizPostStateNotifier() : super(null);
+  QuizPostUseCase() : super(null);
 
   post(QuizPostData post, BuildContext context) async {
     try {
