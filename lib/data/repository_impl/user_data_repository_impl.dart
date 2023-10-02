@@ -8,27 +8,32 @@ class UserDataRepositoryImpl extends UserDataRepository {
   final _dataStore = UserFirebaseStore();
 
   @override
-  Future<UserData?> getCurrentUserData() async {
-    final user = await _dataStore.gerCurrentUser();
-    if(user != null) {
-      final dto = await _dataStore.fetchWhereUid(user.uid);
-      return UserDataMapper.transform(dto);
-    } else {
-      return null;
-    }
+  Future<UserData?> getCurrentUserData() {
+    return _dataStore.gerCurrentUser().then((user) {
+      if (user == null) {
+        return null;
+      }
+      return _dataStore.fetchWhereUid(user.uid).then((dto) {
+        return UserDataMapper.transform(dto);
+      });
+    });
   }
 
   @override
-  Future<UserData?> signInWithGoogle() async {
-    final user = await _dataStore.signInWithGoogle();
-    if (user != null) {
-      if (!await _dataStore.isAlreadyUser(user)) {
-        await _dataStore.setUserData(user);
+  Future<UserData?> signInWithGoogle() {
+    return _dataStore.signInWithGoogle().then((user) {
+      if (user == null) {
+        return null;
       }
-      final dto = await _dataStore.fetchWhereUid(user.uid);
-      return UserDataMapper.transform(dto);
-    }
-    return null;
+      return _dataStore.isAlreadyUser(user).then((value) {
+        if (!value) {
+          _dataStore.setUserData(user);
+        }
+        return _dataStore.fetchWhereUid(user.uid).then((dto) {
+          return UserDataMapper.transform(dto);
+        });
+      });
+    });
   }
 
   @override
