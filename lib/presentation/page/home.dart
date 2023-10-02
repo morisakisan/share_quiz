@@ -8,10 +8,10 @@ import 'package:share_quiz/data/repository_impl/quiz_correct_rate_repository.dar
 import 'package:share_quiz/data/repository_impl/quiz_new_repository.dart';
 
 // Project imports:
-import 'package:share_quiz/domain/common/resource.dart';
 import 'package:share_quiz/domain/user/user_data.dart';
-import 'package:share_quiz/domain/user_login/user_login_state_notifier.dart';
+import 'package:share_quiz/domain/user_login/user_login_usecase.dart';
 import 'package:share_quiz/presentation/screen/quiz_list_screen.dart';
+import '../../domain/di/UseCaseModule.dart';
 import '../nav.dart';
 
 class Home extends HookConsumerWidget {
@@ -21,14 +21,10 @@ class Home extends HookConsumerWidget {
     const Tab(text: '正解率'),
   ];
 
-  final provider =
-      StateNotifierProvider<UserLoginStateNotifier, Resource<UserData?>>(
-          (ref) => UserLoginStateNotifier());
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var state = ref.watch(provider.select((s) => s));
-    var notifier = ref.watch(provider.notifier);
+    var state = ref.watch(userLoginUseCaseProvider);
+    var notifier = ref.watch(userLoginUseCaseProvider.notifier);
     return DefaultTabController(
       length: _tab.length,
       child: Scaffold(
@@ -54,8 +50,8 @@ class Home extends HookConsumerWidget {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            if (state is Success) {
-              final user = (state as Success).value;
+            if (state is AsyncData) {
+              final user = (state as AsyncData).value;
               if (user != null) {
                 Navigator.of(context).pushNamed(Nav.QUIZ_POST);
               } else {
@@ -75,7 +71,7 @@ class Home extends HookConsumerWidget {
 
   _showLoginDialog(
     BuildContext context,
-    UserLoginStateNotifier notifier,
+    UserLoginUseCase notifier,
   ) {
     showDialog(
       barrierDismissible: false,
@@ -102,8 +98,8 @@ class Home extends HookConsumerWidget {
     );
   }
 
-  Widget _createDrawer(BuildContext context, Resource<UserData?> state,
-      UserLoginStateNotifier notifier) {
+  Widget _createDrawer(BuildContext context, AsyncValue<UserData?> state,
+      UserLoginUseCase notifier) {
     final theme = Theme.of(context);
 
     Widget createHeader(Widget profile) {
@@ -118,7 +114,7 @@ class Home extends HookConsumerWidget {
     }
 
     final List<Widget> list = [];
-    if (state is Loading) {
+    if (state is AsyncLoading) {
       list.add(
         createHeader(
           const SizedBox(
@@ -128,10 +124,10 @@ class Home extends HookConsumerWidget {
           ),
         ),
       );
-    } else if (state is Failure) {
+    } else if (state is AsyncError) {
       list.add(createHeader(Column()));
-    } else if (state is Success) {
-      final user = (state as Success).value;
+    } else if (state is AsyncData) {
+      final user = (state as AsyncData).value;
       if (user != null) {
         final name = user?.name ?? "";
         final photoUrl = user?.photoUrl ?? "";
@@ -181,8 +177,8 @@ class Home extends HookConsumerWidget {
     //   ),
     // );
 
-    if (state is Success) {
-      final user = (state as Success).value;
+    if (state is AsyncData) {
+      final user = (state as AsyncData).value;
       final Widget login;
       if (user != null) {
         login = ListTile(
