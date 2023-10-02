@@ -1,4 +1,4 @@
-import 'package:share_quiz/data/mapper/user_state_mapper.dart';
+import 'package:share_quiz/data/mapper/user_data_mapper.dart';
 import 'package:share_quiz/data/user/user_firebase_store.dart';
 import 'package:share_quiz/domain/repository/user_data_repository.dart';
 
@@ -12,7 +12,7 @@ class UserDataRepositoryImpl extends UserDataRepository {
     final user = await _dataStore.gerCurrentUser();
     if(user != null) {
       final dto = await _dataStore.fetchWhereUid(user.uid);
-      return UserStateMapper.transform(dto);
+      return UserDataMapper.transform(dto);
     } else {
       return null;
     }
@@ -26,7 +26,7 @@ class UserDataRepositoryImpl extends UserDataRepository {
         await _dataStore.setUserData(user);
       }
       final dto = await _dataStore.fetchWhereUid(user.uid);
-      return UserStateMapper.transform(dto);
+      return UserDataMapper.transform(dto);
     }
     return null;
   }
