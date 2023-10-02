@@ -2,12 +2,10 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share/share.dart';
 
 // Project imports:
-import 'package:share_quiz/domain/common/resource.dart';
 import 'package:share_quiz/domain/quiz/quiz.dart';
 import 'package:share_quiz/domain/quiz_answer_data/quiz_answer_data.dart';
 import 'package:share_quiz/domain/quiz_answer_data/quiz_answer_data_notifer.dart';
@@ -17,7 +15,7 @@ import 'package:share_quiz/presentation/widget/widget_utils.dart';
 
 class QuizAnswer extends HookConsumerWidget {
   final quizAnswerProvider =
-      StateNotifierProvider<QuizAnswerDataNotifier, Resource<QuizAnswerData>>(
+      StateNotifierProvider<QuizAnswerDataNotifier, AsyncValue<QuizAnswerData>>(
           (_) => QuizAnswerDataNotifier());
   final selectProvider = StateNotifierProvider<_Select, int>((_) => _Select());
   final repository = QuizAnswerPostRepository();
@@ -28,19 +26,19 @@ class QuizAnswer extends HookConsumerWidget {
     final quizAnswerNotifier = ref.watch(quizAnswerProvider.notifier);
     final selectNotifier = ref.watch(selectProvider.notifier);
     var selectValue = ref.watch(selectProvider.select((value) => value));
-    if (quizAnswer is Loading) {
+    if (quizAnswer is AsyncLoading) {
       final quizId = ModalRoute.of(context)!.settings.arguments as String;
       quizAnswerNotifier.fetch(quizId);
       return _loading();
-    } else if (quizAnswer is Failure) {
-      final error = (quizAnswer as Failure).error;
+    } else if (quizAnswer is AsyncError) {
+      final error = (quizAnswer as AsyncError).error;
       if (error is NotSignInException) {
         return _error();
       } else {
         throw error;
       }
-    } else if (quizAnswer is Success) {
-      return _success(context, (quizAnswer as Success<QuizAnswerData>).value,
+    } else if (quizAnswer is AsyncData) {
+      return _success(context, (quizAnswer as AsyncData<QuizAnswerData>).value,
           quizAnswerNotifier, selectNotifier, selectValue);
     } else {
       throw Exception();

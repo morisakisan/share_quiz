@@ -16,7 +16,7 @@ import 'package:share_quiz/presentation/application.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  initializeDateFormatting("ja_JP");
+  initializeDateFormatting('ja_JP');
   runZonedGuarded(() {
     runApp(
       ProviderScope(

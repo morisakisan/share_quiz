@@ -5,11 +5,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
-import 'package:share_quiz/domain/common/resource.dart';
 import 'package:share_quiz/domain/quiz_post/quiz_post_data.dart';
 import 'package:share_quiz/domain/quiz_post/quiz_post_state_notifer.dart';
 import 'package:share_quiz/presentation/widget/form/choices_form_field.dart';
@@ -25,7 +23,7 @@ class QuizPost extends HookConsumerWidget {
   List<String>? _choices;
   int? _answer;
 
-  final provider = StateNotifierProvider<QuizPostStateNotifier, Resource<Object?>?>(
+  final provider = StateNotifierProvider<QuizPostStateNotifier, AsyncValue<Object?>?>(
     (ref) => QuizPostStateNotifier(),
   );
 
@@ -38,11 +36,11 @@ class QuizPost extends HookConsumerWidget {
         child: _form(context, notifier),
       )
     ];
-    if (state is Loading) {
+    if (state is AsyncLoading) {
       children.add(WidgetUtils.loading());
-    } else if (state is Failure) {
+    } else if (state is AsyncError) {
 
-    } else if (state is Success) {
+    } else if (state is AsyncData) {
 
     }
 
