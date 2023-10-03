@@ -26,6 +26,6 @@ class QuizPostRepository {
       "user_id": user!.uid,
       "answer_count": 0,
     };
-    await _quizFireStore.post(json);
+    return _quizFireStore.post(json);
   }
 }
