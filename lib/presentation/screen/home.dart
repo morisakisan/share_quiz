@@ -8,7 +8,7 @@ import 'package:share_quiz/data/repository_impl/quiz_correct_rate_repository.dar
 import 'package:share_quiz/data/repository_impl/quiz_new_repository.dart';
 
 // Project imports:
-import 'package:share_quiz/domain/usecases/user_login_usecase.dart';
+import 'package:share_quiz/domain/usecases/user_login_use_case.dart';
 import 'package:share_quiz/presentation/page/quiz_list_screen.dart';
 import '../../domain/di/UseCaseModule.dart';
 import '../../domain/models/user/user_data.dart';
