@@ -1,10 +1,10 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:share_quiz/presentation/screen/quiz_answer.dart';
+import 'package:share_quiz/presentation/screen/quiz_post.dart';
+import 'package:share_quiz/presentation/screen/setting.dart';
 
 // Project imports:
-import 'package:share_quiz/presentation/page/quiz_answer.dart';
-import 'package:share_quiz/presentation/page/quiz_post.dart';
-import 'package:share_quiz/presentation/page/setting.dart';
 
 class Nav {
   Nav._();

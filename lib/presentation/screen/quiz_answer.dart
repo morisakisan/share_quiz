@@ -6,17 +6,18 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share/share.dart';
 
 // Project imports:
-import 'package:share_quiz/domain/quiz/quiz.dart';
-import 'package:share_quiz/domain/quiz_answer_data/quiz_answer_data.dart';
-import 'package:share_quiz/domain/quiz_answer_data/quiz_answer_data_notifer.dart';
-import 'package:share_quiz/domain/quiz_answer_post/quiz_answer_post_repository.dart';
-import 'package:share_quiz/domain/user/not_sign_In_exception.dart';
+import 'package:share_quiz/domain/usecases/quiz_answer_use_case.dart';
+import 'package:share_quiz/domain/repository/quiz_answer_post_repository.dart';
+import 'package:share_quiz/domain/exception/not_sign_In_exception.dart';
 import 'package:share_quiz/presentation/widget/widget_utils.dart';
+
+import '../../domain/models/quiz/quiz.dart';
+import '../../domain/models/quiz_answer_data/quiz_answer_data.dart';
 
 class QuizAnswer extends HookConsumerWidget {
   final quizAnswerProvider =
-      StateNotifierProvider<QuizAnswerDataNotifier, AsyncValue<QuizAnswerData>>(
-          (_) => QuizAnswerDataNotifier());
+      StateNotifierProvider<QuizAnswerUseCase, AsyncValue<QuizAnswerData>>(
+          (_) => QuizAnswerUseCase());
   final selectProvider = StateNotifierProvider<_Select, int>((_) => _Select());
   final repository = QuizAnswerPostRepository();
 
@@ -68,7 +69,7 @@ class QuizAnswer extends HookConsumerWidget {
   Widget _success(
       BuildContext context,
       QuizAnswerData quizAnswerData,
-      QuizAnswerDataNotifier notifier,
+      QuizAnswerUseCase notifier,
       _Select selectNotifier,
       int selectValue) {
     final theme = Theme.of(context);
@@ -228,7 +229,7 @@ class QuizAnswer extends HookConsumerWidget {
     BuildContext context,
     int select,
     Quiz quiz,
-    QuizAnswerDataNotifier notifier,
+    QuizAnswerUseCase notifier,
   ) {
     showDialog(
       context: context,

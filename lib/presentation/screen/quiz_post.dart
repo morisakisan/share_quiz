@@ -8,11 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
-import 'package:share_quiz/domain/quiz_post/quiz_post_data.dart';
-import 'package:share_quiz/domain/quiz_post/quiz_post_state_notifer.dart';
+import 'package:share_quiz/domain/usecases/quiz_post_use_case.dart';
 import 'package:share_quiz/presentation/widget/form/choices_form_field.dart';
 import 'package:share_quiz/presentation/widget/form/image_form_field.dart';
 import 'package:share_quiz/presentation/widget/widget_utils.dart';
+
+import '../../domain/models/quiz_post/quiz_post_data.dart';
 
 class QuizPost extends HookConsumerWidget {
   final _formKey = GlobalKey<FormState>();
@@ -23,25 +24,25 @@ class QuizPost extends HookConsumerWidget {
   List<String>? _choices;
   int? _answer;
 
-  final provider = StateNotifierProvider<QuizPostStateNotifier, AsyncValue<Object?>?>(
-    (ref) => QuizPostStateNotifier(),
-  );
+  final postNotifierProvider =
+      StateNotifierProvider<QuizPostUseCase, AsyncValue<Object?>?>((ref) {
+    return QuizPostUseCase();
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(provider.select((s) => s));
-    final notifier = ref.watch(provider.notifier);
+    final postState = ref.watch(postNotifierProvider);
     final List<Widget> children = [
       SingleChildScrollView(
-        child: _form(context, notifier),
+        child: _form(context, ref),
       )
     ];
-    if (state is AsyncLoading) {
+    if (postState is AsyncLoading) {
       children.add(WidgetUtils.loading());
-    } else if (state is AsyncError) {
+    } else if (postState is AsyncError) {
 
-    } else if (state is AsyncData) {
-
+    } else if (postState is AsyncData) {
+      Navigator.pop(context);
     }
 
     return Scaffold(
@@ -54,8 +55,7 @@ class QuizPost extends HookConsumerWidget {
     );
   }
 
-  Widget _form(BuildContext context, QuizPostStateNotifier notifier) {
-
+  Widget _form(BuildContext context, WidgetRef ref) {
     return Container(
       margin: const EdgeInsets.all(16.0),
       child: Form(
@@ -127,7 +127,7 @@ class QuizPost extends HookConsumerWidget {
                   answer: _answer!,
                   imageFile: _image,
                 );
-                notifier.post(postData, context);
+                ref.read(postNotifierProvider.notifier).post(postData);
               },
               child: const Text('クイズを投稿する'),
             ),

@@ -6,15 +6,15 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
-import 'package:share_quiz/domain/quiz/quiz.dart';
-import 'package:share_quiz/domain/quiz_list/quiz_list_repository.dart';
+import 'package:share_quiz/domain/repository/quiz_list_repository.dart';
 import 'package:share_quiz/presentation/widget/widget_utils.dart';
+import '../../domain/models/quiz/quiz.dart';
 import '../nav.dart';
 
-class QuizListScreen extends HookWidget {
+class QuizListPage extends HookWidget {
   final QuizListRepository _repository;
 
-  QuizListScreen(this._repository);
+  QuizListPage(this._repository);
 
   @override
   Widget build(BuildContext context) {

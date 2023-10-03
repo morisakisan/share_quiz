@@ -1,6 +1,7 @@
 // Project imports:
 import 'package:share_quiz/data/quiz/quiz_dto.dart';
-import 'package:share_quiz/domain/quiz/quiz.dart';
+
+import '../../domain/models/quiz/quiz.dart';
 
 class QuizMapper {
   QuizMapper._();

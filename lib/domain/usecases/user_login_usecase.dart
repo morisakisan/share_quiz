@@ -1,9 +1,8 @@
 // Package imports:
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'package:share_quiz/domain/user/user_data.dart';
-
-import '../user/user_data_repository.dart';
+import '../models/user/user_data.dart';
+import '../repository/user_data_repository.dart';
 
 class UserLoginUseCase extends StateNotifier<AsyncValue<UserData?>> {
   final UserDataRepository _repository;
@@ -25,7 +24,7 @@ class UserLoginUseCase extends StateNotifier<AsyncValue<UserData?>> {
     try {
       var value = await _repository.signInWithGoogle();
       state = AsyncValue.data(value);
-    } catch(error, stacktrace) {
+    } catch (error, stacktrace) {
       state = AsyncValue.error(error, stacktrace);
     }
   }
