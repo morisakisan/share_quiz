@@ -234,38 +234,39 @@ class QuizAnswer extends HookConsumerWidget {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (_) {
+      builder: (BuildContext context) {
         return StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-          final state = ref.watch(postNotifierProvider);
-          return AlertDialog(
-            content: Text(
-                "問題：${quiz.question}\n回答：${quiz.choices[select]}\nこちらの回答でよろしいですか？"),
-            actions: [
-              TextButton(
-                child: const Text("Cancel"),
-                onPressed: () => Navigator.pop(context),
-              ),
-              TextButton(
-                child: const Text("OK"),
-                onPressed: () {
-                  final quizAnswerNotifier =
-                      ref.read(postNotifierProvider.notifier);
+          builder: (BuildContext context, StateSetter setState) {
+            final state = ref.watch(postNotifierProvider);
 
-                  if (state is AsyncLoading) {
-                  } else if (state is AsyncData) {
-                    Navigator.pop(context);
-                    final quizId =
-                        ModalRoute.of(context)!.settings.arguments as String;
-                    notifier.fetch(quizId);
-                  } else if (state is AsyncError) {}
+            return AlertDialog(
+              content: Text(
+                  "問題：${quiz.question}\n回答：${quiz.choices[select]}\nこちらの回答でよろしいですか？"),
+              actions: [
+                TextButton(
+                  child: const Text("Cancel"),
+                  onPressed: () => Navigator.pop(context),
+                ),
+                TextButton(
+                  child: const Text("OK"),
+                  onPressed: () {
+                    final quizAnswerNotifier = ref.read(postNotifierProvider.notifier);
 
-                  quizAnswerNotifier.post(quiz.documentId, select);
-                },
-              ),
-            ],
-          );
-        });
+                    if (state is AsyncLoading) {
+                    } else if (state is AsyncData) {
+                      Navigator.pop(context);
+                      final quizId =
+                      ModalRoute.of(context)!.settings.arguments as String;
+                      notifier.fetch(quizId);
+                    } else if (state is AsyncError) {}
+
+                    quizAnswerNotifier.post(quiz.documentId, select);
+                  },
+                ),
+              ],
+            );
+          },
+        );
       },
     );
   }
