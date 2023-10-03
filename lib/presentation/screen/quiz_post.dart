@@ -24,25 +24,25 @@ class QuizPost extends HookConsumerWidget {
   List<String>? _choices;
   int? _answer;
 
-  final provider = StateNotifierProvider<QuizPostUseCase, AsyncValue<Object?>?>(
-    (ref) => QuizPostUseCase(),
-  );
+  final postNotifierProvider =
+      StateNotifierProvider<QuizPostUseCase, AsyncValue<Object?>?>((ref) {
+    return QuizPostUseCase();
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(provider.select((s) => s));
-    final notifier = ref.watch(provider.notifier);
+    final postState = ref.watch(postNotifierProvider);
     final List<Widget> children = [
       SingleChildScrollView(
-        child: _form(context, notifier),
+        child: _form(context, ref),
       )
     ];
-    if (state is AsyncLoading) {
+    if (postState is AsyncLoading) {
       children.add(WidgetUtils.loading());
-    } else if (state is AsyncError) {
+    } else if (postState is AsyncError) {
 
-    } else if (state is AsyncData) {
-
+    } else if (postState is AsyncData) {
+      Navigator.pop(context);
     }
 
     return Scaffold(
@@ -55,8 +55,7 @@ class QuizPost extends HookConsumerWidget {
     );
   }
 
-  Widget _form(BuildContext context, QuizPostUseCase notifier) {
-
+  Widget _form(BuildContext context, WidgetRef ref) {
     return Container(
       margin: const EdgeInsets.all(16.0),
       child: Form(
@@ -128,7 +127,7 @@ class QuizPost extends HookConsumerWidget {
                   answer: _answer!,
                   imageFile: _image,
                 );
-                notifier.post(postData, context);
+                ref.read(postNotifierProvider.notifier).post(postData);
               },
               child: const Text('クイズを投稿する'),
             ),
