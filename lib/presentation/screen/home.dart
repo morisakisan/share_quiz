@@ -5,14 +5,35 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
+import 'package:share_quiz/data/repository_impl/quiz_list_repository_impl.dart';
 import 'package:share_quiz/domain/usecases/user_login_use_case.dart';
 import 'package:share_quiz/presentation/page/quiz_list_screen.dart';
 import '../../domain/di/UseCaseModule.dart';
 import '../../domain/models/quiz_list/quiz_list.dart';
 import '../../domain/models/user/user_data.dart';
+import '../../domain/repository/quiz_list_repository.dart';
 import '../../domain/usecases/quiz_list_use_case.dart';
 import '../../domain/value_object/quiz_list_order_by.dart';
 import '../nav.dart';
+
+final quizListRepositoryProvider = Provider<QuizListRepository>((ref) {
+  return QuizListRepositoryImpl();
+});
+
+final quizListNewProvider = StreamProvider<QuizList>((ref) {
+  var repository = ref.read(quizListRepositoryProvider);
+  return QuizListUseCase(repository, QuizListOrderBy.CREATED_AT_DESC).build();
+});
+
+final quizAnswersCountListNewProvider = StreamProvider<QuizList>((ref) {
+  var repository = ref.read(quizListRepositoryProvider);
+  return QuizListUseCase(repository, QuizListOrderBy.ANSWER_COUNT_DESC).build();
+});
+
+final quizCorrectRateListNewProvider = StreamProvider<QuizList>((ref) {
+  var repository = ref.read(quizListRepositoryProvider);
+  return QuizListUseCase(repository, QuizListOrderBy.CORRECT_ANSWER_RATE_ASC).build();
+});
 
 class Home extends HookConsumerWidget {
   final _tab = [
@@ -20,18 +41,6 @@ class Home extends HookConsumerWidget {
     const Tab(text: '回答数'),
     const Tab(text: '正解率'),
   ];
-
-  final quizListNewProvider = StreamProvider<QuizList>((ref) {
-    return QuizListUseCase(QuizListOrderBy.CREATED_AT_DESC).build();
-  });
-
-  final quizAnswersCountListNewProvider = StreamProvider<QuizList>((ref) {
-    return QuizListUseCase(QuizListOrderBy.ANSWER_COUNT_DESC).build();
-  });
-
-  final quizCorrectRateListNewProvider = StreamProvider<QuizList>((ref) {
-    return QuizListUseCase(QuizListOrderBy.CORRECT_ANSWER_RATE_ASC).build();
-  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
