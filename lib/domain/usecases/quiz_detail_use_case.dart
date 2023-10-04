@@ -2,19 +2,19 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
-import 'package:share_quiz/data/repository_impl/quiz_detail_repository_impl.dart';
 import '../models/quiz_detail/quiz_detail.dart';
+import '../repository/quiz_detail_repository.dart';
 
 class QuizDetailUseCase extends StateNotifier<AsyncValue<QuizDetail>> {
-  final _repository = QuizDetailRepositoryImpl();
+  final QuizDetailRepository _repository;
 
-  QuizDetailUseCase() : super(AsyncValue.loading());
+  QuizDetailUseCase(this._repository) : super(AsyncValue.loading());
 
   fetch(String quizId) async {
     try {
       var value = await _repository.fetch(quizId);
       state = AsyncValue.data(value);
-    } catch(error, stacktrace) {
+    } catch (error, stacktrace) {
       state = AsyncValue.error(error, stacktrace);
     }
   }

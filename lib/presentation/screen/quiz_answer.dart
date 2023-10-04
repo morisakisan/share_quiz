@@ -6,22 +6,39 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share/share.dart';
 
 // Project imports:
+import 'package:share_quiz/data/repository_impl/quiz_answer_post_repository_impl.dart';
 import 'package:share_quiz/domain/exception/not_sign_In_exception.dart';
 import 'package:share_quiz/domain/usecases/quiz_detail_use_case.dart';
 import 'package:share_quiz/presentation/widget/widget_utils.dart';
+import '../../data/repository_impl/quiz_detail_repository_impl.dart';
 import '../../domain/models/quiz/quiz.dart';
 import '../../domain/models/quiz_detail/quiz_detail.dart';
+import '../../domain/repository/quiz_answer_post_repository.dart';
+import '../../domain/repository/quiz_detail_repository.dart';
 import '../../domain/usecases/quiz_answer_post_use_case.dart';
 
+final repositoryProvider = Provider<QuizAnswerPostRepository>((ref) {
+  return QuizAnswerPostRepositoryImpl();
+});
+
+final postNotifierProvider =
+    StateNotifierProvider<QuizAnswerPostUseCase, AsyncValue<Object?>?>((ref) {
+  var repo = ref.read(repositoryProvider);
+  return QuizAnswerPostUseCase(repo);
+});
+
+final quizDetailRepositoryProvider = Provider<QuizDetailRepository>((ref) {
+  return QuizDetailRepositoryImpl();
+});
+
+final quizDetailProvider =
+    StateNotifierProvider<QuizDetailUseCase, AsyncValue<QuizDetail>>((ref) {
+  var repo = ref.read(quizDetailRepositoryProvider);
+  return QuizDetailUseCase(repo);
+});
+
 class QuizAnswer extends HookConsumerWidget {
-  final quizDetailProvider =
-      StateNotifierProvider<QuizDetailUseCase, AsyncValue<QuizDetail>>(
-          (_) => QuizDetailUseCase());
   final selectProvider = StateNotifierProvider<_Select, int>((_) => _Select());
-  final postNotifierProvider =
-      StateNotifierProvider<QuizAnswerPostUseCase, AsyncValue<Object?>?>((ref) {
-    return QuizAnswerPostUseCase();
-  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -249,13 +266,14 @@ class QuizAnswer extends HookConsumerWidget {
                 TextButton(
                   child: const Text("OK"),
                   onPressed: () {
-                    final quizAnswerNotifier = ref.read(postNotifierProvider.notifier);
+                    final quizAnswerNotifier =
+                        ref.read(postNotifierProvider.notifier);
 
                     if (state is AsyncLoading) {
                     } else if (state is AsyncData) {
                       Navigator.pop(context);
                       final quizId =
-                      ModalRoute.of(context)!.settings.arguments as String;
+                          ModalRoute.of(context)!.settings.arguments as String;
                       notifier.fetch(quizId);
                     } else if (state is AsyncError) {}
 
