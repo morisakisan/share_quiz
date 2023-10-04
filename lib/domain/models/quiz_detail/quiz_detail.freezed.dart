@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'quiz_answer_data.dart';
+part of 'quiz_detail.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,20 +15,20 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$QuizAnswerData {
+mixin _$QuizDetail {
   Quiz get quiz => throw _privateConstructorUsedError;
   int? get select_anser => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $QuizAnswerDataCopyWith<QuizAnswerData> get copyWith =>
+  $QuizDetailCopyWith<QuizDetail> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $QuizAnswerDataCopyWith<$Res> {
-  factory $QuizAnswerDataCopyWith(
-          QuizAnswerData value, $Res Function(QuizAnswerData) then) =
-      _$QuizAnswerDataCopyWithImpl<$Res, QuizAnswerData>;
+abstract class $QuizDetailCopyWith<$Res> {
+  factory $QuizDetailCopyWith(
+          QuizDetail value, $Res Function(QuizDetail) then) =
+      _$QuizDetailCopyWithImpl<$Res, QuizDetail>;
   @useResult
   $Res call({Quiz quiz, int? select_anser});
 
@@ -36,9 +36,9 @@ abstract class $QuizAnswerDataCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$QuizAnswerDataCopyWithImpl<$Res, $Val extends QuizAnswerData>
-    implements $QuizAnswerDataCopyWith<$Res> {
-  _$QuizAnswerDataCopyWithImpl(this._value, this._then);
+class _$QuizDetailCopyWithImpl<$Res, $Val extends QuizDetail>
+    implements $QuizDetailCopyWith<$Res> {
+  _$QuizDetailCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -73,11 +73,11 @@ class _$QuizAnswerDataCopyWithImpl<$Res, $Val extends QuizAnswerData>
 }
 
 /// @nodoc
-abstract class _$$QuizAnswerDataImplCopyWith<$Res>
-    implements $QuizAnswerDataCopyWith<$Res> {
-  factory _$$QuizAnswerDataImplCopyWith(_$QuizAnswerDataImpl value,
-          $Res Function(_$QuizAnswerDataImpl) then) =
-      __$$QuizAnswerDataImplCopyWithImpl<$Res>;
+abstract class _$$QuizDetailImplCopyWith<$Res>
+    implements $QuizDetailCopyWith<$Res> {
+  factory _$$QuizDetailImplCopyWith(
+          _$QuizDetailImpl value, $Res Function(_$QuizDetailImpl) then) =
+      __$$QuizDetailImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Quiz quiz, int? select_anser});
@@ -87,11 +87,11 @@ abstract class _$$QuizAnswerDataImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$QuizAnswerDataImplCopyWithImpl<$Res>
-    extends _$QuizAnswerDataCopyWithImpl<$Res, _$QuizAnswerDataImpl>
-    implements _$$QuizAnswerDataImplCopyWith<$Res> {
-  __$$QuizAnswerDataImplCopyWithImpl(
-      _$QuizAnswerDataImpl _value, $Res Function(_$QuizAnswerDataImpl) _then)
+class __$$QuizDetailImplCopyWithImpl<$Res>
+    extends _$QuizDetailCopyWithImpl<$Res, _$QuizDetailImpl>
+    implements _$$QuizDetailImplCopyWith<$Res> {
+  __$$QuizDetailImplCopyWithImpl(
+      _$QuizDetailImpl _value, $Res Function(_$QuizDetailImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -100,7 +100,7 @@ class __$$QuizAnswerDataImplCopyWithImpl<$Res>
     Object? quiz = null,
     Object? select_anser = freezed,
   }) {
-    return _then(_$QuizAnswerDataImpl(
+    return _then(_$QuizDetailImpl(
       quiz: null == quiz
           ? _value.quiz
           : quiz // ignore: cast_nullable_to_non_nullable
@@ -115,10 +115,8 @@ class __$$QuizAnswerDataImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$QuizAnswerDataImpl
-    with DiagnosticableTreeMixin
-    implements _QuizAnswerData {
-  const _$QuizAnswerDataImpl({required this.quiz, required this.select_anser});
+class _$QuizDetailImpl with DiagnosticableTreeMixin implements _QuizDetail {
+  const _$QuizDetailImpl({required this.quiz, required this.select_anser});
 
   @override
   final Quiz quiz;
@@ -127,14 +125,14 @@ class _$QuizAnswerDataImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'QuizAnswerData(quiz: $quiz, select_anser: $select_anser)';
+    return 'QuizDetail(quiz: $quiz, select_anser: $select_anser)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'QuizAnswerData'))
+      ..add(DiagnosticsProperty('type', 'QuizDetail'))
       ..add(DiagnosticsProperty('quiz', quiz))
       ..add(DiagnosticsProperty('select_anser', select_anser));
   }
@@ -143,7 +141,7 @@ class _$QuizAnswerDataImpl
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$QuizAnswerDataImpl &&
+            other is _$QuizDetailImpl &&
             (identical(other.quiz, quiz) || other.quiz == quiz) &&
             (identical(other.select_anser, select_anser) ||
                 other.select_anser == select_anser));
@@ -155,15 +153,14 @@ class _$QuizAnswerDataImpl
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$QuizAnswerDataImplCopyWith<_$QuizAnswerDataImpl> get copyWith =>
-      __$$QuizAnswerDataImplCopyWithImpl<_$QuizAnswerDataImpl>(
-          this, _$identity);
+  _$$QuizDetailImplCopyWith<_$QuizDetailImpl> get copyWith =>
+      __$$QuizDetailImplCopyWithImpl<_$QuizDetailImpl>(this, _$identity);
 }
 
-abstract class _QuizAnswerData implements QuizAnswerData {
-  const factory _QuizAnswerData(
+abstract class _QuizDetail implements QuizDetail {
+  const factory _QuizDetail(
       {required final Quiz quiz,
-      required final int? select_anser}) = _$QuizAnswerDataImpl;
+      required final int? select_anser}) = _$QuizDetailImpl;
 
   @override
   Quiz get quiz;
@@ -171,6 +168,6 @@ abstract class _QuizAnswerData implements QuizAnswerData {
   int? get select_anser;
   @override
   @JsonKey(ignore: true)
-  _$$QuizAnswerDataImplCopyWith<_$QuizAnswerDataImpl> get copyWith =>
+  _$$QuizDetailImplCopyWith<_$QuizDetailImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

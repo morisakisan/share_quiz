@@ -7,16 +7,16 @@ import 'package:share/share.dart';
 
 // Project imports:
 import 'package:share_quiz/domain/exception/not_sign_In_exception.dart';
-import 'package:share_quiz/domain/usecases/quiz_answer_use_case.dart';
+import 'package:share_quiz/domain/usecases/quiz_detail_use_case.dart';
 import 'package:share_quiz/presentation/widget/widget_utils.dart';
 import '../../domain/models/quiz/quiz.dart';
-import '../../domain/models/quiz_answer_data/quiz_answer_data.dart';
+import '../../domain/models/quiz_detail/quiz_detail.dart';
 import '../../domain/usecases/quiz_answer_post_use_case.dart';
 
 class QuizAnswer extends HookConsumerWidget {
   final quizAnswerProvider =
-      StateNotifierProvider<QuizAnswerUseCase, AsyncValue<QuizAnswerData>>(
-          (_) => QuizAnswerUseCase());
+      StateNotifierProvider<QuizDetailUseCase, AsyncValue<QuizDetail>>(
+          (_) => QuizDetailUseCase());
   final selectProvider = StateNotifierProvider<_Select, int>((_) => _Select());
   final postNotifierProvider =
       StateNotifierProvider<QuizAnswerPostUseCase, AsyncValue<Object?>?>((ref) {
@@ -41,7 +41,7 @@ class QuizAnswer extends HookConsumerWidget {
         throw error;
       }
     } else if (quizAnswer is AsyncData) {
-      return _success(context, (quizAnswer as AsyncData<QuizAnswerData>).value,
+      return _success(context, (quizAnswer as AsyncData<QuizDetail>).value,
           quizAnswerNotifier, selectNotifier, selectValue, ref);
     } else {
       throw Exception();
@@ -70,8 +70,8 @@ class QuizAnswer extends HookConsumerWidget {
 
   Widget _success(
       BuildContext context,
-      QuizAnswerData quizAnswerData,
-      QuizAnswerUseCase notifier,
+      QuizDetail quizAnswerData,
+      QuizDetailUseCase notifier,
       _Select selectNotifier,
       int selectValue,
       WidgetRef ref) {
@@ -229,7 +229,7 @@ class QuizAnswer extends HookConsumerWidget {
   }
 
   _showAnswerDialog(BuildContext context, int select, Quiz quiz,
-      QuizAnswerUseCase notifier, WidgetRef ref) {
+      QuizDetailUseCase notifier, WidgetRef ref) {
     showDialog(
       context: context,
       barrierDismissible: false,

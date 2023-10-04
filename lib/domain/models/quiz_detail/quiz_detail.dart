@@ -9,12 +9,12 @@ import '../quiz/quiz.dart';
 
 // Project imports:
 
-part 'quiz_answer_data.freezed.dart';
+part 'quiz_detail.freezed.dart';
 
 @freezed
-abstract class QuizAnswerData with _$QuizAnswerData {
-  const factory QuizAnswerData({
+abstract class QuizDetail with _$QuizDetail {
+  const factory QuizDetail({
     required Quiz quiz,
     required int? select_anser
-  }) = _QuizAnswerData;
+  }) = _QuizDetail;
 }
