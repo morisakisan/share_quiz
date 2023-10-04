@@ -9,15 +9,13 @@ class UserLoginUseCase extends StateNotifier<AsyncValue<UserData?>> {
   final UserDataRepository _repository;
 
   UserLoginUseCase(this._repository) : super(AsyncValue.loading()) {
-    _repository.getCurrentUserData().then(
-      (value) {
+    try {
+      _repository.getCurrentUserData().then((value) {
         state = AsyncValue.data(value);
-      },
-    ).catchError(
-      (error) {
-        state = AsyncValue.error(error, error);
-      },
-    );
+      });
+    } catch (error, stacktrace) {
+      state = AsyncValue.error(error, stacktrace);
+    }
   }
 
   signInWithGoogle() async {
@@ -30,7 +28,8 @@ class UserLoginUseCase extends StateNotifier<AsyncValue<UserData?>> {
     }
   }
 
-  logout() {
+  logout() async {
+    state = AsyncValue.loading();
     _repository.signOutWithGoogle().then(
       (value) {
         state = AsyncValue.data(null);
