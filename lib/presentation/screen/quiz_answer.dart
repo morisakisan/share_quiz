@@ -14,7 +14,7 @@ import '../../domain/models/quiz_detail/quiz_detail.dart';
 import '../../domain/usecases/quiz_answer_post_use_case.dart';
 
 class QuizAnswer extends HookConsumerWidget {
-  final quizAnswerProvider =
+  final quizDetailProvider =
       StateNotifierProvider<QuizDetailUseCase, AsyncValue<QuizDetail>>(
           (_) => QuizDetailUseCase());
   final selectProvider = StateNotifierProvider<_Select, int>((_) => _Select());
@@ -25,8 +25,8 @@ class QuizAnswer extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final quizAnswer = ref.watch(quizAnswerProvider.select((value) => value));
-    final quizAnswerNotifier = ref.watch(quizAnswerProvider.notifier);
+    final quizAnswer = ref.watch(quizDetailProvider.select((value) => value));
+    final quizAnswerNotifier = ref.watch(quizDetailProvider.notifier);
     final selectNotifier = ref.watch(selectProvider.notifier);
     var selectValue = ref.watch(selectProvider.select((value) => value));
     if (quizAnswer is AsyncLoading) {
