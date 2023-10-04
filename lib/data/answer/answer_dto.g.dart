@@ -6,14 +6,13 @@ part of 'answer_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_AnswerDto _$_$_AnswerDtoFromJson(Map<String, dynamic> json) {
-  return _$_AnswerDto(
-    answer: json['answer'] as int,
-    userId: json['user_id'] as String,
-  );
-}
+_$AnswerDtoImpl _$$AnswerDtoImplFromJson(Map<String, dynamic> json) =>
+    _$AnswerDtoImpl(
+      answer: json['answer'] as int,
+      userId: json['user_id'] as String,
+    );
 
-Map<String, dynamic> _$_$_AnswerDtoToJson(_$_AnswerDto instance) =>
+Map<String, dynamic> _$$AnswerDtoImplToJson(_$AnswerDtoImpl instance) =>
     <String, dynamic>{
       'answer': instance.answer,
       'user_id': instance.userId,

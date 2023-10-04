@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'user_dto.dart';
 
@@ -10,34 +12,11 @@ part of 'user_dto.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 UserDto _$UserDtoFromJson(Map<String, dynamic> json) {
   return _UserDto.fromJson(json);
 }
-
-/// @nodoc
-class _$UserDtoTearOff {
-  const _$UserDtoTearOff();
-
-  _UserDto call(
-      {@JsonKey(name: 'uid') required String uid,
-      @JsonKey(name: 'name') required String name,
-      @JsonKey(name: 'photo_url') required String photoUrl}) {
-    return _UserDto(
-      uid: uid,
-      name: name,
-      photoUrl: photoUrl,
-    );
-  }
-
-  UserDto fromJson(Map<String, Object> json) {
-    return UserDto.fromJson(json);
-  }
-}
-
-/// @nodoc
-const $UserDto = _$UserDtoTearOff();
 
 /// @nodoc
 mixin _$UserDto {
@@ -56,7 +35,8 @@ mixin _$UserDto {
 /// @nodoc
 abstract class $UserDtoCopyWith<$Res> {
   factory $UserDtoCopyWith(UserDto value, $Res Function(UserDto) then) =
-      _$UserDtoCopyWithImpl<$Res>;
+      _$UserDtoCopyWithImpl<$Res, UserDto>;
+  @useResult
   $Res call(
       {@JsonKey(name: 'uid') String uid,
       @JsonKey(name: 'name') String name,
@@ -64,41 +44,46 @@ abstract class $UserDtoCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$UserDtoCopyWithImpl<$Res> implements $UserDtoCopyWith<$Res> {
+class _$UserDtoCopyWithImpl<$Res, $Val extends UserDto>
+    implements $UserDtoCopyWith<$Res> {
   _$UserDtoCopyWithImpl(this._value, this._then);
 
-  final UserDto _value;
   // ignore: unused_field
-  final $Res Function(UserDto) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uid = freezed,
-    Object? name = freezed,
-    Object? photoUrl = freezed,
+    Object? uid = null,
+    Object? name = null,
+    Object? photoUrl = null,
   }) {
     return _then(_value.copyWith(
-      uid: uid == freezed
+      uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      photoUrl: photoUrl == freezed
+      photoUrl: null == photoUrl
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
               as String,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$UserDtoCopyWith<$Res> implements $UserDtoCopyWith<$Res> {
-  factory _$UserDtoCopyWith(_UserDto value, $Res Function(_UserDto) then) =
-      __$UserDtoCopyWithImpl<$Res>;
+abstract class _$$UserDtoImplCopyWith<$Res> implements $UserDtoCopyWith<$Res> {
+  factory _$$UserDtoImplCopyWith(
+          _$UserDtoImpl value, $Res Function(_$UserDtoImpl) then) =
+      __$$UserDtoImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {@JsonKey(name: 'uid') String uid,
       @JsonKey(name: 'name') String name,
@@ -106,30 +91,30 @@ abstract class _$UserDtoCopyWith<$Res> implements $UserDtoCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$UserDtoCopyWithImpl<$Res> extends _$UserDtoCopyWithImpl<$Res>
-    implements _$UserDtoCopyWith<$Res> {
-  __$UserDtoCopyWithImpl(_UserDto _value, $Res Function(_UserDto) _then)
-      : super(_value, (v) => _then(v as _UserDto));
+class __$$UserDtoImplCopyWithImpl<$Res>
+    extends _$UserDtoCopyWithImpl<$Res, _$UserDtoImpl>
+    implements _$$UserDtoImplCopyWith<$Res> {
+  __$$UserDtoImplCopyWithImpl(
+      _$UserDtoImpl _value, $Res Function(_$UserDtoImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _UserDto get _value => super._value as _UserDto;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? uid = freezed,
-    Object? name = freezed,
-    Object? photoUrl = freezed,
+    Object? uid = null,
+    Object? name = null,
+    Object? photoUrl = null,
   }) {
-    return _then(_UserDto(
-      uid: uid == freezed
+    return _then(_$UserDtoImpl(
+      uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      name: name == freezed
+      name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      photoUrl: photoUrl == freezed
+      photoUrl: null == photoUrl
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
               as String,
@@ -139,14 +124,14 @@ class __$UserDtoCopyWithImpl<$Res> extends _$UserDtoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_UserDto with DiagnosticableTreeMixin implements _UserDto {
-  const _$_UserDto(
+class _$UserDtoImpl with DiagnosticableTreeMixin implements _UserDto {
+  const _$UserDtoImpl(
       {@JsonKey(name: 'uid') required this.uid,
       @JsonKey(name: 'name') required this.name,
       @JsonKey(name: 'photo_url') required this.photoUrl});
 
-  factory _$_UserDto.fromJson(Map<String, dynamic> json) =>
-      _$_$_UserDtoFromJson(json);
+  factory _$UserDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserDtoImplFromJson(json);
 
   @override
   @JsonKey(name: 'uid')
@@ -176,53 +161,52 @@ class _$_UserDto with DiagnosticableTreeMixin implements _UserDto {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _UserDto &&
-            (identical(other.uid, uid) ||
-                const DeepCollectionEquality().equals(other.uid, uid)) &&
-            (identical(other.name, name) ||
-                const DeepCollectionEquality().equals(other.name, name)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$UserDtoImpl &&
+            (identical(other.uid, uid) || other.uid == uid) &&
+            (identical(other.name, name) || other.name == name) &&
             (identical(other.photoUrl, photoUrl) ||
-                const DeepCollectionEquality()
-                    .equals(other.photoUrl, photoUrl)));
+                other.photoUrl == photoUrl));
   }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(uid) ^
-      const DeepCollectionEquality().hash(name) ^
-      const DeepCollectionEquality().hash(photoUrl);
 
   @JsonKey(ignore: true)
   @override
-  _$UserDtoCopyWith<_UserDto> get copyWith =>
-      __$UserDtoCopyWithImpl<_UserDto>(this, _$identity);
+  int get hashCode => Object.hash(runtimeType, uid, name, photoUrl);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$UserDtoImplCopyWith<_$UserDtoImpl> get copyWith =>
+      __$$UserDtoImplCopyWithImpl<_$UserDtoImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_UserDtoToJson(this);
+    return _$$UserDtoImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _UserDto implements UserDto {
   const factory _UserDto(
-      {@JsonKey(name: 'uid') required String uid,
-      @JsonKey(name: 'name') required String name,
-      @JsonKey(name: 'photo_url') required String photoUrl}) = _$_UserDto;
+          {@JsonKey(name: 'uid') required final String uid,
+          @JsonKey(name: 'name') required final String name,
+          @JsonKey(name: 'photo_url') required final String photoUrl}) =
+      _$UserDtoImpl;
 
-  factory _UserDto.fromJson(Map<String, dynamic> json) = _$_UserDto.fromJson;
+  factory _UserDto.fromJson(Map<String, dynamic> json) = _$UserDtoImpl.fromJson;
 
   @override
   @JsonKey(name: 'uid')
-  String get uid => throw _privateConstructorUsedError;
+  String get uid;
   @override
   @JsonKey(name: 'name')
-  String get name => throw _privateConstructorUsedError;
+  String get name;
   @override
   @JsonKey(name: 'photo_url')
-  String get photoUrl => throw _privateConstructorUsedError;
+  String get photoUrl;
   @override
   @JsonKey(ignore: true)
-  _$UserDtoCopyWith<_UserDto> get copyWith =>
+  _$$UserDtoImplCopyWith<_$UserDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

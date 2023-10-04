@@ -7,19 +7,22 @@ import 'package:share/share.dart';
 
 // Project imports:
 import 'package:share_quiz/domain/usecases/quiz_answer_use_case.dart';
-import 'package:share_quiz/domain/repository/quiz_answer_post_repository.dart';
 import 'package:share_quiz/domain/exception/not_sign_In_exception.dart';
 import 'package:share_quiz/presentation/widget/widget_utils.dart';
 
 import '../../domain/models/quiz/quiz.dart';
 import '../../domain/models/quiz_answer_data/quiz_answer_data.dart';
+import '../../domain/usecases/quiz_answer_post_use_case.dart';
 
 class QuizAnswer extends HookConsumerWidget {
   final quizAnswerProvider =
       StateNotifierProvider<QuizAnswerUseCase, AsyncValue<QuizAnswerData>>(
           (_) => QuizAnswerUseCase());
   final selectProvider = StateNotifierProvider<_Select, int>((_) => _Select());
-  final repository = QuizAnswerPostRepository();
+  final postNotifierProvider =
+      StateNotifierProvider<QuizAnswerPostUseCase, AsyncValue<Object?>?>((ref) {
+    return QuizAnswerPostUseCase();
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -40,7 +43,7 @@ class QuizAnswer extends HookConsumerWidget {
       }
     } else if (quizAnswer is AsyncData) {
       return _success(context, (quizAnswer as AsyncData<QuizAnswerData>).value,
-          quizAnswerNotifier, selectNotifier, selectValue);
+          quizAnswerNotifier, selectNotifier, selectValue, ref);
     } else {
       throw Exception();
     }
@@ -71,7 +74,8 @@ class QuizAnswer extends HookConsumerWidget {
       QuizAnswerData quizAnswerData,
       QuizAnswerUseCase notifier,
       _Select selectNotifier,
-      int selectValue) {
+      int selectValue,
+      WidgetRef ref) {
     final theme = Theme.of(context);
     final quiz = quizAnswerData.quiz;
 
@@ -141,7 +145,7 @@ class QuizAnswer extends HookConsumerWidget {
       );
 
       answerOnPressed =
-          () => _showAnswerDialog(context, selectValue, quiz, notifier);
+          () => _showAnswerDialog(context, selectValue, quiz, notifier, ref);
     } else {
       selectValue = quizAnswerData.select_anser!;
       answerOnPressed = null;
@@ -225,40 +229,43 @@ class QuizAnswer extends HookConsumerWidget {
     );
   }
 
-  _showAnswerDialog(
-    BuildContext context,
-    int select,
-    Quiz quiz,
-    QuizAnswerUseCase notifier,
-  ) {
+  _showAnswerDialog(BuildContext context, int select, Quiz quiz,
+      QuizAnswerUseCase notifier, WidgetRef ref) {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (_) {
-        return AlertDialog(
-          content: Text(
-              "問題：${quiz.question}\n回答：${quiz.choices[select]}\nこちらの回答でよろしいですか？"),
-          actions: [
-            TextButton(
-              child: const Text("Cancel"),
-              onPressed: () => Navigator.pop(context),
-            ),
-            TextButton(
-              child: const Text("OK"),
-              onPressed: () {
-                Navigator.pop(context);
-                repository.post(quiz.documentId, select).then(
-                  (value) {
-                    final quizId =
-                        ModalRoute.of(context)!.settings.arguments as String;
-                    notifier.fetch(quizId);
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) {
+            final state = ref.watch(postNotifierProvider);
+
+            return AlertDialog(
+              content: Text(
+                  "問題：${quiz.question}\n回答：${quiz.choices[select]}\nこちらの回答でよろしいですか？"),
+              actions: [
+                TextButton(
+                  child: const Text("Cancel"),
+                  onPressed: () => Navigator.pop(context),
+                ),
+                TextButton(
+                  child: const Text("OK"),
+                  onPressed: () {
+                    final quizAnswerNotifier = ref.read(postNotifierProvider.notifier);
+
+                    if (state is AsyncLoading) {
+                    } else if (state is AsyncData) {
+                      Navigator.pop(context);
+                      final quizId =
+                      ModalRoute.of(context)!.settings.arguments as String;
+                      notifier.fetch(quizId);
+                    } else if (state is AsyncError) {}
+
+                    quizAnswerNotifier.post(quiz.documentId, select);
                   },
-                ).catchError(
-                  (error) {},
-                );
-              },
-            ),
-          ],
+                ),
+              ],
+            );
+          },
         );
       },
     );

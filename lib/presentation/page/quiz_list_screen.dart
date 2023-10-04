@@ -2,40 +2,34 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
-import 'package:share_quiz/domain/repository/quiz_list_repository.dart';
 import 'package:share_quiz/presentation/widget/widget_utils.dart';
 import '../../domain/models/quiz/quiz.dart';
+import '../../domain/models/quiz_list/quiz_list.dart';
 import '../nav.dart';
 
-class QuizListPage extends HookWidget {
-  final QuizListRepository _repository;
+class QuizListPage extends HookConsumerWidget {
+  final StreamProvider<QuizList> _provider;
 
-  QuizListPage(this._repository);
+  QuizListPage(this._provider);
 
   @override
-  Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: _repository.fetch().quizzes,
-      builder: (BuildContext context, AsyncSnapshot<List<Quiz>> snapShot) {
-        if (snapShot.hasError) {
-          return Text("error");
-        } else if (!snapShot.hasData) {
-          return WidgetUtils.loading();
-        } else {
-          return ListView(
-            children: snapShot.data!.map(
+  Widget build(BuildContext context, WidgetRef ref) {
+    var async = ref.watch(_provider);
+    return async.when(
+      data: (list) => ListView(
+        children: list.quizzes.map(
               (value) {
-                return _getQuizView(context, value);
-              },
-            ).toList(),
-            padding: const EdgeInsets.all(8.0),
-          );
-        }
-      },
+            return _getQuizView(context, value);
+          },
+        ).toList(),
+        padding: const EdgeInsets.all(8.0),
+      ),
+      loading: () => CircularProgressIndicator(),
+      error: (error, stack) => Text('Error: $error'),
     );
   }
 
@@ -46,7 +40,8 @@ class QuizListPage extends HookWidget {
 
     final List<Widget> list = [];
 
-    createImage(image) => Padding(
+    createImage(image) =>
+        Padding(
           padding: const EdgeInsets.fromLTRB(8, 8, 16, 8),
           child: image,
         );
@@ -55,7 +50,7 @@ class QuizListPage extends HookWidget {
     if (quiz.imageUrl != null) {
       list.add(
         createImage(
-          WidgetUtils.getQuizImage(imageSize, quiz.imageUrl!)
+            WidgetUtils.getQuizImage(imageSize, quiz.imageUrl!)
         ),
       );
     } else {
