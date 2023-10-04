@@ -708,10 +708,10 @@ packages:
     dependency: "direct main"
     description:
       name: package_info
-      sha256: b4032105ca8d5aaee45045db866253b91eb6d0ebfd0c121e4b86b5dfe610c3cc
+      sha256: "6c07d9d82c69e16afeeeeb6866fe43985a20b3b50df243091bfc4a4ad2b03b75"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.2"
   path:
     dependency: transitive
     description:
