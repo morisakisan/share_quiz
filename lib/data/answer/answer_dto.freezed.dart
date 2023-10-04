@@ -27,7 +27,7 @@ mixin _$AnswerDto {
   @JsonKey(name: 'user_id')
   String get userId => throw _privateConstructorUsedError;
   @JsonKey(name: 'quiz_id')
-  int get quizId => throw _privateConstructorUsedError;
+  String get quizId => throw _privateConstructorUsedError;
   @JsonKey(name: 'selected_choice_index')
   int get selectedChoiceIndex => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_correct')
@@ -51,7 +51,7 @@ abstract class $AnswerDtoCopyWith<$Res> {
       {@JsonKey(includeFromJson: false, includeToJson: false) String? id,
       @JsonKey(name: 'answer') int answer,
       @JsonKey(name: 'user_id') String userId,
-      @JsonKey(name: 'quiz_id') int quizId,
+      @JsonKey(name: 'quiz_id') String quizId,
       @JsonKey(name: 'selected_choice_index') int selectedChoiceIndex,
       @JsonKey(name: 'is_correct') bool isCorrect,
       @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt});
@@ -94,7 +94,7 @@ class _$AnswerDtoCopyWithImpl<$Res, $Val extends AnswerDto>
       quizId: null == quizId
           ? _value.quizId
           : quizId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       selectedChoiceIndex: null == selectedChoiceIndex
           ? _value.selectedChoiceIndex
           : selectedChoiceIndex // ignore: cast_nullable_to_non_nullable
@@ -123,7 +123,7 @@ abstract class _$$AnswerDtoImplCopyWith<$Res>
       {@JsonKey(includeFromJson: false, includeToJson: false) String? id,
       @JsonKey(name: 'answer') int answer,
       @JsonKey(name: 'user_id') String userId,
-      @JsonKey(name: 'quiz_id') int quizId,
+      @JsonKey(name: 'quiz_id') String quizId,
       @JsonKey(name: 'selected_choice_index') int selectedChoiceIndex,
       @JsonKey(name: 'is_correct') bool isCorrect,
       @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt});
@@ -164,7 +164,7 @@ class __$$AnswerDtoImplCopyWithImpl<$Res>
       quizId: null == quizId
           ? _value.quizId
           : quizId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       selectedChoiceIndex: null == selectedChoiceIndex
           ? _value.selectedChoiceIndex
           : selectedChoiceIndex // ignore: cast_nullable_to_non_nullable
@@ -209,7 +209,7 @@ class _$AnswerDtoImpl with DiagnosticableTreeMixin implements _AnswerDto {
   final String userId;
   @override
   @JsonKey(name: 'quiz_id')
-  final int quizId;
+  final String quizId;
   @override
   @JsonKey(name: 'selected_choice_index')
   final int selectedChoiceIndex;
@@ -281,7 +281,7 @@ abstract class _AnswerDto implements AnswerDto {
       {@JsonKey(includeFromJson: false, includeToJson: false) final String? id,
       @JsonKey(name: 'answer') required final int answer,
       @JsonKey(name: 'user_id') required final String userId,
-      @JsonKey(name: 'quiz_id') required final int quizId,
+      @JsonKey(name: 'quiz_id') required final String quizId,
       @JsonKey(name: 'selected_choice_index')
       required final int selectedChoiceIndex,
       @JsonKey(name: 'is_correct') required final bool isCorrect,
@@ -303,7 +303,7 @@ abstract class _AnswerDto implements AnswerDto {
   String get userId;
   @override
   @JsonKey(name: 'quiz_id')
-  int get quizId;
+  String get quizId;
   @override
   @JsonKey(name: 'selected_choice_index')
   int get selectedChoiceIndex;

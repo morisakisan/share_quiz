@@ -10,7 +10,7 @@ _$AnswerDtoImpl _$$AnswerDtoImplFromJson(Map<String, dynamic> json) =>
     _$AnswerDtoImpl(
       answer: json['answer'] as int,
       userId: json['user_id'] as String,
-      quizId: json['quiz_id'] as int,
+      quizId: json['quiz_id'] as String,
       selectedChoiceIndex: json['selected_choice_index'] as int,
       isCorrect: json['is_correct'] as bool,
       createdAt:

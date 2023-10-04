@@ -7,23 +7,20 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../json_converter/timestamp_converter.dart';
 
-part 'answer_dto.freezed.dart';
-part 'answer_dto.g.dart';
+part 'good_dto.freezed.dart';
+part 'good_dto.g.dart';
 
 @freezed
-abstract class AnswerDto with _$AnswerDto {
-  const factory AnswerDto({
+abstract class GoodDto with _$GoodDto {
+  const factory GoodDto({
     @JsonKey(includeFromJson: false, includeToJson: false) String? id,
-    @JsonKey(name: 'answer') required int answer,
-    @JsonKey(name: 'user_id') required String userId,
     @JsonKey(name: 'quiz_id') required String quizId,
-    @JsonKey(name: 'selected_choice_index') required int selectedChoiceIndex,
-    @JsonKey(name: 'is_correct') required bool isCorrect,
+    @JsonKey(name: 'user_id') required String userId,
     @TimestampConverter()
     @JsonKey(name: 'created_at')
     required DateTime createdAt,
-  }) = _AnswerDto;
+  }) = _GoodDto;
 
-  factory AnswerDto.fromJson(Map<String, dynamic> json) =>
-      _$AnswerDtoFromJson(json);
+  factory GoodDto.fromJson(Map<String, dynamic> json) =>
+      _$GoodDtoFromJson(json);
 }
