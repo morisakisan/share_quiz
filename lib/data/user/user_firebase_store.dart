@@ -44,12 +44,16 @@ class UserFirebaseStore {
 
   setUserData(User user) async {
     final dto = UserDto(
-      uid: user.uid,
-      name: user.displayName!,
-      photoUrl: user.photoURL!,
-    );
+        uid: user.uid,
+        name: user.displayName!,
+        photoUrl: user.photoURL!,
+        createdAt: DateTime.now());
+
+    var userJson = dto.toJson();
+    userJson['created_at'] = FieldValue.serverTimestamp();
+
     return await _getCollection().doc().set(
-          dto.toJson(),
+          userJson,
         );
   }
 
