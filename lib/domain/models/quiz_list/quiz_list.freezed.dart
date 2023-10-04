@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'quiz_list.dart';
 
@@ -10,25 +12,11 @@ part of 'quiz_list.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$QuizListTearOff {
-  const _$QuizListTearOff();
-
-  _QuizList call({required Stream<List<Quiz>> quizzes}) {
-    return _QuizList(
-      quizzes: quizzes,
-    );
-  }
-}
-
-/// @nodoc
-const $QuizList = _$QuizListTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$QuizList {
-  Stream<List<Quiz>> get quizzes => throw _privateConstructorUsedError;
+  List<Quiz> get quizzes => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $QuizListCopyWith<QuizList> get copyWith =>
@@ -38,68 +26,81 @@ mixin _$QuizList {
 /// @nodoc
 abstract class $QuizListCopyWith<$Res> {
   factory $QuizListCopyWith(QuizList value, $Res Function(QuizList) then) =
-      _$QuizListCopyWithImpl<$Res>;
-  $Res call({Stream<List<Quiz>> quizzes});
+      _$QuizListCopyWithImpl<$Res, QuizList>;
+  @useResult
+  $Res call({List<Quiz> quizzes});
 }
 
 /// @nodoc
-class _$QuizListCopyWithImpl<$Res> implements $QuizListCopyWith<$Res> {
+class _$QuizListCopyWithImpl<$Res, $Val extends QuizList>
+    implements $QuizListCopyWith<$Res> {
   _$QuizListCopyWithImpl(this._value, this._then);
 
-  final QuizList _value;
   // ignore: unused_field
-  final $Res Function(QuizList) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? quizzes = freezed,
+    Object? quizzes = null,
   }) {
     return _then(_value.copyWith(
-      quizzes: quizzes == freezed
+      quizzes: null == quizzes
           ? _value.quizzes
           : quizzes // ignore: cast_nullable_to_non_nullable
-              as Stream<List<Quiz>>,
-    ));
+              as List<Quiz>,
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$QuizListCopyWith<$Res> implements $QuizListCopyWith<$Res> {
-  factory _$QuizListCopyWith(_QuizList value, $Res Function(_QuizList) then) =
-      __$QuizListCopyWithImpl<$Res>;
+abstract class _$$QuizListImplCopyWith<$Res>
+    implements $QuizListCopyWith<$Res> {
+  factory _$$QuizListImplCopyWith(
+          _$QuizListImpl value, $Res Function(_$QuizListImpl) then) =
+      __$$QuizListImplCopyWithImpl<$Res>;
   @override
-  $Res call({Stream<List<Quiz>> quizzes});
+  @useResult
+  $Res call({List<Quiz> quizzes});
 }
 
 /// @nodoc
-class __$QuizListCopyWithImpl<$Res> extends _$QuizListCopyWithImpl<$Res>
-    implements _$QuizListCopyWith<$Res> {
-  __$QuizListCopyWithImpl(_QuizList _value, $Res Function(_QuizList) _then)
-      : super(_value, (v) => _then(v as _QuizList));
+class __$$QuizListImplCopyWithImpl<$Res>
+    extends _$QuizListCopyWithImpl<$Res, _$QuizListImpl>
+    implements _$$QuizListImplCopyWith<$Res> {
+  __$$QuizListImplCopyWithImpl(
+      _$QuizListImpl _value, $Res Function(_$QuizListImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _QuizList get _value => super._value as _QuizList;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? quizzes = freezed,
+    Object? quizzes = null,
   }) {
-    return _then(_QuizList(
-      quizzes: quizzes == freezed
-          ? _value.quizzes
+    return _then(_$QuizListImpl(
+      quizzes: null == quizzes
+          ? _value._quizzes
           : quizzes // ignore: cast_nullable_to_non_nullable
-              as Stream<List<Quiz>>,
+              as List<Quiz>,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_QuizList with DiagnosticableTreeMixin implements _QuizList {
-  const _$_QuizList({required this.quizzes});
+class _$QuizListImpl with DiagnosticableTreeMixin implements _QuizList {
+  const _$QuizListImpl({required final List<Quiz> quizzes})
+      : _quizzes = quizzes;
 
+  final List<Quiz> _quizzes;
   @override
-  final Stream<List<Quiz>> quizzes;
+  List<Quiz> get quizzes {
+    if (_quizzes is EqualUnmodifiableListView) return _quizzes;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_quizzes);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -117,28 +118,29 @@ class _$_QuizList with DiagnosticableTreeMixin implements _QuizList {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _QuizList &&
-            (identical(other.quizzes, quizzes) ||
-                const DeepCollectionEquality().equals(other.quizzes, quizzes)));
+        (other.runtimeType == runtimeType &&
+            other is _$QuizListImpl &&
+            const DeepCollectionEquality().equals(other._quizzes, _quizzes));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(quizzes);
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(_quizzes));
 
   @JsonKey(ignore: true)
   @override
-  _$QuizListCopyWith<_QuizList> get copyWith =>
-      __$QuizListCopyWithImpl<_QuizList>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$QuizListImplCopyWith<_$QuizListImpl> get copyWith =>
+      __$$QuizListImplCopyWithImpl<_$QuizListImpl>(this, _$identity);
 }
 
 abstract class _QuizList implements QuizList {
-  const factory _QuizList({required Stream<List<Quiz>> quizzes}) = _$_QuizList;
+  const factory _QuizList({required final List<Quiz> quizzes}) = _$QuizListImpl;
 
   @override
-  Stream<List<Quiz>> get quizzes => throw _privateConstructorUsedError;
+  List<Quiz> get quizzes;
   @override
   @JsonKey(ignore: true)
-  _$QuizListCopyWith<_QuizList> get copyWith =>
+  _$$QuizListImplCopyWith<_$QuizListImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

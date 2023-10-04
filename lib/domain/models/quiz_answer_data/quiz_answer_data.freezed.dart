@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'quiz_answer_data.dart';
 
@@ -10,22 +12,7 @@ part of 'quiz_answer_data.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$QuizAnswerDataTearOff {
-  const _$QuizAnswerDataTearOff();
-
-  _QuizAnswerData call({required Quiz quiz, required int? select_anser}) {
-    return _QuizAnswerData(
-      quiz: quiz,
-      select_anser: select_anser,
-    );
-  }
-}
-
-/// @nodoc
-const $QuizAnswerData = _$QuizAnswerDataTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$QuizAnswerData {
@@ -41,53 +28,58 @@ mixin _$QuizAnswerData {
 abstract class $QuizAnswerDataCopyWith<$Res> {
   factory $QuizAnswerDataCopyWith(
           QuizAnswerData value, $Res Function(QuizAnswerData) then) =
-      _$QuizAnswerDataCopyWithImpl<$Res>;
+      _$QuizAnswerDataCopyWithImpl<$Res, QuizAnswerData>;
+  @useResult
   $Res call({Quiz quiz, int? select_anser});
 
   $QuizCopyWith<$Res> get quiz;
 }
 
 /// @nodoc
-class _$QuizAnswerDataCopyWithImpl<$Res>
+class _$QuizAnswerDataCopyWithImpl<$Res, $Val extends QuizAnswerData>
     implements $QuizAnswerDataCopyWith<$Res> {
   _$QuizAnswerDataCopyWithImpl(this._value, this._then);
 
-  final QuizAnswerData _value;
   // ignore: unused_field
-  final $Res Function(QuizAnswerData) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? quiz = freezed,
+    Object? quiz = null,
     Object? select_anser = freezed,
   }) {
     return _then(_value.copyWith(
-      quiz: quiz == freezed
+      quiz: null == quiz
           ? _value.quiz
           : quiz // ignore: cast_nullable_to_non_nullable
               as Quiz,
-      select_anser: select_anser == freezed
+      select_anser: freezed == select_anser
           ? _value.select_anser
           : select_anser // ignore: cast_nullable_to_non_nullable
               as int?,
-    ));
+    ) as $Val);
   }
 
   @override
+  @pragma('vm:prefer-inline')
   $QuizCopyWith<$Res> get quiz {
     return $QuizCopyWith<$Res>(_value.quiz, (value) {
-      return _then(_value.copyWith(quiz: value));
+      return _then(_value.copyWith(quiz: value) as $Val);
     });
   }
 }
 
 /// @nodoc
-abstract class _$QuizAnswerDataCopyWith<$Res>
+abstract class _$$QuizAnswerDataImplCopyWith<$Res>
     implements $QuizAnswerDataCopyWith<$Res> {
-  factory _$QuizAnswerDataCopyWith(
-          _QuizAnswerData value, $Res Function(_QuizAnswerData) then) =
-      __$QuizAnswerDataCopyWithImpl<$Res>;
+  factory _$$QuizAnswerDataImplCopyWith(_$QuizAnswerDataImpl value,
+          $Res Function(_$QuizAnswerDataImpl) then) =
+      __$$QuizAnswerDataImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call({Quiz quiz, int? select_anser});
 
   @override
@@ -95,27 +87,25 @@ abstract class _$QuizAnswerDataCopyWith<$Res>
 }
 
 /// @nodoc
-class __$QuizAnswerDataCopyWithImpl<$Res>
-    extends _$QuizAnswerDataCopyWithImpl<$Res>
-    implements _$QuizAnswerDataCopyWith<$Res> {
-  __$QuizAnswerDataCopyWithImpl(
-      _QuizAnswerData _value, $Res Function(_QuizAnswerData) _then)
-      : super(_value, (v) => _then(v as _QuizAnswerData));
+class __$$QuizAnswerDataImplCopyWithImpl<$Res>
+    extends _$QuizAnswerDataCopyWithImpl<$Res, _$QuizAnswerDataImpl>
+    implements _$$QuizAnswerDataImplCopyWith<$Res> {
+  __$$QuizAnswerDataImplCopyWithImpl(
+      _$QuizAnswerDataImpl _value, $Res Function(_$QuizAnswerDataImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _QuizAnswerData get _value => super._value as _QuizAnswerData;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? quiz = freezed,
+    Object? quiz = null,
     Object? select_anser = freezed,
   }) {
-    return _then(_QuizAnswerData(
-      quiz: quiz == freezed
+    return _then(_$QuizAnswerDataImpl(
+      quiz: null == quiz
           ? _value.quiz
           : quiz // ignore: cast_nullable_to_non_nullable
               as Quiz,
-      select_anser: select_anser == freezed
+      select_anser: freezed == select_anser
           ? _value.select_anser
           : select_anser // ignore: cast_nullable_to_non_nullable
               as int?,
@@ -125,10 +115,10 @@ class __$QuizAnswerDataCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_QuizAnswerData
+class _$QuizAnswerDataImpl
     with DiagnosticableTreeMixin
     implements _QuizAnswerData {
-  const _$_QuizAnswerData({required this.quiz, required this.select_anser});
+  const _$QuizAnswerDataImpl({required this.quiz, required this.select_anser});
 
   @override
   final Quiz quiz;
@@ -152,36 +142,35 @@ class _$_QuizAnswerData
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _QuizAnswerData &&
-            (identical(other.quiz, quiz) ||
-                const DeepCollectionEquality().equals(other.quiz, quiz)) &&
+        (other.runtimeType == runtimeType &&
+            other is _$QuizAnswerDataImpl &&
+            (identical(other.quiz, quiz) || other.quiz == quiz) &&
             (identical(other.select_anser, select_anser) ||
-                const DeepCollectionEquality()
-                    .equals(other.select_anser, select_anser)));
+                other.select_anser == select_anser));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(quiz) ^
-      const DeepCollectionEquality().hash(select_anser);
+  int get hashCode => Object.hash(runtimeType, quiz, select_anser);
 
   @JsonKey(ignore: true)
   @override
-  _$QuizAnswerDataCopyWith<_QuizAnswerData> get copyWith =>
-      __$QuizAnswerDataCopyWithImpl<_QuizAnswerData>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$QuizAnswerDataImplCopyWith<_$QuizAnswerDataImpl> get copyWith =>
+      __$$QuizAnswerDataImplCopyWithImpl<_$QuizAnswerDataImpl>(
+          this, _$identity);
 }
 
 abstract class _QuizAnswerData implements QuizAnswerData {
   const factory _QuizAnswerData(
-      {required Quiz quiz, required int? select_anser}) = _$_QuizAnswerData;
+      {required final Quiz quiz,
+      required final int? select_anser}) = _$QuizAnswerDataImpl;
 
   @override
-  Quiz get quiz => throw _privateConstructorUsedError;
+  Quiz get quiz;
   @override
-  int? get select_anser => throw _privateConstructorUsedError;
+  int? get select_anser;
   @override
   @JsonKey(ignore: true)
-  _$QuizAnswerDataCopyWith<_QuizAnswerData> get copyWith =>
+  _$$QuizAnswerDataImplCopyWith<_$QuizAnswerDataImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

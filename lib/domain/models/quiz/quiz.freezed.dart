@@ -1,5 +1,7 @@
+// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
+// ignore_for_file: type=lint
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'quiz.dart';
 
@@ -10,38 +12,7 @@ part of 'quiz.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
-
-/// @nodoc
-class _$QuizTearOff {
-  const _$QuizTearOff();
-
-  _Quiz call(
-      {required String documentId,
-      required String title,
-      required String question,
-      required List<String> choices,
-      required int correctAnswer,
-      required DateTime createdAt,
-      required double? car,
-      required int? answerCount,
-      String? imageUrl = null}) {
-    return _Quiz(
-      documentId: documentId,
-      title: title,
-      question: question,
-      choices: choices,
-      correctAnswer: correctAnswer,
-      createdAt: createdAt,
-      car: car,
-      answerCount: answerCount,
-      imageUrl: imageUrl,
-    );
-  }
-}
-
-/// @nodoc
-const $Quiz = _$QuizTearOff();
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
 mixin _$Quiz {
@@ -62,7 +33,8 @@ mixin _$Quiz {
 /// @nodoc
 abstract class $QuizCopyWith<$Res> {
   factory $QuizCopyWith(Quiz value, $Res Function(Quiz) then) =
-      _$QuizCopyWithImpl<$Res>;
+      _$QuizCopyWithImpl<$Res, Quiz>;
+  @useResult
   $Res call(
       {String documentId,
       String title,
@@ -76,71 +48,76 @@ abstract class $QuizCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$QuizCopyWithImpl<$Res> implements $QuizCopyWith<$Res> {
+class _$QuizCopyWithImpl<$Res, $Val extends Quiz>
+    implements $QuizCopyWith<$Res> {
   _$QuizCopyWithImpl(this._value, this._then);
 
-  final Quiz _value;
   // ignore: unused_field
-  final $Res Function(Quiz) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? documentId = freezed,
-    Object? title = freezed,
-    Object? question = freezed,
-    Object? choices = freezed,
-    Object? correctAnswer = freezed,
-    Object? createdAt = freezed,
+    Object? documentId = null,
+    Object? title = null,
+    Object? question = null,
+    Object? choices = null,
+    Object? correctAnswer = null,
+    Object? createdAt = null,
     Object? car = freezed,
     Object? answerCount = freezed,
     Object? imageUrl = freezed,
   }) {
     return _then(_value.copyWith(
-      documentId: documentId == freezed
+      documentId: null == documentId
           ? _value.documentId
           : documentId // ignore: cast_nullable_to_non_nullable
               as String,
-      title: title == freezed
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      question: question == freezed
+      question: null == question
           ? _value.question
           : question // ignore: cast_nullable_to_non_nullable
               as String,
-      choices: choices == freezed
+      choices: null == choices
           ? _value.choices
           : choices // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      correctAnswer: correctAnswer == freezed
+      correctAnswer: null == correctAnswer
           ? _value.correctAnswer
           : correctAnswer // ignore: cast_nullable_to_non_nullable
               as int,
-      createdAt: createdAt == freezed
+      createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      car: car == freezed
+      car: freezed == car
           ? _value.car
           : car // ignore: cast_nullable_to_non_nullable
               as double?,
-      answerCount: answerCount == freezed
+      answerCount: freezed == answerCount
           ? _value.answerCount
           : answerCount // ignore: cast_nullable_to_non_nullable
               as int?,
-      imageUrl: imageUrl == freezed
+      imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-    ));
+    ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$QuizCopyWith<$Res> implements $QuizCopyWith<$Res> {
-  factory _$QuizCopyWith(_Quiz value, $Res Function(_Quiz) then) =
-      __$QuizCopyWithImpl<$Res>;
+abstract class _$$QuizImplCopyWith<$Res> implements $QuizCopyWith<$Res> {
+  factory _$$QuizImplCopyWith(
+          _$QuizImpl value, $Res Function(_$QuizImpl) then) =
+      __$$QuizImplCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {String documentId,
       String title,
@@ -154,60 +131,59 @@ abstract class _$QuizCopyWith<$Res> implements $QuizCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$QuizCopyWithImpl<$Res> extends _$QuizCopyWithImpl<$Res>
-    implements _$QuizCopyWith<$Res> {
-  __$QuizCopyWithImpl(_Quiz _value, $Res Function(_Quiz) _then)
-      : super(_value, (v) => _then(v as _Quiz));
+class __$$QuizImplCopyWithImpl<$Res>
+    extends _$QuizCopyWithImpl<$Res, _$QuizImpl>
+    implements _$$QuizImplCopyWith<$Res> {
+  __$$QuizImplCopyWithImpl(_$QuizImpl _value, $Res Function(_$QuizImpl) _then)
+      : super(_value, _then);
 
-  @override
-  _Quiz get _value => super._value as _Quiz;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? documentId = freezed,
-    Object? title = freezed,
-    Object? question = freezed,
-    Object? choices = freezed,
-    Object? correctAnswer = freezed,
-    Object? createdAt = freezed,
+    Object? documentId = null,
+    Object? title = null,
+    Object? question = null,
+    Object? choices = null,
+    Object? correctAnswer = null,
+    Object? createdAt = null,
     Object? car = freezed,
     Object? answerCount = freezed,
     Object? imageUrl = freezed,
   }) {
-    return _then(_Quiz(
-      documentId: documentId == freezed
+    return _then(_$QuizImpl(
+      documentId: null == documentId
           ? _value.documentId
           : documentId // ignore: cast_nullable_to_non_nullable
               as String,
-      title: title == freezed
+      title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String,
-      question: question == freezed
+      question: null == question
           ? _value.question
           : question // ignore: cast_nullable_to_non_nullable
               as String,
-      choices: choices == freezed
-          ? _value.choices
+      choices: null == choices
+          ? _value._choices
           : choices // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      correctAnswer: correctAnswer == freezed
+      correctAnswer: null == correctAnswer
           ? _value.correctAnswer
           : correctAnswer // ignore: cast_nullable_to_non_nullable
               as int,
-      createdAt: createdAt == freezed
+      createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      car: car == freezed
+      car: freezed == car
           ? _value.car
           : car // ignore: cast_nullable_to_non_nullable
               as double?,
-      answerCount: answerCount == freezed
+      answerCount: freezed == answerCount
           ? _value.answerCount
           : answerCount // ignore: cast_nullable_to_non_nullable
               as int?,
-      imageUrl: imageUrl == freezed
+      imageUrl: freezed == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
               as String?,
@@ -217,17 +193,18 @@ class __$QuizCopyWithImpl<$Res> extends _$QuizCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Quiz with DiagnosticableTreeMixin implements _Quiz {
-  const _$_Quiz(
+class _$QuizImpl with DiagnosticableTreeMixin implements _Quiz {
+  const _$QuizImpl(
       {required this.documentId,
       required this.title,
       required this.question,
-      required this.choices,
+      required final List<String> choices,
       required this.correctAnswer,
       required this.createdAt,
       required this.car,
       required this.answerCount,
-      this.imageUrl = null});
+      this.imageUrl = null})
+      : _choices = choices;
 
   @override
   final String documentId;
@@ -235,8 +212,14 @@ class _$_Quiz with DiagnosticableTreeMixin implements _Quiz {
   final String title;
   @override
   final String question;
+  final List<String> _choices;
   @override
-  final List<String> choices;
+  List<String> get choices {
+    if (_choices is EqualUnmodifiableListView) return _choices;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_choices);
+  }
+
   @override
   final int correctAnswer;
   @override
@@ -245,8 +228,8 @@ class _$_Quiz with DiagnosticableTreeMixin implements _Quiz {
   final double? car;
   @override
   final int? answerCount;
-  @JsonKey(defaultValue: null)
   @override
+  @JsonKey()
   final String? imageUrl;
 
   @override
@@ -273,84 +256,77 @@ class _$_Quiz with DiagnosticableTreeMixin implements _Quiz {
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Quiz &&
+        (other.runtimeType == runtimeType &&
+            other is _$QuizImpl &&
             (identical(other.documentId, documentId) ||
-                const DeepCollectionEquality()
-                    .equals(other.documentId, documentId)) &&
-            (identical(other.title, title) ||
-                const DeepCollectionEquality().equals(other.title, title)) &&
+                other.documentId == documentId) &&
+            (identical(other.title, title) || other.title == title) &&
             (identical(other.question, question) ||
-                const DeepCollectionEquality()
-                    .equals(other.question, question)) &&
-            (identical(other.choices, choices) ||
-                const DeepCollectionEquality()
-                    .equals(other.choices, choices)) &&
+                other.question == question) &&
+            const DeepCollectionEquality().equals(other._choices, _choices) &&
             (identical(other.correctAnswer, correctAnswer) ||
-                const DeepCollectionEquality()
-                    .equals(other.correctAnswer, correctAnswer)) &&
+                other.correctAnswer == correctAnswer) &&
             (identical(other.createdAt, createdAt) ||
-                const DeepCollectionEquality()
-                    .equals(other.createdAt, createdAt)) &&
-            (identical(other.car, car) ||
-                const DeepCollectionEquality().equals(other.car, car)) &&
+                other.createdAt == createdAt) &&
+            (identical(other.car, car) || other.car == car) &&
             (identical(other.answerCount, answerCount) ||
-                const DeepCollectionEquality()
-                    .equals(other.answerCount, answerCount)) &&
+                other.answerCount == answerCount) &&
             (identical(other.imageUrl, imageUrl) ||
-                const DeepCollectionEquality()
-                    .equals(other.imageUrl, imageUrl)));
+                other.imageUrl == imageUrl));
   }
 
   @override
-  int get hashCode =>
-      runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(documentId) ^
-      const DeepCollectionEquality().hash(title) ^
-      const DeepCollectionEquality().hash(question) ^
-      const DeepCollectionEquality().hash(choices) ^
-      const DeepCollectionEquality().hash(correctAnswer) ^
-      const DeepCollectionEquality().hash(createdAt) ^
-      const DeepCollectionEquality().hash(car) ^
-      const DeepCollectionEquality().hash(answerCount) ^
-      const DeepCollectionEquality().hash(imageUrl);
+  int get hashCode => Object.hash(
+      runtimeType,
+      documentId,
+      title,
+      question,
+      const DeepCollectionEquality().hash(_choices),
+      correctAnswer,
+      createdAt,
+      car,
+      answerCount,
+      imageUrl);
 
   @JsonKey(ignore: true)
   @override
-  _$QuizCopyWith<_Quiz> get copyWith =>
-      __$QuizCopyWithImpl<_Quiz>(this, _$identity);
+  @pragma('vm:prefer-inline')
+  _$$QuizImplCopyWith<_$QuizImpl> get copyWith =>
+      __$$QuizImplCopyWithImpl<_$QuizImpl>(this, _$identity);
 }
 
 abstract class _Quiz implements Quiz {
   const factory _Quiz(
-      {required String documentId,
-      required String title,
-      required String question,
-      required List<String> choices,
-      required int correctAnswer,
-      required DateTime createdAt,
-      required double? car,
-      required int? answerCount,
-      String? imageUrl}) = _$_Quiz;
+      {required final String documentId,
+      required final String title,
+      required final String question,
+      required final List<String> choices,
+      required final int correctAnswer,
+      required final DateTime createdAt,
+      required final double? car,
+      required final int? answerCount,
+      final String? imageUrl}) = _$QuizImpl;
 
   @override
-  String get documentId => throw _privateConstructorUsedError;
+  String get documentId;
   @override
-  String get title => throw _privateConstructorUsedError;
+  String get title;
   @override
-  String get question => throw _privateConstructorUsedError;
+  String get question;
   @override
-  List<String> get choices => throw _privateConstructorUsedError;
+  List<String> get choices;
   @override
-  int get correctAnswer => throw _privateConstructorUsedError;
+  int get correctAnswer;
   @override
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime get createdAt;
   @override
-  double? get car => throw _privateConstructorUsedError;
+  double? get car;
   @override
-  int? get answerCount => throw _privateConstructorUsedError;
+  int? get answerCount;
   @override
-  String? get imageUrl => throw _privateConstructorUsedError;
+  String? get imageUrl;
   @override
   @JsonKey(ignore: true)
-  _$QuizCopyWith<_Quiz> get copyWith => throw _privateConstructorUsedError;
+  _$$QuizImplCopyWith<_$QuizImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }
