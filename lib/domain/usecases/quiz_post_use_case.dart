@@ -2,13 +2,13 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
-import 'package:share_quiz/data/repository_impl/quiz_post_repository_impl.dart';
 import '../models/quiz_post/quiz_post_data.dart';
+import '../repository/quiz_post_repository.dart';
 
 class QuizPostUseCase extends StateNotifier<AsyncValue<void>?> {
-  final _repository = QuizPostRepositoryImpl();
+  final QuizPostRepository _repository;
 
-  QuizPostUseCase() : super(null);
+  QuizPostUseCase(this._repository) : super(null);
 
   post(QuizPostData post) async {
     try {
