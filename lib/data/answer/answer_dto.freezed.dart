@@ -20,12 +20,21 @@ AnswerDto _$AnswerDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$AnswerDto {
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   String? get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'answer')
   int get answer => throw _privateConstructorUsedError;
   @JsonKey(name: 'user_id')
   String get userId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'quiz_id')
+  int get quizId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'selected_choice_index')
+  int get selectedChoiceIndex => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_correct')
+  bool get isCorrect => throw _privateConstructorUsedError;
+  @TimestampConverter()
+  @JsonKey(name: 'created_at')
+  DateTime get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,9 +48,13 @@ abstract class $AnswerDtoCopyWith<$Res> {
       _$AnswerDtoCopyWithImpl<$Res, AnswerDto>;
   @useResult
   $Res call(
-      {@JsonKey(ignore: true) String? id,
+      {@JsonKey(includeFromJson: false, includeToJson: false) String? id,
       @JsonKey(name: 'answer') int answer,
-      @JsonKey(name: 'user_id') String userId});
+      @JsonKey(name: 'user_id') String userId,
+      @JsonKey(name: 'quiz_id') int quizId,
+      @JsonKey(name: 'selected_choice_index') int selectedChoiceIndex,
+      @JsonKey(name: 'is_correct') bool isCorrect,
+      @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt});
 }
 
 /// @nodoc
@@ -60,6 +73,10 @@ class _$AnswerDtoCopyWithImpl<$Res, $Val extends AnswerDto>
     Object? id = freezed,
     Object? answer = null,
     Object? userId = null,
+    Object? quizId = null,
+    Object? selectedChoiceIndex = null,
+    Object? isCorrect = null,
+    Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -74,6 +91,22 @@ class _$AnswerDtoCopyWithImpl<$Res, $Val extends AnswerDto>
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
+      quizId: null == quizId
+          ? _value.quizId
+          : quizId // ignore: cast_nullable_to_non_nullable
+              as int,
+      selectedChoiceIndex: null == selectedChoiceIndex
+          ? _value.selectedChoiceIndex
+          : selectedChoiceIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      isCorrect: null == isCorrect
+          ? _value.isCorrect
+          : isCorrect // ignore: cast_nullable_to_non_nullable
+              as bool,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -87,9 +120,13 @@ abstract class _$$AnswerDtoImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(ignore: true) String? id,
+      {@JsonKey(includeFromJson: false, includeToJson: false) String? id,
       @JsonKey(name: 'answer') int answer,
-      @JsonKey(name: 'user_id') String userId});
+      @JsonKey(name: 'user_id') String userId,
+      @JsonKey(name: 'quiz_id') int quizId,
+      @JsonKey(name: 'selected_choice_index') int selectedChoiceIndex,
+      @JsonKey(name: 'is_correct') bool isCorrect,
+      @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt});
 }
 
 /// @nodoc
@@ -106,6 +143,10 @@ class __$$AnswerDtoImplCopyWithImpl<$Res>
     Object? id = freezed,
     Object? answer = null,
     Object? userId = null,
+    Object? quizId = null,
+    Object? selectedChoiceIndex = null,
+    Object? isCorrect = null,
+    Object? createdAt = null,
   }) {
     return _then(_$AnswerDtoImpl(
       id: freezed == id
@@ -120,6 +161,22 @@ class __$$AnswerDtoImplCopyWithImpl<$Res>
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
+      quizId: null == quizId
+          ? _value.quizId
+          : quizId // ignore: cast_nullable_to_non_nullable
+              as int,
+      selectedChoiceIndex: null == selectedChoiceIndex
+          ? _value.selectedChoiceIndex
+          : selectedChoiceIndex // ignore: cast_nullable_to_non_nullable
+              as int,
+      isCorrect: null == isCorrect
+          ? _value.isCorrect
+          : isCorrect // ignore: cast_nullable_to_non_nullable
+              as bool,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -128,15 +185,21 @@ class __$$AnswerDtoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$AnswerDtoImpl with DiagnosticableTreeMixin implements _AnswerDto {
   const _$AnswerDtoImpl(
-      {@JsonKey(ignore: true) this.id,
+      {@JsonKey(includeFromJson: false, includeToJson: false) this.id,
       @JsonKey(name: 'answer') required this.answer,
-      @JsonKey(name: 'user_id') required this.userId});
+      @JsonKey(name: 'user_id') required this.userId,
+      @JsonKey(name: 'quiz_id') required this.quizId,
+      @JsonKey(name: 'selected_choice_index') required this.selectedChoiceIndex,
+      @JsonKey(name: 'is_correct') required this.isCorrect,
+      @TimestampConverter()
+      @JsonKey(name: 'created_at')
+      required this.createdAt});
 
   factory _$AnswerDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$AnswerDtoImplFromJson(json);
 
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   final String? id;
   @override
   @JsonKey(name: 'answer')
@@ -144,10 +207,23 @@ class _$AnswerDtoImpl with DiagnosticableTreeMixin implements _AnswerDto {
   @override
   @JsonKey(name: 'user_id')
   final String userId;
+  @override
+  @JsonKey(name: 'quiz_id')
+  final int quizId;
+  @override
+  @JsonKey(name: 'selected_choice_index')
+  final int selectedChoiceIndex;
+  @override
+  @JsonKey(name: 'is_correct')
+  final bool isCorrect;
+  @override
+  @TimestampConverter()
+  @JsonKey(name: 'created_at')
+  final DateTime createdAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AnswerDto(id: $id, answer: $answer, userId: $userId)';
+    return 'AnswerDto(id: $id, answer: $answer, userId: $userId, quizId: $quizId, selectedChoiceIndex: $selectedChoiceIndex, isCorrect: $isCorrect, createdAt: $createdAt)';
   }
 
   @override
@@ -157,7 +233,11 @@ class _$AnswerDtoImpl with DiagnosticableTreeMixin implements _AnswerDto {
       ..add(DiagnosticsProperty('type', 'AnswerDto'))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('answer', answer))
-      ..add(DiagnosticsProperty('userId', userId));
+      ..add(DiagnosticsProperty('userId', userId))
+      ..add(DiagnosticsProperty('quizId', quizId))
+      ..add(DiagnosticsProperty('selectedChoiceIndex', selectedChoiceIndex))
+      ..add(DiagnosticsProperty('isCorrect', isCorrect))
+      ..add(DiagnosticsProperty('createdAt', createdAt));
   }
 
   @override
@@ -167,12 +247,20 @@ class _$AnswerDtoImpl with DiagnosticableTreeMixin implements _AnswerDto {
             other is _$AnswerDtoImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.answer, answer) || other.answer == answer) &&
-            (identical(other.userId, userId) || other.userId == userId));
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.quizId, quizId) || other.quizId == quizId) &&
+            (identical(other.selectedChoiceIndex, selectedChoiceIndex) ||
+                other.selectedChoiceIndex == selectedChoiceIndex) &&
+            (identical(other.isCorrect, isCorrect) ||
+                other.isCorrect == isCorrect) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, answer, userId);
+  int get hashCode => Object.hash(runtimeType, id, answer, userId, quizId,
+      selectedChoiceIndex, isCorrect, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -190,16 +278,22 @@ class _$AnswerDtoImpl with DiagnosticableTreeMixin implements _AnswerDto {
 
 abstract class _AnswerDto implements AnswerDto {
   const factory _AnswerDto(
-          {@JsonKey(ignore: true) final String? id,
-          @JsonKey(name: 'answer') required final int answer,
-          @JsonKey(name: 'user_id') required final String userId}) =
-      _$AnswerDtoImpl;
+      {@JsonKey(includeFromJson: false, includeToJson: false) final String? id,
+      @JsonKey(name: 'answer') required final int answer,
+      @JsonKey(name: 'user_id') required final String userId,
+      @JsonKey(name: 'quiz_id') required final int quizId,
+      @JsonKey(name: 'selected_choice_index')
+      required final int selectedChoiceIndex,
+      @JsonKey(name: 'is_correct') required final bool isCorrect,
+      @TimestampConverter()
+      @JsonKey(name: 'created_at')
+      required final DateTime createdAt}) = _$AnswerDtoImpl;
 
   factory _AnswerDto.fromJson(Map<String, dynamic> json) =
       _$AnswerDtoImpl.fromJson;
 
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   String? get id;
   @override
   @JsonKey(name: 'answer')
@@ -207,6 +301,19 @@ abstract class _AnswerDto implements AnswerDto {
   @override
   @JsonKey(name: 'user_id')
   String get userId;
+  @override
+  @JsonKey(name: 'quiz_id')
+  int get quizId;
+  @override
+  @JsonKey(name: 'selected_choice_index')
+  int get selectedChoiceIndex;
+  @override
+  @JsonKey(name: 'is_correct')
+  bool get isCorrect;
+  @override
+  @TimestampConverter()
+  @JsonKey(name: 'created_at')
+  DateTime get createdAt;
   @override
   @JsonKey(ignore: true)
   _$$AnswerDtoImplCopyWith<_$AnswerDtoImpl> get copyWith =>
