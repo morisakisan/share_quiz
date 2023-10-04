@@ -19,7 +19,7 @@ dependencies:
   firebase_storage: 11.2.8
   tuple: 2.0.0
   firebase_crashlytics: 3.3.7
-  crypto: 3.0.1
+  crypto: 3.0.3
   package_info: 2.0.0
   import_sorter: 4.5.1
   image_picker: 1.0.4
