@@ -3,7 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
 import 'package:share_quiz/domain/repository/quiz_answer_data_repository.dart';
-
 import '../models/quiz_answer_data/quiz_answer_data.dart';
 
 class QuizAnswerUseCase extends StateNotifier<AsyncValue<QuizAnswerData>> {

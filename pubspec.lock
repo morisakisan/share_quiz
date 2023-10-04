@@ -609,7 +609,7 @@ packages:
     source: hosted
     version: "0.2.1+1"
   import_sorter:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: import_sorter
       sha256: "22ba9edb1a51a67a6f2ab534e8d1536b8e5cd03a31472c67fe3bc2ffba4008bc"

@@ -1,7 +1,7 @@
+// Project imports:
 import 'package:share_quiz/data/mapper/user_data_mapper.dart';
 import 'package:share_quiz/data/user/user_firebase_store.dart';
 import 'package:share_quiz/domain/repository/user_data_repository.dart';
-
 import '../../domain/models/user/user_data.dart';
 
 class UserDataRepositoryImpl extends UserDataRepository {
