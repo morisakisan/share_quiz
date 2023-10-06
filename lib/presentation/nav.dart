@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 
 // Project imports:
-import 'package:share_quiz/presentation/screen/quiz_answer.dart';
-import 'package:share_quiz/presentation/screen/quiz_post.dart';
-import 'package:share_quiz/presentation/screen/setting.dart';
+import 'package:share_quiz/presentation/screen/quiz_detail_screen.dart';
+import 'package:share_quiz/presentation/screen/quiz_post_screen.dart';
+import 'package:share_quiz/presentation/screen/setting_screen.dart';
 
 // Project imports:
 
@@ -16,8 +16,8 @@ class Nav {
   static const SETTING = "setting";
 
   static final routes = <String, WidgetBuilder>{
-    QUIZ_POST: (BuildContext context) => QuizPost(),
-    QUIZ_DETAIL: (BuildContext context) => QuizAnswer(),
-    SETTING: (BuildContext context) => Setting()
+    QUIZ_POST: (BuildContext context) => QuizPostScreen(),
+    QUIZ_DETAIL: (BuildContext context) => QuizDetailScreen(),
+    SETTING: (BuildContext context) => SettingScreen()
   };
 }

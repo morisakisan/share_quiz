@@ -39,8 +39,7 @@ final quizDetailProvider =
 
 final selectProvider = StateNotifierProvider.autoDispose<_Select, int>((_) => _Select());
 
-class QuizAnswer extends HookConsumerWidget {
-
+class QuizDetailScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

@@ -12,7 +12,7 @@ import '../../domain/models/quiz_list/quiz_list.dart';
 import '../nav.dart';
 
 class QuizListPage extends HookConsumerWidget {
-  final StreamProvider<QuizList> _provider;
+  final AutoDisposeStreamProvider<QuizList> _provider;
 
   QuizListPage(this._provider);
 

@@ -16,16 +16,16 @@ import 'package:share_quiz/presentation/widget/form/image_form_field.dart';
 import 'package:share_quiz/presentation/widget/widget_utils.dart';
 import '../../domain/models/quiz_post/quiz_post_data.dart';
 
-final quizPostRepositoryProvider = Provider<QuizPostRepository>((ref) {
+final quizPostRepositoryProvider = Provider.autoDispose<QuizPostRepository>((ref) {
   return QuizPostRepositoryImpl();
 });
 
 final postNotifierProvider =
-    StateNotifierProvider<QuizPostUseCase, AsyncValue<Object?>?>((ref) {
+    StateNotifierProvider.autoDispose<QuizPostUseCase, AsyncValue<Object?>?>((ref) {
   return QuizPostUseCase(ref.read(quizPostRepositoryProvider));
 });
 
-class QuizPost extends HookConsumerWidget {
+class QuizPostScreen extends HookConsumerWidget {
   final _formKey = GlobalKey<FormState>();
 
   String? _title;
