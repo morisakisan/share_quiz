@@ -13,10 +13,11 @@ class Application extends HookWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
+        useMaterial3: true,
         primaryColor: Colors.lime[800],
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(primary: Colors.blueAccent),
+          style: TextButton.styleFrom(disabledForegroundColor: Colors.blueAccent),
         ),
       ),
       routes: Nav.routes,
