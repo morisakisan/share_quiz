@@ -1,8 +1,6 @@
-// Package imports:
+// Project imports:
 import 'package:share_quiz/data/user/user_dto.dart';
-
 import '../../domain/models/user/user_data.dart';
-
 
 class UserDataMapper {
   UserDataMapper._();

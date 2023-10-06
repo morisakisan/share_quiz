@@ -7,12 +7,15 @@ import 'package:share_quiz/data/quiz/quiz_dto.dart';
 import 'package:share_quiz/data/quiz/quiz_firebase_store.dart';
 
 class AnswerFirebaseStore {
-  CollectionReference<Map<String, dynamic>> _getCollection(String docId) {
-    return QuizFirebaseStore.getCollection().doc(docId).collection("answer");
+  CollectionReference<Map<String, dynamic>> _getCollection() {
+    return FirebaseFirestore.instance.collection('answer');
   }
 
-  Future<List<AnswerDto>> fetchAnswers(String docId) =>
-      _getCollection(docId).get().then(
+  Future<List<AnswerDto>> fetchAnswers(String quizId) =>
+      _getCollection()
+          .where("quiz_id", isEqualTo: quizId)
+          .get()
+          .then(
             (snapshot) => snapshot.docs
                 .map(
                   (e) => AnswerDto.fromJson(e.data()).copyWith(id: e.id),
@@ -20,9 +23,12 @@ class AnswerFirebaseStore {
                 .toList(),
           );
 
-  Future<AnswerDto?> fetchMyAnswers(String docId, String userId) async {
+  Future<AnswerDto?> fetchMyAnswers(String quizId, String userId) async {
     final snapshot =
-        await _getCollection(docId).where("user_id", isEqualTo: userId).get();
+        await _getCollection()
+            .where("quiz_id", isEqualTo: quizId)
+            .where("user_id", isEqualTo: userId)
+            .get();
     final list = snapshot.docs
         .map(
           (e) => AnswerDto.fromJson(e.data()).copyWith(id: e.id),
@@ -58,7 +64,7 @@ class AnswerFirebaseStore {
         );
         final rate = correctAnswerCount / answerCount;
 
-        transaction.set(_getCollection(quizDocId).doc(), dto);
+        transaction.set(_getCollection().doc(), dto);
         updateQuiz.reference.update(
           {
             "correct_answer_rate": rate,

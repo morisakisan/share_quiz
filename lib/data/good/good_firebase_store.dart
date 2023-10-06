@@ -5,20 +5,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:share_quiz/data/quiz/quiz_firebase_store.dart';
 
 class GoodFirebaseStore {
-  CollectionReference<Map<String, dynamic>> _getCollection(String docId) =>
-      QuizFirebaseStore.getCollection().doc(docId).collection("good");
+  CollectionReference<Map<String, dynamic>> _getCollection() =>
+      FirebaseFirestore.instance.collection('good');
 
   Future<List<QueryDocumentSnapshot<Map<String, dynamic>>>> fetchGoods(
-          String docId) =>
-      _getCollection(docId).get().then((snapshot) => snapshot.docs);
+          String quizId) =>
+      _getCollection().get().then((snapshot) => snapshot.docs);
 
-  Future<void> post(String docId, Map<String, dynamic> json) =>
-      _getCollection(docId).doc().set(json);
+  Future<void> post(String quizId, Map<String, dynamic> json) =>
+      _getCollection().doc().set(json);
 
   Future<void> update(
-          String quizDocId, String goodDogId, Map<String, dynamic> json) =>
-      _getCollection(quizDocId).doc(goodDogId).update(json);
+          String quizId, String goodDogId, Map<String, dynamic> json) =>
+      _getCollection().doc(goodDogId).update(json);
 
-  Future<void> delete(String quizDocId, String goodDogId) =>
-      _getCollection(quizDocId).doc(goodDogId).delete();
+  Future<void> delete(String quizId, String goodDogId) =>
+      _getCollection().doc(goodDogId).delete();
 }

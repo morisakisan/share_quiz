@@ -20,7 +20,7 @@ QuizDto _$QuizDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$QuizDto {
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: true, includeToJson: true)
   String? get docId => throw _privateConstructorUsedError;
   @JsonKey(name: 'correct_answer')
   int get correctAnswer => throw _privateConstructorUsedError;
@@ -53,7 +53,7 @@ abstract class $QuizDtoCopyWith<$Res> {
       _$QuizDtoCopyWithImpl<$Res, QuizDto>;
   @useResult
   $Res call(
-      {@JsonKey(ignore: true) String? docId,
+      {@JsonKey(includeFromJson: true, includeToJson: true) String? docId,
       @JsonKey(name: 'correct_answer') int correctAnswer,
       @JsonKey(name: 'title') String title,
       @JsonKey(name: 'question') String question,
@@ -142,7 +142,7 @@ abstract class _$$QuizDtoImplCopyWith<$Res> implements $QuizDtoCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {@JsonKey(ignore: true) String? docId,
+      {@JsonKey(includeFromJson: true, includeToJson: true) String? docId,
       @JsonKey(name: 'correct_answer') int correctAnswer,
       @JsonKey(name: 'title') String title,
       @JsonKey(name: 'question') String question,
@@ -225,7 +225,7 @@ class __$$QuizDtoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$QuizDtoImpl with DiagnosticableTreeMixin implements _QuizDto {
   const _$QuizDtoImpl(
-      {@JsonKey(ignore: true) this.docId,
+      {@JsonKey(includeFromJson: true, includeToJson: true) this.docId,
       @JsonKey(name: 'correct_answer') required this.correctAnswer,
       @JsonKey(name: 'title') required this.title,
       @JsonKey(name: 'question') required this.question,
@@ -243,7 +243,7 @@ class _$QuizDtoImpl with DiagnosticableTreeMixin implements _QuizDto {
       _$$QuizDtoImplFromJson(json);
 
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: true, includeToJson: true)
   final String? docId;
   @override
   @JsonKey(name: 'correct_answer')
@@ -355,24 +355,24 @@ class _$QuizDtoImpl with DiagnosticableTreeMixin implements _QuizDto {
 
 abstract class _QuizDto implements QuizDto {
   const factory _QuizDto(
-          {@JsonKey(ignore: true) final String? docId,
-          @JsonKey(name: 'correct_answer') required final int correctAnswer,
-          @JsonKey(name: 'title') required final String title,
-          @JsonKey(name: 'question') required final String question,
-          @JsonKey(name: 'image_url') required final String? imageUrl,
-          @JsonKey(name: 'choices') required final List<String> choices,
-          @TimestampConverter()
-          @JsonKey(name: 'created_at')
-          required final DateTime createdAt,
-          @JsonKey(name: 'user_id') required final String userId,
-          @JsonKey(name: 'correct_answer_rate') required final double? car,
-          @JsonKey(name: 'answer_count') required final int answerCount}) =
-      _$QuizDtoImpl;
+      {@JsonKey(includeFromJson: true, includeToJson: true) final String? docId,
+      @JsonKey(name: 'correct_answer') required final int correctAnswer,
+      @JsonKey(name: 'title') required final String title,
+      @JsonKey(name: 'question') required final String question,
+      @JsonKey(name: 'image_url') required final String? imageUrl,
+      @JsonKey(name: 'choices') required final List<String> choices,
+      @TimestampConverter()
+      @JsonKey(name: 'created_at')
+      required final DateTime createdAt,
+      @JsonKey(name: 'user_id') required final String userId,
+      @JsonKey(name: 'correct_answer_rate') required final double? car,
+      @JsonKey(name: 'answer_count')
+      required final int answerCount}) = _$QuizDtoImpl;
 
   factory _QuizDto.fromJson(Map<String, dynamic> json) = _$QuizDtoImpl.fromJson;
 
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: true, includeToJson: true)
   String? get docId;
   @override
   @JsonKey(name: 'correct_answer')

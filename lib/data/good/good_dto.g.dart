@@ -1,24 +1,22 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_dto.dart';
+part of 'good_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$UserDtoImpl _$$UserDtoImplFromJson(Map<String, dynamic> json) =>
-    _$UserDtoImpl(
-      uid: json['uid'] as String,
-      name: json['name'] as String,
-      photoUrl: json['photo_url'] as String,
+_$GoodDtoImpl _$$GoodDtoImplFromJson(Map<String, dynamic> json) =>
+    _$GoodDtoImpl(
+      quizId: json['quiz_id'] as String,
+      userId: json['user_id'] as String,
       createdAt:
           const TimestampConverter().fromJson(json['created_at'] as Timestamp),
     );
 
-Map<String, dynamic> _$$UserDtoImplToJson(_$UserDtoImpl instance) =>
+Map<String, dynamic> _$$GoodDtoImplToJson(_$GoodDtoImpl instance) =>
     <String, dynamic>{
-      'uid': instance.uid,
-      'name': instance.name,
-      'photo_url': instance.photoUrl,
+      'quiz_id': instance.quizId,
+      'user_id': instance.userId,
       'created_at': const TimestampConverter().toJson(instance.createdAt),
     };

@@ -26,6 +26,9 @@ mixin _$UserDto {
   String get name => throw _privateConstructorUsedError;
   @JsonKey(name: 'photo_url')
   String get photoUrl => throw _privateConstructorUsedError;
+  @TimestampConverter()
+  @JsonKey(name: 'created_at')
+  DateTime get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -40,7 +43,8 @@ abstract class $UserDtoCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'uid') String uid,
       @JsonKey(name: 'name') String name,
-      @JsonKey(name: 'photo_url') String photoUrl});
+      @JsonKey(name: 'photo_url') String photoUrl,
+      @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt});
 }
 
 /// @nodoc
@@ -59,6 +63,7 @@ class _$UserDtoCopyWithImpl<$Res, $Val extends UserDto>
     Object? uid = null,
     Object? name = null,
     Object? photoUrl = null,
+    Object? createdAt = null,
   }) {
     return _then(_value.copyWith(
       uid: null == uid
@@ -73,6 +78,10 @@ class _$UserDtoCopyWithImpl<$Res, $Val extends UserDto>
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ) as $Val);
   }
 }
@@ -87,7 +96,8 @@ abstract class _$$UserDtoImplCopyWith<$Res> implements $UserDtoCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'uid') String uid,
       @JsonKey(name: 'name') String name,
-      @JsonKey(name: 'photo_url') String photoUrl});
+      @JsonKey(name: 'photo_url') String photoUrl,
+      @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt});
 }
 
 /// @nodoc
@@ -104,6 +114,7 @@ class __$$UserDtoImplCopyWithImpl<$Res>
     Object? uid = null,
     Object? name = null,
     Object? photoUrl = null,
+    Object? createdAt = null,
   }) {
     return _then(_$UserDtoImpl(
       uid: null == uid
@@ -118,6 +129,10 @@ class __$$UserDtoImplCopyWithImpl<$Res>
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
               as String,
+      createdAt: null == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime,
     ));
   }
 }
@@ -128,7 +143,10 @@ class _$UserDtoImpl with DiagnosticableTreeMixin implements _UserDto {
   const _$UserDtoImpl(
       {@JsonKey(name: 'uid') required this.uid,
       @JsonKey(name: 'name') required this.name,
-      @JsonKey(name: 'photo_url') required this.photoUrl});
+      @JsonKey(name: 'photo_url') required this.photoUrl,
+      @TimestampConverter()
+      @JsonKey(name: 'created_at')
+      required this.createdAt});
 
   factory _$UserDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$UserDtoImplFromJson(json);
@@ -142,10 +160,14 @@ class _$UserDtoImpl with DiagnosticableTreeMixin implements _UserDto {
   @override
   @JsonKey(name: 'photo_url')
   final String photoUrl;
+  @override
+  @TimestampConverter()
+  @JsonKey(name: 'created_at')
+  final DateTime createdAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'UserDto(uid: $uid, name: $name, photoUrl: $photoUrl)';
+    return 'UserDto(uid: $uid, name: $name, photoUrl: $photoUrl, createdAt: $createdAt)';
   }
 
   @override
@@ -155,7 +177,8 @@ class _$UserDtoImpl with DiagnosticableTreeMixin implements _UserDto {
       ..add(DiagnosticsProperty('type', 'UserDto'))
       ..add(DiagnosticsProperty('uid', uid))
       ..add(DiagnosticsProperty('name', name))
-      ..add(DiagnosticsProperty('photoUrl', photoUrl));
+      ..add(DiagnosticsProperty('photoUrl', photoUrl))
+      ..add(DiagnosticsProperty('createdAt', createdAt));
   }
 
   @override
@@ -166,12 +189,14 @@ class _$UserDtoImpl with DiagnosticableTreeMixin implements _UserDto {
             (identical(other.uid, uid) || other.uid == uid) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.photoUrl, photoUrl) ||
-                other.photoUrl == photoUrl));
+                other.photoUrl == photoUrl) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, uid, name, photoUrl);
+  int get hashCode => Object.hash(runtimeType, uid, name, photoUrl, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -189,10 +214,12 @@ class _$UserDtoImpl with DiagnosticableTreeMixin implements _UserDto {
 
 abstract class _UserDto implements UserDto {
   const factory _UserDto(
-          {@JsonKey(name: 'uid') required final String uid,
-          @JsonKey(name: 'name') required final String name,
-          @JsonKey(name: 'photo_url') required final String photoUrl}) =
-      _$UserDtoImpl;
+      {@JsonKey(name: 'uid') required final String uid,
+      @JsonKey(name: 'name') required final String name,
+      @JsonKey(name: 'photo_url') required final String photoUrl,
+      @TimestampConverter()
+      @JsonKey(name: 'created_at')
+      required final DateTime createdAt}) = _$UserDtoImpl;
 
   factory _UserDto.fromJson(Map<String, dynamic> json) = _$UserDtoImpl.fromJson;
 
@@ -205,6 +232,10 @@ abstract class _UserDto implements UserDto {
   @override
   @JsonKey(name: 'photo_url')
   String get photoUrl;
+  @override
+  @TimestampConverter()
+  @JsonKey(name: 'created_at')
+  DateTime get createdAt;
   @override
   @JsonKey(ignore: true)
   _$$UserDtoImplCopyWith<_$UserDtoImpl> get copyWith =>

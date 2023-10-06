@@ -1,24 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_dto.dart';
+part of 'comment_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$UserDtoImpl _$$UserDtoImplFromJson(Map<String, dynamic> json) =>
-    _$UserDtoImpl(
-      uid: json['uid'] as String,
-      name: json['name'] as String,
-      photoUrl: json['photo_url'] as String,
+_$CommentDtoImpl _$$CommentDtoImplFromJson(Map<String, dynamic> json) =>
+    _$CommentDtoImpl(
+      quizId: json['quiz_id'] as String,
+      content: json['content'] as String,
+      userId: json['user_id'] as String,
       createdAt:
           const TimestampConverter().fromJson(json['created_at'] as Timestamp),
     );
 
-Map<String, dynamic> _$$UserDtoImplToJson(_$UserDtoImpl instance) =>
+Map<String, dynamic> _$$CommentDtoImplToJson(_$CommentDtoImpl instance) =>
     <String, dynamic>{
-      'uid': instance.uid,
-      'name': instance.name,
-      'photo_url': instance.photoUrl,
+      'quiz_id': instance.quizId,
+      'content': instance.content,
+      'user_id': instance.userId,
       'created_at': const TimestampConverter().toJson(instance.createdAt),
     };

@@ -8,6 +8,7 @@ part of 'quiz_dto.dart';
 
 _$QuizDtoImpl _$$QuizDtoImplFromJson(Map<String, dynamic> json) =>
     _$QuizDtoImpl(
+      docId: json['docId'] as String?,
       correctAnswer: json['correct_answer'] as int,
       title: json['title'] as String,
       question: json['question'] as String,
@@ -23,6 +24,7 @@ _$QuizDtoImpl _$$QuizDtoImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$QuizDtoImplToJson(_$QuizDtoImpl instance) =>
     <String, dynamic>{
+      'docId': instance.docId,
       'correct_answer': instance.correctAnswer,
       'title': instance.title,
       'question': instance.question,

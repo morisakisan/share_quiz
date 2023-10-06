@@ -2,6 +2,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+
+// Project imports:
 import 'package:share_quiz/data/user/user_dto.dart';
 
 class UserFirebaseStore {
@@ -42,12 +44,16 @@ class UserFirebaseStore {
 
   setUserData(User user) async {
     final dto = UserDto(
-      uid: user.uid,
-      name: user.displayName!,
-      photoUrl: user.photoURL!,
-    );
+        uid: user.uid,
+        name: user.displayName!,
+        photoUrl: user.photoURL!,
+        createdAt: DateTime.now());
+
+    var userJson = dto.toJson();
+    userJson['created_at'] = FieldValue.serverTimestamp();
+
     return await _getCollection().doc().set(
-          dto.toJson(),
+          userJson,
         );
   }
 

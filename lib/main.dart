@@ -17,11 +17,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   initializeDateFormatting('ja_JP');
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   runZonedGuarded(() {
     runApp(
       ProviderScope(
         child: Application(),
       ),
     );
-  }, FirebaseCrashlytics.instance.recordError);
+  }, (error, stackTrace) {
+    FirebaseCrashlytics.instance.recordError(error, stackTrace);
+  });
 }
