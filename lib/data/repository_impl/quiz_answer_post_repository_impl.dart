@@ -19,11 +19,13 @@ class QuizAnswerPostRepositoryImpl extends QuizAnswerPostRepository {
         final updateQuiz = await transaction
             .get(QuizFirebaseStore.getCollection().doc(quizDocId));
         final updateQuizDto = QuizDto.fromJson(updateQuiz.data()!);
-
         final answers = (await updateQuiz.reference.collection("answer").get())
             .docs
-            .map((e) => AnswerDto.fromJson(e.data()))
-            .toList();
+            .map((e) {
+          var json = e.data();
+          json["quiz_id"] = e.reference.id;
+          return AnswerDto.fromJson(json);
+        }).toList();
         var user = await userDatastore.getCurrentUser();
         var isCorrect = updateQuizDto.correctAnswer == select;
         var answerJson = {
