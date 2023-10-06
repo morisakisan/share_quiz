@@ -22,7 +22,8 @@ final repositoryProvider = Provider.autoDispose<QuizAnswerPostRepository>((ref) 
 });
 
 final postNotifierProvider =
-    StateNotifierProvider.autoDispose<QuizAnswerPostUseCase, AsyncValue<Object?>?>((ref) {
+    StateNotifierProvider.autoDispose<QuizAnswerPostUseCase, AsyncValue<void>>(
+        (ref) {
   var repo = ref.read(repositoryProvider);
   return QuizAnswerPostUseCase(repo);
 });
