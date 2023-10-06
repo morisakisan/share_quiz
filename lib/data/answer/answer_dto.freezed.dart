@@ -28,8 +28,6 @@ mixin _$AnswerDto {
   String get userId => throw _privateConstructorUsedError;
   @JsonKey(name: 'quiz_id')
   String get quizId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'selected_choice_index')
-  int get selectedChoiceIndex => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_correct')
   bool get isCorrect => throw _privateConstructorUsedError;
   @TimestampConverter()
@@ -52,7 +50,6 @@ abstract class $AnswerDtoCopyWith<$Res> {
       @JsonKey(name: 'answer') int answer,
       @JsonKey(name: 'user_id') String userId,
       @JsonKey(name: 'quiz_id') String quizId,
-      @JsonKey(name: 'selected_choice_index') int selectedChoiceIndex,
       @JsonKey(name: 'is_correct') bool isCorrect,
       @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt});
 }
@@ -74,7 +71,6 @@ class _$AnswerDtoCopyWithImpl<$Res, $Val extends AnswerDto>
     Object? answer = null,
     Object? userId = null,
     Object? quizId = null,
-    Object? selectedChoiceIndex = null,
     Object? isCorrect = null,
     Object? createdAt = null,
   }) {
@@ -95,10 +91,6 @@ class _$AnswerDtoCopyWithImpl<$Res, $Val extends AnswerDto>
           ? _value.quizId
           : quizId // ignore: cast_nullable_to_non_nullable
               as String,
-      selectedChoiceIndex: null == selectedChoiceIndex
-          ? _value.selectedChoiceIndex
-          : selectedChoiceIndex // ignore: cast_nullable_to_non_nullable
-              as int,
       isCorrect: null == isCorrect
           ? _value.isCorrect
           : isCorrect // ignore: cast_nullable_to_non_nullable
@@ -124,7 +116,6 @@ abstract class _$$AnswerDtoImplCopyWith<$Res>
       @JsonKey(name: 'answer') int answer,
       @JsonKey(name: 'user_id') String userId,
       @JsonKey(name: 'quiz_id') String quizId,
-      @JsonKey(name: 'selected_choice_index') int selectedChoiceIndex,
       @JsonKey(name: 'is_correct') bool isCorrect,
       @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt});
 }
@@ -144,7 +135,6 @@ class __$$AnswerDtoImplCopyWithImpl<$Res>
     Object? answer = null,
     Object? userId = null,
     Object? quizId = null,
-    Object? selectedChoiceIndex = null,
     Object? isCorrect = null,
     Object? createdAt = null,
   }) {
@@ -165,10 +155,6 @@ class __$$AnswerDtoImplCopyWithImpl<$Res>
           ? _value.quizId
           : quizId // ignore: cast_nullable_to_non_nullable
               as String,
-      selectedChoiceIndex: null == selectedChoiceIndex
-          ? _value.selectedChoiceIndex
-          : selectedChoiceIndex // ignore: cast_nullable_to_non_nullable
-              as int,
       isCorrect: null == isCorrect
           ? _value.isCorrect
           : isCorrect // ignore: cast_nullable_to_non_nullable
@@ -189,7 +175,6 @@ class _$AnswerDtoImpl with DiagnosticableTreeMixin implements _AnswerDto {
       @JsonKey(name: 'answer') required this.answer,
       @JsonKey(name: 'user_id') required this.userId,
       @JsonKey(name: 'quiz_id') required this.quizId,
-      @JsonKey(name: 'selected_choice_index') required this.selectedChoiceIndex,
       @JsonKey(name: 'is_correct') required this.isCorrect,
       @TimestampConverter()
       @JsonKey(name: 'created_at')
@@ -211,9 +196,6 @@ class _$AnswerDtoImpl with DiagnosticableTreeMixin implements _AnswerDto {
   @JsonKey(name: 'quiz_id')
   final String quizId;
   @override
-  @JsonKey(name: 'selected_choice_index')
-  final int selectedChoiceIndex;
-  @override
   @JsonKey(name: 'is_correct')
   final bool isCorrect;
   @override
@@ -223,7 +205,7 @@ class _$AnswerDtoImpl with DiagnosticableTreeMixin implements _AnswerDto {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AnswerDto(id: $id, answer: $answer, userId: $userId, quizId: $quizId, selectedChoiceIndex: $selectedChoiceIndex, isCorrect: $isCorrect, createdAt: $createdAt)';
+    return 'AnswerDto(id: $id, answer: $answer, userId: $userId, quizId: $quizId, isCorrect: $isCorrect, createdAt: $createdAt)';
   }
 
   @override
@@ -235,7 +217,6 @@ class _$AnswerDtoImpl with DiagnosticableTreeMixin implements _AnswerDto {
       ..add(DiagnosticsProperty('answer', answer))
       ..add(DiagnosticsProperty('userId', userId))
       ..add(DiagnosticsProperty('quizId', quizId))
-      ..add(DiagnosticsProperty('selectedChoiceIndex', selectedChoiceIndex))
       ..add(DiagnosticsProperty('isCorrect', isCorrect))
       ..add(DiagnosticsProperty('createdAt', createdAt));
   }
@@ -249,8 +230,6 @@ class _$AnswerDtoImpl with DiagnosticableTreeMixin implements _AnswerDto {
             (identical(other.answer, answer) || other.answer == answer) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.quizId, quizId) || other.quizId == quizId) &&
-            (identical(other.selectedChoiceIndex, selectedChoiceIndex) ||
-                other.selectedChoiceIndex == selectedChoiceIndex) &&
             (identical(other.isCorrect, isCorrect) ||
                 other.isCorrect == isCorrect) &&
             (identical(other.createdAt, createdAt) ||
@@ -259,8 +238,8 @@ class _$AnswerDtoImpl with DiagnosticableTreeMixin implements _AnswerDto {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, answer, userId, quizId,
-      selectedChoiceIndex, isCorrect, createdAt);
+  int get hashCode => Object.hash(
+      runtimeType, id, answer, userId, quizId, isCorrect, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -282,8 +261,6 @@ abstract class _AnswerDto implements AnswerDto {
       @JsonKey(name: 'answer') required final int answer,
       @JsonKey(name: 'user_id') required final String userId,
       @JsonKey(name: 'quiz_id') required final String quizId,
-      @JsonKey(name: 'selected_choice_index')
-      required final int selectedChoiceIndex,
       @JsonKey(name: 'is_correct') required final bool isCorrect,
       @TimestampConverter()
       @JsonKey(name: 'created_at')
@@ -304,9 +281,6 @@ abstract class _AnswerDto implements AnswerDto {
   @override
   @JsonKey(name: 'quiz_id')
   String get quizId;
-  @override
-  @JsonKey(name: 'selected_choice_index')
-  int get selectedChoiceIndex;
   @override
   @JsonKey(name: 'is_correct')
   bool get isCorrect;

@@ -12,12 +12,12 @@ class Nav {
   Nav._();
 
   static const QUIZ_POST = "quiz_post";
-  static const QUIZ_ANSWER = "quiz_answer";
+  static const QUIZ_DETAIL = "quiz_detail";
   static const SETTING = "setting";
 
   static final routes = <String, WidgetBuilder>{
     QUIZ_POST: (BuildContext context) => QuizPost(),
-    QUIZ_ANSWER: (BuildContext context) => QuizAnswer(),
+    QUIZ_DETAIL: (BuildContext context) => QuizAnswer(),
     SETTING: (BuildContext context) => Setting()
   };
 }

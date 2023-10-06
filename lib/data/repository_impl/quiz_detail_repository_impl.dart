@@ -18,7 +18,7 @@ class QuizDetailRepositoryImpl extends QuizDetailRepository {
     final quizDto = await _quizDataStore.fetchWhereByQuizId(quizId);
 
     final quiz = QuizMapper.transform(quizDto!);
-    final user = await _userDataStore.gerCurrentUser();
+    final user = await _userDataStore.getCurrentUser();
     if(user == null) {
       throw NotSignInException();
     }
