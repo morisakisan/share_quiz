@@ -9,7 +9,7 @@ import 'package:package_info/package_info.dart';
 // Project imports:
 import 'package:share_quiz/presentation/widget/widget_utils.dart';
 
-class Setting extends HookWidget {
+class SettingScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 // Package imports:
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -17,38 +18,41 @@ import '../../domain/repository/quiz_answer_post_repository.dart';
 import '../../domain/repository/quiz_detail_repository.dart';
 import '../../domain/usecases/quiz_answer_post_use_case.dart';
 
-final repositoryProvider = Provider<QuizAnswerPostRepository>((ref) {
+final repositoryProvider = Provider.autoDispose<QuizAnswerPostRepository>((ref) {
   return QuizAnswerPostRepositoryImpl();
 });
 
 final postNotifierProvider =
-    StateNotifierProvider<QuizAnswerPostUseCase, AsyncValue<Object?>?>((ref) {
+    StateNotifierProvider.autoDispose<QuizAnswerPostUseCase, AsyncValue<void>>(
+        (ref) {
   var repo = ref.read(repositoryProvider);
   return QuizAnswerPostUseCase(repo);
 });
 
-final quizDetailRepositoryProvider = Provider<QuizDetailRepository>((ref) {
+final quizDetailRepositoryProvider = Provider.autoDispose<QuizDetailRepository>((ref) {
   return QuizDetailRepositoryImpl();
 });
 
 final quizDetailProvider =
-    StateNotifierProvider<QuizDetailUseCase, AsyncValue<QuizDetail>>((ref) {
+    StateNotifierProvider.autoDispose<QuizDetailUseCase, AsyncValue<QuizDetail>>((ref) {
   var repo = ref.read(quizDetailRepositoryProvider);
   return QuizDetailUseCase(repo);
 });
 
-class QuizAnswer extends HookConsumerWidget {
-  final selectProvider = StateNotifierProvider<_Select, int>((_) => _Select());
+final selectProvider = StateNotifierProvider.autoDispose<_Select, int>((_) => _Select());
+
+class QuizDetailScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final quizId = useState<String>(ModalRoute.of(context)!.settings.arguments as String);
     final quizAnswer = ref.watch(quizDetailProvider.select((value) => value));
     final quizAnswerNotifier = ref.watch(quizDetailProvider.notifier);
-    final selectNotifier = ref.watch(selectProvider.notifier);
-    var selectValue = ref.watch(selectProvider.select((value) => value));
+    useEffect(() {
+      quizAnswerNotifier.fetch(quizId.value);
+      return () {};
+    }, const []);
     if (quizAnswer is AsyncLoading) {
-      final quizId = ModalRoute.of(context)!.settings.arguments as String;
-      quizAnswerNotifier.fetch(quizId);
       return _loading();
     } else if (quizAnswer is AsyncError) {
       final error = (quizAnswer as AsyncError).error;
@@ -59,7 +63,7 @@ class QuizAnswer extends HookConsumerWidget {
       }
     } else if (quizAnswer is AsyncData) {
       return _success(context, (quizAnswer as AsyncData<QuizDetail>).value,
-          quizAnswerNotifier, selectNotifier, selectValue, ref);
+          quizAnswerNotifier, ref);
     } else {
       throw Exception();
     }
@@ -85,13 +89,10 @@ class QuizAnswer extends HookConsumerWidget {
     );
   }
 
-  Widget _success(
-      BuildContext context,
-      QuizDetail quizAnswerData,
-      QuizDetailUseCase notifier,
-      _Select selectNotifier,
-      int selectValue,
-      WidgetRef ref) {
+  Widget _success(BuildContext context, QuizDetail quizAnswerData,
+      QuizDetailUseCase notifier, WidgetRef ref) {
+    final selectNotifier = ref.read(selectProvider.notifier);
+    var selectValue = ref.watch(selectProvider.select((value) => value));
     final theme = Theme.of(context);
     final quiz = quizAnswerData.quiz;
 
@@ -161,7 +162,7 @@ class QuizAnswer extends HookConsumerWidget {
       );
 
       answerOnPressed =
-          () => _showAnswerDialog(context, selectValue, quiz, notifier, ref);
+          () => _showAnswerDialog(context, selectValue, quiz, notifier);
     } else {
       selectValue = quizAnswerData.select_anser!;
       answerOnPressed = null;
@@ -208,6 +209,7 @@ class QuizAnswer extends HookConsumerWidget {
       TextButton.icon(
         icon: Icon(Icons.share),
         onPressed: () {
+          _showCommentBottomSheet(context);
           Share.share("タイトル：${quiz.title}\n問題：${quiz.question}\n#みんなのクイズ");
         },
         label: Text("シェア"),
@@ -246,14 +248,22 @@ class QuizAnswer extends HookConsumerWidget {
   }
 
   _showAnswerDialog(BuildContext context, int select, Quiz quiz,
-      QuizDetailUseCase notifier, WidgetRef ref) {
+      QuizDetailUseCase notifier) {
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) {
+        return Consumer(
+          builder: (context, ref, child) {
             final state = ref.watch(postNotifierProvider);
+            final quizAnswerNotifier = ref.read(postNotifierProvider.notifier);
+            if (state is AsyncLoading) {
+            } else if (state is AsyncData) {
+              Navigator.pop(context);
+              notifier.fetch(quiz.documentId);
+            } else if (state is AsyncError) {
+
+            }
 
             return AlertDialog(
               content: Text(
@@ -266,23 +276,30 @@ class QuizAnswer extends HookConsumerWidget {
                 TextButton(
                   child: const Text("OK"),
                   onPressed: () {
-                    final quizAnswerNotifier =
-                        ref.read(postNotifierProvider.notifier);
-
-                    if (state is AsyncLoading) {
-                    } else if (state is AsyncData) {
-                      Navigator.pop(context);
-                      final quizId =
-                          ModalRoute.of(context)!.settings.arguments as String;
-                      notifier.fetch(quizId);
-                    } else if (state is AsyncError) {}
-
                     quizAnswerNotifier.post(quiz.documentId, select);
                   },
                 ),
               ],
             );
           },
+        );
+      },
+    );
+  }
+
+  void _showCommentBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return FractionallySizedBox(
+          heightFactor: 0.8, // 画面の80%の高さ
+          child: Container(
+            color: Colors.white,
+            child: Center(
+              child: Text("Large Bottom Sheet"),
+            ),
+          ),
         );
       },
     );

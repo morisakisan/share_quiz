@@ -12,7 +12,7 @@ import '../../domain/models/quiz_list/quiz_list.dart';
 import '../nav.dart';
 
 class QuizListPage extends HookConsumerWidget {
-  final StreamProvider<QuizList> _provider;
+  final AutoDisposeStreamProvider<QuizList> _provider;
 
   QuizListPage(this._provider);
 
@@ -112,7 +112,7 @@ class QuizListPage extends HookConsumerWidget {
                 icon: const Icon(Icons.question_answer_rounded),
                 onPressed: () {
                   Navigator.of(context).pushNamed(
-                    Nav.QUIZ_ANSWER,
+                    Nav.QUIZ_DETAIL,
                     arguments: quiz.documentId,
                   );
                 },

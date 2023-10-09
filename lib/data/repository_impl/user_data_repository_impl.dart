@@ -9,7 +9,7 @@ class UserDataRepositoryImpl extends UserDataRepository {
 
   @override
   Future<UserData?> getCurrentUserData() {
-    return _dataStore.gerCurrentUser().then((user) {
+    return _dataStore.getCurrentUser().then((user) {
       if (user == null) {
         return null;
       }

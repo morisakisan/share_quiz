@@ -16,26 +16,26 @@ import '../../domain/usecases/quiz_list_use_case.dart';
 import '../../domain/value_object/quiz_list_order_by.dart';
 import '../nav.dart';
 
-final quizListRepositoryProvider = Provider<QuizListRepository>((ref) {
+final quizListRepositoryProvider = Provider.autoDispose<QuizListRepository>((ref) {
   return QuizListRepositoryImpl();
 });
 
-final quizListNewProvider = StreamProvider<QuizList>((ref) {
+final quizListNewProvider = StreamProvider.autoDispose<QuizList>((ref) {
   var repository = ref.read(quizListRepositoryProvider);
   return QuizListUseCase(repository, QuizListOrderBy.CREATED_AT_DESC).build();
 });
 
-final quizAnswersCountListNewProvider = StreamProvider<QuizList>((ref) {
+final quizAnswersCountListNewProvider = StreamProvider.autoDispose<QuizList>((ref) {
   var repository = ref.read(quizListRepositoryProvider);
   return QuizListUseCase(repository, QuizListOrderBy.ANSWER_COUNT_DESC).build();
 });
 
-final quizCorrectRateListNewProvider = StreamProvider<QuizList>((ref) {
+final quizCorrectRateListNewProvider = StreamProvider.autoDispose<QuizList>((ref) {
   var repository = ref.read(quizListRepositoryProvider);
   return QuizListUseCase(repository, QuizListOrderBy.CORRECT_ANSWER_RATE_ASC).build();
 });
 
-class Home extends HookConsumerWidget {
+class HomeScreen extends HookConsumerWidget {
   final _tab = [
     const Tab(text: '新着'),
     const Tab(text: '回答数'),

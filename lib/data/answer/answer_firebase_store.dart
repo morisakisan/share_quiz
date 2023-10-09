@@ -3,19 +3,17 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 // Project imports:
 import 'package:share_quiz/data/answer/answer_dto.dart';
-import 'package:share_quiz/data/quiz/quiz_dto.dart';
-import 'package:share_quiz/data/quiz/quiz_firebase_store.dart';
 
 class AnswerFirebaseStore {
-  CollectionReference<Map<String, dynamic>> _getCollection() {
-    return FirebaseFirestore.instance.collection('answer');
+  CollectionReference<Map<String, dynamic>> _getCollection(String quizId) {
+    return FirebaseFirestore.instance
+        .collection('quiz')
+        .doc(quizId)
+        .collection('answer');
   }
 
   Future<List<AnswerDto>> fetchAnswers(String quizId) =>
-      _getCollection()
-          .where("quiz_id", isEqualTo: quizId)
-          .get()
-          .then(
+      _getCollection(quizId).get().then(
             (snapshot) => snapshot.docs
                 .map(
                   (e) => AnswerDto.fromJson(e.data()).copyWith(id: e.id),
@@ -24,11 +22,10 @@ class AnswerFirebaseStore {
           );
 
   Future<AnswerDto?> fetchMyAnswers(String quizId, String userId) async {
-    final snapshot =
-        await _getCollection()
-            .where("quiz_id", isEqualTo: quizId)
-            .where("user_id", isEqualTo: userId)
-            .get();
+    final snapshot = await _getCollection(quizId)
+        .where("quiz_id", isEqualTo: quizId)
+        .where("user_id", isEqualTo: userId)
+        .get();
     final list = snapshot.docs
         .map(
           (e) => AnswerDto.fromJson(e.data()).copyWith(id: e.id),
@@ -39,39 +36,5 @@ class AnswerFirebaseStore {
     } else {
       return list.first;
     }
-  }
-
-  Future<void> post(String quizDocId, Map<String, dynamic> dto) {
-    return FirebaseFirestore.instance.runTransaction(
-      (transaction) async {
-        final updateQuiz = await transaction
-            .get(QuizFirebaseStore.getCollection().doc(quizDocId));
-        final updateQuizDto = QuizDto.fromJson(updateQuiz.data()!);
-
-        final answers = (await updateQuiz.reference.collection("answer").get())
-            .docs
-            .map((e) => AnswerDto.fromJson(e.data()))
-            .toList();
-        answers.add(AnswerDto.fromJson(dto));
-        final answerCount = answers.length;
-        var correctAnswerCount = 0;
-        answers.forEach(
-          (dto) {
-            if (dto.answer == updateQuizDto.correctAnswer) {
-              correctAnswerCount++;
-            }
-          },
-        );
-        final rate = correctAnswerCount / answerCount;
-
-        transaction.set(_getCollection().doc(), dto);
-        updateQuiz.reference.update(
-          {
-            "correct_answer_rate": rate,
-            "answer_count": answerCount,
-          },
-        );
-      },
-    );
   }
 }
