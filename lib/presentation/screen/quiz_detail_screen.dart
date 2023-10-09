@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 // Package imports:
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -44,11 +45,14 @@ class QuizDetailScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final quizId = useState<String>(ModalRoute.of(context)!.settings.arguments as String);
     final quizAnswer = ref.watch(quizDetailProvider.select((value) => value));
     final quizAnswerNotifier = ref.watch(quizDetailProvider.notifier);
+    useEffect(() {
+      quizAnswerNotifier.fetch(quizId.value);
+      return () {};
+    }, const []);
     if (quizAnswer is AsyncLoading) {
-      final quizId = ModalRoute.of(context)!.settings.arguments as String;
-      quizAnswerNotifier.fetch(quizId);
       return _loading();
     } else if (quizAnswer is AsyncError) {
       final error = (quizAnswer as AsyncError).error;
@@ -158,7 +162,7 @@ class QuizDetailScreen extends HookConsumerWidget {
       );
 
       answerOnPressed =
-          () => _showAnswerDialog(context, selectValue, quiz, notifier, ref);
+          () => _showAnswerDialog(context, selectValue, quiz, notifier);
     } else {
       selectValue = quizAnswerData.select_anser!;
       answerOnPressed = null;
@@ -244,21 +248,19 @@ class QuizDetailScreen extends HookConsumerWidget {
   }
 
   _showAnswerDialog(BuildContext context, int select, Quiz quiz,
-      QuizDetailUseCase notifier, WidgetRef ref) {
+      QuizDetailUseCase notifier) {
     showDialog(
       context: context,
       barrierDismissible: false,
       builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) {
+        return Consumer(
+          builder: (context, ref, child) {
             final state = ref.watch(postNotifierProvider);
             final quizAnswerNotifier = ref.read(postNotifierProvider.notifier);
             if (state is AsyncLoading) {
             } else if (state is AsyncData) {
               Navigator.pop(context);
-              final quizId =
-              ModalRoute.of(context)!.settings.arguments as String;
-              notifier.fetch(quizId);
+              notifier.fetch(quiz.documentId);
             } else if (state is AsyncError) {
 
             }
@@ -274,7 +276,6 @@ class QuizDetailScreen extends HookConsumerWidget {
                 TextButton(
                   child: const Text("OK"),
                   onPressed: () {
-
                     quizAnswerNotifier.post(quiz.documentId, select);
                   },
                 ),
