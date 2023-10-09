@@ -18,34 +18,37 @@ import '../../domain/repository/quiz_answer_post_repository.dart';
 import '../../domain/repository/quiz_detail_repository.dart';
 import '../../domain/usecases/quiz_answer_post_use_case.dart';
 
-final repositoryProvider = Provider.autoDispose<QuizAnswerPostRepository>((ref) {
+final repositoryProvider =
+    Provider.autoDispose<QuizAnswerPostRepository>((ref) {
   return QuizAnswerPostRepositoryImpl();
 });
 
 final postNotifierProvider =
-    StateNotifierProvider.autoDispose<QuizAnswerPostUseCase, AsyncValue<void>>(
+    StateNotifierProvider.autoDispose<QuizAnswerPostUseCase, AsyncValue<void>?>(
         (ref) {
   var repo = ref.read(repositoryProvider);
   return QuizAnswerPostUseCase(repo);
 });
 
-final quizDetailRepositoryProvider = Provider.autoDispose<QuizDetailRepository>((ref) {
+final quizDetailRepositoryProvider =
+    Provider.autoDispose<QuizDetailRepository>((ref) {
   return QuizDetailRepositoryImpl();
 });
 
-final quizDetailProvider =
-    StateNotifierProvider.autoDispose<QuizDetailUseCase, AsyncValue<QuizDetail>>((ref) {
+final quizDetailProvider = StateNotifierProvider.autoDispose<QuizDetailUseCase,
+    AsyncValue<QuizDetail>>((ref) {
   var repo = ref.read(quizDetailRepositoryProvider);
   return QuizDetailUseCase(repo);
 });
 
-final selectProvider = StateNotifierProvider.autoDispose<_Select, int>((_) => _Select());
+final selectProvider =
+    StateNotifierProvider.autoDispose<_Select, int>((_) => _Select());
 
 class QuizDetailScreen extends HookConsumerWidget {
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final quizId = useState<String>(ModalRoute.of(context)!.settings.arguments as String);
+    final quizId =
+        useState<String>(ModalRoute.of(context)!.settings.arguments as String);
     final quizAnswer = ref.watch(quizDetailProvider.select((value) => value));
     final quizAnswerNotifier = ref.watch(quizDetailProvider.notifier);
     useEffect(() {
@@ -247,20 +250,22 @@ class QuizDetailScreen extends HookConsumerWidget {
     );
   }
 
-  _showAnswerDialog(BuildContext context, int select, Quiz quiz,
-      QuizDetailUseCase notifier) {
+  _showAnswerDialog(
+      BuildContext context, int select, Quiz quiz, QuizDetailUseCase notifier) {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext context) {
+      builder: (BuildContext dialogContext) {
         return Consumer(
           builder: (context, ref, child) {
             final state = ref.watch(postNotifierProvider);
             final quizAnswerNotifier = ref.read(postNotifierProvider.notifier);
             if (state is AsyncLoading) {
+              return CircularProgressIndicator();
             } else if (state is AsyncData) {
-              Navigator.pop(context);
               notifier.fetch(quiz.documentId);
+              Navigator.pop(dialogContext);
+              return CircularProgressIndicator();
             } else if (state is AsyncError) {
 
             }
@@ -271,7 +276,7 @@ class QuizDetailScreen extends HookConsumerWidget {
               actions: [
                 TextButton(
                   child: const Text("Cancel"),
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () => Navigator.pop(dialogContext),
                 ),
                 TextButton(
                   child: const Text("OK"),
