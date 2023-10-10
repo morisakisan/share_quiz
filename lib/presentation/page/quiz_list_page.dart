@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // Project imports:
 import 'package:share_quiz/presentation/widget/widget_utils.dart';
@@ -34,8 +35,9 @@ class QuizListPage extends HookConsumerWidget {
   }
 
   Widget _getQuizView(BuildContext context, Quiz quiz) {
+    final appLocalizations = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-    final formatter = DateFormat('yyyy/MM/dd(E) HH:mm', "ja_JP");
+    final formatter = DateFormat(appLocalizations.dateFormat, "ja_JP");
     final formatted = formatter.format(quiz.createdAt); // Dateから
 
     final List<Widget> list = [];
@@ -61,7 +63,7 @@ class QuizListPage extends HookConsumerWidget {
 
     final String correctRate;
     if (quiz.car != null) {
-      correctRate = "正解率：${(quiz.car! * 100).toInt()}％";
+      correctRate = appLocalizations.correctRateWithPercent((quiz.car! * 100).toInt());
     } else {
       correctRate = "";
     }
@@ -82,14 +84,14 @@ class QuizListPage extends HookConsumerWidget {
             height: 16,
           ),
           Text(
-            "問題　${quiz.question}",
+            appLocalizations.questionText(quiz.question),
             style: theme.textTheme.headline6,
           ),
           SizedBox(
             height: 16,
           ),
           Text(
-            "回答数：${quiz.answerCount}　$correctRate",
+            appLocalizations.answerCountWithRate(quiz.answerCount!, correctRate),
             style: theme.textTheme.bodyText2,
           ),
         ],
@@ -116,7 +118,7 @@ class QuizListPage extends HookConsumerWidget {
                     arguments: quiz.documentId,
                   );
                 },
-                label: const Text('クイズに答える'),
+                label: Text(appLocalizations.answerTheQuiz),
               ),
             ],
           ),
