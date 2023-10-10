@@ -15,5 +15,16 @@
   "correctRateWithPercent": "正解率：{percent}％",
   "questionText": "問題　{question}",
   "answerCountWithRate": "回答数：{answerCount}　{correctRate}",
-  "answerTheQuiz": "クイズに答える"
+  "answerTheQuiz": "クイズに答える",
+  "loginReminder": "未ログインです。クイズに答えるにはホームからログインしてください。",
+  "displayQuestion": "問題　{question}",
+  "displayCorrectRate": "正解率は{rate}％だよ",
+  "answerRevealFormat": "答えは「{correctChoice}」！",
+  "chooseCorrectChoice": "正解だと思う選択肢にチェックをいれてね",
+  "correctAnswer": "正解だよ！",
+  "wrongAnswer": "不正解だよ！",
+  "shareFormat": "タイトル：{title}\n問題：{question}\n#みんなのクイズ",
+  "share": "シェア",
+  "answer": "回答する",
+  "confirmAnswerFormat": "問題：{question}\n回答：{choice}\nこちらの回答でよろしいですか？"
 }
