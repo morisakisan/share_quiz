@@ -34,5 +34,8 @@
   "questionPrompt": "問題文",
   "enterQuestionPrompt": "問題文を入れてね",
   "questionTextMissing": "問題文がはいってないよ",
-  "postQuiz": "クイズを投稿する"
+  "postQuiz": "クイズを投稿する",
+  "others": "その他",
+  "license": "ライセンス",
+  "version": "バージョン"
 }

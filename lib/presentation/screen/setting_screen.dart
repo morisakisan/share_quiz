@@ -8,32 +8,35 @@ import 'package:package_info/package_info.dart';
 
 // Project imports:
 import 'package:share_quiz/presentation/widget/widget_utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('設定'),
+        title: Text(appLocalizations.settings),
       ),
       body: FutureBuilder<PackageInfo>(
         future: PackageInfo.fromPlatform(),
         builder: (context, snapshot) {
-          if(!snapshot.hasData) {
+          if (!snapshot.hasData) {
             return WidgetUtils.loading();
           } else {
-            return _buildSettingsList(snapshot.data!);
+            return _buildSettingsList(snapshot.data!, context);
           }
         },
       ),
     );
   }
 
-  Widget _buildSettingsList(PackageInfo info) {
+  Widget _buildSettingsList(PackageInfo info, BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
     return SettingsList(
       sections: [
         SettingsSection(
-          title: 'その他',
+          title: appLocalizations.others,
           titlePadding: const EdgeInsets.only(
             top: 12,
             left: 15.0,
@@ -46,7 +49,7 @@ class SettingScreen extends HookWidget {
             //   leading: Icon(Icons.description),
             // ),
             SettingsTile(
-              title: 'ライセンス',
+              title: appLocalizations.license,
               leading: const Icon(Icons.collections_bookmark),
               onPressed: (context) {
                 showLicensePage(
@@ -59,10 +62,10 @@ class SettingScreen extends HookWidget {
           ],
         ),
         SettingsSection(
-          title: 'バージョン',
+          title: appLocalizations.version,
           tiles: [
             SettingsTile(
-              title: 'バージョン',
+              title: appLocalizations.version,
               leading: const Icon(Icons.info_outline),
               trailing: Text(info.version),
             ),
