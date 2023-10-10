@@ -16,7 +16,7 @@ jobs:
         uses: actions/checkout@v2
         
       - name: Setup Build Environment
-        uses: ./.github/actions/setup-build-env
+        uses: .github/actions/setup-build-env
         with:
           secrets_debug_android_google_service: ${{ secrets.DEBUG_ANDROID_GOOGLE_SERVICE }}
           secrets_debug_android_keystore: ${{ secrets.DEBUG_ANDROID_KEYSTORE }}
