@@ -37,17 +37,22 @@ runs:
 
     - name: flutter dependencies install
       run: flutter pub get
+      shell: bash
 
     - name: flutter test
       run: flutter test
+      shell: bash
 
     - name: Translate secrets of base64 into json
       run: echo "${{ inputs.secrets_debug_android_google_service }}" | base64 --decode > ./android/app/src/debug/google-services.json
+      shell: bash
 
     - name: Create key.properties
       run: |
         echo "${{ inputs.secrets_debug_android_keystore }}" | base64 -d > ./android/app/src/debug/debug.keystore
         echo "${{ inputs.secrets_debug_key_properties }}" | base64 -d > ./android/debug_key.properties
+      shell: bash
 
     - name: Build APK
       run: flutter build apk --debug --build-number=$GITHUB_RUN_NUMBER
+      shell: bash
