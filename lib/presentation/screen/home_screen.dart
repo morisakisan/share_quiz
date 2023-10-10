@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
@@ -50,7 +51,7 @@ class HomeScreen extends HookConsumerWidget {
       length: _tab.length,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('みんなのクイズ'),
+          title: Text(AppLocalizations.of(context)!.app_title),
           bottom: TabBar(
             tabs: _tab,
           ),

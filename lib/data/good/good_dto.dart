@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+// Project imports:
 import '../json_converter/timestamp_converter.dart';
 
 part 'good_dto.freezed.dart';
