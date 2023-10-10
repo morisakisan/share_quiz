@@ -1,6 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 
+// Package imports:
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class WidgetUtils {
   WidgetUtils._();
 
@@ -12,18 +15,21 @@ class WidgetUtils {
         ),
       );
 
-  static Widget getNoImage(double imageSize) => Container(
-        height: imageSize,
-        width: imageSize,
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.black54),
+  static Widget getNoImage(BuildContext context, double imageSize) {
+    final appLocalizations = AppLocalizations.of(context)!;
+    return Container(
+      height: imageSize,
+      width: imageSize,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black54),
+      ),
+      child: Center(
+        child: Text(
+          appLocalizations.noImage,
         ),
-        child: Center(
-          child: const Text(
-            "No image",
-          ),
-        ),
-      );
+      ),
+    );
+  }
 
   static Widget getQuizImage(double imageSize, String imageUrl) {
     return Hero(

@@ -2,7 +2,9 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 // Project imports:
 import 'package:share_quiz/presentation/screen/home_screen.dart';
@@ -12,12 +14,22 @@ class Application extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('ja')
+      ],
       theme: ThemeData(
         useMaterial3: true,
         primaryColor: Colors.lime[800],
         visualDensity: VisualDensity.adaptivePlatformDensity,
         textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(disabledForegroundColor: Colors.blueAccent),
+          style:
+              TextButton.styleFrom(disabledForegroundColor: Colors.blueAccent),
         ),
       ),
       routes: Nav.routes,

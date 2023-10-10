@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:tuple/tuple.dart';
 
 class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
@@ -11,14 +12,15 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
           initialValue: Tuple2([], 0),
           onSaved: onSaved,
           validator: (value) {
+            final appLocalizations = AppLocalizations.of(context)!;
             final list = value!.item1;
             if (list.length < 2) {
-              return "選択肢は二つ以上いれてね";
+              return appLocalizations.minimumChoicePrompt;
             }
             final a = list.toSet().toList();
             var isDistinct = list.length != a.length;
             if (isDistinct) {
-              return "重複する選択肢があるよ";
+              return appLocalizations.duplicateChoiceWarning;
             }
 
             return null;
@@ -26,9 +28,10 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
           builder: (FormFieldState<Tuple2<List<String>, int>> state) {
             final selectedRadioTile = state.value!.item2;
             final headerChildren = <Widget>[];
+            final appLocalizations = AppLocalizations.of(context)!;
             headerChildren.add(
-              const Text(
-                "選択肢",
+              Text(
+                appLocalizations.choiceLabel,
               ),
             );
             if (state.value!.item1.length < 5) {
@@ -39,7 +42,7 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
               );
               headerChildren.add(
                 TextButton.icon(
-                  label: const Text('選択肢を追加する'),
+                  label: Text(appLocalizations.addChoicePrompt),
                   icon: const Icon(Icons.add),
                   onPressed: () => _showInputTextDialog(context, state),
                 ),
@@ -52,8 +55,8 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
                 ),
               );
               headerChildren.add(
-                const Text(
-                  "正解の選択肢にチェックを入れてね",
+                Text(
+                  appLocalizations.markCorrectChoice,
                 ),
               );
             }
@@ -133,6 +136,7 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
 
   static _showInputTextDialog(
       BuildContext context, FormFieldState<Tuple2<List<String>, int>> state) {
+    final appLocalizations = AppLocalizations.of(context)!;
     showDialog(
       barrierDismissible: false,
       context: context,
@@ -140,20 +144,20 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
         String? choice;
         final _formKey = GlobalKey<FormState>();
         return AlertDialog(
-          title: const Text("選択肢を入力してね"),
+          title: Text(appLocalizations.enterChoicePrompt),
           content: Form(
             key: _formKey,
             child: TextFormField(
               keyboardType: TextInputType.multiline,
               maxLines: null,
               maxLength: 30,
-              decoration: const InputDecoration(
-                labelText: "選択肢",
-                hintText: '選択肢を入力してね',
+              decoration: InputDecoration(
+                labelText: appLocalizations.choiceLabel,
+                hintText: appLocalizations.enterChoicePrompt,
               ),
               validator: (value) {
                 if (value?.isEmpty ?? true) {
-                  return '選択肢がはいってないよ';
+                  return appLocalizations.choiceMissing;
                 }
                 return null;
               },
@@ -164,11 +168,11 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
           ),
           actions: [
             TextButton(
-              child: const Text("Cancel"),
+              child: Text(appLocalizations.cancel),
               onPressed: () => Navigator.pop(context),
             ),
             TextButton(
-              child: const Text("OK"),
+              child: Text(appLocalizations.ok),
               onPressed: () {
                 if (!_formKey.currentState!.validate()) return;
                 // 入力データが正常な場合の処理

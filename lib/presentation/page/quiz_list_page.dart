@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
@@ -22,7 +23,7 @@ class QuizListPage extends HookConsumerWidget {
     return async.when(
       data: (list) => ListView(
         children: list.quizzes.map(
-              (value) {
+          (value) {
             return _getQuizView(context, value);
           },
         ).toList(),
@@ -34,14 +35,14 @@ class QuizListPage extends HookConsumerWidget {
   }
 
   Widget _getQuizView(BuildContext context, Quiz quiz) {
+    final appLocalizations = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-    final formatter = DateFormat('yyyy/MM/dd(E) HH:mm', "ja_JP");
+    final formatter = DateFormat(appLocalizations.dateFormat, "ja_JP");
     final formatted = formatter.format(quiz.createdAt); // Dateから
 
     final List<Widget> list = [];
 
-    createImage(image) =>
-        Padding(
+    createImage(image) => Padding(
           padding: const EdgeInsets.fromLTRB(8, 8, 16, 8),
           child: image,
         );
@@ -49,19 +50,18 @@ class QuizListPage extends HookConsumerWidget {
     const imageSize = 125.0;
     if (quiz.imageUrl != null) {
       list.add(
-        createImage(
-            WidgetUtils.getQuizImage(imageSize, quiz.imageUrl!)
-        ),
+        createImage(WidgetUtils.getQuizImage(imageSize, quiz.imageUrl!)),
       );
     } else {
       list.add(
-        createImage(WidgetUtils.getNoImage(imageSize)),
+        createImage(WidgetUtils.getNoImage(context, imageSize)),
       );
     }
 
     final String correctRate;
     if (quiz.car != null) {
-      correctRate = "正解率：${(quiz.car! * 100).toInt()}％";
+      correctRate =
+          appLocalizations.correctRateWithPercent((quiz.car! * 100).toInt());
     } else {
       correctRate = "";
     }
@@ -82,14 +82,15 @@ class QuizListPage extends HookConsumerWidget {
             height: 16,
           ),
           Text(
-            "問題　${quiz.question}",
+            appLocalizations.questionText(quiz.question),
             style: theme.textTheme.headline6,
           ),
           SizedBox(
             height: 16,
           ),
           Text(
-            "回答数：${quiz.answerCount}　$correctRate",
+            appLocalizations.answerCountWithRate(
+                quiz.answerCount!, correctRate),
             style: theme.textTheme.bodyText2,
           ),
         ],
@@ -116,7 +117,7 @@ class QuizListPage extends HookConsumerWidget {
                     arguments: quiz.documentId,
                   );
                 },
-                label: const Text('クイズに答える'),
+                label: Text(appLocalizations.answerTheQuiz),
               ),
             ],
           ),

@@ -1,8 +1,9 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
 // Package imports:
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share/share.dart';
 
@@ -18,34 +19,37 @@ import '../../domain/repository/quiz_answer_post_repository.dart';
 import '../../domain/repository/quiz_detail_repository.dart';
 import '../../domain/usecases/quiz_answer_post_use_case.dart';
 
-final repositoryProvider = Provider.autoDispose<QuizAnswerPostRepository>((ref) {
+final repositoryProvider =
+    Provider.autoDispose<QuizAnswerPostRepository>((ref) {
   return QuizAnswerPostRepositoryImpl();
 });
 
 final postNotifierProvider =
-    StateNotifierProvider.autoDispose<QuizAnswerPostUseCase, AsyncValue<void>>(
+    StateNotifierProvider.autoDispose<QuizAnswerPostUseCase, AsyncValue<void>?>(
         (ref) {
   var repo = ref.read(repositoryProvider);
   return QuizAnswerPostUseCase(repo);
 });
 
-final quizDetailRepositoryProvider = Provider.autoDispose<QuizDetailRepository>((ref) {
+final quizDetailRepositoryProvider =
+    Provider.autoDispose<QuizDetailRepository>((ref) {
   return QuizDetailRepositoryImpl();
 });
 
-final quizDetailProvider =
-    StateNotifierProvider.autoDispose<QuizDetailUseCase, AsyncValue<QuizDetail>>((ref) {
+final quizDetailProvider = StateNotifierProvider.autoDispose<QuizDetailUseCase,
+    AsyncValue<QuizDetail>>((ref) {
   var repo = ref.read(quizDetailRepositoryProvider);
   return QuizDetailUseCase(repo);
 });
 
-final selectProvider = StateNotifierProvider.autoDispose<_Select, int>((_) => _Select());
+final selectProvider =
+    StateNotifierProvider.autoDispose<_Select, int>((_) => _Select());
 
 class QuizDetailScreen extends HookConsumerWidget {
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final quizId = useState<String>(ModalRoute.of(context)!.settings.arguments as String);
+    final quizId =
+        useState<String>(ModalRoute.of(context)!.settings.arguments as String);
     final quizAnswer = ref.watch(quizDetailProvider.select((value) => value));
     final quizAnswerNotifier = ref.watch(quizDetailProvider.notifier);
     useEffect(() {
@@ -57,7 +61,7 @@ class QuizDetailScreen extends HookConsumerWidget {
     } else if (quizAnswer is AsyncError) {
       final error = (quizAnswer as AsyncError).error;
       if (error is NotSignInException) {
-        return _error();
+        return _error(context);
       } else {
         throw error;
       }
@@ -76,13 +80,14 @@ class QuizDetailScreen extends HookConsumerWidget {
     );
   }
 
-  Widget _error() {
+  Widget _error(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(),
       body: Container(
         padding: EdgeInsets.all(16),
         child: Text(
-          "未ログインです。クイズに答えるにはホームからログインしてください。",
+          appLocalizations.loginReminder,
           style: TextStyle(fontSize: 20),
         ),
       ),
@@ -100,14 +105,14 @@ class QuizDetailScreen extends HookConsumerWidget {
     if (quiz.imageUrl != null) {
       list.add(WidgetUtils.getQuizImage(250.0, quiz.imageUrl!));
     } else {
-      list.add(WidgetUtils.getNoImage(100));
+      list.add(WidgetUtils.getNoImage(context, 100));
     }
-
+    final appLocalizations = AppLocalizations.of(context)!;
     list.add(
       Padding(
         padding: const EdgeInsets.only(top: 16),
         child: Text(
-          "問題　${quiz.question}",
+          appLocalizations.displayQuestion(quiz.question),
           style: theme.textTheme.headline5,
         ),
       ),
@@ -119,7 +124,7 @@ class QuizDetailScreen extends HookConsumerWidget {
         Padding(
           padding: const EdgeInsets.only(top: 8),
           child: Text(
-            "正解率は${(correctRate * 100).toInt()}％だよ",
+            appLocalizations.displayCorrectRate((correctRate * 100).toInt()),
             style: theme.textTheme.caption,
           ),
         ),
@@ -130,7 +135,7 @@ class QuizDetailScreen extends HookConsumerWidget {
       Padding(
         padding: const EdgeInsets.only(top: 24),
         child: Text(
-          "正解だと思う選択肢にチェックをいれてね",
+          appLocalizations.chooseCorrectChoice,
           style: theme.textTheme.bodyText1,
         ),
       ),
@@ -177,7 +182,7 @@ class QuizDetailScreen extends HookConsumerWidget {
 
       list.add(
         Text(
-          "答えは「${quiz.choices[quiz.correctAnswer]}」！",
+          appLocalizations.answerRevealFormat(quiz.choices[quiz.correctAnswer]),
         ),
       );
 
@@ -186,11 +191,11 @@ class QuizDetailScreen extends HookConsumerWidget {
           height: 8,
         ),
       );
-      String text;
+      final String text;
       if (selectValue == quiz.correctAnswer) {
-        text = "正解だよ！";
+        text = appLocalizations.correctAnswer;
       } else {
-        text = "不正解だよ！";
+        text = appLocalizations.wrongAnswer;
       }
       list.add(
         Text(
@@ -210,9 +215,9 @@ class QuizDetailScreen extends HookConsumerWidget {
         icon: Icon(Icons.share),
         onPressed: () {
           _showCommentBottomSheet(context);
-          Share.share("タイトル：${quiz.title}\n問題：${quiz.question}\n#みんなのクイズ");
+          Share.share(appLocalizations.shareFormat(quiz.title, quiz.question));
         },
-        label: Text("シェア"),
+        label: Text(appLocalizations.share),
       ),
     );
 
@@ -236,7 +241,7 @@ class QuizDetailScreen extends HookConsumerWidget {
           ),
           ElevatedButton.icon(
             icon: const Icon(Icons.question_answer_rounded),
-            label: const Text('　　回答する　　'),
+            label: Text(appLocalizations.answer),
             onPressed: answerOnPressed,
           ),
           const SizedBox(
@@ -247,34 +252,35 @@ class QuizDetailScreen extends HookConsumerWidget {
     );
   }
 
-  _showAnswerDialog(BuildContext context, int select, Quiz quiz,
-      QuizDetailUseCase notifier) {
+  _showAnswerDialog(
+      BuildContext context, int select, Quiz quiz, QuizDetailUseCase notifier) {
     showDialog(
       context: context,
       barrierDismissible: false,
-      builder: (BuildContext context) {
+      builder: (BuildContext dialogContext) {
+        final appLocalizations = AppLocalizations.of(dialogContext)!;
         return Consumer(
           builder: (context, ref, child) {
             final state = ref.watch(postNotifierProvider);
             final quizAnswerNotifier = ref.read(postNotifierProvider.notifier);
             if (state is AsyncLoading) {
+              return CircularProgressIndicator();
             } else if (state is AsyncData) {
-              Navigator.pop(context);
               notifier.fetch(quiz.documentId);
-            } else if (state is AsyncError) {
-
-            }
+              Navigator.pop(dialogContext);
+              return CircularProgressIndicator();
+            } else if (state is AsyncError) {}
 
             return AlertDialog(
-              content: Text(
-                  "問題：${quiz.question}\n回答：${quiz.choices[select]}\nこちらの回答でよろしいですか？"),
+              content: Text(appLocalizations.confirmAnswerFormat(
+                  quiz.question, quiz.choices[select])),
               actions: [
                 TextButton(
-                  child: const Text("Cancel"),
-                  onPressed: () => Navigator.pop(context),
+                  child: Text(appLocalizations.cancel),
+                  onPressed: () => Navigator.pop(dialogContext),
                 ),
                 TextButton(
-                  child: const Text("OK"),
+                  child: Text(appLocalizations.ok),
                   onPressed: () {
                     quizAnswerNotifier.post(quiz.documentId, select);
                   },

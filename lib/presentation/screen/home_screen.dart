@@ -2,12 +2,13 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
 import 'package:share_quiz/data/repository_impl/quiz_list_repository_impl.dart';
 import 'package:share_quiz/domain/usecases/user_login_use_case.dart';
-import 'package:share_quiz/presentation/page/quiz_list_screen.dart';
+import 'package:share_quiz/presentation/page/quiz_list_page.dart';
 import '../../domain/di/UseCaseModule.dart';
 import '../../domain/models/quiz_list/quiz_list.dart';
 import '../../domain/models/user/user_data.dart';
@@ -16,7 +17,8 @@ import '../../domain/usecases/quiz_list_use_case.dart';
 import '../../domain/value_object/quiz_list_order_by.dart';
 import '../nav.dart';
 
-final quizListRepositoryProvider = Provider.autoDispose<QuizListRepository>((ref) {
+final quizListRepositoryProvider =
+    Provider.autoDispose<QuizListRepository>((ref) {
   return QuizListRepositoryImpl();
 });
 
@@ -25,34 +27,38 @@ final quizListNewProvider = StreamProvider.autoDispose<QuizList>((ref) {
   return QuizListUseCase(repository, QuizListOrderBy.CREATED_AT_DESC).build();
 });
 
-final quizAnswersCountListNewProvider = StreamProvider.autoDispose<QuizList>((ref) {
+final quizAnswersCountListNewProvider =
+    StreamProvider.autoDispose<QuizList>((ref) {
   var repository = ref.read(quizListRepositoryProvider);
   return QuizListUseCase(repository, QuizListOrderBy.ANSWER_COUNT_DESC).build();
 });
 
-final quizCorrectRateListNewProvider = StreamProvider.autoDispose<QuizList>((ref) {
+final quizCorrectRateListNewProvider =
+    StreamProvider.autoDispose<QuizList>((ref) {
   var repository = ref.read(quizListRepositoryProvider);
-  return QuizListUseCase(repository, QuizListOrderBy.CORRECT_ANSWER_RATE_ASC).build();
+  return QuizListUseCase(repository, QuizListOrderBy.CORRECT_ANSWER_RATE_ASC)
+      .build();
 });
 
 class HomeScreen extends HookConsumerWidget {
-  final _tab = [
-    const Tab(text: '新着'),
-    const Tab(text: '回答数'),
-    const Tab(text: '正解率'),
-  ];
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final appLocalizations = AppLocalizations.of(context)!;
+    final tab = [
+      Tab(text: appLocalizations.new_arrivals),
+      Tab(text: appLocalizations.answer_count),
+      Tab(text: appLocalizations.correct_rate),
+    ];
+
     var state = ref.watch(userLoginUseCaseProvider);
     var notifier = ref.watch(userLoginUseCaseProvider.notifier);
     return DefaultTabController(
-      length: _tab.length,
+      length: tab.length,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('みんなのクイズ'),
+          title: Text(appLocalizations.app_title),
           bottom: TabBar(
-            tabs: _tab,
+            tabs: tab,
           ),
         ),
         drawer: _createDrawer(context, state, notifier),
@@ -94,20 +100,21 @@ class HomeScreen extends HookConsumerWidget {
     BuildContext context,
     UserLoginUseCase notifier,
   ) {
+    final appLocalizations = AppLocalizations.of(context)!;
     showDialog(
       barrierDismissible: false,
       context: context,
       builder: (_) {
         return AlertDialog(
-          content: const Text("クイズを投稿するにはログインが必要です。ログインしますか？"),
+          content: Text(appLocalizations.login_required_to_post),
           actions: [
             // ボタン領域
             TextButton(
-              child: const Text("Cancel"),
+              child: Text(appLocalizations.cancel),
               onPressed: () => Navigator.pop(context),
             ),
             TextButton(
-              child: const Text("OK"),
+              child: Text(appLocalizations.ok),
               onPressed: () {
                 Navigator.pop(context);
                 notifier.signInWithGoogle();
@@ -122,7 +129,7 @@ class HomeScreen extends HookConsumerWidget {
   Widget _createDrawer(BuildContext context, AsyncValue<UserData?> state,
       UserLoginUseCase notifier) {
     final theme = Theme.of(context);
-
+    final appLocalizations = AppLocalizations.of(context)!;
     Widget createHeader(Widget profile) {
       return DrawerHeader(
         child: Center(
@@ -177,7 +184,7 @@ class HomeScreen extends HookConsumerWidget {
         list.add(
           createHeader(
             Text(
-              "未ログインです。ログインしてください。",
+              appLocalizations.please_login,
               style: theme.primaryTextTheme.headline6,
             ),
           ),
@@ -205,7 +212,7 @@ class HomeScreen extends HookConsumerWidget {
         login = ListTile(
           leading: const Icon(Icons.logout),
           title: Text(
-            'ログアウト',
+            appLocalizations.logout,
             style: theme.textTheme.bodyText1,
           ),
           onTap: () {
@@ -214,14 +221,14 @@ class HomeScreen extends HookConsumerWidget {
               context: context,
               builder: (_) {
                 return AlertDialog(
-                  content: Text("ログアウトを行います"),
+                  content: Text(appLocalizations.confirm_logout),
                   actions: [
                     TextButton(
-                      child: Text("Cancel"),
+                      child: Text(appLocalizations.cancel),
                       onPressed: () => Navigator.pop(context),
                     ),
                     TextButton(
-                      child: Text("OK"),
+                      child: Text(appLocalizations.ok),
                       onPressed: () {
                         notifier.logout();
                         Navigator.pop(context);
@@ -237,7 +244,7 @@ class HomeScreen extends HookConsumerWidget {
         login = ListTile(
           leading: const Icon(Icons.login),
           title: Text(
-            'ログイン',
+            appLocalizations.login,
             style: theme.textTheme.bodyText1,
           ),
           onTap: () => notifier.signInWithGoogle(),
@@ -250,7 +257,7 @@ class HomeScreen extends HookConsumerWidget {
       ListTile(
         leading: const Icon(Icons.settings),
         title: Text(
-          '設定',
+          appLocalizations.settings,
           style: theme.textTheme.bodyText1,
         ),
         onTap: () {

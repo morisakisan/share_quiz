@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
@@ -16,12 +17,14 @@ import 'package:share_quiz/presentation/widget/form/image_form_field.dart';
 import 'package:share_quiz/presentation/widget/widget_utils.dart';
 import '../../domain/models/quiz_post/quiz_post_data.dart';
 
-final quizPostRepositoryProvider = Provider.autoDispose<QuizPostRepository>((ref) {
+final quizPostRepositoryProvider =
+    Provider.autoDispose<QuizPostRepository>((ref) {
   return QuizPostRepositoryImpl();
 });
 
 final postNotifierProvider =
-    StateNotifierProvider.autoDispose<QuizPostUseCase, AsyncValue<Object?>?>((ref) {
+    StateNotifierProvider.autoDispose<QuizPostUseCase, AsyncValue<Object?>?>(
+        (ref) {
   return QuizPostUseCase(ref.read(quizPostRepositoryProvider));
 });
 
@@ -48,10 +51,10 @@ class QuizPostScreen extends HookConsumerWidget {
     } else if (postState is AsyncData) {
       Navigator.pop(context);
     }
-
+    final appLocalizations = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('クイズを入力してね'),
+        title: Text(appLocalizations.enterQuizPrompt),
       ),
       body: Stack(
         children: children,
@@ -60,6 +63,7 @@ class QuizPostScreen extends HookConsumerWidget {
   }
 
   Widget _form(BuildContext context, WidgetRef ref) {
+    final appLocalizations = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.all(16.0),
       child: Form(
@@ -71,13 +75,13 @@ class QuizPostScreen extends HookConsumerWidget {
               keyboardType: TextInputType.multiline,
               maxLines: null,
               maxLength: 20,
-              decoration: const InputDecoration(
-                labelText: "タイトル",
-                hintText: 'タイトルを入れてね',
+              decoration: InputDecoration(
+                labelText: appLocalizations.title,
+                hintText: appLocalizations.enterTitlePrompt,
               ),
               validator: (value) {
                 if (value?.isEmpty ?? true) {
-                  return 'タイトルがはいってないよ';
+                  return appLocalizations.titleMissing;
                 }
                 return null;
               },
@@ -90,13 +94,13 @@ class QuizPostScreen extends HookConsumerWidget {
               keyboardType: TextInputType.multiline,
               maxLines: null,
               maxLength: 100,
-              decoration: const InputDecoration(
-                labelText: "問題文",
-                hintText: '問題文を入れてね',
+              decoration: InputDecoration(
+                labelText: appLocalizations.questionPrompt,
+                hintText: appLocalizations.enterQuestionPrompt,
               ),
               validator: (value) {
                 if (value?.isEmpty ?? true) {
-                  return '問題文がはいってないよ';
+                  return appLocalizations.questionTextMissing;
                 }
                 return null;
               },
@@ -133,7 +137,7 @@ class QuizPostScreen extends HookConsumerWidget {
                 );
                 ref.read(postNotifierProvider.notifier).post(postData);
               },
-              child: const Text('クイズを投稿する'),
+              child: Text(appLocalizations.postQuiz),
             ),
           ],
         ),
