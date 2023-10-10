@@ -1,11 +1,9 @@
 name: Android Release CD
 
 on:
-  workflow_dispatch:
-    branches: [ master ]
   push:
     branches:
-      - master
+      - a
 
 jobs:
   build_and_deploy:
