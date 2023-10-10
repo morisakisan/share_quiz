@@ -1,0 +1,53 @@
+name: 'Setup Build Environment'
+description: 'Sets up the required environment for Android build'
+
+inputs:
+  secrets_debug_android_google_service:
+    description: 'Debug Android Google Service'
+    required: true
+  secrets_debug_android_keystore:
+    description: 'Debug Android Keystore'
+    required: true
+  secrets_debug_key_properties:
+    description: 'Debug Key Properties'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: checkout
+      uses: actions/checkout@v3
+
+    - name: install java 11.x
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'zulu'
+        java-version: '11.x'
+
+    - name: setup cache
+      uses: actions/cache@v1
+      with:
+        path: /Users/runner/hostedtoolcache/flutter
+        key: ${{ runner.OS }}-flutter-install-cache
+
+    - name: install flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: 'stable'
+
+    - name: flutter dependencies install
+      run: flutter pub get
+
+    - name: flutter test
+      run: flutter test
+
+    - name: Translate secrets of base64 into json
+      run: echo "${{ inputs.secrets_debug_android_google_service }}" | base64 --decode > ./android/app/src/debug/google-services.json
+
+    - name: Create key.properties
+      run: |
+        echo "${{ inputs.secrets_debug_android_keystore }}" | base64 -d > ./android/app/src/debug/debug.keystore
+        echo "${{ inputs.secrets_debug_key_properties }}" | base64 -d > ./android/debug_key.properties
+
+    - name: Build APK
+      run: flutter build apk --debug --build-number=$GITHUB_RUN_NUMBER
