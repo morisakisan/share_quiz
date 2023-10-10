@@ -26,5 +26,13 @@
   "shareFormat": "タイトル：{title}\n問題：{question}\n#みんなのクイズ",
   "share": "シェア",
   "answer": "回答する",
-  "confirmAnswerFormat": "問題：{question}\n回答：{choice}\nこちらの回答でよろしいですか？"
+  "confirmAnswerFormat": "問題：{question}\n回答：{choice}\nこちらの回答でよろしいですか？",
+  "enterQuizPrompt": "クイズを入力してね",
+  "title": "タイトル",
+  "enterTitlePrompt": "タイトルを入れてね",
+  "titleMissing": "タイトルがはいってないよ",
+  "questionPrompt": "問題文",
+  "enterQuestionPrompt": "問題文を入れてね",
+  "questionTextMissing": "問題文がはいってないよ",
+  "postQuiz": "クイズを投稿する"
 }
