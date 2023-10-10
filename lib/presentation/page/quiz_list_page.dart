@@ -23,7 +23,7 @@ class QuizListPage extends HookConsumerWidget {
     return async.when(
       data: (list) => ListView(
         children: list.quizzes.map(
-              (value) {
+          (value) {
             return _getQuizView(context, value);
           },
         ).toList(),
@@ -42,8 +42,7 @@ class QuizListPage extends HookConsumerWidget {
 
     final List<Widget> list = [];
 
-    createImage(image) =>
-        Padding(
+    createImage(image) => Padding(
           padding: const EdgeInsets.fromLTRB(8, 8, 16, 8),
           child: image,
         );
@@ -51,19 +50,18 @@ class QuizListPage extends HookConsumerWidget {
     const imageSize = 125.0;
     if (quiz.imageUrl != null) {
       list.add(
-        createImage(
-            WidgetUtils.getQuizImage(imageSize, quiz.imageUrl!)
-        ),
+        createImage(WidgetUtils.getQuizImage(imageSize, quiz.imageUrl!)),
       );
     } else {
       list.add(
-        createImage(WidgetUtils.getNoImage(imageSize)),
+        createImage(WidgetUtils.getNoImage(context, imageSize)),
       );
     }
 
     final String correctRate;
     if (quiz.car != null) {
-      correctRate = appLocalizations.correctRateWithPercent((quiz.car! * 100).toInt());
+      correctRate =
+          appLocalizations.correctRateWithPercent((quiz.car! * 100).toInt());
     } else {
       correctRate = "";
     }
@@ -91,7 +89,8 @@ class QuizListPage extends HookConsumerWidget {
             height: 16,
           ),
           Text(
-            appLocalizations.answerCountWithRate(quiz.answerCount!, correctRate),
+            appLocalizations.answerCountWithRate(
+                quiz.answerCount!, correctRate),
             style: theme.textTheme.bodyText2,
           ),
         ],

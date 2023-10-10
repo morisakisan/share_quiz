@@ -105,7 +105,7 @@ class QuizDetailScreen extends HookConsumerWidget {
     if (quiz.imageUrl != null) {
       list.add(WidgetUtils.getQuizImage(250.0, quiz.imageUrl!));
     } else {
-      list.add(WidgetUtils.getNoImage(100));
+      list.add(WidgetUtils.getNoImage(context, 100));
     }
     final appLocalizations = AppLocalizations.of(context)!;
     list.add(
