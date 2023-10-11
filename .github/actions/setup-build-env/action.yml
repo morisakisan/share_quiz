@@ -48,6 +48,10 @@ runs:
       run: flutter test
       shell: bash
 
+    - name: Check directory existence after setup
+      run: ls -la ./android/app/src/release/
+      shell: bash
+
     - name: Translate secrets of base64 into json
       run: echo "${{ inputs.google_service_secret }}" | base64 --decode > ./android/app/src/${{ inputs.build_type }}/google-services.json
       shell: bash
