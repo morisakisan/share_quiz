@@ -16,7 +16,7 @@ runs:
   using: "composite"
   steps:
     - name: Decode Firebase Service Account Key
-      run: echo "${{ inputs.google_service_secret }}" | base64 -d > service_account_key.json
+      run: echo "${{ inputs.gcloud_service_key }}" | base64 -d > service_account_key.json
       shell: bash
 
     # Firebase にデプロイ
