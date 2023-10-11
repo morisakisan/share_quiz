@@ -1,1 +1,0 @@
-class NotSignInException implements Exception{}

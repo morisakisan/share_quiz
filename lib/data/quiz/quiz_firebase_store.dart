@@ -23,15 +23,15 @@ class QuizFirebaseStore {
         );
   }
 
-  Future<QuizDto?> fetchWhereByQuizId(String quizId) async {
-    final doc = await getCollection().doc(quizId).get();
-    final json = doc.data();
-    if (json == null) {
-      return null;
-    }
-
-    final dto = QuizDto.fromJson(json);
-    return dto.copyWith(docId: doc.id);
+  Stream<QuizDto?> fetchWhereByQuizId(String quizId) {
+    return getCollection().doc(quizId).snapshots().map((doc) {
+      final json = doc.data();
+      if (json == null) {
+        return null;
+      }
+      final dto = QuizDto.fromJson(json);
+      return dto.copyWith(docId: doc.id);
+    });
   }
 
   Future<void> post(Map<String, dynamic> json) {

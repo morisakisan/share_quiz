@@ -7,6 +7,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:share_quiz/data/user/user_dto.dart';
 
 class UserFirebaseStore {
+  Stream<User?> listenToUserChanges() {
+    return FirebaseAuth.instance.authStateChanges();
+  }
+
   Future<User?> getCurrentUser() async {
     return FirebaseAuth.instance.currentUser;
   }

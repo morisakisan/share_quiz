@@ -15,6 +15,7 @@ part 'quiz_detail.freezed.dart';
 abstract class QuizDetail with _$QuizDetail {
   const factory QuizDetail({
     required Quiz quiz,
-    required int? select_anser
+    required int? select_anser,
+    required bool isLogin,
   }) = _QuizDetail;
 }
