@@ -23,7 +23,7 @@ jobs:
           key_properties_secret: ${{ secrets.RELEASE_KEY_PROPERTIES }}
 
       - name: Decode Firebase Service Account Key
-        run: echo "${{ secrets.DEVELOP_GCLOUD_SERVICE_KEY }}" | base64 -d > service_account_key.json
+        run: echo "${{ secrets.RELEASE_GCLOUD_SERVICE_KEY }}" | base64 -d > service_account_key.json
 
       # Firebase にデプロイ
       - name: Firebase App Distribution
