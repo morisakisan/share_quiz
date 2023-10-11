@@ -5,17 +5,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../models/quiz_detail/quiz_detail.dart';
 import '../repository/quiz_detail_repository.dart';
 
-class QuizDetailUseCase extends StateNotifier<AsyncValue<QuizDetail>> {
+class QuizDetailUseCase extends StreamNotifier<QuizDetail> {
   final QuizDetailRepository _repository;
+  final String _quizId;
 
-  QuizDetailUseCase(this._repository) : super(AsyncValue.loading());
+  QuizDetailUseCase(this._repository, this._quizId) : super();
 
-  fetch(String quizId) async {
-    try {
-      var value = await _repository.fetch(quizId);
-      state = AsyncValue.data(value);
-    } catch (error, stacktrace) {
-      state = AsyncValue.error(error, stacktrace);
-    }
+  @override
+  Stream<QuizDetail> build() {
+    return _repository.fetch(_quizId);
   }
 }

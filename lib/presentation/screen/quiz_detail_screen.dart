@@ -9,7 +9,6 @@ import 'package:share/share.dart';
 
 // Project imports:
 import 'package:share_quiz/data/repository_impl/quiz_answer_post_repository_impl.dart';
-import 'package:share_quiz/domain/exception/not_sign_In_exception.dart';
 import 'package:share_quiz/domain/usecases/quiz_detail_use_case.dart';
 import 'package:share_quiz/presentation/widget/widget_utils.dart';
 import '../../data/repository_impl/quiz_detail_repository_impl.dart';
@@ -18,6 +17,8 @@ import '../../domain/models/quiz_detail/quiz_detail.dart';
 import '../../domain/repository/quiz_answer_post_repository.dart';
 import '../../domain/repository/quiz_detail_repository.dart';
 import '../../domain/usecases/quiz_answer_post_use_case.dart';
+import '../../domain/di/UseCaseModule.dart';
+import '../../domain/usecases/user_login_use_case.dart';
 
 final repositoryProvider =
     Provider.autoDispose<QuizAnswerPostRepository>((ref) {
@@ -36,10 +37,10 @@ final quizDetailRepositoryProvider =
   return QuizDetailRepositoryImpl();
 });
 
-final quizDetailProvider = StateNotifierProvider.autoDispose<QuizDetailUseCase,
-    AsyncValue<QuizDetail>>((ref) {
+final quizDetailProvider =
+    StreamProvider.autoDispose.family<QuizDetail, String>((ref, quizId) {
   var repo = ref.read(quizDetailRepositoryProvider);
-  return QuizDetailUseCase(repo);
+  return QuizDetailUseCase(repo, quizId).build();
 });
 
 final selectProvider =
@@ -50,24 +51,14 @@ class QuizDetailScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final quizId =
         useState<String>(ModalRoute.of(context)!.settings.arguments as String);
-    final quizAnswer = ref.watch(quizDetailProvider.select((value) => value));
-    final quizAnswerNotifier = ref.watch(quizDetailProvider.notifier);
-    useEffect(() {
-      quizAnswerNotifier.fetch(quizId.value);
-      return () {};
-    }, const []);
+    final quizAnswer = ref.watch(quizDetailProvider(quizId.value));
     if (quizAnswer is AsyncLoading) {
       return _loading();
     } else if (quizAnswer is AsyncError) {
       final error = (quizAnswer as AsyncError).error;
-      if (error is NotSignInException) {
-        return _error(context);
-      } else {
-        throw error;
-      }
+      throw error;
     } else if (quizAnswer is AsyncData) {
-      return _success(context, (quizAnswer as AsyncData<QuizDetail>).value,
-          quizAnswerNotifier, ref);
+      return _success(context, (quizAnswer as AsyncData<QuizDetail>).value, ref);
     } else {
       throw Exception();
     }
@@ -80,22 +71,10 @@ class QuizDetailScreen extends HookConsumerWidget {
     );
   }
 
-  Widget _error(BuildContext context) {
-    final appLocalizations = AppLocalizations.of(context)!;
-    return Scaffold(
-      appBar: AppBar(),
-      body: Container(
-        padding: EdgeInsets.all(16),
-        child: Text(
-          appLocalizations.loginReminder,
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
-    );
-  }
-
-  Widget _success(BuildContext context, QuizDetail quizAnswerData,
-      QuizDetailUseCase notifier, WidgetRef ref) {
+  Widget _success(
+      BuildContext context, QuizDetail quizAnswerData, WidgetRef ref) {
+    var state = ref.watch(userLoginUseCaseProvider);
+    var userLoginUseCase = ref.watch(userLoginUseCaseProvider.notifier);
     final selectNotifier = ref.read(selectProvider.notifier);
     var selectValue = ref.watch(selectProvider.select((value) => value));
     final theme = Theme.of(context);
@@ -166,8 +145,15 @@ class QuizDetailScreen extends HookConsumerWidget {
         ),
       );
 
-      answerOnPressed =
-          () => _showAnswerDialog(context, selectValue, quiz, notifier);
+      answerOnPressed = () {
+        if (state is AsyncData) {
+          if (state.value == null) {
+            _showLoginDialog(context, userLoginUseCase);
+            return;
+          }
+          _showAnswerDialog(context, selectValue, quiz);
+        }
+      };
     } else {
       selectValue = quizAnswerData.select_anser!;
       answerOnPressed = null;
@@ -253,7 +239,7 @@ class QuizDetailScreen extends HookConsumerWidget {
   }
 
   _showAnswerDialog(
-      BuildContext context, int select, Quiz quiz, QuizDetailUseCase notifier) {
+      BuildContext context, int select, Quiz quiz) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -266,7 +252,6 @@ class QuizDetailScreen extends HookConsumerWidget {
             if (state is AsyncLoading) {
               return CircularProgressIndicator();
             } else if (state is AsyncData) {
-              notifier.fetch(quiz.documentId);
               Navigator.pop(dialogContext);
               return CircularProgressIndicator();
             } else if (state is AsyncError) {}
@@ -288,6 +273,36 @@ class QuizDetailScreen extends HookConsumerWidget {
               ],
             );
           },
+        );
+      },
+    );
+  }
+
+  _showLoginDialog(
+    BuildContext context,
+    UserLoginUseCase notifier,
+  ) {
+    final appLocalizations = AppLocalizations.of(context)!;
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          content: Text(appLocalizations.login_required_to_post),
+          actions: [
+            // ボタン領域
+            TextButton(
+              child: Text(appLocalizations.cancel),
+              onPressed: () => Navigator.pop(context),
+            ),
+            TextButton(
+              child: Text(appLocalizations.ok),
+              onPressed: () {
+                Navigator.pop(context);
+                notifier.signInWithGoogle();
+              },
+            ),
+          ],
         );
       },
     );

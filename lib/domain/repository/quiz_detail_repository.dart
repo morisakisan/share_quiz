@@ -8,6 +8,6 @@ import '../models/quiz_detail/quiz_detail.dart';
 
 abstract class QuizDetailRepository {
 
-  Future<QuizDetail> fetch(String quizId);
+  Stream<QuizDetail> fetch(String quizId);
 
 }

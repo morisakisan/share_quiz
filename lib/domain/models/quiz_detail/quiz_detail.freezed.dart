@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$QuizDetail {
   Quiz get quiz => throw _privateConstructorUsedError;
   int? get select_anser => throw _privateConstructorUsedError;
+  bool get isLogin => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $QuizDetailCopyWith<QuizDetail> get copyWith =>
@@ -30,7 +31,7 @@ abstract class $QuizDetailCopyWith<$Res> {
           QuizDetail value, $Res Function(QuizDetail) then) =
       _$QuizDetailCopyWithImpl<$Res, QuizDetail>;
   @useResult
-  $Res call({Quiz quiz, int? select_anser});
+  $Res call({Quiz quiz, int? select_anser, bool isLogin});
 
   $QuizCopyWith<$Res> get quiz;
 }
@@ -50,6 +51,7 @@ class _$QuizDetailCopyWithImpl<$Res, $Val extends QuizDetail>
   $Res call({
     Object? quiz = null,
     Object? select_anser = freezed,
+    Object? isLogin = null,
   }) {
     return _then(_value.copyWith(
       quiz: null == quiz
@@ -60,6 +62,10 @@ class _$QuizDetailCopyWithImpl<$Res, $Val extends QuizDetail>
           ? _value.select_anser
           : select_anser // ignore: cast_nullable_to_non_nullable
               as int?,
+      isLogin: null == isLogin
+          ? _value.isLogin
+          : isLogin // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 
@@ -80,7 +86,7 @@ abstract class _$$QuizDetailImplCopyWith<$Res>
       __$$QuizDetailImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Quiz quiz, int? select_anser});
+  $Res call({Quiz quiz, int? select_anser, bool isLogin});
 
   @override
   $QuizCopyWith<$Res> get quiz;
@@ -99,6 +105,7 @@ class __$$QuizDetailImplCopyWithImpl<$Res>
   $Res call({
     Object? quiz = null,
     Object? select_anser = freezed,
+    Object? isLogin = null,
   }) {
     return _then(_$QuizDetailImpl(
       quiz: null == quiz
@@ -109,6 +116,10 @@ class __$$QuizDetailImplCopyWithImpl<$Res>
           ? _value.select_anser
           : select_anser // ignore: cast_nullable_to_non_nullable
               as int?,
+      isLogin: null == isLogin
+          ? _value.isLogin
+          : isLogin // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -116,16 +127,19 @@ class __$$QuizDetailImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$QuizDetailImpl with DiagnosticableTreeMixin implements _QuizDetail {
-  const _$QuizDetailImpl({required this.quiz, required this.select_anser});
+  const _$QuizDetailImpl(
+      {required this.quiz, required this.select_anser, required this.isLogin});
 
   @override
   final Quiz quiz;
   @override
   final int? select_anser;
+  @override
+  final bool isLogin;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'QuizDetail(quiz: $quiz, select_anser: $select_anser)';
+    return 'QuizDetail(quiz: $quiz, select_anser: $select_anser, isLogin: $isLogin)';
   }
 
   @override
@@ -134,7 +148,8 @@ class _$QuizDetailImpl with DiagnosticableTreeMixin implements _QuizDetail {
     properties
       ..add(DiagnosticsProperty('type', 'QuizDetail'))
       ..add(DiagnosticsProperty('quiz', quiz))
-      ..add(DiagnosticsProperty('select_anser', select_anser));
+      ..add(DiagnosticsProperty('select_anser', select_anser))
+      ..add(DiagnosticsProperty('isLogin', isLogin));
   }
 
   @override
@@ -144,11 +159,12 @@ class _$QuizDetailImpl with DiagnosticableTreeMixin implements _QuizDetail {
             other is _$QuizDetailImpl &&
             (identical(other.quiz, quiz) || other.quiz == quiz) &&
             (identical(other.select_anser, select_anser) ||
-                other.select_anser == select_anser));
+                other.select_anser == select_anser) &&
+            (identical(other.isLogin, isLogin) || other.isLogin == isLogin));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, quiz, select_anser);
+  int get hashCode => Object.hash(runtimeType, quiz, select_anser, isLogin);
 
   @JsonKey(ignore: true)
   @override
@@ -160,12 +176,15 @@ class _$QuizDetailImpl with DiagnosticableTreeMixin implements _QuizDetail {
 abstract class _QuizDetail implements QuizDetail {
   const factory _QuizDetail(
       {required final Quiz quiz,
-      required final int? select_anser}) = _$QuizDetailImpl;
+      required final int? select_anser,
+      required final bool isLogin}) = _$QuizDetailImpl;
 
   @override
   Quiz get quiz;
   @override
   int? get select_anser;
+  @override
+  bool get isLogin;
   @override
   @JsonKey(ignore: true)
   _$$QuizDetailImplCopyWith<_$QuizDetailImpl> get copyWith =>

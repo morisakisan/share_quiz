@@ -21,20 +21,20 @@ class AnswerFirebaseStore {
                 .toList(),
           );
 
-  Future<AnswerDto?> fetchMyAnswers(String quizId, String userId) async {
-    final snapshot = await _getCollection(quizId)
+  Stream<AnswerDto?> fetchMyAnswers(String quizId, String userId) {
+    return _getCollection(quizId)
         .where("quiz_id", isEqualTo: quizId)
         .where("user_id", isEqualTo: userId)
-        .get();
-    final list = snapshot.docs
-        .map(
-          (e) => AnswerDto.fromJson(e.data()).copyWith(id: e.id),
-        )
-        .toList();
-    if (list.isEmpty) {
-      return null;
-    } else {
-      return list.first;
-    }
+        .snapshots()
+        .map((snapshot) {
+      final list = snapshot.docs
+          .map((e) => AnswerDto.fromJson(e.data()).copyWith(id: e.id))
+          .toList();
+      if (list.isEmpty) {
+        return null;
+      } else {
+        return list.first;
+      }
+    });
   }
 }

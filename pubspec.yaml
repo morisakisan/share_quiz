@@ -29,6 +29,7 @@ dependencies:
   intl: 0.18.1
   flutter_localizations:
     sdk: flutter
+  rxdart: 0.27.7
 
 dev_dependencies:
   freezed_annotation: 2.4.1
