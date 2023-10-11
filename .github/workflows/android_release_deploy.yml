@@ -53,11 +53,18 @@ jobs:
       - name: Build APK
         run: flutter build appbundle --release --build-number=$GITHUB_RUN_NUMBER
 
+      - name: Set up Google Cloud authentication
+        run: |
+          # DEVELOP_GCLOUD_SERVICE_KEYをデコードして/tmp/credentials.jsonに保存
+          echo "${{ secrets.DEVELOP_GCLOUD_SERVICE_KEY }}" | base64 -d > /tmp/credentials.json
+
+          # GOOGLE_APPLICATION_CREDENTIALS環境変数にパスをセット
+          echo "GOOGLE_APPLICATION_CREDENTIALS=/tmp/credentials.json" >> $GITHUB_ENV
+
       # Firebase にデプロイ
       - name: Firebase App Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1.3.4
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
           appId: ${{secrets.RELEASE_FIREBASE_APP_ID_ANDROID}}
-          token: ${{secrets.FIREBASE_TOKEN}}
           groups: testers
           file: ./build/app/outputs/bundle/release/app-release.aab
