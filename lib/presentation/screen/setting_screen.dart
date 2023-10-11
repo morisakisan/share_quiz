@@ -8,7 +8,7 @@ import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:package_info/package_info.dart';
 
 // Project imports:
-import 'package:share_quiz/presentation/widget/widget_utils.dart';
+import 'package:share_quiz/presentation/utility/widget_utils.dart';
 
 class SettingScreen extends HookWidget {
   @override

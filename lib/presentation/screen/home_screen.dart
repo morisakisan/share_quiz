@@ -9,6 +9,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_quiz/data/repository_impl/quiz_list_repository_impl.dart';
 import 'package:share_quiz/domain/usecases/user_login_use_case.dart';
 import 'package:share_quiz/presentation/page/quiz_list_page.dart';
+import 'package:share_quiz/presentation/utility/FirebaseErrorHandler.dart';
 import '../../domain/di/UseCaseModule.dart';
 import '../../domain/models/quiz_list/quiz_list.dart';
 import '../../domain/models/user/user_data.dart';
@@ -87,6 +88,8 @@ class HomeScreen extends HookConsumerWidget {
                   notifier,
                 );
               }
+            } else if (state is AsyncError){
+              FirebaseErrorHandler.showErrorDialog(context, state.error);
             }
           },
           child: const Icon(Icons.add),

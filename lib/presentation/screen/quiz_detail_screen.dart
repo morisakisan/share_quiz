@@ -10,7 +10,7 @@ import 'package:share/share.dart';
 // Project imports:
 import 'package:share_quiz/data/repository_impl/quiz_answer_post_repository_impl.dart';
 import 'package:share_quiz/domain/usecases/quiz_detail_use_case.dart';
-import 'package:share_quiz/presentation/widget/widget_utils.dart';
+import 'package:share_quiz/presentation/utility/widget_utils.dart';
 import '../../data/repository_impl/quiz_detail_repository_impl.dart';
 import '../../domain/models/quiz/quiz.dart';
 import '../../domain/models/quiz_detail/quiz_detail.dart';
