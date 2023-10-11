@@ -1,9 +1,11 @@
 name: Android Release CD
 
 on:
+  workflow_dispatch:
+    branches: [ master ]
   push:
     branches:
-      - a
+      - master
 
 concurrency:
   group: pr-${{ github.event.pull_request.number }}-Android Release CD

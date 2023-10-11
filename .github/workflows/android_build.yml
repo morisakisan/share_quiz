@@ -1,9 +1,10 @@
 name: Android Build
 
 on:
-  push:
+  workflow_dispatch:
+  pull_request:
     branches:
-      - a
+      - dev
 
 concurrency:
   group: pr-${{ github.event.pull_request.number }}-Android Build

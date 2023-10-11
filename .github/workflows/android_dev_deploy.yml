@@ -1,9 +1,10 @@
 name: Android Dev CD
 
 on:
+  workflow_dispatch:
   push:
     branches:
-      - a
+      - dev
 
 concurrency:
   group: pr-${{ github.event.pull_request.number }}-Android Dev CD
@@ -17,7 +18,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-
+        
       - name: Setup Build Environment
         uses: ./.github/actions/setup-build-env
         with:
