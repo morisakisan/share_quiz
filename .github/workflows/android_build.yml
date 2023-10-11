@@ -17,6 +17,7 @@ jobs:
       - name: Setup Build Environment
         uses: ./.github/actions/setup-build-env
         with:
-          secrets_debug_android_google_service: ${{ secrets.DEBUG_ANDROID_GOOGLE_SERVICE }}
-          secrets_debug_android_keystore: ${{ secrets.DEBUG_ANDROID_KEYSTORE }}
-          secrets_debug_key_properties: ${{ secrets.DEBUG_KEY_PROPERTIES }}
+          build_type: debug
+          google_service_secret: ${{ secrets.DEBUG_ANDROID_GOOGLE_SERVICE }}
+          keystore_secret: ${{ secrets.DEBUG_ANDROID_KEYSTORE }}
+          key_properties_secret: ${{ secrets.DEBUG_KEY_PROPERTIES }}

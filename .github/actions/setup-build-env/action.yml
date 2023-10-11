@@ -1,15 +1,20 @@
-name: 'Setup Build Environment'
-description: 'Sets up the required environment for Android build'
+# .github/actions/setup-build-environment/action.yml
+name: 'Setup Build Environment and Build APK'
+description: 'Sets up the required environment for Android build and builds APK'
 
 inputs:
-  secrets_debug_android_google_service:
-    description: 'Debug Android Google Service'
+  build_type:
+    description: 'Build type (debug or release)'
     required: true
-  secrets_debug_android_keystore:
-    description: 'Debug Android Keystore'
+    default: 'debug'
+  google_service_secret:
+    description: 'Android Google Service secret'
     required: true
-  secrets_debug_key_properties:
-    description: 'Debug Key Properties'
+  keystore_secret:
+    description: 'Android Keystore secret'
+    required: true
+  key_properties_secret:
+    description: 'Key Properties secret'
     required: true
 
 runs:
@@ -44,15 +49,15 @@ runs:
       shell: bash
 
     - name: Translate secrets of base64 into json
-      run: echo "${{ inputs.secrets_debug_android_google_service }}" | base64 --decode > ./android/app/src/debug/google-services.json
+      run: echo "${{ inputs.google_service_secret }}" | base64 --decode > ./android/app/src/${{ inputs.build_type }}/google-services.json
       shell: bash
 
     - name: Create key.properties
       run: |
-        echo "${{ inputs.secrets_debug_android_keystore }}" | base64 -d > ./android/app/src/debug/debug.keystore
-        echo "${{ inputs.secrets_debug_key_properties }}" | base64 -d > ./android/debug_key.properties
+        echo "${{ inputs.keystore_secret }}" | base64 -d > ./android/app/src/${{ inputs.build_type }}/${{ inputs.build_type }}.keystore
+        echo "${{ inputs.key_properties_secret }}" | base64 -d > ./android/${{ inputs.build_type }}_key.properties
       shell: bash
 
-    - name: Build APK
-      run: flutter build apk --debug --build-number=$GITHUB_RUN_NUMBER
+    - name: Build APK based on type
+      run: flutter build appbundle --${{ inputs.build_type }} --build-number=$GITHUB_RUN_NUMBER
       shell: bash

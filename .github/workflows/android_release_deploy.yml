@@ -11,55 +11,19 @@ jobs:
     timeout-minutes: 20
 
     steps:
-      - name: checkout
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - name: install java 11.x
-        uses: actions/setup-java@v2
+      - name: Setup Build Environment
+        uses: ./.github/actions/setup-build-env
         with:
-          distribution: 'zulu'
-          java-version: '11.x'
+          build_type: release
+          google_service_secret: ${{ secrets.RELEASE_ANDROID_GOOGLE_SERVICE }}
+          keystore_secret: ${{ secrets.RELEASE_ANDROID_KEYSTORE }}
+          key_properties_secret: ${{ secrets.RELEASE_KEY_PROPERTIES }}
 
-      - name: setup cache
-        uses: actions/cache@v1
-        with:
-          path: /Users/runner/hostedtoolcache/flutter
-          key: ${{ runner.OS }}-flutter-install-cache
-
-      - name: install flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-
-      - name: flutter dependencies install
-        run: flutter pub get
-
-      - name: flutter test
-        run: flutter test
-
-      - name: mkdir
-        run:
-          mkdir ./android/app/src/release
-
-      - name:  Translate secrets of base64 into json
-        run:
-          echo ${{ secrets.RELEASE_ANDROID_GOOGLE_SERVICE }} | base64 --decode > ./android/app/src/release/google-services.json
-
-      - name: Create key.properties
-        run: |
-          echo ${{ secrets.RELEASE_ANDROID_KEYSTORE }} | base64 -d > ./android/app/src/release/release.jks
-          echo ${{ secrets.RELEASE_KEY_PROPERTIES }} | base64 -d > ./android/release_key.properties
-
-      - name: Build APK
-        run: flutter build appbundle --release --build-number=$GITHUB_RUN_NUMBER
-
-      - name: Set up Google Cloud authentication
-        run: |
-          # DEVELOP_GCLOUD_SERVICE_KEYをデコードして/tmp/credentials.jsonに保存
-          echo "${{ secrets.DEVELOP_GCLOUD_SERVICE_KEY }}" | base64 -d > /tmp/credentials.json
-
-          # GOOGLE_APPLICATION_CREDENTIALS環境変数にパスをセット
-          echo "GOOGLE_APPLICATION_CREDENTIALS=/tmp/credentials.json" >> $GITHUB_ENV
+      - name: Decode Firebase Service Account Key
+        run: echo "${{ secrets.DEVELOP_GCLOUD_SERVICE_KEY }}" | base64 -d > service_account_key.json
 
       # Firebase にデプロイ
       - name: Firebase App Distribution
