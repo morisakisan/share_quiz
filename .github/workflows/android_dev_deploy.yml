@@ -22,9 +22,7 @@ jobs:
           secrets_debug_key_properties: ${{ secrets.DEBUG_KEY_PROPERTIES }}
 
       - name: Decode Firebase Service Account Key
-        id: decode-key
-        run: |
-          echo "DECODED_KEY=$(echo '${{ secrets.DEVELOP_GCLOUD_SERVICE_KEY }}' | base64 -d)" >> $GITHUB_ENV
+        run: echo "${{ secrets.DEVELOP_GCLOUD_SERVICE_KEY }}" | base64 -d > service_account_key.json
 
       # Firebase にデプロイ
       - name: Firebase App Distribution
@@ -33,4 +31,4 @@ jobs:
           appId: ${{secrets.FIREBASE_APP_ID_ANDROID}}
           groups: testers
           file: ./build/app/outputs/apk/debug/app-debug.apk
-          serviceCredentialsFileContent: ${{ env.DECODED_KEY }}
+          serviceCredentialsFile: service_account_key.json
