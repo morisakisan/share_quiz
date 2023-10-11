@@ -21,9 +21,6 @@ jobs:
       - name: Ensure directory exists
         run: mkdir -p ./android/app/src/release/
 
-      - name: Check directory existence before setup
-        run: ls -la ./android/app/src/release/
-
       - name: Setup Build Environment
         uses: ./.github/actions/setup-build-env
         with:
@@ -31,9 +28,6 @@ jobs:
           google_service_secret: ${{ secrets.RELEASE_ANDROID_GOOGLE_SERVICE }}
           keystore_secret: ${{ secrets.RELEASE_ANDROID_KEYSTORE }}
           key_properties_secret: ${{ secrets.RELEASE_KEY_PROPERTIES }}
-
-      - name: Check directory existence after setup
-        run: ls -la ./android/app/src/release/
 
       - name: deploy
         uses: ./.github/actions/deploy
