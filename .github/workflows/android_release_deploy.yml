@@ -18,6 +18,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
+      - name: mkdir
+        run:
+          mkdir ./android/app/src/release
+
       - name: Setup Build Environment
         uses: ./.github/actions/setup-build-env
         with:
