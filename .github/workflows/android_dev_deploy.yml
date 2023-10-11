@@ -21,13 +21,10 @@ jobs:
           secrets_debug_android_keystore: ${{ secrets.DEBUG_ANDROID_KEYSTORE }}
           secrets_debug_key_properties: ${{ secrets.DEBUG_KEY_PROPERTIES }}
 
-      - name: Set up Google Cloud authentication
+      - name: Decode Firebase Service Account Key
+        id: decode-key
         run: |
-          # DEVELOP_GCLOUD_SERVICE_KEYをデコードして/tmp/credentials.jsonに保存
-          echo "${{ secrets.DEVELOP_GCLOUD_SERVICE_KEY }}" | base64 -d > /tmp/credentials.json
-
-          # GOOGLE_APPLICATION_CREDENTIALS環境変数にパスをセット
-          echo "GOOGLE_APPLICATION_CREDENTIALS=/tmp/credentials.json" >> $GITHUB_ENV
+          echo "DECODED_KEY=$(echo '${{ secrets.DEVELOP_GCLOUD_SERVICE_KEY }}' | base64 -d)" >> $GITHUB_ENV
 
       # Firebase にデプロイ
       - name: Firebase App Distribution
@@ -36,4 +33,4 @@ jobs:
           appId: ${{secrets.FIREBASE_APP_ID_ANDROID}}
           groups: testers
           file: ./build/app/outputs/apk/debug/app-debug.apk
-          serviceCredentialsFile: /tmp/credentials.json
+          serviceCredentialsFileContent: ${{ env.DECODED_KEY }}
