@@ -59,5 +59,10 @@ runs:
       shell: bash
 
     - name: Build APK based on type
-      run: flutter build appbundle --${{ inputs.build_type }} --build-number=$GITHUB_RUN_NUMBER
+      run: |
+        if [[ "${{ inputs.build_type }}" == "debug" ]]; then
+          flutter build apk --debug --build-number=$GITHUB_RUN_NUMBER
+        else
+          flutter build appbundle --${{ inputs.build_type }} --build-number=$GITHUB_RUN_NUMBER
+        fi
       shell: bash

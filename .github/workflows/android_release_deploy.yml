@@ -29,13 +29,9 @@ jobs:
           keystore_secret: ${{ secrets.RELEASE_ANDROID_KEYSTORE }}
           key_properties_secret: ${{ secrets.RELEASE_KEY_PROPERTIES }}
 
-      - name: Decode Firebase Service Account Key
-        run: echo "${{ secrets.RELEASE_GCLOUD_SERVICE_KEY }}" | base64 -d > service_account_key.json
-
-      # Firebase にデプロイ
-      - name: Firebase App Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1
+      - name: deploy
+        uses: ./.github/actions/deploy
         with:
+          gcloud_service_key: ${{ secrets.RELEASE_GCLOUD_SERVICE_KEY }}
+          deploy_file_path: ./build/app/outputs/bundle/release/app-release.aab
           appId: ${{secrets.RELEASE_FIREBASE_APP_ID_ANDROID}}
-          groups: testers
-          file: ./build/app/outputs/bundle/release/app-release.aab
