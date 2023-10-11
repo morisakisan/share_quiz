@@ -7,59 +7,30 @@ on:
     branches:
       - master
 
+concurrency:
+  group: pr-${{ github.event.pull_request.number }}-Android Release CD
+  cancel-in-progress: true
+
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
     steps:
-      - name: checkout
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      - name: install java 11.x
-        uses: actions/setup-java@v2
+      - name: Setup Build Environment
+        uses: ./.github/actions/setup-build-env
         with:
-          distribution: 'zulu'
-          java-version: '11.x'
+          build_type: release
+          google_service_secret: ${{ secrets.RELEASE_ANDROID_GOOGLE_SERVICE }}
+          keystore_secret: ${{ secrets.RELEASE_ANDROID_KEYSTORE }}
+          key_properties_secret: ${{ secrets.RELEASE_KEY_PROPERTIES }}
 
-      - name: setup cache
-        uses: actions/cache@v1
+      - name: deploy
+        uses: ./.github/actions/deploy
         with:
-          path: /Users/runner/hostedtoolcache/flutter
-          key: ${{ runner.OS }}-flutter-install-cache
-
-      - name: install flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-
-      - name: flutter dependencies install
-        run: flutter pub get
-
-      - name: flutter test
-        run: flutter test
-
-      - name: mkdir
-        run:
-          mkdir ./android/app/src/release
-
-      - name:  Translate secrets of base64 into json
-        run:
-          echo ${{ secrets.RELEASE_ANDROID_GOOGLE_SERVICE }} | base64 --decode > ./android/app/src/release/google-services.json
-
-      - name: Create key.properties
-        run: |
-          echo ${{ secrets.RELEASE_ANDROID_KEYSTORE }} | base64 -d > ./android/app/src/release/release.jks
-          echo ${{ secrets.RELEASE_KEY_PROPERTIES }} | base64 -d > ./android/release_key.properties
-
-      - name: Build APK
-        run: flutter build appbundle --release --build-number=$GITHUB_RUN_NUMBER
-
-      # Firebase にデプロイ
-      - name: Firebase App Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1.3.4
-        with:
+          gcloud_service_key: ${{ secrets.RELEASE_GCLOUD_SERVICE_KEY }}
+          deploy_file_path: ./build/app/outputs/bundle/release/app-release.aab
           appId: ${{secrets.RELEASE_FIREBASE_APP_ID_ANDROID}}
-          token: ${{secrets.FIREBASE_TOKEN}}
-          groups: testers
-          file: ./build/app/outputs/bundle/release/app-release.aab

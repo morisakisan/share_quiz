@@ -1,0 +1,77 @@
+# .github/actions/setup-build-environment/action.yml
+name: 'Setup Build Environment and Build APK'
+description: 'Sets up the required environment for Android build and builds APK'
+
+inputs:
+  build_type:
+    description: 'Build type (debug or release)'
+    required: true
+    default: 'debug'
+  google_service_secret:
+    description: 'Android Google Service secret'
+    required: true
+  keystore_secret:
+    description: 'Android Keystore secret'
+    required: true
+  key_properties_secret:
+    description: 'Key Properties secret'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: checkout
+      uses: actions/checkout@v3
+
+    - name: install java 11.x
+      uses: actions/setup-java@v2
+      with:
+        distribution: 'zulu'
+        java-version: '11.x'
+
+    - name: setup cache
+      uses: actions/cache@v1
+      with:
+        path: /Users/runner/hostedtoolcache/flutter
+        key: ${{ runner.OS }}-flutter-install-cache
+
+    - name: install flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: 'stable'
+
+    - name: flutter dependencies install
+      run: flutter pub get
+      shell: bash
+
+    - name: flutter test
+      run: flutter test
+      shell: bash
+
+    - name: Ensure directory exists
+      run: mkdir -p ./android/app/src/${{ inputs.build_type }}/
+      shell: bash
+
+    - name: Translate secrets of base64 into json
+      run: echo "${{ inputs.google_service_secret }}" | base64 --decode > ./android/app/src/${{ inputs.build_type }}/google-services.json
+      shell: bash
+
+    - name: Create key.properties
+      run: |
+        if [[ "${{ inputs.build_type }}" == "debug" ]]; then
+          EXTENSION=".keystore"
+        else
+          EXTENSION=".jks"
+        fi
+        echo "${{ inputs.keystore_secret }}" | base64 -d > ./android/app/src/${{ inputs.build_type }}/${{ inputs.build_type }}$EXTENSION
+        echo "${{ inputs.key_properties_secret }}" | base64 -d > ./android/${{ inputs.build_type }}_key.properties
+      shell: bash
+
+    - name: Build APK based on type
+      run: |
+        if [[ "${{ inputs.build_type }}" == "debug" ]]; then
+          flutter build apk --debug --build-number=$GITHUB_RUN_NUMBER
+        else
+          flutter build appbundle --${{ inputs.build_type }} --build-number=$GITHUB_RUN_NUMBER
+        fi
+      shell: bash

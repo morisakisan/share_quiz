@@ -6,46 +6,23 @@ on:
     branches:
       - dev
 
+concurrency:
+  group: pr-${{ github.event.pull_request.number }}-Android Build
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
     steps:
-      - name: checkout
-        uses: actions/checkout@v3
-
-      - name: install java 11.x
-        uses: actions/setup-java@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        
+      - name: Setup Build Environment
+        uses: ./.github/actions/setup-build-env
         with:
-          distribution: 'zulu'
-          java-version: '11.x'
-
-      - name: setup cache
-        uses: actions/cache@v1
-        with:
-          path: /Users/runner/hostedtoolcache/flutter
-          key: ${{ runner.OS }}-flutter-install-cache
-
-      - name: install flutter
-        uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-
-      - name: flutter dependencies install
-        run: flutter pub get
-
-      - name: flutter test
-        run: flutter test
-
-      - name:  Translate secrets of base64 into json
-        run:
-          echo ${{ secrets.DEBUG_ANDROID_GOOGLE_SERVICE }} | base64 --decode > ./android/app/src/debug/google-services.json
-
-      - name: Create key.properties
-        run: |
-          echo ${{ secrets.DEBUG_ANDROID_KEYSTORE }} | base64 -d > ./android/app/src/debug/debug.keystore
-          echo ${{ secrets.DEBUG_KEY_PROPERTIES }} | base64 -d > ./android/debug_key.properties
-
-      - name: Build APK
-        run: flutter build apk --debug --build-number=$GITHUB_RUN_NUMBER
+          build_type: debug
+          google_service_secret: ${{ secrets.DEBUG_ANDROID_GOOGLE_SERVICE }}
+          keystore_secret: ${{ secrets.DEBUG_ANDROID_KEYSTORE }}
+          key_properties_secret: ${{ secrets.DEBUG_KEY_PROPERTIES }}
