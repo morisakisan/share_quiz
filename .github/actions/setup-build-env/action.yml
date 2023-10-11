@@ -58,7 +58,12 @@ runs:
 
     - name: Create key.properties
       run: |
-        echo "${{ inputs.keystore_secret }}" | base64 -d > ./android/app/src/${{ inputs.build_type }}/${{ inputs.build_type }}.keystore
+        if [[ "${{ inputs.build_type }}" == "debug" ]]; then
+          EXTENSION=".keystore"
+        else
+          EXTENSION=".jks"
+        fi
+        echo "${{ inputs.keystore_secret }}" | base64 -d > ./android/app/src/${{ inputs.build_type }}/${{ inputs.build_type }}$EXTENSION
         echo "${{ inputs.key_properties_secret }}" | base64 -d > ./android/${{ inputs.build_type }}_key.properties
       shell: bash
 
