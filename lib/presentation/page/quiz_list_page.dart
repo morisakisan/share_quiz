@@ -31,7 +31,7 @@ class QuizListPage extends HookConsumerWidget {
         padding: const EdgeInsets.all(8.0),
       ),
       loading: () => CircularProgressIndicator(),
-      error: (error, stack) => Text(FirebaseErrorHandler.getMessage(error)),
+      error: (error, stack) => Text(FirebaseErrorHandler.getMessage(error, stack)),
     );
   }
 

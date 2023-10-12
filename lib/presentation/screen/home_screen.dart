@@ -89,7 +89,9 @@ class HomeScreen extends HookConsumerWidget {
                 );
               }
             } else if (state is AsyncError) {
-              FirebaseErrorHandler.showErrorDialog(context, state.error);
+              var error = state as AsyncError;
+              FirebaseErrorHandler.showErrorDialog(
+                  context, error.error, error.stackTrace);
             }
           },
           child: const Icon(Icons.add),
@@ -156,8 +158,9 @@ class HomeScreen extends HookConsumerWidget {
         ),
       );
     } else if (state is AsyncError) {
-      list.add(
-          createHeader(Text(FirebaseErrorHandler.getMessage(state.error))));
+      var error = state as AsyncError;
+      list.add(createHeader(Text(
+          FirebaseErrorHandler.getMessage(state.error, error.stackTrace))));
     } else if (state is AsyncData) {
       final user = (state as AsyncData).value;
       if (user != null) {

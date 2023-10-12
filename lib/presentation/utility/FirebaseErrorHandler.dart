@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
 class FirebaseErrorHandler {
   FirebaseErrorHandler._();
 
-  static String getMessage(Object? e) {
+  static String getMessage(Object? e, StackTrace stackTrace) {
     if (e is FirebaseAuthException) {
       switch (e.code) {
         case 'account-exists-with-different-credential':
@@ -17,7 +18,6 @@ class FirebaseErrorHandler {
           return '無効な認証情報です。';
         case 'operation-not-allowed':
           return 'Googleログインは許可されていません。';
-      // その他のFirebase Authエラーコード...
         default:
           return 'ログイン中にエラーが発生しました。';
       }
@@ -27,19 +27,20 @@ class FirebaseErrorHandler {
           return 'Firestoreへのアクセス権限がありません。';
         case 'not-found':
           return '要求されたドキュメントは見つかりませんでした。';
-      // その他のFirestoreエラーコード...
         default:
           return 'データベース操作中にエラーが発生しました。';
       }
     } else {
+      FirebaseCrashlytics.instance.recordError(e, stackTrace);
       return '不明なエラーが発生しました。';
     }
   }
 
-  static AlertDialog getAlertDialog(BuildContext context, Object? e) {
+  static AlertDialog getAlertDialog(
+      BuildContext context, Object? e, StackTrace stackTrace) {
     return AlertDialog(
       title: Text('エラー'),
-      content: Text(getMessage(e)),
+      content: Text(getMessage(e, stackTrace)),
       actions: [
         TextButton(
           child: Text('OK'),
@@ -49,11 +50,12 @@ class FirebaseErrorHandler {
     );
   }
 
-  static void showErrorDialog(BuildContext context, Object? e) {
+  static void showErrorDialog(
+      BuildContext context, Object? e, StackTrace stackTrace) {
     showDialog(
       context: context,
       builder: (context) {
-        return getAlertDialog(context, e);
+        return getAlertDialog(context, e, stackTrace);
       },
     );
   }

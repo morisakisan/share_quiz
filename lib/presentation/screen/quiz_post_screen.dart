@@ -49,7 +49,8 @@ class QuizPostScreen extends HookConsumerWidget {
     if (postState is AsyncLoading) {
       children.add(WidgetUtils.loading());
     } else if (postState is AsyncError) {
-      FirebaseErrorHandler.showErrorDialog(context, postState.error);
+      FirebaseErrorHandler.showErrorDialog(
+          context, postState.error, postState.stackTrace);
     } else if (postState is AsyncData) {
       Navigator.pop(context);
     }
