@@ -56,8 +56,8 @@ class QuizDetailScreen extends HookConsumerWidget {
     if (quizAnswer is AsyncLoading) {
       return _loading();
     } else if (quizAnswer is AsyncError) {
-      final error = (quizAnswer as AsyncError).error;
-      return Text(FirebaseErrorHandler.getMessage(error));
+      var error = (quizAnswer as AsyncError);
+      return Text(FirebaseErrorHandler.getMessage(error.error, error.stackTrace));
     } else if (quizAnswer is AsyncData) {
       return _success(
           context, (quizAnswer as AsyncData<QuizDetail>).value, ref);
@@ -253,7 +253,7 @@ class QuizDetailScreen extends HookConsumerWidget {
               Navigator.pop(dialogContext);
               return CircularProgressIndicator();
             } else if (state is AsyncError) {
-              return FirebaseErrorHandler.getAlertDialog(context, state.error);
+              return FirebaseErrorHandler.getAlertDialog(context, state.error, state.stackTrace);
             }
 
             return AlertDialog(
