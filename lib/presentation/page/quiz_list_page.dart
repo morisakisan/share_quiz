@@ -7,7 +7,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
-import 'package:share_quiz/presentation/widget/widget_utils.dart';
+import 'package:share_quiz/presentation/utility/FirebaseErrorHandler.dart';
+import 'package:share_quiz/presentation/utility/widget_utils.dart';
 import '../../domain/models/quiz/quiz.dart';
 import '../../domain/models/quiz_list/quiz_list.dart';
 import '../nav.dart';
@@ -30,7 +31,7 @@ class QuizListPage extends HookConsumerWidget {
         padding: const EdgeInsets.all(8.0),
       ),
       loading: () => CircularProgressIndicator(),
-      error: (error, stack) => Text('Error: $error'),
+      error: (error, stack) => Text(FirebaseErrorHandler.getMessage(error)),
     );
   }
 

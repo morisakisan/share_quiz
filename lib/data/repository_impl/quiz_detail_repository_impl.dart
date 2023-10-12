@@ -1,14 +1,17 @@
-// Project imports:
-import 'package:rxdart/rxdart.dart';
+// Dart imports:
+import 'dart:async';
 
+// Package imports:
+import 'package:rxdart/rxdart.dart';
+import 'package:tuple/tuple.dart';
+
+// Project imports:
 import '../../domain/models/quiz_detail/quiz_detail.dart';
 import '../../domain/repository/quiz_detail_repository.dart';
 import '../answer/answer_firebase_store.dart';
 import '../mapper/quiz_mapper.dart';
 import '../quiz/quiz_firebase_store.dart';
 import '../user/user_firebase_store.dart';
-import 'dart:async';
-import 'package:tuple/tuple.dart';
 
 class QuizDetailRepositoryImpl extends QuizDetailRepository {
   final _quizDataStore = QuizFirebaseStore();
