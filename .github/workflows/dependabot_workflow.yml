@@ -1,12 +1,9 @@
 name: Dependabot Workflow
 
 on:
-  pull_request:
-    branches:
-      - 'dependabot/**'
   pull_request_target:
     branches:
-      - 'dev'
+      - 'dependabot/**'
 
 concurrency:
   group: pr-${{ github.event.pull_request.number }}-Android Build
