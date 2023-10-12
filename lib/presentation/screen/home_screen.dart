@@ -19,7 +19,6 @@ import '../../domain/value_object/quiz_list_order_by.dart';
 import '../nav.dart';
 
 final quizListRepositoryProvider =
-
     Provider.autoDispose<QuizListRepository>((ref) {
   return QuizListRepositoryImpl();
 });
