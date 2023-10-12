@@ -13,6 +13,7 @@ import 'package:share_quiz/presentation/utility/widget_utils.dart';
 class SettingScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
+    aaa
     final appLocalizations = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
