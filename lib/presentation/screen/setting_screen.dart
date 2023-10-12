@@ -62,7 +62,6 @@ class SettingScreen extends HookWidget {
           ],
         ),
         SettingsSection(
-          
           title: appLocalizations.version,
           tiles: [
             SettingsTile(
