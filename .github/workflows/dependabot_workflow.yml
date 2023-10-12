@@ -1,0 +1,32 @@
+name: Dependabot Workflow
+
+on:
+  pull_request:
+    branches:
+      - 'dependabot/**'
+  pull_request_target:
+    branches:
+      - 'dev'
+
+concurrency:
+  group: pr-${{ github.event.pull_request.number }}-Android Build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Setup Build Environment
+        uses: ./.github/actions/setup-build-env
+        with:
+          build_type: debug
+          google_service_secret: ${{ secrets.DEBUG_ANDROID_GOOGLE_SERVICE }}
+          keystore_secret: ${{ secrets.DEBUG_ANDROID_KEYSTORE }}
+          key_properties_secret: ${{ secrets.DEBUG_KEY_PROPERTIES }}
