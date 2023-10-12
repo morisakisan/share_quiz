@@ -31,9 +31,13 @@ class FirebaseErrorHandler {
           return 'データベース操作中にエラーが発生しました。';
       }
     } else {
-      FirebaseCrashlytics.instance.recordError(e, stackTrace);
+      _reportError(e, stackTrace);
       return '不明なエラーが発生しました。';
     }
+  }
+
+  static _reportError(dynamic error, StackTrace stackTrace) async {
+    await FirebaseCrashlytics.instance.recordError(error, stackTrace);
   }
 
   static AlertDialog getAlertDialog(
