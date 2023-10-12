@@ -88,7 +88,7 @@ class HomeScreen extends HookConsumerWidget {
                   notifier,
                 );
               }
-            } else if (state is AsyncError){
+            } else if (state is AsyncError) {
               FirebaseErrorHandler.showErrorDialog(context, state.error);
             }
           },
@@ -156,7 +156,8 @@ class HomeScreen extends HookConsumerWidget {
         ),
       );
     } else if (state is AsyncError) {
-      list.add(createHeader(Column()));
+      list.add(
+          createHeader(Text(FirebaseErrorHandler.getMessage(state.error))));
     } else if (state is AsyncData) {
       final user = (state as AsyncData).value;
       if (user != null) {

@@ -1,8 +1,13 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
+// Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class FirebaseErrorHandler {
+  FirebaseErrorHandler._();
+
   static String getMessage(Object? e) {
     if (e is FirebaseAuthException) {
       switch (e.code) {
@@ -48,7 +53,7 @@ class FirebaseErrorHandler {
     showDialog(
       context: context,
       builder: (context) {
-        return getAlertDialog(context, e)
+        return getAlertDialog(context, e);
       },
     );
   }

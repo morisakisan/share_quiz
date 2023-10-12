@@ -10,14 +10,15 @@ import 'package:share/share.dart';
 // Project imports:
 import 'package:share_quiz/data/repository_impl/quiz_answer_post_repository_impl.dart';
 import 'package:share_quiz/domain/usecases/quiz_detail_use_case.dart';
+import 'package:share_quiz/presentation/utility/FirebaseErrorHandler.dart';
 import 'package:share_quiz/presentation/utility/widget_utils.dart';
 import '../../data/repository_impl/quiz_detail_repository_impl.dart';
+import '../../domain/di/UseCaseModule.dart';
 import '../../domain/models/quiz/quiz.dart';
 import '../../domain/models/quiz_detail/quiz_detail.dart';
 import '../../domain/repository/quiz_answer_post_repository.dart';
 import '../../domain/repository/quiz_detail_repository.dart';
 import '../../domain/usecases/quiz_answer_post_use_case.dart';
-import '../../domain/di/UseCaseModule.dart';
 import '../../domain/usecases/user_login_use_case.dart';
 
 final repositoryProvider =
@@ -56,9 +57,10 @@ class QuizDetailScreen extends HookConsumerWidget {
       return _loading();
     } else if (quizAnswer is AsyncError) {
       final error = (quizAnswer as AsyncError).error;
-      throw error;
+      return Text(FirebaseErrorHandler.getMessage(error));
     } else if (quizAnswer is AsyncData) {
-      return _success(context, (quizAnswer as AsyncData<QuizDetail>).value, ref);
+      return _success(
+          context, (quizAnswer as AsyncData<QuizDetail>).value, ref);
     } else {
       throw Exception();
     }
@@ -73,7 +75,6 @@ class QuizDetailScreen extends HookConsumerWidget {
 
   Widget _success(
       BuildContext context, QuizDetail quizAnswerData, WidgetRef ref) {
-    var state = ref.watch(userLoginUseCaseProvider);
     var userLoginUseCase = ref.watch(userLoginUseCaseProvider.notifier);
     final selectNotifier = ref.read(selectProvider.notifier);
     var selectValue = ref.watch(selectProvider.select((value) => value));
@@ -146,13 +147,11 @@ class QuizDetailScreen extends HookConsumerWidget {
       );
 
       answerOnPressed = () {
-        if (state is AsyncData) {
-          if (state.value == null) {
-            _showLoginDialog(context, userLoginUseCase);
-            return;
-          }
-          _showAnswerDialog(context, selectValue, quiz);
+        if (!quizAnswerData.isLogin) {
+          _showLoginDialog(context, userLoginUseCase);
+          return;
         }
+        _showAnswerDialog(context, selectValue, quiz);
       };
     } else {
       selectValue = quizAnswerData.select_anser!;
@@ -238,8 +237,7 @@ class QuizDetailScreen extends HookConsumerWidget {
     );
   }
 
-  _showAnswerDialog(
-      BuildContext context, int select, Quiz quiz) {
+  _showAnswerDialog(BuildContext context, int select, Quiz quiz) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -254,7 +252,9 @@ class QuizDetailScreen extends HookConsumerWidget {
             } else if (state is AsyncData) {
               Navigator.pop(dialogContext);
               return CircularProgressIndicator();
-            } else if (state is AsyncError) {}
+            } else if (state is AsyncError) {
+              return FirebaseErrorHandler.getAlertDialog(context, state.error);
+            }
 
             return AlertDialog(
               content: Text(appLocalizations.confirmAnswerFormat(
