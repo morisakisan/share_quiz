@@ -20,9 +20,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: checkout
-      uses: actions/checkout@v3
-
     - name: install java 11.x
       uses: actions/setup-java@v2
       with:
