@@ -15,21 +15,21 @@ dependencies:
   firebase_analytics: 10.5.1
   firebase_auth: 4.10.1
   cloud_firestore: 4.9.3
-  google_sign_in: 5.0.2
+  google_sign_in: 6.1.5
   firebase_storage: 11.2.8
   tuple: 2.0.2
   firebase_crashlytics: 3.3.7
   crypto: 3.0.3
-  package_info: 2.0.0
   image_picker: 1.0.4
-  share: 2.0.4
   flutter_launcher_icons: 0.13.1
   flutter_settings_ui: 2.0.1
-  state_notifier: 0.7.2+1
+  state_notifier: 1.0.0
   intl: 0.18.1
   flutter_localizations:
     sdk: flutter
   rxdart: 0.27.7
+  package_info_plus: 4.1.0
+  share_plus: 7.1.0
 
 dev_dependencies:
   freezed_annotation: 2.4.1
