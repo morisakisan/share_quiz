@@ -3,10 +3,10 @@ import 'dart:async';
 
 // Package imports:
 import 'package:rxdart/rxdart.dart';
-import 'package:share_quiz/data/firebase_auth/firebase_auth_store.dart';
 import 'package:tuple/tuple.dart';
 
 // Project imports:
+import 'package:share_quiz/data/firebase_auth/firebase_auth_store.dart';
 import '../../domain/models/quiz_detail/quiz_detail.dart';
 import '../../domain/repository/quiz_detail_repository.dart';
 import '../answer/answer_firebase_store.dart';

@@ -1,8 +1,8 @@
 // Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:share_quiz/data/firebase_auth/firebase_auth_store.dart';
 
 // Project imports:
+import 'package:share_quiz/data/firebase_auth/firebase_auth_store.dart';
 import '../../domain/models/quiz_post/quiz_post_data.dart';
 import '../../domain/repository/quiz_post_repository.dart';
 import '../image/firebase_storage_data_store.dart';
