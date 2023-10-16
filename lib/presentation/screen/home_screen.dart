@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
@@ -53,6 +54,14 @@ class HomeScreen extends HookConsumerWidget {
 
     var state = ref.watch(userLoginUseCaseProvider);
     var notifier = ref.watch(userLoginUseCaseProvider.notifier);
+    useEffect(() {
+       // ウィジェットの起動時にだけ実行される処理
+      notifier.fetch();
+      return () {
+        // オプション: ウィジェットがアンマウントされるときのクリーンアップ処理
+      };
+    }, []);
+
     return DefaultTabController(
       length: tab.length,
       child: Scaffold(

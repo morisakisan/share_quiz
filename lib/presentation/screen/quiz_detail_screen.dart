@@ -76,6 +76,14 @@ class QuizDetailScreen extends HookConsumerWidget {
   Widget _success(
       BuildContext context, QuizDetail quizAnswerData, WidgetRef ref) {
     var userLoginUseCase = ref.watch(userLoginUseCaseProvider.notifier);
+    useEffect(() {
+      // ウィジェットの起動時にだけ実行される処理
+      userLoginUseCase.fetch();
+      return () {
+        // オプション: ウィジェットがアンマウントされるときのクリーンアップ処理
+      };
+    }, []);
+
     final selectNotifier = ref.read(selectProvider.notifier);
     var selectValue = ref.watch(selectProvider.select((value) => value));
     final theme = Theme.of(context);

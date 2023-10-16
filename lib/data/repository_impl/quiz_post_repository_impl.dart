@@ -2,6 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 // Project imports:
+import 'package:share_quiz/data/firebase_auth/firebase_auth_store.dart';
 import '../../domain/models/quiz_post/quiz_post_data.dart';
 import '../../domain/repository/quiz_post_repository.dart';
 import '../image/firebase_storage_data_store.dart';
@@ -11,12 +12,12 @@ import '../user/user_firebase_store.dart';
 class QuizPostRepositoryImpl extends QuizPostRepository {
   final _storage = FirebaseStorageDataStore();
   final _quizFireStore = QuizFirebaseStore();
-  final _userFireStore = UserFirebaseStore();
+  final _userFireStore = FirebaseAuthStore();
 
   @override
   Future<void> store(QuizPostData post) async {
     final imageUrl = await _storage.uploadFile(post.imageFile);
-    final user = await _userFireStore.getCurrentUser();
+    final user = _userFireStore.getCurrentUser();
     final json = {
       "title": post.title,
       "question": post.question,
