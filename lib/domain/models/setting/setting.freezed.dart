@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Setting {
   PackageInfo get packageInfo => throw _privateConstructorUsedError;
-  UserData get userData => throw _privateConstructorUsedError;
+  bool get isLogin => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $SettingCopyWith<Setting> get copyWith => throw _privateConstructorUsedError;
@@ -28,9 +28,7 @@ abstract class $SettingCopyWith<$Res> {
   factory $SettingCopyWith(Setting value, $Res Function(Setting) then) =
       _$SettingCopyWithImpl<$Res, Setting>;
   @useResult
-  $Res call({PackageInfo packageInfo, UserData userData});
-
-  $UserDataCopyWith<$Res> get userData;
+  $Res call({PackageInfo packageInfo, bool isLogin});
 }
 
 /// @nodoc
@@ -47,26 +45,18 @@ class _$SettingCopyWithImpl<$Res, $Val extends Setting>
   @override
   $Res call({
     Object? packageInfo = null,
-    Object? userData = null,
+    Object? isLogin = null,
   }) {
     return _then(_value.copyWith(
       packageInfo: null == packageInfo
           ? _value.packageInfo
           : packageInfo // ignore: cast_nullable_to_non_nullable
               as PackageInfo,
-      userData: null == userData
-          ? _value.userData
-          : userData // ignore: cast_nullable_to_non_nullable
-              as UserData,
+      isLogin: null == isLogin
+          ? _value.isLogin
+          : isLogin // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $UserDataCopyWith<$Res> get userData {
-    return $UserDataCopyWith<$Res>(_value.userData, (value) {
-      return _then(_value.copyWith(userData: value) as $Val);
-    });
   }
 }
 
@@ -77,10 +67,7 @@ abstract class _$$SettingImplCopyWith<$Res> implements $SettingCopyWith<$Res> {
       __$$SettingImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({PackageInfo packageInfo, UserData userData});
-
-  @override
-  $UserDataCopyWith<$Res> get userData;
+  $Res call({PackageInfo packageInfo, bool isLogin});
 }
 
 /// @nodoc
@@ -95,17 +82,17 @@ class __$$SettingImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? packageInfo = null,
-    Object? userData = null,
+    Object? isLogin = null,
   }) {
     return _then(_$SettingImpl(
       packageInfo: null == packageInfo
           ? _value.packageInfo
           : packageInfo // ignore: cast_nullable_to_non_nullable
               as PackageInfo,
-      userData: null == userData
-          ? _value.userData
-          : userData // ignore: cast_nullable_to_non_nullable
-              as UserData,
+      isLogin: null == isLogin
+          ? _value.isLogin
+          : isLogin // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -113,16 +100,16 @@ class __$$SettingImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SettingImpl with DiagnosticableTreeMixin implements _Setting {
-  const _$SettingImpl({required this.packageInfo, required this.userData});
+  const _$SettingImpl({required this.packageInfo, required this.isLogin});
 
   @override
   final PackageInfo packageInfo;
   @override
-  final UserData userData;
+  final bool isLogin;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Setting(packageInfo: $packageInfo, userData: $userData)';
+    return 'Setting(packageInfo: $packageInfo, isLogin: $isLogin)';
   }
 
   @override
@@ -131,7 +118,7 @@ class _$SettingImpl with DiagnosticableTreeMixin implements _Setting {
     properties
       ..add(DiagnosticsProperty('type', 'Setting'))
       ..add(DiagnosticsProperty('packageInfo', packageInfo))
-      ..add(DiagnosticsProperty('userData', userData));
+      ..add(DiagnosticsProperty('isLogin', isLogin));
   }
 
   @override
@@ -141,12 +128,11 @@ class _$SettingImpl with DiagnosticableTreeMixin implements _Setting {
             other is _$SettingImpl &&
             (identical(other.packageInfo, packageInfo) ||
                 other.packageInfo == packageInfo) &&
-            (identical(other.userData, userData) ||
-                other.userData == userData));
+            (identical(other.isLogin, isLogin) || other.isLogin == isLogin));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, packageInfo, userData);
+  int get hashCode => Object.hash(runtimeType, packageInfo, isLogin);
 
   @JsonKey(ignore: true)
   @override
@@ -158,12 +144,12 @@ class _$SettingImpl with DiagnosticableTreeMixin implements _Setting {
 abstract class _Setting implements Setting {
   const factory _Setting(
       {required final PackageInfo packageInfo,
-      required final UserData userData}) = _$SettingImpl;
+      required final bool isLogin}) = _$SettingImpl;
 
   @override
   PackageInfo get packageInfo;
   @override
-  UserData get userData;
+  bool get isLogin;
   @override
   @JsonKey(ignore: true)
   _$$SettingImplCopyWith<_$SettingImpl> get copyWith =>

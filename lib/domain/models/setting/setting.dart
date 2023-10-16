@@ -13,6 +13,6 @@ part 'setting.freezed.dart';
 abstract class Setting with _$Setting {
   const factory Setting({
     required PackageInfo packageInfo,
-    required UserData userData,
+    required bool isLogin,
   }) = _Setting;
 }
