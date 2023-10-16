@@ -32,7 +32,7 @@ class UserDataRepositoryImpl extends UserDataRepository {
     final firebaseAuth = _firebaseAuthStore.getCurrentUser();
 
     if (await _userDataStore.isAlreadyUser(firebaseAuth!) == false) {
-      _userDataStore.setUserData(firebaseAuth);
+      await _userDataStore.setUserData(firebaseAuth);
     }
     var dto = await _userDataStore.fetchWhereUid(firebaseAuth.uid);
     if(dto == null) {

@@ -15,7 +15,7 @@ class UserFirebaseStore {
     return data.docs.isNotEmpty;
   }
 
-  setUserData(User user) async {
+  Future<void> setUserData(User user) async {
     final dto = UserDto(
         uid: user.uid,
         name: user.displayName!,
