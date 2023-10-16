@@ -29,7 +29,7 @@ dependencies:
     sdk: flutter
   rxdart: 0.27.7
   package_info_plus: 4.1.0
-  share_plus: 7.1.0
+  share_plus: 7.2.1
 
 dev_dependencies:
   freezed_annotation: 2.4.1
