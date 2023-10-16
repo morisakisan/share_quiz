@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:share_quiz/data/firebase_auth/firebase_auth_store.dart';
 
 // Project imports:
 import '../../domain/repository/quiz_answer_post_repository.dart';
@@ -11,7 +12,7 @@ import '../user/user_firebase_store.dart';
 
 class QuizAnswerPostRepositoryImpl extends QuizAnswerPostRepository {
   final answerDatastore = AnswerFirebaseStore();
-  final userDatastore = UserFirebaseStore();
+  final firebaseAuthStore = FirebaseAuthStore();
 
   @override
   Future<void> post(String quizDocId, int select) {
@@ -27,7 +28,7 @@ class QuizAnswerPostRepositoryImpl extends QuizAnswerPostRepository {
           json["quiz_id"] = e.reference.id;
           return AnswerDto.fromJson(json);
         }).toList();
-        var user = await userDatastore.getCurrentUser();
+        var user = firebaseAuthStore.getCurrentUser();
         var isCorrect = updateQuizDto.correctAnswer == select;
         var answerJson = {
           "quiz_id": quizDocId,

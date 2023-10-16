@@ -7,37 +7,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:share_quiz/data/user/user_dto.dart';
 
 class UserFirebaseStore {
-  Stream<User?> listenToUserChanges() {
-    return FirebaseAuth.instance.authStateChanges();
-  }
-
-  Future<User?> getCurrentUser() async {
-    return FirebaseAuth.instance.currentUser;
-  }
-
-  Future<User?> signInWithGoogle() async {
-    final googleSignInAccount = await GoogleSignIn().signIn();
-    final googleSignInAuthentication =
-        await googleSignInAccount?.authentication;
-    if (googleSignInAuthentication == null) {
-      return null;
-    }
-
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleSignInAuthentication.accessToken,
-      idToken: googleSignInAuthentication.idToken,
-    );
-
-    final user =
-        (await FirebaseAuth.instance.signInWithCredential(credential)).user;
-
-    return user;
-  }
-
-  Future<void> signOutGoogle() {
-    return GoogleSignIn().signOut();
-  }
-
   CollectionReference<Map<String, dynamic>> _getCollection() =>
       FirebaseFirestore.instance.collection('user');
 
@@ -61,8 +30,11 @@ class UserFirebaseStore {
         );
   }
 
-  Future<UserDto> fetchWhereUid(String uid) async {
+  Future<UserDto?> fetchWhereUid(String uid) async {
     final doc = await _getCollection().where("uid", isEqualTo: uid).get();
+    if (doc.docs.isEmpty) {
+      return null;
+    }
     final json = doc.docs.first.data();
     return UserDto.fromJson(json);
   }

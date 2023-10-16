@@ -3,6 +3,7 @@ import 'dart:async';
 
 // Package imports:
 import 'package:rxdart/rxdart.dart';
+import 'package:share_quiz/data/firebase_auth/firebase_auth_store.dart';
 import 'package:tuple/tuple.dart';
 
 // Project imports:
@@ -16,7 +17,7 @@ import '../user/user_firebase_store.dart';
 class QuizDetailRepositoryImpl extends QuizDetailRepository {
   final _quizDataStore = QuizFirebaseStore();
   final _answerDataStore = AnswerFirebaseStore();
-  final _userDataStore = UserFirebaseStore();
+  final _userDataStore = FirebaseAuthStore();
 
   @override
   Stream<QuizDetail> fetch(String quizId) {

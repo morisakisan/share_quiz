@@ -8,11 +8,12 @@ import '../repository/user_data_repository.dart';
 class UserLoginUseCase extends StateNotifier<AsyncValue<UserData?>> {
   final UserDataRepository _repository;
 
-  UserLoginUseCase(this._repository) : super(AsyncValue.loading()) {
+  UserLoginUseCase(this._repository) : super(AsyncValue.data(null)) {}
+
+  Future<void> fetch() async {
     try {
-      _repository.getCurrentUserData().then((value) {
-        state = AsyncValue.data(value);
-      });
+      var value = await _repository.getCurrentUserData();
+      state = AsyncValue.data(value);
     } catch (error, stacktrace) {
       state = AsyncValue.error(error, stacktrace);
     }
@@ -30,10 +31,7 @@ class UserLoginUseCase extends StateNotifier<AsyncValue<UserData?>> {
 
   logout() async {
     state = AsyncValue.loading();
-    _repository.signOutWithGoogle().then(
-      (value) {
-        state = AsyncValue.data(null);
-      },
-    );
+    await _repository.signOutWithGoogle();
+    state = AsyncValue.data(null);
   }
 }
