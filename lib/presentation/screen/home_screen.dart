@@ -201,22 +201,20 @@ class HomeScreen extends HookConsumerWidget {
       throw Exception();
     }
 
-    // list.add(
-    //   ListTile(
-    //     leading: Icon(Icons.account_circle),
-    //     title: Text(
-    //       'プロフィール',
-    //       style: theme.textTheme.bodyText1,
-    //     ),
-    //     onTap: () {},
-    //   ),
-    // );
-
     if (state is AsyncData) {
       final user = (state as AsyncData).value;
-      final Widget login;
       if (user != null) {
-        login = ListTile(
+        list.add(
+          ListTile(
+            leading: Icon(Icons.account_circle),
+            title: Text(
+              'プロフィール',
+              style: theme.textTheme.bodyText1,
+            ),
+            onTap: () {},
+          ),
+        );
+        final login = ListTile(
           leading: const Icon(Icons.logout),
           title: Text(
             appLocalizations.logout,
@@ -247,8 +245,9 @@ class HomeScreen extends HookConsumerWidget {
             );
           },
         );
+        list.add(login);
       } else {
-        login = ListTile(
+        final login = ListTile(
           leading: const Icon(Icons.login),
           title: Text(
             appLocalizations.login,
@@ -256,8 +255,8 @@ class HomeScreen extends HookConsumerWidget {
           ),
           onTap: () => notifier.signInWithGoogle(),
         );
+        list.add(login);
       }
-      list.add(login);
     }
 
     list.add(

@@ -36,21 +36,14 @@ class SettingScreen extends HookWidget {
     return SettingsList(
       sections: [
         SettingsSection(
-          title: appLocalizations.others,
-          titlePadding: const EdgeInsets.only(
-            top: 12,
-            left: 15.0,
-            right: 15.0,
-            bottom: 6.0,
-          ),
           tiles: [
-            // SettingsTile(
-            //   title: '利用規約',
-            //   leading: Icon(Icons.description),
-            // ),
+            SettingsTile(
+              title: "退会",
+              leading: const Icon(Icons.exit_to_app),
+            ),
             SettingsTile(
               title: appLocalizations.license,
-              leading: const Icon(Icons.collections_bookmark),
+              leading: const Icon(Icons.gavel),
               onPressed: (context) {
                 showLicensePage(
                   context: context,
@@ -59,11 +52,6 @@ class SettingScreen extends HookWidget {
                 );
               },
             ),
-          ],
-        ),
-        SettingsSection(
-          title: appLocalizations.version,
-          tiles: [
             SettingsTile(
               title: appLocalizations.version,
               leading: const Icon(Icons.info_outline),
