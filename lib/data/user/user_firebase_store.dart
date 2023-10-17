@@ -25,7 +25,7 @@ class UserFirebaseStore {
     var userJson = dto.toJson();
     userJson['created_at'] = FieldValue.serverTimestamp();
 
-    return await _getCollection().doc().set(
+    return await _getCollection().doc(user.uid).set(
           userJson,
         );
   }
