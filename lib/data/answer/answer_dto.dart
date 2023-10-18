@@ -16,7 +16,7 @@ abstract class AnswerDto with _$AnswerDto {
   const factory AnswerDto({
     @JsonKey(includeFromJson: false, includeToJson: false) String? id,
     @JsonKey(name: 'answer') required int answer,
-    @JsonKey(name: 'user_id') required String userId,
+    @JsonKey(name: 'uid') required String userId,
     @JsonKey(name: 'quiz_id') required String quizId,
     @JsonKey(name: 'is_correct') required bool isCorrect,
     @TimestampConverter()

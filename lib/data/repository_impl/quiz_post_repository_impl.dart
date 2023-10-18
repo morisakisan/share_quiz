@@ -5,9 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:share_quiz/data/firebase_auth/firebase_auth_store.dart';
 import '../../domain/models/quiz_post/quiz_post_data.dart';
 import '../../domain/repository/quiz_post_repository.dart';
-import '../image/firebase_storage_data_store.dart';
 import '../quiz/quiz_firebase_store.dart';
-import '../user/user_firebase_store.dart';
+import '../storage/firebase_storage_data_store.dart';
 
 class QuizPostRepositoryImpl extends QuizPostRepository {
   final _storage = FirebaseStorageDataStore();
@@ -25,7 +24,7 @@ class QuizPostRepositoryImpl extends QuizPostRepository {
       "correct_answer": post.answer,
       "image_url": imageUrl,
       "created_at": FieldValue.serverTimestamp(),
-      "user_id": user!.uid,
+      "uid": user!.uid,
       "answer_count": 0,
     };
     return _quizFireStore.post(json);

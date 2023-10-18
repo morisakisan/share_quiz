@@ -35,7 +35,7 @@ mixin _$QuizDto {
   @TimestampConverter()
   @JsonKey(name: 'created_at')
   DateTime get createdAt => throw _privateConstructorUsedError;
-  @JsonKey(name: 'user_id')
+  @JsonKey(name: 'uid')
   String get userId => throw _privateConstructorUsedError;
   @JsonKey(name: 'correct_answer_rate')
   double? get car => throw _privateConstructorUsedError;
@@ -60,7 +60,7 @@ abstract class $QuizDtoCopyWith<$Res> {
       @JsonKey(name: 'image_url') String? imageUrl,
       @JsonKey(name: 'choices') List<String> choices,
       @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'user_id') String userId,
+      @JsonKey(name: 'uid') String userId,
       @JsonKey(name: 'correct_answer_rate') double? car,
       @JsonKey(name: 'answer_count') int answerCount});
 }
@@ -149,7 +149,7 @@ abstract class _$$QuizDtoImplCopyWith<$Res> implements $QuizDtoCopyWith<$Res> {
       @JsonKey(name: 'image_url') String? imageUrl,
       @JsonKey(name: 'choices') List<String> choices,
       @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'user_id') String userId,
+      @JsonKey(name: 'uid') String userId,
       @JsonKey(name: 'correct_answer_rate') double? car,
       @JsonKey(name: 'answer_count') int answerCount});
 }
@@ -234,7 +234,7 @@ class _$QuizDtoImpl with DiagnosticableTreeMixin implements _QuizDto {
       @TimestampConverter()
       @JsonKey(name: 'created_at')
       required this.createdAt,
-      @JsonKey(name: 'user_id') required this.userId,
+      @JsonKey(name: 'uid') required this.userId,
       @JsonKey(name: 'correct_answer_rate') required this.car,
       @JsonKey(name: 'answer_count') required this.answerCount})
       : _choices = choices;
@@ -271,7 +271,7 @@ class _$QuizDtoImpl with DiagnosticableTreeMixin implements _QuizDto {
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
   @override
-  @JsonKey(name: 'user_id')
+  @JsonKey(name: 'uid')
   final String userId;
   @override
   @JsonKey(name: 'correct_answer_rate')
@@ -364,7 +364,7 @@ abstract class _QuizDto implements QuizDto {
       @TimestampConverter()
       @JsonKey(name: 'created_at')
       required final DateTime createdAt,
-      @JsonKey(name: 'user_id') required final String userId,
+      @JsonKey(name: 'uid') required final String userId,
       @JsonKey(name: 'correct_answer_rate') required final double? car,
       @JsonKey(name: 'answer_count')
       required final int answerCount}) = _$QuizDtoImpl;
@@ -394,7 +394,7 @@ abstract class _QuizDto implements QuizDto {
   @JsonKey(name: 'created_at')
   DateTime get createdAt;
   @override
-  @JsonKey(name: 'user_id')
+  @JsonKey(name: 'uid')
   String get userId;
   @override
   @JsonKey(name: 'correct_answer_rate')

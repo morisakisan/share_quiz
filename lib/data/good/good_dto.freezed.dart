@@ -24,7 +24,7 @@ mixin _$GoodDto {
   String? get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'quiz_id')
   String get quizId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'user_id')
+  @JsonKey(name: 'uid')
   String get userId => throw _privateConstructorUsedError;
   @TimestampConverter()
   @JsonKey(name: 'created_at')
@@ -43,7 +43,7 @@ abstract class $GoodDtoCopyWith<$Res> {
   $Res call(
       {@JsonKey(includeFromJson: false, includeToJson: false) String? id,
       @JsonKey(name: 'quiz_id') String quizId,
-      @JsonKey(name: 'user_id') String userId,
+      @JsonKey(name: 'uid') String userId,
       @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt});
 }
 
@@ -96,7 +96,7 @@ abstract class _$$GoodDtoImplCopyWith<$Res> implements $GoodDtoCopyWith<$Res> {
   $Res call(
       {@JsonKey(includeFromJson: false, includeToJson: false) String? id,
       @JsonKey(name: 'quiz_id') String quizId,
-      @JsonKey(name: 'user_id') String userId,
+      @JsonKey(name: 'uid') String userId,
       @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt});
 }
 
@@ -143,7 +143,7 @@ class _$GoodDtoImpl with DiagnosticableTreeMixin implements _GoodDto {
   const _$GoodDtoImpl(
       {@JsonKey(includeFromJson: false, includeToJson: false) this.id,
       @JsonKey(name: 'quiz_id') required this.quizId,
-      @JsonKey(name: 'user_id') required this.userId,
+      @JsonKey(name: 'uid') required this.userId,
       @TimestampConverter()
       @JsonKey(name: 'created_at')
       required this.createdAt});
@@ -158,7 +158,7 @@ class _$GoodDtoImpl with DiagnosticableTreeMixin implements _GoodDto {
   @JsonKey(name: 'quiz_id')
   final String quizId;
   @override
-  @JsonKey(name: 'user_id')
+  @JsonKey(name: 'uid')
   final String userId;
   @override
   @TimestampConverter()
@@ -215,7 +215,7 @@ abstract class _GoodDto implements GoodDto {
   const factory _GoodDto(
       {@JsonKey(includeFromJson: false, includeToJson: false) final String? id,
       @JsonKey(name: 'quiz_id') required final String quizId,
-      @JsonKey(name: 'user_id') required final String userId,
+      @JsonKey(name: 'uid') required final String userId,
       @TimestampConverter()
       @JsonKey(name: 'created_at')
       required final DateTime createdAt}) = _$GoodDtoImpl;
@@ -229,7 +229,7 @@ abstract class _GoodDto implements GoodDto {
   @JsonKey(name: 'quiz_id')
   String get quizId;
   @override
-  @JsonKey(name: 'user_id')
+  @JsonKey(name: 'uid')
   String get userId;
   @override
   @TimestampConverter()
