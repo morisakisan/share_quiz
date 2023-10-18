@@ -24,7 +24,7 @@ mixin _$AnswerDto {
   String? get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'answer')
   int get answer => throw _privateConstructorUsedError;
-  @JsonKey(name: 'user_id')
+  @JsonKey(name: 'uid')
   String get userId => throw _privateConstructorUsedError;
   @JsonKey(name: 'quiz_id')
   String get quizId => throw _privateConstructorUsedError;
@@ -48,7 +48,7 @@ abstract class $AnswerDtoCopyWith<$Res> {
   $Res call(
       {@JsonKey(includeFromJson: false, includeToJson: false) String? id,
       @JsonKey(name: 'answer') int answer,
-      @JsonKey(name: 'user_id') String userId,
+      @JsonKey(name: 'uid') String userId,
       @JsonKey(name: 'quiz_id') String quizId,
       @JsonKey(name: 'is_correct') bool isCorrect,
       @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt});
@@ -114,7 +114,7 @@ abstract class _$$AnswerDtoImplCopyWith<$Res>
   $Res call(
       {@JsonKey(includeFromJson: false, includeToJson: false) String? id,
       @JsonKey(name: 'answer') int answer,
-      @JsonKey(name: 'user_id') String userId,
+      @JsonKey(name: 'uid') String userId,
       @JsonKey(name: 'quiz_id') String quizId,
       @JsonKey(name: 'is_correct') bool isCorrect,
       @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt});
@@ -173,7 +173,7 @@ class _$AnswerDtoImpl with DiagnosticableTreeMixin implements _AnswerDto {
   const _$AnswerDtoImpl(
       {@JsonKey(includeFromJson: false, includeToJson: false) this.id,
       @JsonKey(name: 'answer') required this.answer,
-      @JsonKey(name: 'user_id') required this.userId,
+      @JsonKey(name: 'uid') required this.userId,
       @JsonKey(name: 'quiz_id') required this.quizId,
       @JsonKey(name: 'is_correct') required this.isCorrect,
       @TimestampConverter()
@@ -190,7 +190,7 @@ class _$AnswerDtoImpl with DiagnosticableTreeMixin implements _AnswerDto {
   @JsonKey(name: 'answer')
   final int answer;
   @override
-  @JsonKey(name: 'user_id')
+  @JsonKey(name: 'uid')
   final String userId;
   @override
   @JsonKey(name: 'quiz_id')
@@ -259,7 +259,7 @@ abstract class _AnswerDto implements AnswerDto {
   const factory _AnswerDto(
       {@JsonKey(includeFromJson: false, includeToJson: false) final String? id,
       @JsonKey(name: 'answer') required final int answer,
-      @JsonKey(name: 'user_id') required final String userId,
+      @JsonKey(name: 'uid') required final String userId,
       @JsonKey(name: 'quiz_id') required final String quizId,
       @JsonKey(name: 'is_correct') required final bool isCorrect,
       @TimestampConverter()
@@ -276,7 +276,7 @@ abstract class _AnswerDto implements AnswerDto {
   @JsonKey(name: 'answer')
   int get answer;
   @override
-  @JsonKey(name: 'user_id')
+  @JsonKey(name: 'uid')
   String get userId;
   @override
   @JsonKey(name: 'quiz_id')

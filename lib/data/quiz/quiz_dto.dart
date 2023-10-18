@@ -24,7 +24,7 @@ abstract class QuizDto with _$QuizDto {
     @TimestampConverter()
     @JsonKey(name: 'created_at')
     required DateTime createdAt,
-    @JsonKey(name: 'user_id') required String userId,
+    @JsonKey(name: 'uid') required String userId,
     @JsonKey(name: 'correct_answer_rate') required double? car,
     @JsonKey(name: 'answer_count') required int answerCount,
   }) = _QuizDto;

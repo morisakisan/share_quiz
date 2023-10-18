@@ -26,7 +26,7 @@ mixin _$CommentDto {
   String get quizId => throw _privateConstructorUsedError;
   @JsonKey(name: 'content')
   String get content => throw _privateConstructorUsedError;
-  @JsonKey(name: 'user_id')
+  @JsonKey(name: 'uid')
   String get userId => throw _privateConstructorUsedError;
   @TimestampConverter()
   @JsonKey(name: 'created_at')
@@ -48,7 +48,7 @@ abstract class $CommentDtoCopyWith<$Res> {
       {@JsonKey(includeFromJson: false, includeToJson: false) String? id,
       @JsonKey(name: 'quiz_id') String quizId,
       @JsonKey(name: 'content') String content,
-      @JsonKey(name: 'user_id') String userId,
+      @JsonKey(name: 'uid') String userId,
       @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt});
 }
 
@@ -108,7 +108,7 @@ abstract class _$$CommentDtoImplCopyWith<$Res>
       {@JsonKey(includeFromJson: false, includeToJson: false) String? id,
       @JsonKey(name: 'quiz_id') String quizId,
       @JsonKey(name: 'content') String content,
-      @JsonKey(name: 'user_id') String userId,
+      @JsonKey(name: 'uid') String userId,
       @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt});
 }
 
@@ -161,7 +161,7 @@ class _$CommentDtoImpl with DiagnosticableTreeMixin implements _CommentDto {
       {@JsonKey(includeFromJson: false, includeToJson: false) this.id,
       @JsonKey(name: 'quiz_id') required this.quizId,
       @JsonKey(name: 'content') required this.content,
-      @JsonKey(name: 'user_id') required this.userId,
+      @JsonKey(name: 'uid') required this.userId,
       @TimestampConverter()
       @JsonKey(name: 'created_at')
       required this.createdAt});
@@ -179,7 +179,7 @@ class _$CommentDtoImpl with DiagnosticableTreeMixin implements _CommentDto {
   @JsonKey(name: 'content')
   final String content;
   @override
-  @JsonKey(name: 'user_id')
+  @JsonKey(name: 'uid')
   final String userId;
   @override
   @TimestampConverter()
@@ -240,7 +240,7 @@ abstract class _CommentDto implements CommentDto {
       {@JsonKey(includeFromJson: false, includeToJson: false) final String? id,
       @JsonKey(name: 'quiz_id') required final String quizId,
       @JsonKey(name: 'content') required final String content,
-      @JsonKey(name: 'user_id') required final String userId,
+      @JsonKey(name: 'uid') required final String userId,
       @TimestampConverter()
       @JsonKey(name: 'created_at')
       required final DateTime createdAt}) = _$CommentDtoImpl;
@@ -258,7 +258,7 @@ abstract class _CommentDto implements CommentDto {
   @JsonKey(name: 'content')
   String get content;
   @override
-  @JsonKey(name: 'user_id')
+  @JsonKey(name: 'uid')
   String get userId;
   @override
   @TimestampConverter()
