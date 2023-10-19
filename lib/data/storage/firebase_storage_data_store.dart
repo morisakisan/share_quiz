@@ -2,6 +2,7 @@
 import 'dart:io';
 
 // Flutter imports:
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 
 // Package imports:
@@ -17,9 +18,13 @@ class FirebaseStorageDataStore {
 
     final value = await sha256.bind(file.openRead()).first;
 
+    // ユーザーのUIDを取得
+    final userId = FirebaseAuth.instance.currentUser!.uid;
+
+    // UIDを参照の一部として使用
     final ref = FirebaseStorage.instance
         .ref()
-        .child('$value.jpg');
+        .child('$userId/$value.jpg');
 
     final metadata = SettableMetadata(
       contentType: 'image/jpeg',
@@ -32,6 +37,7 @@ class FirebaseStorageDataStore {
     } else {
       uploadTask = ref.putFile(File(file.path), metadata);
     }
+    await uploadTask.whenComplete(() {});
     return uploadTask.snapshot.ref.getDownloadURL();
   }
 }
