@@ -11,7 +11,7 @@ dependencies:
   flutter_hooks: 0.20.3
   hooks_riverpod: 2.4.4
 
-  firebase_core: 2.18.0
+  firebase_core: 2.19.0
   firebase_analytics: 10.6.0
   firebase_auth: 4.11.0
   cloud_firestore: 4.10.0
