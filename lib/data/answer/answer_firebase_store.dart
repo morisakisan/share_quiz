@@ -24,7 +24,7 @@ class AnswerFirebaseStore {
   Stream<AnswerDto?> fetchMyAnswers(String quizId, String userId) {
     return _getCollection(quizId)
         .where("quiz_id", isEqualTo: quizId)
-        .where("user_id", isEqualTo: userId)
+        .where("uid", isEqualTo: userId)
         .snapshots()
         .map((snapshot) {
       final list = snapshot.docs

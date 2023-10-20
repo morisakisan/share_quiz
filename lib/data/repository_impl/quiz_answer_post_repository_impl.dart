@@ -33,7 +33,7 @@ class QuizAnswerPostRepositoryImpl extends QuizAnswerPostRepository {
         var answerJson = {
           "quiz_id": quizDocId,
           "answer": select,
-          "user_id": user!.uid,
+          "uid": user!.uid,
           "is_correct": isCorrect,
           "created_at": FieldValue.serverTimestamp()
         };
