@@ -13,7 +13,7 @@ dependencies:
 
   firebase_core: 2.19.0
   firebase_analytics: 10.6.0
-  firebase_auth: 4.11.0
+  firebase_auth: 4.11.1
   cloud_firestore: 4.10.0
   google_sign_in: 6.1.5
   firebase_storage: 11.3.0
