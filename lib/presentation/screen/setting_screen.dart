@@ -28,11 +28,13 @@ final settingUseCaseProvider = StreamProvider.autoDispose<Setting>((ref) {
 });
 
 final deleteUserRepositoryProvider =
-Provider.autoDispose<DeleteUserRepository>((ref) {
+    Provider.autoDispose<DeleteUserRepository>((ref) {
   return DeleteUserRepositoryImpl();
 });
 
-final deleteUserUseCaseProvider = StateNotifierProvider.autoDispose<DeleteUserUseCase, AsyncValue<void>?>((ref) {
+final deleteUserUseCaseProvider =
+    StateNotifierProvider.autoDispose<DeleteUserUseCase, AsyncValue<void>?>(
+        (ref) {
   var repo = ref.read(deleteUserRepositoryProvider);
   return DeleteUserUseCase(repo);
 });
@@ -46,7 +48,7 @@ class SettingScreen extends HookConsumerWidget {
     if (useCase is AsyncLoading) {
       body = WidgetUtils.loading();
     } else if (useCase is AsyncData) {
-      body = _buildSettingsList(useCase.value!, context);
+      body = _buildSettingsList(useCase.value!, context, ref);
     } else if (useCase is AsyncError) {
       var error = (useCase as AsyncError);
       return Text(
@@ -62,18 +64,27 @@ class SettingScreen extends HookConsumerWidget {
     );
   }
 
-  Widget _buildSettingsList(Setting setting, BuildContext context) {
+  Widget _buildSettingsList(
+      Setting setting, BuildContext context, WidgetRef ref) {
+    final state = ref.watch(deleteUserUseCaseProvider);
+    final useCase = ref.watch(deleteUserUseCaseProvider.notifier);
     final appLocalizations = AppLocalizations.of(context)!;
     List<AbstractTile> tiles = [];
 
+    if (state is AsyncLoading) {
+      WidgetUtils.loading();
+    } else if (state is AsyncError) {
+      FirebaseErrorHandler.showErrorDialog(
+          context, state.error, state.stackTrace);
+    }
+
     if (setting.isLogin) {
       tiles.add(SettingsTile(
-        title: "退会",
-        leading: const Icon(Icons.exit_to_app),
-        onPressed: (context) {
-
-        }
-      ));
+          title: "退会",
+          leading: const Icon(Icons.exit_to_app),
+          onPressed: (context) {
+            useCase.delete();
+          }));
     }
 
     tiles.add(SettingsTile(
