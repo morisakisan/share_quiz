@@ -9,7 +9,7 @@ class DeleteUserUseCase extends StateNotifier<AsyncValue<void>?> {
 
   DeleteUserUseCase(this._repository) : super(null);
 
-  delete() async {
+  Future<void> delete() async {
     try {
       state = AsyncValue.loading();
       await _repository.delete();

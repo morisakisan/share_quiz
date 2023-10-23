@@ -10,7 +10,7 @@ class QuizPostUseCase extends StateNotifier<AsyncValue<void>?> {
 
   QuizPostUseCase(this._repository) : super(null);
 
-  post(QuizPostData post) async {
+  Future<void> post(QuizPostData post) async {
     try {
       await _repository.store(post);
       state = AsyncValue.data(null);

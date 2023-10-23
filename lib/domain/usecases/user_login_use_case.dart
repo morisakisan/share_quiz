@@ -19,7 +19,7 @@ class UserLoginUseCase extends StateNotifier<AsyncValue<UserData?>> {
     }
   }
 
-  signInWithGoogle() async {
+  Future<void> signInWithGoogle() async {
     state = AsyncValue.loading();
     try {
       var value = await _repository.signInWithGoogle();
@@ -29,7 +29,7 @@ class UserLoginUseCase extends StateNotifier<AsyncValue<UserData?>> {
     }
   }
 
-  logout() async {
+  Future<void> logout() async {
     state = AsyncValue.loading();
     await _repository.signOutWithGoogle();
     state = AsyncValue.data(null);
