@@ -83,8 +83,10 @@ class SettingScreen extends HookConsumerWidget {
     if (state is AsyncLoading) {
       children.add(WidgetUtils.loading());
     } else if (state is AsyncError) {
-      FirebaseErrorHandler.showErrorDialog(
-          context, state.error, state.stackTrace);
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        FirebaseErrorHandler.showErrorDialog(
+            context, state.error, state.stackTrace);
+      });
     }
 
     if (setting.isLogin) {
