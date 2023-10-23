@@ -70,9 +70,18 @@ class SettingScreen extends HookConsumerWidget {
     final useCase = ref.watch(deleteUserUseCaseProvider.notifier);
     final appLocalizations = AppLocalizations.of(context)!;
     List<AbstractTile> tiles = [];
+    List<Widget> children = [
+      SettingsList(
+        sections: [
+          SettingsSection(
+            tiles: tiles,
+          ),
+        ],
+      )
+    ];
 
     if (state is AsyncLoading) {
-      WidgetUtils.loading();
+      children.add(WidgetUtils.loading());
     } else if (state is AsyncError) {
       FirebaseErrorHandler.showErrorDialog(
           context, state.error, state.stackTrace);
@@ -105,12 +114,8 @@ class SettingScreen extends HookConsumerWidget {
       trailing: Text(setting.packageInfo.version),
     ));
 
-    return SettingsList(
-      sections: [
-        SettingsSection(
-          tiles: tiles,
-        ),
-      ],
+    return Stack(
+      children: children,
     );
   }
 }
