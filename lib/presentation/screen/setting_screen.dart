@@ -9,8 +9,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Project imports:
 import 'package:share_quiz/domain/repository/setting_repository.dart';
 import 'package:share_quiz/presentation/utility/widget_utils.dart';
+import '../../data/repository_impl/delete_user_repository_impl.dart';
 import '../../data/repository_impl/setting_repository_impl.dart';
 import '../../domain/models/setting/setting.dart';
+import '../../domain/repository/delete_user_repository.dart';
+import '../../domain/usecases/delete_user_use_case.dart';
 import '../../domain/usecases/setting_usecase.dart';
 import '../utility/FirebaseErrorHandler.dart';
 
@@ -22,6 +25,16 @@ final settingRepositoryProvider =
 final settingUseCaseProvider = StreamProvider.autoDispose<Setting>((ref) {
   var repo = ref.read(settingRepositoryProvider);
   return SettingUseCase(repo).build();
+});
+
+final deleteUserRepositoryProvider =
+Provider.autoDispose<DeleteUserRepository>((ref) {
+  return DeleteUserRepositoryImpl();
+});
+
+final deleteUserUseCaseProvider = StateNotifierProvider.autoDispose<DeleteUserUseCase, AsyncValue<void>?>((ref) {
+  var repo = ref.read(deleteUserRepositoryProvider);
+  return DeleteUserUseCase(repo);
 });
 
 class SettingScreen extends HookConsumerWidget {
@@ -57,6 +70,9 @@ class SettingScreen extends HookConsumerWidget {
       tiles.add(SettingsTile(
         title: "退会",
         leading: const Icon(Icons.exit_to_app),
+        onPressed: (context) {
+
+        }
       ));
     }
 
