@@ -81,7 +81,7 @@ class SettingScreen extends HookConsumerWidget {
     ];
 
     if (state is AsyncLoading) {
-      children.add(WidgetUtils.loading());
+      children.add(WidgetUtils.loadingScreen(context));
     } else if (state is AsyncError) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         FirebaseErrorHandler.showErrorDialog(

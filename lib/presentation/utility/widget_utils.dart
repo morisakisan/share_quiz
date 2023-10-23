@@ -15,6 +15,16 @@ class WidgetUtils {
         ),
       );
 
+  static Widget loadingScreen(BuildContext context) {
+    return Container(
+      color: Theme
+          .of(context)
+          .dialogBackgroundColor
+          .withOpacity(0.5),
+      child: loading(),
+    );
+  }
+
   static Widget getNoImage(BuildContext context, double imageSize) {
     final appLocalizations = AppLocalizations.of(context)!;
     return Container(
