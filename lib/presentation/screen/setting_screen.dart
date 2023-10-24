@@ -9,8 +9,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Project imports:
 import 'package:share_quiz/domain/repository/setting_repository.dart';
 import 'package:share_quiz/presentation/utility/widget_utils.dart';
+import '../../data/repository_impl/delete_user_repository_impl.dart';
 import '../../data/repository_impl/setting_repository_impl.dart';
 import '../../domain/models/setting/setting.dart';
+import '../../domain/repository/delete_user_repository.dart';
+import '../../domain/usecases/delete_user_use_case.dart';
 import '../../domain/usecases/setting_usecase.dart';
 import '../utility/FirebaseErrorHandler.dart';
 
@@ -24,40 +27,72 @@ final settingUseCaseProvider = StreamProvider.autoDispose<Setting>((ref) {
   return SettingUseCase(repo).build();
 });
 
+final deleteUserRepositoryProvider =
+    Provider.autoDispose<DeleteUserRepository>((ref) {
+  return DeleteUserRepositoryImpl();
+});
+
+final deleteUserUseCaseProvider =
+    StateNotifierProvider.autoDispose<DeleteUserUseCase, AsyncValue<void>?>(
+        (ref) {
+  var repo = ref.read(deleteUserRepositoryProvider);
+  return DeleteUserUseCase(repo);
+});
+
 class SettingScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appLocalizations = AppLocalizations.of(context)!;
     final useCase = ref.watch(settingUseCaseProvider);
-    Widget body;
-    if (useCase is AsyncLoading) {
-      body = WidgetUtils.loading();
-    } else if (useCase is AsyncData) {
-      body = _buildSettingsList(useCase.value!, context);
+    final deleteUseCaseState = ref.watch(deleteUserUseCaseProvider);
+    List<Widget> children = [];
+    Widget? body;
+
+    if (useCase is AsyncData) {
+      body =
+          _buildSettingsList(useCase.value!, context, ref, deleteUseCaseState);
     } else if (useCase is AsyncError) {
-      var error = (useCase as AsyncError);
-      return Text(
-          FirebaseErrorHandler.getMessage(error.error, error.stackTrace));
-    } else {
-      throw Exception();
+      var error = useCase as AsyncError;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        FirebaseErrorHandler.showErrorDialog(
+            context, error.error, error.stackTrace);
+      });
+    } else if (deleteUseCaseState is AsyncError) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        FirebaseErrorHandler.showErrorDialog(
+            context, deleteUseCaseState.error, deleteUseCaseState.stackTrace);
+      });
     }
-    return Scaffold(
+
+    children.add(Scaffold(
       appBar: AppBar(
         title: Text(appLocalizations.settings),
       ),
       body: body,
+    ));
+
+    if (useCase is AsyncLoading || deleteUseCaseState is AsyncLoading) {
+      children.add(WidgetUtils.loadingScreen(context));
+    }
+
+    return Stack(
+      children: children,
     );
   }
 
-  Widget _buildSettingsList(Setting setting, BuildContext context) {
+  Widget _buildSettingsList(Setting setting, BuildContext context,
+      WidgetRef ref, AsyncValue<void>? deleteUseCaseState) {
+    final useCase = ref.watch(deleteUserUseCaseProvider.notifier);
     final appLocalizations = AppLocalizations.of(context)!;
     List<AbstractTile> tiles = [];
 
     if (setting.isLogin) {
       tiles.add(SettingsTile(
-        title: "退会",
-        leading: const Icon(Icons.exit_to_app),
-      ));
+          title: "退会",
+          leading: const Icon(Icons.exit_to_app),
+          onPressed: (context) {
+            useCase.delete();
+          }));
     }
 
     tiles.add(SettingsTile(
