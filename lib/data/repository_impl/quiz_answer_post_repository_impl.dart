@@ -27,13 +27,7 @@ class QuizAnswerPostRepositoryImpl extends QuizAnswerPostRepository {
         }).toList();
         var user = _firebaseAuthStore.getCurrentUser();
         var isCorrect = updateQuizDto.correctAnswer == select;
-        var answerJson = {
-          "quiz_id": quizDocId,
-          "answer": select,
-          "uid": user!.uid,
-          "is_correct": isCorrect,
-          "created_at": FieldValue.serverTimestamp()
-        };
+
         final answerCount = answers.length + 1;
         var correctAnswerCount = 0;
         answers.forEach(
@@ -47,7 +41,13 @@ class QuizAnswerPostRepositoryImpl extends QuizAnswerPostRepository {
           correctAnswerCount++;
         }
         final rate = correctAnswerCount / answerCount;
-        answerJson["created_at"] = FieldValue.serverTimestamp();
+        var answerJson = {
+          "quiz_id": quizDocId,
+          "answer": select,
+          "uid": user!.uid,
+          "is_correct": isCorrect,
+          "created_at": FieldValue.serverTimestamp()
+        };
         transaction.set(
             updateQuiz.reference.collection("answer").doc(), answerJson);
         updateQuiz.reference.update(
