@@ -7,7 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
-import 'package:share_quiz/presentation/utility/FirebaseErrorHandler.dart';
+import 'package:share_quiz/presentation/utility/firebase_error_handler.dart';
 import 'package:share_quiz/presentation/utility/widget_utils.dart';
 import '../../domain/models/quiz/quiz.dart';
 import '../../domain/models/quiz_list/quiz_list.dart';

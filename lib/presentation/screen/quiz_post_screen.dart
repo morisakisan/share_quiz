@@ -11,22 +11,22 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Project imports:
 import 'package:share_quiz/data/repository_impl/quiz_post_repository_impl.dart';
 import 'package:share_quiz/domain/repository/quiz_post_repository.dart';
-import 'package:share_quiz/domain/usecases/quiz_post_use_case.dart';
-import 'package:share_quiz/presentation/utility/FirebaseErrorHandler.dart';
+import 'package:share_quiz/domain/use_cases/quiz_post_use_case.dart';
+import 'package:share_quiz/presentation/utility/firebase_error_handler.dart';
 import 'package:share_quiz/presentation/utility/widget_utils.dart';
 import 'package:share_quiz/presentation/widget/form/choices_form_field.dart';
 import 'package:share_quiz/presentation/widget/form/image_form_field.dart';
 import '../../domain/models/quiz_post/quiz_post_data.dart';
 
-final quizPostRepositoryProvider =
+final _quizPostRepositoryProvider =
     Provider.autoDispose<QuizPostRepository>((ref) {
   return QuizPostRepositoryImpl();
 });
 
-final postNotifierProvider =
+final _postNotifierProvider =
     StateNotifierProvider.autoDispose<QuizPostUseCase, AsyncValue<Object?>?>(
         (ref) {
-  return QuizPostUseCase(ref.read(quizPostRepositoryProvider));
+  return QuizPostUseCase(ref.read(_quizPostRepositoryProvider));
 });
 
 class QuizPostScreen extends HookConsumerWidget {
@@ -40,7 +40,7 @@ class QuizPostScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final postState = ref.watch(postNotifierProvider);
+    final postState = ref.watch(_postNotifierProvider);
     final List<Widget> children = [
       SingleChildScrollView(
         child: _form(context, ref),
@@ -138,7 +138,7 @@ class QuizPostScreen extends HookConsumerWidget {
                   answer: _answer!,
                   imageFile: _image,
                 );
-                ref.read(postNotifierProvider.notifier).post(postData);
+                ref.read(_postNotifierProvider.notifier).post(postData);
               },
               child: Text(appLocalizations.postQuiz),
             ),

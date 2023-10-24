@@ -13,29 +13,29 @@ import '../../data/repository_impl/delete_user_repository_impl.dart';
 import '../../data/repository_impl/setting_repository_impl.dart';
 import '../../domain/models/setting/setting.dart';
 import '../../domain/repository/delete_user_repository.dart';
-import '../../domain/usecases/delete_user_use_case.dart';
-import '../../domain/usecases/setting_usecase.dart';
-import '../utility/FirebaseErrorHandler.dart';
+import '../../domain/use_cases/delete_user_use_case.dart';
+import '../../domain/use_cases/setting_usecase.dart';
+import '../utility/firebase_error_handler.dart';
 
-final settingRepositoryProvider =
+final _settingRepositoryProvider =
     Provider.autoDispose<SettingRepository>((ref) {
   return SettingRepositoryImpl();
 });
 
-final settingUseCaseProvider = StreamProvider.autoDispose<Setting>((ref) {
-  var repo = ref.read(settingRepositoryProvider);
+final _settingUseCaseProvider = StreamProvider.autoDispose<Setting>((ref) {
+  var repo = ref.read(_settingRepositoryProvider);
   return SettingUseCase(repo).build();
 });
 
-final deleteUserRepositoryProvider =
+final _deleteUserRepositoryProvider =
     Provider.autoDispose<DeleteUserRepository>((ref) {
   return DeleteUserRepositoryImpl();
 });
 
-final deleteUserUseCaseProvider =
+final _deleteUserUseCaseProvider =
     StateNotifierProvider.autoDispose<DeleteUserUseCase, AsyncValue<void>?>(
         (ref) {
-  var repo = ref.read(deleteUserRepositoryProvider);
+  var repo = ref.read(_deleteUserRepositoryProvider);
   return DeleteUserUseCase(repo);
 });
 
@@ -43,8 +43,8 @@ class SettingScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appLocalizations = AppLocalizations.of(context)!;
-    final useCase = ref.watch(settingUseCaseProvider);
-    final deleteUseCaseState = ref.watch(deleteUserUseCaseProvider);
+    final useCase = ref.watch(_settingUseCaseProvider);
+    final deleteUseCaseState = ref.watch(_deleteUserUseCaseProvider);
     List<Widget> children = [];
     Widget? body;
 
@@ -82,7 +82,7 @@ class SettingScreen extends HookConsumerWidget {
 
   Widget _buildSettingsList(Setting setting, BuildContext context,
       WidgetRef ref, AsyncValue<void>? deleteUseCaseState) {
-    final useCase = ref.watch(deleteUserUseCaseProvider.notifier);
+    final useCase = ref.watch(_deleteUserUseCaseProvider.notifier);
     final appLocalizations = AppLocalizations.of(context)!;
     List<AbstractTile> tiles = [];
 

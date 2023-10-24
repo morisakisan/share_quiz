@@ -3,43 +3,79 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
+import 'package:share_quiz/data/repository_impl/current_login_repository_impl.dart';
 import 'package:share_quiz/data/repository_impl/quiz_list_repository_impl.dart';
-import 'package:share_quiz/domain/usecases/user_login_use_case.dart';
+import 'package:share_quiz/domain/repository/current_login_repository.dart';
+import 'package:share_quiz/domain/use_cases/current_login_use_case.dart';
+import 'package:share_quiz/domain/use_cases/login_use_case.dart';
 import 'package:share_quiz/presentation/page/quiz_list_page.dart';
-import 'package:share_quiz/presentation/utility/FirebaseErrorHandler.dart';
-import '../../domain/di/UseCaseModule.dart';
+import 'package:share_quiz/presentation/utility/firebase_error_handler.dart';
+import '../../data/repository_impl/log_out_repository_impl.dart';
+import '../../data/repository_impl/login_repository_impl.dart';
 import '../../domain/models/quiz_list/quiz_list.dart';
 import '../../domain/models/user/user_data.dart';
+import '../../domain/repository/log_out_repository.dart';
+import '../../domain/repository/login_repository.dart';
 import '../../domain/repository/quiz_list_repository.dart';
-import '../../domain/usecases/quiz_list_use_case.dart';
+import '../../domain/use_cases/log_out_use_case.dart';
+import '../../domain/use_cases/quiz_list_use_case.dart';
 import '../../domain/value_object/quiz_list_order_by.dart';
 import '../nav.dart';
 
-final quizListRepositoryProvider =
+final _quizListRepositoryProvider =
     Provider.autoDispose<QuizListRepository>((ref) {
   return QuizListRepositoryImpl();
 });
 
-final quizListNewProvider = StreamProvider.autoDispose<QuizList>((ref) {
-  var repository = ref.read(quizListRepositoryProvider);
+final _quizListNewProvider = StreamProvider.autoDispose<QuizList>((ref) {
+  var repository = ref.read(_quizListRepositoryProvider);
   return QuizListUseCase(repository, QuizListOrderBy.CREATED_AT_DESC).build();
 });
 
-final quizAnswersCountListNewProvider =
+final _quizAnswersCountListNewProvider =
     StreamProvider.autoDispose<QuizList>((ref) {
-  var repository = ref.read(quizListRepositoryProvider);
+  var repository = ref.read(_quizListRepositoryProvider);
   return QuizListUseCase(repository, QuizListOrderBy.ANSWER_COUNT_DESC).build();
 });
 
-final quizCorrectRateListNewProvider =
+final _quizCorrectRateListNewProvider =
     StreamProvider.autoDispose<QuizList>((ref) {
-  var repository = ref.read(quizListRepositoryProvider);
+  var repository = ref.read(_quizListRepositoryProvider);
   return QuizListUseCase(repository, QuizListOrderBy.CORRECT_ANSWER_RATE_ASC)
       .build();
+});
+
+final _currentUserRepositoryProvider =
+    Provider.autoDispose<CurrentLoginRepository>((ref) {
+  return CurrentLoginRepositoryImpl();
+});
+
+final _currentUserProvider = StreamProvider.autoDispose<UserData?>((ref) {
+  var repository = ref.read(_currentUserRepositoryProvider);
+  return CurrentLoginUseCase(repository).build();
+});
+
+final _loginRepositoryProvider = Provider.autoDispose<LoginRepository>((ref) {
+  return LoginRepositoryImpl();
+});
+
+final _loginUseCaseProvider =
+    StateNotifierProvider.autoDispose<LoginUseCase, AsyncValue<void>>((ref) {
+  var repository = ref.read(_loginRepositoryProvider);
+  return LoginUseCase(repository);
+});
+
+final _logOutRepositoryProvider = Provider.autoDispose<LogOutRepository>((ref) {
+  return LogOutRepositoryImpl();
+});
+
+final _logOutUseCaseProvider =
+    StateNotifierProvider.autoDispose<LogOutUseCase, AsyncValue<void>>((ref) {
+  var repository = ref.read(_logOutRepositoryProvider);
+  return LogOutUseCase(repository);
 });
 
 class HomeScreen extends HookConsumerWidget {
@@ -52,15 +88,9 @@ class HomeScreen extends HookConsumerWidget {
       Tab(text: appLocalizations.correct_rate),
     ];
 
-    var state = ref.watch(userLoginUseCaseProvider);
-    var notifier = ref.watch(userLoginUseCaseProvider.notifier);
-    useEffect(() {
-       // ウィジェットの起動時にだけ実行される処理
-      notifier.fetch();
-      return () {
-        // オプション: ウィジェットがアンマウントされるときのクリーンアップ処理
-      };
-    }, []);
+    var currentUser = ref.watch(_currentUserProvider);
+    var loginUseCase = ref.watch(_loginUseCaseProvider.notifier);
+    var logOutUseCase = ref.watch(_logOutUseCaseProvider.notifier);
 
     return DefaultTabController(
       length: tab.length,
@@ -71,34 +101,34 @@ class HomeScreen extends HookConsumerWidget {
             tabs: tab,
           ),
         ),
-        drawer: _createDrawer(context, state, notifier),
+        drawer: _createDrawer(context, currentUser, loginUseCase, logOutUseCase),
         body: TabBarView(
           children: [
             QuizListPage(
-              quizListNewProvider,
+              _quizListNewProvider,
             ),
             QuizListPage(
-              quizAnswersCountListNewProvider,
+              _quizAnswersCountListNewProvider,
             ),
             QuizListPage(
-              quizCorrectRateListNewProvider,
+              _quizCorrectRateListNewProvider,
             ),
           ],
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            if (state is AsyncData) {
-              final user = (state as AsyncData).value;
+            if (currentUser is AsyncData) {
+              final user = (currentUser as AsyncData).value;
               if (user != null) {
                 Navigator.of(context).pushNamed(Nav.QUIZ_POST);
               } else {
                 _showLoginDialog(
                   context,
-                  notifier,
+                  loginUseCase,
                 );
               }
-            } else if (state is AsyncError) {
-              var error = state as AsyncError;
+            } else if (currentUser is AsyncError) {
+              var error = currentUser as AsyncError;
               FirebaseErrorHandler.showErrorDialog(
                   context, error.error, error.stackTrace);
             }
@@ -112,7 +142,7 @@ class HomeScreen extends HookConsumerWidget {
 
   _showLoginDialog(
     BuildContext context,
-    UserLoginUseCase notifier,
+    LoginUseCase notifier,
   ) {
     final appLocalizations = AppLocalizations.of(context)!;
     showDialog(
@@ -141,7 +171,7 @@ class HomeScreen extends HookConsumerWidget {
   }
 
   Widget _createDrawer(BuildContext context, AsyncValue<UserData?> state,
-      UserLoginUseCase notifier) {
+      LoginUseCase loginUseCase, LogOutUseCase logOutUseCase) {
     final theme = Theme.of(context);
     final appLocalizations = AppLocalizations.of(context)!;
     Widget createHeader(Widget profile) {
@@ -244,7 +274,7 @@ class HomeScreen extends HookConsumerWidget {
                     TextButton(
                       child: Text(appLocalizations.ok),
                       onPressed: () {
-                        notifier.logout();
+                        logOutUseCase.logout();
                         Navigator.pop(context);
                       },
                     ),
@@ -262,7 +292,7 @@ class HomeScreen extends HookConsumerWidget {
             appLocalizations.login,
             style: theme.textTheme.bodyText1,
           ),
-          onTap: () => notifier.signInWithGoogle(),
+          onTap: () => loginUseCase.signInWithGoogle(),
         );
         list.add(login);
       }
