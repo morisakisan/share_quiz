@@ -12,52 +12,50 @@ import 'package:share_quiz/data/repository_impl/quiz_answer_post_repository_impl
 import 'package:share_quiz/domain/use_cases/quiz_detail_use_case.dart';
 import 'package:share_quiz/presentation/utility/firebase_error_handler.dart';
 import 'package:share_quiz/presentation/utility/widget_utils.dart';
-import '../../data/repository_impl/current_login_repository_impl.dart';
+import '../../data/repository_impl/login_repository_impl.dart';
 import '../../data/repository_impl/quiz_detail_repository_impl.dart';
-import '../../domain/di/UseCaseModule.dart';
 import '../../domain/models/quiz/quiz.dart';
 import '../../domain/models/quiz_detail/quiz_detail.dart';
-import '../../domain/models/user/user_data.dart';
-import '../../domain/repository/current_login_repository.dart';
+import '../../domain/repository/login_repository.dart';
 import '../../domain/repository/quiz_answer_post_repository.dart';
 import '../../domain/repository/quiz_detail_repository.dart';
-import '../../domain/use_cases/current_login_use_case.dart';
+import '../../domain/use_cases/login_use_case.dart';
 import '../../domain/use_cases/quiz_answer_post_use_case.dart';
-import '../../domain/use_cases/user_login_use_case.dart';
 
-final repositoryProvider =
+final _repositoryProvider =
     Provider.autoDispose<QuizAnswerPostRepository>((ref) {
   return QuizAnswerPostRepositoryImpl();
 });
 
-final postNotifierProvider =
+final _postNotifierProvider =
     StateNotifierProvider.autoDispose<QuizAnswerPostUseCase, AsyncValue<void>?>(
         (ref) {
-  var repo = ref.read(repositoryProvider);
+  var repo = ref.read(_repositoryProvider);
   return QuizAnswerPostUseCase(repo);
 });
 
-final quizDetailRepositoryProvider =
+final _quizDetailRepositoryProvider =
     Provider.autoDispose<QuizDetailRepository>((ref) {
   return QuizDetailRepositoryImpl();
 });
 
-final quizDetailProvider =
+final _quizDetailProvider =
     StreamProvider.autoDispose.family<QuizDetail, String>((ref, quizId) {
-  var repo = ref.read(quizDetailRepositoryProvider);
+  var repo = ref.read(_quizDetailRepositoryProvider);
   return QuizDetailUseCase(repo, quizId).build();
 });
 
-final selectProvider =
+final _selectProvider =
     StateNotifierProvider.autoDispose<_Select, int>((_) => _Select());
 
-final _currentUserRepositoryProvider = Provider.autoDispose<CurrentLoginRepository>((ref) {
-  return CurrentLoginRepositoryImpl();
+final _loginRepositoryProvider = Provider.autoDispose<LoginRepository>((ref) {
+  return LoginRepositoryImpl();
 });
 
-final _currentUserProvider = StreamProvider.autoDispose<UserData?>((ref) {
-  var repository = ref.read(_currentUserRepositoryProvider);
-  return CurrentLoginUseCase(repository).build();
+final _loginUseCaseProvider =
+StateNotifierProvider.autoDispose<LoginUseCase, AsyncValue<void>>((ref) {
+  var repository = ref.read(_loginRepositoryProvider);
+  return LoginUseCase(repository);
 });
 
 class QuizDetailScreen extends HookConsumerWidget {
@@ -65,7 +63,7 @@ class QuizDetailScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final quizId =
         useState<String>(ModalRoute.of(context)!.settings.arguments as String);
-    final quizAnswer = ref.watch(quizDetailProvider(quizId.value));
+    final quizAnswer = ref.watch(_quizDetailProvider(quizId.value));
     if (quizAnswer is AsyncLoading) {
       return _loading();
     } else if (quizAnswer is AsyncError) {
@@ -88,9 +86,9 @@ class QuizDetailScreen extends HookConsumerWidget {
 
   Widget _success(
       BuildContext context, QuizDetail quizAnswerData, WidgetRef ref) {
-    var userLoginUseCase = ref.watch(userLoginUseCaseProvider.notifier);
-    final selectNotifier = ref.read(selectProvider.notifier);
-    var selectValue = ref.watch(selectProvider.select((value) => value));
+    var userLoginUseCase = ref.watch(_loginUseCaseProvider.notifier);
+    final selectNotifier = ref.read(_selectProvider.notifier);
+    var selectValue = ref.watch(_selectProvider.select((value) => value));
     final theme = Theme.of(context);
     final quiz = quizAnswerData.quiz;
 
@@ -258,8 +256,8 @@ class QuizDetailScreen extends HookConsumerWidget {
         final appLocalizations = AppLocalizations.of(dialogContext)!;
         return Consumer(
           builder: (context, ref, child) {
-            final state = ref.watch(postNotifierProvider);
-            final quizAnswerNotifier = ref.read(postNotifierProvider.notifier);
+            final state = ref.watch(_postNotifierProvider);
+            final quizAnswerNotifier = ref.read(_postNotifierProvider.notifier);
             if (state is AsyncLoading) {
               return CircularProgressIndicator();
             } else if (state is AsyncData) {
@@ -293,7 +291,7 @@ class QuizDetailScreen extends HookConsumerWidget {
 
   _showLoginDialog(
     BuildContext context,
-    UserLoginUseCase notifier,
+    LoginUseCase notifier,
   ) {
     final appLocalizations = AppLocalizations.of(context)!;
     showDialog(

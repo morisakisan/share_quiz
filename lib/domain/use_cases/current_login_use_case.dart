@@ -5,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_quiz/domain/models/setting/setting.dart';
 import 'package:share_quiz/domain/models/user/user_data.dart';
 import 'package:share_quiz/domain/repository/setting_repository.dart';
-
 import '../repository/current_login_repository.dart';
 
 class CurrentLoginUseCase extends StreamNotifier<UserData?> {
