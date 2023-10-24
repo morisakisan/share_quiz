@@ -44,50 +44,47 @@ class SettingScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final appLocalizations = AppLocalizations.of(context)!;
     final useCase = ref.watch(settingUseCaseProvider);
-    Widget body;
-    if (useCase is AsyncLoading) {
-      body = WidgetUtils.loading();
-    } else if (useCase is AsyncData) {
-      body = _buildSettingsList(useCase.value!, context, ref);
+    final deleteUseCaseState = ref.watch(deleteUserUseCaseProvider);
+    List<Widget> children = [];
+    Widget? body;
+
+    if (useCase is AsyncData) {
+      body =
+          _buildSettingsList(useCase.value!, context, ref, deleteUseCaseState);
     } else if (useCase is AsyncError) {
-      var error = (useCase as AsyncError);
-      return Text(
-          FirebaseErrorHandler.getMessage(error.error, error.stackTrace));
-    } else {
-      throw Exception();
+      var error = useCase as AsyncError;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        FirebaseErrorHandler.showErrorDialog(
+            context, error.error, error.stackTrace);
+      });
+    } else if (deleteUseCaseState is AsyncError) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        FirebaseErrorHandler.showErrorDialog(
+            context, deleteUseCaseState.error, deleteUseCaseState.stackTrace);
+      });
     }
-    return Scaffold(
+
+    children.add(Scaffold(
       appBar: AppBar(
         title: Text(appLocalizations.settings),
       ),
       body: body,
+    ));
+
+    if (useCase is AsyncLoading || deleteUseCaseState is AsyncLoading) {
+      children.add(WidgetUtils.loadingScreen(context));
+    }
+
+    return Stack(
+      children: children,
     );
   }
 
-  Widget _buildSettingsList(
-      Setting setting, BuildContext context, WidgetRef ref) {
-    final state = ref.watch(deleteUserUseCaseProvider);
+  Widget _buildSettingsList(Setting setting, BuildContext context,
+      WidgetRef ref, AsyncValue<void>? deleteUseCaseState) {
     final useCase = ref.watch(deleteUserUseCaseProvider.notifier);
     final appLocalizations = AppLocalizations.of(context)!;
     List<AbstractTile> tiles = [];
-    List<Widget> children = [
-      SettingsList(
-        sections: [
-          SettingsSection(
-            tiles: tiles,
-          ),
-        ],
-      )
-    ];
-
-    if (state is AsyncLoading) {
-      children.add(WidgetUtils.loadingScreen(context));
-    } else if (state is AsyncError) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        FirebaseErrorHandler.showErrorDialog(
-            context, state.error, state.stackTrace);
-      });
-    }
 
     if (setting.isLogin) {
       tiles.add(SettingsTile(
@@ -116,8 +113,12 @@ class SettingScreen extends HookConsumerWidget {
       trailing: Text(setting.packageInfo.version),
     ));
 
-    return Stack(
-      children: children,
+    return SettingsList(
+      sections: [
+        SettingsSection(
+          tiles: tiles,
+        ),
+      ],
     );
   }
 }
