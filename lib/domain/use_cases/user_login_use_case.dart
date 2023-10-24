@@ -10,15 +10,6 @@ class UserLoginUseCase extends StateNotifier<AsyncValue<UserData?>> {
 
   UserLoginUseCase(this._repository) : super(AsyncValue.data(null)) {}
 
-  Future<void> fetch() async {
-    try {
-      var value = await _repository.getCurrentUserData();
-      state = AsyncValue.data(value);
-    } catch (error, stacktrace) {
-      state = AsyncValue.error(error, stacktrace);
-    }
-  }
-
   Future<void> signInWithGoogle() async {
     state = AsyncValue.loading();
     try {
@@ -33,5 +24,6 @@ class UserLoginUseCase extends StateNotifier<AsyncValue<UserData?>> {
     state = AsyncValue.loading();
     await _repository.signOutWithGoogle();
     state = AsyncValue.data(null);
+    print("User123456");
   }
 }

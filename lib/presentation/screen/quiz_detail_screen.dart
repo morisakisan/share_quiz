@@ -9,17 +9,21 @@ import 'package:share_plus/share_plus.dart';
 
 // Project imports:
 import 'package:share_quiz/data/repository_impl/quiz_answer_post_repository_impl.dart';
-import 'package:share_quiz/domain/usecases/quiz_detail_use_case.dart';
-import 'package:share_quiz/presentation/utility/FirebaseErrorHandler.dart';
+import 'package:share_quiz/domain/use_cases/quiz_detail_use_case.dart';
+import 'package:share_quiz/presentation/utility/firebase_error_handler.dart';
 import 'package:share_quiz/presentation/utility/widget_utils.dart';
+import '../../data/repository_impl/current_login_repository_impl.dart';
 import '../../data/repository_impl/quiz_detail_repository_impl.dart';
 import '../../domain/di/UseCaseModule.dart';
 import '../../domain/models/quiz/quiz.dart';
 import '../../domain/models/quiz_detail/quiz_detail.dart';
+import '../../domain/models/user/user_data.dart';
+import '../../domain/repository/current_login_repository.dart';
 import '../../domain/repository/quiz_answer_post_repository.dart';
 import '../../domain/repository/quiz_detail_repository.dart';
-import '../../domain/usecases/quiz_answer_post_use_case.dart';
-import '../../domain/usecases/user_login_use_case.dart';
+import '../../domain/use_cases/current_login_use_case.dart';
+import '../../domain/use_cases/quiz_answer_post_use_case.dart';
+import '../../domain/use_cases/user_login_use_case.dart';
 
 final repositoryProvider =
     Provider.autoDispose<QuizAnswerPostRepository>((ref) {
@@ -46,6 +50,15 @@ final quizDetailProvider =
 
 final selectProvider =
     StateNotifierProvider.autoDispose<_Select, int>((_) => _Select());
+
+final _currentUserRepositoryProvider = Provider.autoDispose<CurrentLoginRepository>((ref) {
+  return CurrentLoginRepositoryImpl();
+});
+
+final _currentUserProvider = StreamProvider.autoDispose<UserData?>((ref) {
+  var repository = ref.read(_currentUserRepositoryProvider);
+  return CurrentLoginUseCase(repository).build();
+});
 
 class QuizDetailScreen extends HookConsumerWidget {
   @override
@@ -76,14 +89,6 @@ class QuizDetailScreen extends HookConsumerWidget {
   Widget _success(
       BuildContext context, QuizDetail quizAnswerData, WidgetRef ref) {
     var userLoginUseCase = ref.watch(userLoginUseCaseProvider.notifier);
-    useEffect(() {
-      // ウィジェットの起動時にだけ実行される処理
-      userLoginUseCase.fetch();
-      return () {
-        // オプション: ウィジェットがアンマウントされるときのクリーンアップ処理
-      };
-    }, []);
-
     final selectNotifier = ref.read(selectProvider.notifier);
     var selectValue = ref.watch(selectProvider.select((value) => value));
     final theme = Theme.of(context);
@@ -207,7 +212,7 @@ class QuizDetailScreen extends HookConsumerWidget {
       TextButton.icon(
         icon: Icon(Icons.share),
         onPressed: () {
-          _showCommentBottomSheet(context);
+          // _showCommentBottomSheet(context);
           Share.share(appLocalizations.shareFormat(quiz.title, quiz.question));
         },
         label: Text(appLocalizations.share),

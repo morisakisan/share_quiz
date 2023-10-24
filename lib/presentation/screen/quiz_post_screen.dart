@@ -11,8 +11,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Project imports:
 import 'package:share_quiz/data/repository_impl/quiz_post_repository_impl.dart';
 import 'package:share_quiz/domain/repository/quiz_post_repository.dart';
-import 'package:share_quiz/domain/usecases/quiz_post_use_case.dart';
-import 'package:share_quiz/presentation/utility/FirebaseErrorHandler.dart';
+import 'package:share_quiz/domain/use_cases/quiz_post_use_case.dart';
+import 'package:share_quiz/presentation/utility/firebase_error_handler.dart';
 import 'package:share_quiz/presentation/utility/widget_utils.dart';
 import 'package:share_quiz/presentation/widget/form/choices_form_field.dart';
 import 'package:share_quiz/presentation/widget/form/image_form_field.dart';

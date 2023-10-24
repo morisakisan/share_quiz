@@ -13,9 +13,9 @@ import '../../data/repository_impl/delete_user_repository_impl.dart';
 import '../../data/repository_impl/setting_repository_impl.dart';
 import '../../domain/models/setting/setting.dart';
 import '../../domain/repository/delete_user_repository.dart';
-import '../../domain/usecases/delete_user_use_case.dart';
-import '../../domain/usecases/setting_usecase.dart';
-import '../utility/FirebaseErrorHandler.dart';
+import '../../domain/use_cases/delete_user_use_case.dart';
+import '../../domain/use_cases/setting_usecase.dart';
+import '../utility/firebase_error_handler.dart';
 
 final settingRepositoryProvider =
     Provider.autoDispose<SettingRepository>((ref) {

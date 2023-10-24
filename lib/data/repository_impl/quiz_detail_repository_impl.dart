@@ -12,7 +12,6 @@ import '../../domain/repository/quiz_detail_repository.dart';
 import '../answer/answer_firebase_store.dart';
 import '../mapper/quiz_mapper.dart';
 import '../quiz/quiz_firebase_store.dart';
-import '../user/user_firebase_store.dart';
 
 class QuizDetailRepositoryImpl extends QuizDetailRepository {
   final _quizDataStore = QuizFirebaseStore();

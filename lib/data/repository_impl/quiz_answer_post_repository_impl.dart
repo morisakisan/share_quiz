@@ -8,7 +8,6 @@ import '../answer/answer_dto.dart';
 import '../answer/answer_firebase_store.dart';
 import '../quiz/quiz_dto.dart';
 import '../quiz/quiz_firebase_store.dart';
-import '../user/user_firebase_store.dart';
 
 class QuizAnswerPostRepositoryImpl extends QuizAnswerPostRepository {
   final answerDatastore = AnswerFirebaseStore();

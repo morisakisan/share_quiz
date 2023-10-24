@@ -17,8 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$UserData {
   String get uid => throw _privateConstructorUsedError;
-  String get name => throw _privateConstructorUsedError;
-  String get photoUrl => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get photoUrl => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UserDataCopyWith<UserData> get copyWith =>
@@ -30,7 +30,7 @@ abstract class $UserDataCopyWith<$Res> {
   factory $UserDataCopyWith(UserData value, $Res Function(UserData) then) =
       _$UserDataCopyWithImpl<$Res, UserData>;
   @useResult
-  $Res call({String uid, String name, String photoUrl});
+  $Res call({String uid, String? name, String? photoUrl});
 }
 
 /// @nodoc
@@ -47,22 +47,22 @@ class _$UserDataCopyWithImpl<$Res, $Val extends UserData>
   @override
   $Res call({
     Object? uid = null,
-    Object? name = null,
-    Object? photoUrl = null,
+    Object? name = freezed,
+    Object? photoUrl = freezed,
   }) {
     return _then(_value.copyWith(
       uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      name: null == name
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      photoUrl: null == photoUrl
+              as String?,
+      photoUrl: freezed == photoUrl
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -75,7 +75,7 @@ abstract class _$$UserDataImplCopyWith<$Res>
       __$$UserDataImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String uid, String name, String photoUrl});
+  $Res call({String uid, String? name, String? photoUrl});
 }
 
 /// @nodoc
@@ -90,22 +90,22 @@ class __$$UserDataImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? uid = null,
-    Object? name = null,
-    Object? photoUrl = null,
+    Object? name = freezed,
+    Object? photoUrl = freezed,
   }) {
     return _then(_$UserDataImpl(
       uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      name: null == name
+      name: freezed == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      photoUrl: null == photoUrl
+              as String?,
+      photoUrl: freezed == photoUrl
           ? _value.photoUrl
           : photoUrl // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -119,9 +119,9 @@ class _$UserDataImpl with DiagnosticableTreeMixin implements _UserData {
   @override
   final String uid;
   @override
-  final String name;
+  final String? name;
   @override
-  final String photoUrl;
+  final String? photoUrl;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -162,15 +162,15 @@ class _$UserDataImpl with DiagnosticableTreeMixin implements _UserData {
 abstract class _UserData implements UserData {
   const factory _UserData(
       {required final String uid,
-      required final String name,
-      required final String photoUrl}) = _$UserDataImpl;
+      required final String? name,
+      required final String? photoUrl}) = _$UserDataImpl;
 
   @override
   String get uid;
   @override
-  String get name;
+  String? get name;
   @override
-  String get photoUrl;
+  String? get photoUrl;
   @override
   @JsonKey(ignore: true)
   _$$UserDataImplCopyWith<_$UserDataImpl> get copyWith =>
