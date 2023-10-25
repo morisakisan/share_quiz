@@ -19,8 +19,7 @@ class WidgetUtils {
     return Container(
       color: Theme
           .of(context)
-          .dialogBackgroundColor
-          .withOpacity(0.5),
+          .dialogBackgroundColor,
       child: loading(),
     );
   }
