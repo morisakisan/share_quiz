@@ -24,6 +24,7 @@ import '../../domain/use_cases/log_out_use_case.dart';
 import '../../domain/use_cases/quiz_list_use_case.dart';
 import '../../domain/value_object/quiz_list_order_by.dart';
 import '../nav.dart';
+import '../utility/widget_utils.dart';
 
 final _quizListRepositoryProvider =
     Provider.autoDispose<QuizListRepository>((ref) {
@@ -89,10 +90,10 @@ class HomeScreen extends HookConsumerWidget {
     ];
 
     var currentUser = ref.watch(_currentUserProvider);
-    var loginUseCase = ref.watch(_loginUseCaseProvider.notifier);
-    var logOutUseCase = ref.watch(_logOutUseCaseProvider.notifier);
 
-    return DefaultTabController(
+    List<Widget> children = [];
+
+    children.add(DefaultTabController(
       length: tab.length,
       child: Scaffold(
         appBar: AppBar(
@@ -101,7 +102,7 @@ class HomeScreen extends HookConsumerWidget {
             tabs: tab,
           ),
         ),
-        drawer: _createDrawer(context, currentUser, loginUseCase, logOutUseCase),
+        drawer: _createDrawer(context, ref, currentUser),
         body: TabBarView(
           children: [
             QuizListPage(
@@ -122,29 +123,44 @@ class HomeScreen extends HookConsumerWidget {
               if (user != null) {
                 Navigator.of(context).pushNamed(Nav.QUIZ_POST);
               } else {
-                _showLoginDialog(
-                  context,
-                  loginUseCase,
-                );
+                _showLoginDialog(context, ref);
               }
             } else if (currentUser is AsyncError) {
               var error = currentUser as AsyncError;
-              FirebaseErrorHandler.showErrorDialog(
-                  context, error.error, error.stackTrace);
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                FirebaseErrorHandler.showErrorDialog(
+                    context, error.error, error.stackTrace);
+              });
             }
           },
           child: const Icon(Icons.add),
           backgroundColor: Colors.green,
         ),
       ),
-    );
+    ));
+
+    var login = ref.watch(_loginUseCaseProvider);
+    var logout = ref.watch(_logOutUseCaseProvider);
+    if (login is AsyncLoading || logout is AsyncLoading) {
+      children.add(WidgetUtils.loading());
+    } else if (login is AsyncError) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        FirebaseErrorHandler.showErrorDialog(
+            context, login.error, login.stackTrace);
+      });
+    } else if (logout is AsyncError) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        FirebaseErrorHandler.showErrorDialog(
+            context, logout.error, logout.stackTrace);
+      });
+    }
+
+    return Stack(children: children);
   }
 
-  _showLoginDialog(
-    BuildContext context,
-    LoginUseCase notifier,
-  ) {
+  _showLoginDialog(BuildContext context, WidgetRef ref) {
     final appLocalizations = AppLocalizations.of(context)!;
+    var loginUseCase = ref.read(_loginUseCaseProvider.notifier);
     showDialog(
       barrierDismissible: false,
       context: context,
@@ -161,7 +177,7 @@ class HomeScreen extends HookConsumerWidget {
               child: Text(appLocalizations.ok),
               onPressed: () {
                 Navigator.pop(context);
-                notifier.signInWithGoogle();
+                loginUseCase.signInWithGoogle();
               },
             ),
           ],
@@ -170,8 +186,10 @@ class HomeScreen extends HookConsumerWidget {
     );
   }
 
-  Widget _createDrawer(BuildContext context, AsyncValue<UserData?> state,
-      LoginUseCase loginUseCase, LogOutUseCase logOutUseCase) {
+  Widget _createDrawer(
+      BuildContext context, WidgetRef ref, AsyncValue<UserData?> state) {
+    var loginUseCase = ref.read(_loginUseCaseProvider.notifier);
+    var logOutUseCase = ref.read(_logOutUseCaseProvider.notifier);
     final theme = Theme.of(context);
     final appLocalizations = AppLocalizations.of(context)!;
     Widget createHeader(Widget profile) {

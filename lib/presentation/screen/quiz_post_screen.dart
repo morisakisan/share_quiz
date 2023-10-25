@@ -41,28 +41,32 @@ class QuizPostScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final postState = ref.watch(_postNotifierProvider);
-    final List<Widget> children = [
-      SingleChildScrollView(
-        child: _form(context, ref),
-      )
-    ];
-    if (postState is AsyncLoading) {
-      children.add(WidgetUtils.loading());
-    } else if (postState is AsyncError) {
-      FirebaseErrorHandler.showErrorDialog(
-          context, postState.error, postState.stackTrace);
-    } else if (postState is AsyncData) {
-      Navigator.pop(context);
-    }
+    final List<Widget> children = [];
+
     final appLocalizations = AppLocalizations.of(context)!;
-    return Scaffold(
+    children.add(Scaffold(
       appBar: AppBar(
         title: Text(appLocalizations.enterQuizPrompt),
       ),
-      body: Stack(
-        children: children,
+      body: SingleChildScrollView(
+        child: _form(context, ref),
       ),
-    );
+    ));
+
+    if (postState is AsyncLoading) {
+      children.add(WidgetUtils.loadingScreen(context));
+    } else if (postState is AsyncError) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        FirebaseErrorHandler.showErrorDialog(
+            context, postState.error, postState.stackTrace);
+      });
+    } else if (postState is AsyncData) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pop(context);
+      });
+    }
+
+    return Stack(children: children);
   }
 
   Widget _form(BuildContext context, WidgetRef ref) {

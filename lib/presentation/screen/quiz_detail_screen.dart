@@ -259,10 +259,10 @@ class QuizDetailScreen extends HookConsumerWidget {
             final state = ref.watch(_postNotifierProvider);
             final quizAnswerNotifier = ref.read(_postNotifierProvider.notifier);
             if (state is AsyncLoading) {
-              return CircularProgressIndicator();
+              return WidgetUtils.loadingScreen(context);
             } else if (state is AsyncData) {
               Navigator.pop(dialogContext);
-              return CircularProgressIndicator();
+              return WidgetUtils.loadingScreen(context);
             } else if (state is AsyncError) {
               return FirebaseErrorHandler.getAlertDialog(context, state.error, state.stackTrace);
             }
