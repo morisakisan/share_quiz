@@ -15,7 +15,8 @@ class QuizPostRepositoryImpl extends QuizPostRepository {
 
   @override
   Future<void> store(QuizPostData post) async {
-    final imageUrl = await _storage.uploadFile(post.imageFile);
+    final userId = _userFireStore.getCurrentUser()!.uid;
+    final imageUrl = await _storage.uploadFile(post.imageFile, userId);
     final user = _userFireStore.getCurrentUser();
     final json = {
       "title": post.title,
