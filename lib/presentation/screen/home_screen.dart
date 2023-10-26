@@ -140,6 +140,7 @@ class HomeScreen extends HookConsumerWidget {
     ));
 
     var login = ref.watch(_loginUseCaseProvider);
+
     var logout = ref.watch(_logOutUseCaseProvider);
     if (login is AsyncLoading || logout is AsyncLoading) {
       children.add(WidgetUtils.loading());
@@ -268,7 +269,9 @@ class HomeScreen extends HookConsumerWidget {
               'プロフィール',
               style: theme.textTheme.bodyText1,
             ),
-            onTap: () {},
+            onTap: () {
+              Navigator.of(context).pushNamed(Nav.PROFILE);
+            },
           ),
         );
         final login = ListTile(

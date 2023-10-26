@@ -1,5 +1,6 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
+import 'package:share_quiz/presentation/screen/profile_screen.dart';
 
 // Project imports:
 import 'package:share_quiz/presentation/screen/quiz_detail_screen.dart';
@@ -14,10 +15,12 @@ class Nav {
   static const QUIZ_POST = "quiz_post";
   static const QUIZ_DETAIL = "quiz_detail";
   static const SETTING = "setting";
+  static const PROFILE= "profile";
 
   static final routes = <String, WidgetBuilder>{
     QUIZ_POST: (BuildContext context) => QuizPostScreen(),
     QUIZ_DETAIL: (BuildContext context) => QuizDetailScreen(),
-    SETTING: (BuildContext context) => SettingScreen()
+    SETTING: (BuildContext context) => SettingScreen(),
+    PROFILE: (BuildContext context) => ProfileScreen()
   };
 }
