@@ -70,8 +70,7 @@ class QuizPostScreen extends HookConsumerWidget {
   }
 
   Widget _form(BuildContext context, WidgetRef ref) {
-    final quizFrom = ref.watch(_formNotifierProvider);
-    final quizFromUseCase = ref.read(_formNotifierProvider.notifier);
+    final quizFromUseCase = ref.watch(_formNotifierProvider.notifier);
     final appLocalizations = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.all(16.0),
@@ -134,16 +133,21 @@ class QuizPostScreen extends HookConsumerWidget {
             const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
-                if (!_formKey.currentState!.validate()) return;
+                if (!_formKey.currentState!.validate()) {
+                  return;
+                }
                 // 入力データが正常な場合の処理
                 _formKey.currentState!.save();
-                ref.read(_postNotifierProvider.notifier).post(QuizPostData(
-                      title: quizFrom.title!,
-                      question: quizFrom.question!,
-                      choices: quizFrom.choices!,
-                      answer: quizFrom.answer!,
-                      imageFile: quizFrom.image,
-                    ));
+                var postUseCase = ref.read(_postNotifierProvider.notifier);
+                final quizFrom = ref.read(_formNotifierProvider);
+                var post = QuizPostData(
+                  title: quizFrom.title!,
+                  question: quizFrom.question!,
+                  choices: quizFrom.choices!,
+                  answer: quizFrom.answer!,
+                  imageFile: quizFrom.image,
+                );
+                postUseCase.post(post);
               },
               child: Text(appLocalizations.postQuiz),
             ),
