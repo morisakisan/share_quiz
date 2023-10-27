@@ -28,6 +28,6 @@ class QuizPostRepositoryImpl extends QuizPostRepository {
       "uid": userId,
       "answer_count": 0,
     };
-    return _quizFireStore.post(json);
+    return await _quizFireStore.post(json);
   }
 }
