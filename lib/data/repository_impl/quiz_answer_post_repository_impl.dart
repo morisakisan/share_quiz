@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:share_quiz/data/firebase_auth/firebase_auth_store.dart';
 import '../../domain/repository/quiz_answer_post_repository.dart';
 import '../answer/answer_firebase_store.dart';
+import '../firestore_transaction/fire_store_transaction_store.dart';
 import '../quiz/quiz_dto.dart';
 import '../quiz/quiz_firebase_store.dart';
 
@@ -12,10 +13,11 @@ class QuizAnswerPostRepositoryImpl extends QuizAnswerPostRepository {
   final _firebaseAuthStore = FirebaseAuthStore();
   final _answerFirebaseStore = AnswerFirebaseStore();
   final _quizFirebaseStore = QuizFirebaseStore();
+  final _transactionStore = FireStoreTransactionStore();
 
   @override
   Future<void> post(String quizDocId, int select) {
-    return FirebaseFirestore.instance.runTransaction(
+    return _transactionStore.runTransaction(
       (transaction) async {
         final quizDoc = _quizFirebaseStore.getDoc(quizDocId);
         final updateQuiz = await transaction.get(quizDoc);
