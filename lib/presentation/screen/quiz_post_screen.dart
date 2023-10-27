@@ -70,7 +70,7 @@ class QuizPostScreen extends HookConsumerWidget {
   }
 
   Widget _form(BuildContext context, WidgetRef ref) {
-    final quizFrom = ref.read(_formNotifierProvider);
+    final quizFrom = ref.watch(_formNotifierProvider);
     final quizFromUseCase = ref.read(_formNotifierProvider.notifier);
     final appLocalizations = AppLocalizations.of(context)!;
     return Container(
