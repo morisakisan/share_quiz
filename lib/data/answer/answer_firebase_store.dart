@@ -6,18 +6,18 @@ import 'package:share_quiz/data/answer/answer_dto.dart';
 
 class AnswerFirebaseStore {
   CollectionReference<Map<String, dynamic>> _getCollection(String quizId) {
-    return _getCollection2(
+    return _getAnswerCollectionFromQuiz(
         FirebaseFirestore.instance.collection('quiz').doc(quizId));
   }
 
-  CollectionReference<Map<String, dynamic>> _getCollection2(
+  CollectionReference<Map<String, dynamic>> _getAnswerCollectionFromQuiz(
       DocumentReference<Map<String, dynamic>> quiz) {
     return quiz.collection('answer');
   }
 
   Future<List<AnswerDto>> fetchAnswers(
       DocumentReference<Map<String, dynamic>> quiz) {
-    return _getCollection2(quiz)
+    return _getAnswerCollectionFromQuiz(quiz)
         .get()
         .then<List<AnswerDto>>((query) => query.docs.map((e) {
               var json = e.data();
@@ -47,6 +47,6 @@ class AnswerFirebaseStore {
       Transaction transaction,
       DocumentReference<Map<String, dynamic>> quizReference,
       Map<String, dynamic> answerJson) {
-    transaction.set(_getCollection2(quizReference).doc(), answerJson);
+    transaction.set(_getAnswerCollectionFromQuiz(quizReference).doc(), answerJson);
   }
 }
