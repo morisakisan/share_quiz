@@ -1,9 +1,13 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+
+// Package imports:
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+// Project imports:
 import 'package:share_quiz/domain/use_cases/profile_use_case.dart';
 import 'package:share_quiz/presentation/utility/widget_utils.dart';
-
 import '../../data/repository_impl/profile_repository_impl.dart';
 import '../../domain/models/user/user_data.dart';
 import '../../domain/repository/profile_repository.dart';
@@ -19,6 +23,9 @@ final _profileUseCaseProvider = FutureProvider.autoDispose<UserData>((ref) {
 });
 
 class ProfileScreen extends HookConsumerWidget {
+
+  final _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var profile = ref.watch(_profileUseCaseProvider);

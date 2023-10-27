@@ -1,8 +1,8 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:share_quiz/presentation/screen/profile_screen.dart';
 
 // Project imports:
+import 'package:share_quiz/presentation/screen/profile_screen.dart';
 import 'package:share_quiz/presentation/screen/quiz_detail_screen.dart';
 import 'package:share_quiz/presentation/screen/quiz_post_screen.dart';
 import 'package:share_quiz/presentation/screen/setting_screen.dart';
