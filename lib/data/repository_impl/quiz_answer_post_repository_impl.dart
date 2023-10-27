@@ -39,7 +39,6 @@ class QuizAnswerPostRepositoryImpl extends QuizAnswerPostRepository {
         final rate = correctAnswerCount / answerCount;
         var user = _firebaseAuthStore.getCurrentUser();
         var answerJson = {
-          "quiz_id": quizDocId,
           "answer": select,
           "uid": user!.uid,
           "is_correct": isCorrect,
