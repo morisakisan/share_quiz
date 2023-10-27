@@ -11,15 +11,12 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 class FirebaseStorageDataStore {
 
-  Future<String?> uploadFile(File? file) async {
+  Future<String?> uploadFile(File? file, String userId) async {
     if (file == null) {
       return null;
     }
 
     final value = await sha256.bind(file.openRead()).first;
-
-    // ユーザーのUIDを取得
-    final userId = FirebaseAuth.instance.currentUser!.uid;
 
     // UIDを参照の一部として使用
     final ref = FirebaseStorage.instance

@@ -1,5 +1,4 @@
 // Dart imports:
-import 'dart:io';
 
 // Flutter imports:
 import 'package:flutter/material.dart';
@@ -10,7 +9,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
 import 'package:share_quiz/data/repository_impl/quiz_post_repository_impl.dart';
+import 'package:share_quiz/domain/models/quiz_form/quiz_form.dart';
 import 'package:share_quiz/domain/repository/quiz_post_repository.dart';
+import 'package:share_quiz/domain/use_cases/quiz_form_use_case.dart';
 import 'package:share_quiz/domain/use_cases/quiz_post_use_case.dart';
 import 'package:share_quiz/presentation/utility/firebase_error_handler.dart';
 import 'package:share_quiz/presentation/utility/widget_utils.dart';
@@ -29,14 +30,13 @@ final _postNotifierProvider =
   return QuizPostUseCase(ref.read(_quizPostRepositoryProvider));
 });
 
+final _formNotifierProvider =
+    StateNotifierProvider.autoDispose<QuizFromUseCase, QuizForm>((ref) {
+  return QuizFromUseCase();
+});
+
 class QuizPostScreen extends HookConsumerWidget {
   final _formKey = GlobalKey<FormState>();
-
-  String? _title;
-  String? _question;
-  File? _image;
-  List<String>? _choices;
-  int? _answer;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -70,6 +70,8 @@ class QuizPostScreen extends HookConsumerWidget {
   }
 
   Widget _form(BuildContext context, WidgetRef ref) {
+    final quizFrom = ref.watch(_formNotifierProvider);
+    final quizFromUseCase = ref.read(_formNotifierProvider.notifier);
     final appLocalizations = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.all(16.0),
@@ -93,7 +95,7 @@ class QuizPostScreen extends HookConsumerWidget {
                 return null;
               },
               onSaved: (value) {
-                _title = value;
+                quizFromUseCase.addTitle(value);
               },
             ),
             const SizedBox(height: 16),
@@ -112,21 +114,21 @@ class QuizPostScreen extends HookConsumerWidget {
                 return null;
               },
               onSaved: (value) {
-                _question = value;
+                quizFromUseCase.addQuestion(value);
               },
             ),
             const SizedBox(height: 16),
             ImageFormField(
               onSaved: (value) {
-                _image = value;
+                quizFromUseCase.addImage(value);
               },
             ),
             const SizedBox(height: 16),
             ChoicesFormField(
               context,
               onSaved: (value) {
-                _choices = value!.item1;
-                _answer = value.item2;
+                quizFromUseCase.addChoices(value!.item1);
+                quizFromUseCase.addAnswer(value.item2);
               },
             ),
             const SizedBox(height: 16),
@@ -135,14 +137,13 @@ class QuizPostScreen extends HookConsumerWidget {
                 if (!_formKey.currentState!.validate()) return;
                 // 入力データが正常な場合の処理
                 _formKey.currentState!.save();
-                final postData = QuizPostData(
-                  title: _title!,
-                  question: _question!,
-                  choices: _choices!,
-                  answer: _answer!,
-                  imageFile: _image,
-                );
-                ref.read(_postNotifierProvider.notifier).post(postData);
+                ref.read(_postNotifierProvider.notifier).post(QuizPostData(
+                      title: quizFrom.title!,
+                      question: quizFrom.question!,
+                      choices: quizFrom.choices!,
+                      answer: quizFrom.answer!,
+                      imageFile: quizFrom.image,
+                    ));
               },
               child: Text(appLocalizations.postQuiz),
             ),

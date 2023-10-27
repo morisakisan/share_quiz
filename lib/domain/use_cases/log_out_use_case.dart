@@ -11,8 +11,12 @@ class LogOutUseCase extends StateNotifier<AsyncValue<void>> {
   LogOutUseCase(this._repository) : super(AsyncValue.data(null)) {}
 
   Future<void> logout() async {
-    state = AsyncValue.loading();
-    await _repository.logout();
-    state = AsyncValue.data(null);
+    try {
+      state = AsyncValue.loading();
+      await _repository.logout();
+      state = AsyncValue.data(null);
+    } catch (error, stacktrace) {
+      state = AsyncValue.error(error, stacktrace);
+    }
   }
 }
