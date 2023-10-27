@@ -4,30 +4,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 // Project imports:
 import 'package:share_quiz/data/firebase_auth/firebase_auth_store.dart';
 import '../../domain/repository/quiz_answer_post_repository.dart';
-import '../answer/answer_dto.dart';
+import '../answer/answer_firebase_store.dart';
 import '../quiz/quiz_dto.dart';
 import '../quiz/quiz_firebase_store.dart';
 
 class QuizAnswerPostRepositoryImpl extends QuizAnswerPostRepository {
   final _firebaseAuthStore = FirebaseAuthStore();
+  final _answerFirebaseStore = AnswerFirebaseStore();
+  final _quizFirebaseStore = QuizFirebaseStore();
 
   @override
   Future<void> post(String quizDocId, int select) {
     return FirebaseFirestore.instance.runTransaction(
       (transaction) async {
-        final updateQuiz = await transaction
-            .get(QuizFirebaseStore.getCollection().doc(quizDocId));
+        final quizDoc = _quizFirebaseStore.getDoc(quizDocId);
+        final updateQuiz = await transaction.get(quizDoc);
         final updateQuizDto = QuizDto.fromJson(updateQuiz.data()!);
-        final answers = (await updateQuiz.reference.collection("answer").get())
-            .docs
-            .map((e) {
-          var json = e.data();
-          json["quiz_id"] = e.reference.id;
-          return AnswerDto.fromJson(json);
-        }).toList();
-        var user = _firebaseAuthStore.getCurrentUser();
         var isCorrect = updateQuizDto.correctAnswer == select;
-
+        final answers = await _answerFirebaseStore.fetchAnswers(quizDoc);
         final answerCount = answers.length + 1;
         var correctAnswerCount = 0;
         answers.forEach(
@@ -41,6 +35,7 @@ class QuizAnswerPostRepositoryImpl extends QuizAnswerPostRepository {
           correctAnswerCount++;
         }
         final rate = correctAnswerCount / answerCount;
+        var user = _firebaseAuthStore.getCurrentUser();
         var answerJson = {
           "quiz_id": quizDocId,
           "answer": select,
@@ -48,14 +43,10 @@ class QuizAnswerPostRepositoryImpl extends QuizAnswerPostRepository {
           "is_correct": isCorrect,
           "created_at": FieldValue.serverTimestamp()
         };
-        transaction.set(
-            updateQuiz.reference.collection("answer").doc(), answerJson);
-        updateQuiz.reference.update(
-          {
-            "correct_answer_rate": rate,
-            "answer_count": answerCount,
-          },
-        );
+        _answerFirebaseStore.addAnswerInTransaction(
+            transaction, updateQuiz.reference, answerJson);
+        _quizFirebaseStore.updateQuizInTransaction(
+            transaction, updateQuiz.reference, rate, answerCount);
       },
     );
   }
