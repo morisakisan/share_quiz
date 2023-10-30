@@ -1,6 +1,7 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 
 // Package imports:
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -9,8 +10,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_quiz/domain/use_cases/profile_use_case.dart';
 import 'package:share_quiz/presentation/utility/widget_utils.dart';
 import '../../data/repository_impl/profile_repository_impl.dart';
+import '../../data/repository_impl/user_quizzes_repository_impl.dart';
+import '../../domain/models/pagination_state/pagination_state.dart';
 import '../../domain/models/user/user_data.dart';
+import '../../domain/models/user_quizzes/user_quizzes.dart';
+import '../../domain/models/user_quizzes/user_quizzes_repository.dart';
 import '../../domain/repository/profile_repository.dart';
+import '../../domain/use_cases/user_quizzes_use_case.dart';
 
 final _profileRepositoryProvider =
     Provider.autoDispose<ProfileRepository>((ref) {
@@ -22,13 +28,45 @@ final _profileUseCaseProvider = FutureProvider.autoDispose<UserData>((ref) {
   return ProfileUseCase(repository).fetch();
 });
 
+final _userQuizzesProvider = Provider.autoDispose<UserQuizzesRepository>((ref) {
+  return UserQuizzesRepositoryImpl();
+});
+
+final _userQuizzesUseCaseProvider =
+    StateNotifierProvider<UserQuizzesUseCase, PaginationState<UserQuizzes>>(
+  (ref) {
+    final repository = ref.read(_userQuizzesProvider);
+    return UserQuizzesUseCase(repository);
+  },
+);
+
+final _scrollControllerProvider = Provider<ScrollController>((ref) {
+  final controller = ScrollController();
+  controller.addListener(() {
+    if (controller.position.atEdge) {
+      if (controller.position.pixels != 0) {
+        ref
+            .read(_userQuizzesUseCaseProvider.notifier)
+            .fetchQuizzes('YOUR_UID_HERE', 1); // TODO: UIDとページ数を適切に設定してください。
+      }
+    }
+  });
+  return controller;
+});
+
 class ProfileScreen extends HookConsumerWidget {
-
-  final _scrollController = ScrollController();
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final userQuizzesState = ref.watch(_userQuizzesUseCaseProvider);
+    final scrollController = ref.watch(_scrollControllerProvider);
     var profile = ref.watch(_profileUseCaseProvider);
+    useEffect(() {
+      ref
+          .read(_userQuizzesUseCaseProvider.notifier)
+          .fetchQuizzes('YOUR_UID_HERE', 1);
+      return null;
+    }, const []);
+
     Widget profileWidget = profile.when<Widget>(
       data: (user) {
         return Center(
@@ -38,8 +76,7 @@ class ProfileScreen extends HookConsumerWidget {
               // アバター表示
               CircleAvatar(
                 radius: 50.0,
-                backgroundImage:
-                NetworkImage(user.photoUrl ?? ""),
+                backgroundImage: NetworkImage(user.photoUrl ?? ""),
               ),
               SizedBox(height: 10.0),
               // ユーザー名表示
@@ -61,8 +98,21 @@ class ProfileScreen extends HookConsumerWidget {
       loading: () => WidgetUtils.loading(),
     );
 
+    Widget quizzesWidget = userQuizzesState.when<Widget>(
+      loading: () => CircularProgressIndicator(),
+      success: (quizzes) => ListView.builder(
+        controller: scrollController,
+        itemCount: quizzes.quizzes.length,
+        itemBuilder: (context, index) =>
+            ListTile(title: Text('Quiz: ${quizzes.quizzes[index].title}')),
+      ),
+      error: (error, stackTrace, previousData) =>
+          Center(child: Text('エラーが発生しました: $error')),
+    );
+
     return Scaffold(
       body: CustomScrollView(
+        controller: scrollController,
         slivers: [
           SliverAppBar(
             expandedHeight: 250.0,
@@ -79,14 +129,7 @@ class ProfileScreen extends HookConsumerWidget {
               ),
             ),
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (BuildContext context, int index) {
-                return ListTile(title: Text('Item $index'));
-              },
-              childCount: 100,
-            ),
-          ),
+          SliverToBoxAdapter(child: quizzesWidget),
         ],
       ),
     );
