@@ -5,12 +5,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:share_quiz/data/quiz/quiz_dto.dart';
 
 class QuizFirebaseStore {
-  static CollectionReference<Map<String, dynamic>> getCollection() {
+  static CollectionReference<Map<String, dynamic>> _getCollection() {
     return FirebaseFirestore.instance.collection('quiz');
   }
 
   Stream<List<QuizDto>> fetchList(Object field, bool descending) {
-    return getCollection()
+    return _getCollection()
         .orderBy(field, descending: descending)
         .limit(100)
         .snapshots()
@@ -24,7 +24,7 @@ class QuizFirebaseStore {
   }
 
   Stream<QuizDto?> fetchWhereByQuizId(String quizId) {
-    return getCollection().doc(quizId).snapshots().map((doc) {
+    return _getCollection().doc(quizId).snapshots().map((doc) {
       final json = doc.data();
       if (json == null) {
         return null;
@@ -35,6 +35,17 @@ class QuizFirebaseStore {
   }
 
   Future<void> post(Map<String, dynamic> json) {
-    return getCollection().doc().set(json);
+    return _getCollection().doc().set(json);
+  }
+
+  DocumentReference<Map<String, dynamic>> getDoc(String quizDocId) {
+    return _getCollection().doc(quizDocId);
+  }
+
+  void updateQuizInTransaction(Transaction transaction, DocumentReference quizReference, double rate, int answerCount) {
+    transaction.update(quizReference, {
+      "correct_answer_rate": rate,
+      "answer_count": answerCount,
+    });
   }
 }

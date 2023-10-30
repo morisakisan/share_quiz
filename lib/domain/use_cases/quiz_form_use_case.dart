@@ -1,32 +1,32 @@
-// Package imports:
+// Dart imports:
 import 'dart:io';
 
+// Package imports:
 import 'package:state_notifier/state_notifier.dart';
 
 // Project imports:
 import '../models/quiz_form/quiz_form.dart';
 
 class QuizFromUseCase extends StateNotifier<QuizForm> {
-
   QuizFromUseCase() : super(QuizForm());
 
-  Future<void> addTitle(String? newTitle) async {
+  addTitle(String? newTitle) {
     state = state.copyWith(title: newTitle);
   }
 
-  Future<void> addQuestion(String? newQuestion) async {
+  addQuestion(String? newQuestion) {
     state = state.copyWith(question: newQuestion);
   }
 
-  Future<void> addImage(File? newImage) async {
+  addImage(File? newImage) {
     state = state.copyWith(image: newImage);
   }
 
-  Future<void> addChoices(List<String> newChoices) async {
+  addChoices(List<String> newChoices) {
     state = state.copyWith(choices: newChoices);
   }
 
-  Future<void> addAnswer(int newAnswer) async {
+  addAnswer(int newAnswer) {
     state = state.copyWith(answer: newAnswer);
   }
 }
