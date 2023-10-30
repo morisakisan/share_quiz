@@ -26,7 +26,7 @@ class QuizPostRepositoryImpl extends QuizPostRepository {
       "image_url": imageUrl,
       "created_at": FieldValue.serverTimestamp(),
       "uid": userId,
-      "answer_count": 0,
+      "answer_count": 0
     };
     return await _quizFireStore.post(json);
   }

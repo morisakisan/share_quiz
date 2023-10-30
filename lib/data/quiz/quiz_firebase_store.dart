@@ -42,10 +42,23 @@ class QuizFirebaseStore {
     return _getCollection().doc(quizDocId);
   }
 
-  void updateQuizInTransaction(Transaction transaction, DocumentReference quizReference, double rate, int answerCount) {
+  void updateQuizInTransaction(Transaction transaction,
+      DocumentReference quizReference, double rate, int answerCount) {
     transaction.update(quizReference, {
       "correct_answer_rate": rate,
       "answer_count": answerCount,
     });
+  }
+
+  Future<List<QuizDto>> fetchMyQuiz(String uid) {
+    return _getCollection()
+        .where("quiz_id", isEqualTo: uid)
+        .orderBy("created_at")
+        .get()
+        .then<List<QuizDto>>((query) => query.docs.map((e) {
+              var json = e.data();
+              json["quiz_id"] = e.reference.id;
+              return QuizDto.fromJson(json);
+            }).toList());
   }
 }
