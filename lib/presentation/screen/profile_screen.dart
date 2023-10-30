@@ -47,7 +47,7 @@ final _scrollControllerProvider = Provider<ScrollController>((ref) {
       if (controller.position.pixels != 0) {
         ref
             .read(_userQuizzesUseCaseProvider.notifier)
-            .fetchQuizzes('YOUR_UID_HERE', 1); // TODO: UIDとページ数を適切に設定してください。
+            .fetchQuizzes(1); // TODO: UIDとページ数を適切に設定してください。
       }
     }
   });
@@ -63,7 +63,7 @@ class ProfileScreen extends HookConsumerWidget {
     useEffect(() {
       ref
           .read(_userQuizzesUseCaseProvider.notifier)
-          .fetchQuizzes('YOUR_UID_HERE', 1);
+          .fetchQuizzes(1);
       return null;
     }, const []);
 

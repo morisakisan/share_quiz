@@ -50,20 +50,35 @@ class QuizFirebaseStore {
     });
   }
 
-  Future<List<QuizDto>> fetchMyQuiz(String uid, int page, [int limit = 10]) {
-    int offset = (page - 1) * limit;
+  DocumentSnapshot? lastDocument;
 
-    return _getCollection()
-        .where("uid", isEqualTo: uid) // Assuming uid is the correct field name
+  Future<List<QuizDto>> fetchMyQuiz(String uid) {
+    const limit = 10;
+    var query = _getCollection()
+        .where("uid", isEqualTo: uid)
         .orderBy("created_at")
-        .limit(limit)
-        .startAt([offset])
-        .get()
-        .then<List<QuizDto>>((query) => query.docs.map((e) {
-              var json = e.data();
-              json["docId"] =
-                  e.id; // Replaced "quiz_id" with "docId" based on your QuizDto
-              return QuizDto.fromJson(json);
-            }).toList());
+        .limit(limit);
+
+    if (lastDocument != null) {
+      query = query.startAfterDocument(lastDocument!);
+    }
+
+    return query.get().then<List<QuizDto>>((querySnapshot) {
+      if (querySnapshot.docs.isNotEmpty) {
+        lastDocument = querySnapshot.docs.last;
+      }
+
+      return querySnapshot.docs.map((e) {
+        var json = e.data();
+        final dto = QuizDto.fromJson(json);
+        return dto.copyWith(docId: e.id);
+      }).toList();
+    });
   }
+
+
+
+
+
+
 }

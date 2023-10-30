@@ -9,9 +9,9 @@ class UserQuizzesUseCase extends StateNotifier<PaginationState<UserQuizzes>> {
 
   UserQuizzesUseCase(this.repository) : super(PaginationState.loading());
 
-  Future<void> fetchQuizzes(String uid, int page) async {
+  Future<void> fetchQuizzes(int page) async {
     try {
-      final newUserQuizzes = await repository.getUserQuizzes(uid, page);
+      final newUserQuizzes = await repository.getUserQuizzes(page);
       final updatedQuizzes = state.maybeWhen(
         success: (currentQuizzes) => newUserQuizzes.copyWith(
             quizzes: currentQuizzes.quizzes..addAll(newUserQuizzes.quizzes)),
