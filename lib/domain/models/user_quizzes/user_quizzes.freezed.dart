@@ -31,6 +31,8 @@ abstract class $UserQuizzesCopyWith<$Res> {
       _$UserQuizzesCopyWithImpl<$Res, UserQuizzes>;
   @useResult
   $Res call({List<Quiz> quizzes, Pagination pagination});
+
+  $PaginationCopyWith<$Res> get pagination;
 }
 
 /// @nodoc
@@ -47,18 +49,26 @@ class _$UserQuizzesCopyWithImpl<$Res, $Val extends UserQuizzes>
   @override
   $Res call({
     Object? quizzes = null,
-    Object? pagination = freezed,
+    Object? pagination = null,
   }) {
     return _then(_value.copyWith(
       quizzes: null == quizzes
           ? _value.quizzes
           : quizzes // ignore: cast_nullable_to_non_nullable
               as List<Quiz>,
-      pagination: freezed == pagination
+      pagination: null == pagination
           ? _value.pagination
           : pagination // ignore: cast_nullable_to_non_nullable
               as Pagination,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $PaginationCopyWith<$Res> get pagination {
+    return $PaginationCopyWith<$Res>(_value.pagination, (value) {
+      return _then(_value.copyWith(pagination: value) as $Val);
+    });
   }
 }
 
@@ -71,6 +81,9 @@ abstract class _$$UserQuizzesImplCopyWith<$Res>
   @override
   @useResult
   $Res call({List<Quiz> quizzes, Pagination pagination});
+
+  @override
+  $PaginationCopyWith<$Res> get pagination;
 }
 
 /// @nodoc
@@ -85,14 +98,14 @@ class __$$UserQuizzesImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? quizzes = null,
-    Object? pagination = freezed,
+    Object? pagination = null,
   }) {
     return _then(_$UserQuizzesImpl(
       quizzes: null == quizzes
           ? _value._quizzes
           : quizzes // ignore: cast_nullable_to_non_nullable
               as List<Quiz>,
-      pagination: freezed == pagination
+      pagination: null == pagination
           ? _value.pagination
           : pagination // ignore: cast_nullable_to_non_nullable
               as Pagination,
@@ -138,15 +151,13 @@ class _$UserQuizzesImpl with DiagnosticableTreeMixin implements _UserQuizzes {
         (other.runtimeType == runtimeType &&
             other is _$UserQuizzesImpl &&
             const DeepCollectionEquality().equals(other._quizzes, _quizzes) &&
-            const DeepCollectionEquality()
-                .equals(other.pagination, pagination));
+            (identical(other.pagination, pagination) ||
+                other.pagination == pagination));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_quizzes),
-      const DeepCollectionEquality().hash(pagination));
+      runtimeType, const DeepCollectionEquality().hash(_quizzes), pagination);
 
   @JsonKey(ignore: true)
   @override

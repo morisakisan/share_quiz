@@ -50,14 +50,19 @@ class QuizFirebaseStore {
     });
   }
 
-  Future<List<QuizDto>> fetchMyQuiz(String uid) {
+  Future<List<QuizDto>> fetchMyQuiz(String uid, int page, [int limit = 10]) {
+    int offset = (page - 1) * limit;
+
     return _getCollection()
-        .where("quiz_id", isEqualTo: uid)
+        .where("uid", isEqualTo: uid) // Assuming uid is the correct field name
         .orderBy("created_at")
+        .limit(limit)
+        .startAt([offset])
         .get()
         .then<List<QuizDto>>((query) => query.docs.map((e) {
               var json = e.data();
-              json["quiz_id"] = e.reference.id;
+              json["docId"] =
+                  e.id; // Replaced "quiz_id" with "docId" based on your QuizDto
               return QuizDto.fromJson(json);
             }).toList());
   }
