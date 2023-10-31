@@ -54,8 +54,7 @@ class SettingScreen extends HookConsumerWidget {
     } else if (useCase is AsyncError) {
       var error = useCase as AsyncError;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        ErrorHandler.showErrorDialog(
-            context, error.error, error.stackTrace);
+        ErrorHandler.showErrorDialog(context, error.error, error.stackTrace);
       });
     } else if (deleteUseCaseState is AsyncError) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -91,7 +90,23 @@ class SettingScreen extends HookConsumerWidget {
           title: "退会",
           leading: const Icon(Icons.exit_to_app),
           onPressed: (context) {
-            useCase.delete();
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(content: Text("退会します。よろしいですか？"), actions: [
+                    TextButton(
+                      child: Text(appLocalizations.cancel),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    TextButton(
+                      child: Text(appLocalizations.ok),
+                      onPressed: () {
+                        useCase.delete();
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ]);
+                });
           }));
     }
 
