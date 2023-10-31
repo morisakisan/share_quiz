@@ -59,6 +59,8 @@ StateNotifierProvider.autoDispose<LoginUseCase, AsyncValue<void>>((ref) {
 });
 
 class QuizDetailScreen extends HookConsumerWidget {
+  const QuizDetailScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final quizId =
@@ -208,7 +210,7 @@ class QuizDetailScreen extends HookConsumerWidget {
 
     list.add(
       TextButton.icon(
-        icon: Icon(Icons.share),
+        icon: const Icon(Icons.share),
         onPressed: () {
           // _showCommentBottomSheet(context);
           Share.share(appLocalizations.shareFormat(quiz.title, quiz.question));
@@ -328,7 +330,7 @@ class QuizDetailScreen extends HookConsumerWidget {
           heightFactor: 0.8, // 画面の80%の高さ
           child: Container(
             color: Colors.white,
-            child: Center(
+            child: const Center(
               child: Text("Large Bottom Sheet"),
             ),
           ),
