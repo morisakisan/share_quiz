@@ -13,12 +13,6 @@ class QuizListRepositoryImpl extends QuizListRepository {
   @override
   Stream<QuizList> fetch(QuizListOrderBy order) => _dataStore
       .fetchList(order.name, order.desc)
-      .map(
-        (list) => list
-            .map(
-              (dto) => QuizMapper.transform(dto),
-            )
-            .toList(),
-      )
+      .map((list) => list.map((dto) => QuizMapper.transform(dto)).toList())
       .map((event) => QuizList(quizzes: event));
 }

@@ -17,8 +17,7 @@ class QuizAnswerPostRepositoryImpl extends QuizAnswerPostRepository {
 
   @override
   Future<void> post(String quizDocId, int select) {
-    return _transactionStore.runTransaction(
-      (transaction) async {
+    return _transactionStore.runTransaction((transaction) async {
         final quizDoc = _quizFirebaseStore.getDoc(quizDocId);
         final updateQuiz = await transaction.get(quizDoc);
         final updateQuizDto = QuizDto.fromJson(updateQuiz.data()!);

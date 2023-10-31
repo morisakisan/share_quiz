@@ -42,10 +42,37 @@ class QuizFirebaseStore {
     return _getCollection().doc(quizDocId);
   }
 
-  void updateQuizInTransaction(Transaction transaction, DocumentReference quizReference, double rate, int answerCount) {
+  void updateQuizInTransaction(Transaction transaction,
+      DocumentReference quizReference, double rate, int answerCount) {
     transaction.update(quizReference, {
       "correct_answer_rate": rate,
       "answer_count": answerCount,
+    });
+  }
+
+  DocumentSnapshot? lastDocument;
+
+  Future<List<QuizDto>> fetchMyQuiz(String uid) {
+    const limit = 10;
+    var query = _getCollection()
+        .where("uid", isEqualTo: uid)
+        .orderBy("created_at", descending: true)
+        .limit(limit);
+
+    if (lastDocument != null) {
+      query = query.startAfterDocument(lastDocument!);
+    }
+
+    return query.get().then<List<QuizDto>>((querySnapshot) {
+      if (querySnapshot.docs.isNotEmpty) {
+        lastDocument = querySnapshot.docs.last;
+      }
+
+      return querySnapshot.docs.map((e) {
+        var json = e.data();
+        final dto = QuizDto.fromJson(json);
+        return dto.copyWith(docId: e.id);
+      }).toList();
     });
   }
 }
