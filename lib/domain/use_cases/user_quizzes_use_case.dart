@@ -14,7 +14,7 @@ class UserQuizzesUseCase extends StateNotifier<PaginationState<UserQuizzes>> {
       final newUserQuizzes = await repository.getUserQuizzes(page);
       final updatedQuizzes = state.maybeWhen(
         success: (currentQuizzes) => newUserQuizzes.copyWith(
-            quizzes: currentQuizzes.quizzes..addAll(newUserQuizzes.quizzes)),
+            quizzes: [...currentQuizzes.quizzes, ...newUserQuizzes.quizzes]),
         orElse: () => newUserQuizzes,
       );
       state = PaginationState.success(updatedQuizzes);
@@ -25,5 +25,14 @@ class UserQuizzesUseCase extends StateNotifier<PaginationState<UserQuizzes>> {
       );
       state = PaginationState.error(e, stackTrace, previousData);
     }
+  }
+
+  Future<void> loadMoreQuizzes() async {
+    state.when(
+        loading: () => {},
+        success: (quizzes) {
+          fetchQuizzes(2);
+        },
+        error: (error, stackTrace, previousData) => {});
   }
 }
