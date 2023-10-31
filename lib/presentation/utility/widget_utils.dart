@@ -8,10 +8,10 @@ class WidgetUtils {
   WidgetUtils._();
 
   static Widget loading() => const Center(
-        child: const SizedBox(
+        child: SizedBox(
           height: 100,
           width: 100,
-          child: const CircularProgressIndicator(),
+          child: CircularProgressIndicator(),
         ),
       );
 

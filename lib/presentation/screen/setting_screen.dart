@@ -40,6 +40,8 @@ final _deleteUserUseCaseProvider =
 });
 
 class SettingScreen extends HookConsumerWidget {
+  const SettingScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appLocalizations = AppLocalizations.of(context)!;
@@ -93,7 +95,7 @@ class SettingScreen extends HookConsumerWidget {
             showDialog(
                 context: context,
                 builder: (context) {
-                  return AlertDialog(content: Text("退会します。よろしいですか？"), actions: [
+                  return AlertDialog(content: const Text("退会します。よろしいですか？"), actions: [
                     TextButton(
                       child: Text(appLocalizations.cancel),
                       onPressed: () => Navigator.pop(context),

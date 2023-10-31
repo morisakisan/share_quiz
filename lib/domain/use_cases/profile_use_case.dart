@@ -3,7 +3,7 @@ import '../models/user/user_data.dart';
 import '../repository/profile_repository.dart';
 
 class ProfileUseCase {
-  ProfileRepository _repository;
+  final ProfileRepository _repository;
 
   ProfileUseCase(this._repository);
 

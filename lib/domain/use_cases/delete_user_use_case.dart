@@ -11,9 +11,9 @@ class DeleteUserUseCase extends StateNotifier<AsyncValue<void>?> {
 
   Future<void> delete() async {
     try {
-      state = AsyncValue.loading();
+      state = const AsyncValue.loading();
       await _repository.delete();
-      state = AsyncValue.data(null);
+      state = const AsyncValue.data(null);
     } catch (error, stacktrace) {
       state = AsyncValue.error(error, stacktrace);
     }

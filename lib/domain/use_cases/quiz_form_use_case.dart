@@ -8,7 +8,7 @@ import 'package:state_notifier/state_notifier.dart';
 import '../models/quiz_form/quiz_form.dart';
 
 class QuizFromUseCase extends StateNotifier<QuizForm> {
-  QuizFromUseCase() : super(QuizForm());
+  QuizFromUseCase() : super(const QuizForm());
 
   addTitle(String? newTitle) {
     state = state.copyWith(title: newTitle);

@@ -9,10 +9,10 @@ import 'package:share_quiz/domain/repository/login_repository.dart';
 class LoginUseCase extends StateNotifier<AsyncValue<void>> {
   final LoginRepository _repository;
 
-  LoginUseCase(this._repository) : super(AsyncValue.data(null)) {}
+  LoginUseCase(this._repository) : super(const AsyncValue.data(null));
 
   Future<void> signInWithGoogle() async {
-    state = AsyncValue.loading();
+    state = const AsyncValue.loading();
     try {
       var value = await _repository.login();
       state = AsyncValue.data(value);

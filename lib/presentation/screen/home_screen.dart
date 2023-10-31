@@ -80,6 +80,8 @@ final _logOutUseCaseProvider =
 });
 
 class HomeScreen extends HookConsumerWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appLocalizations = AppLocalizations.of(context)!;
@@ -133,8 +135,8 @@ class HomeScreen extends HookConsumerWidget {
               });
             }
           },
-          child: const Icon(Icons.add),
           backgroundColor: Colors.green,
+          child: const Icon(Icons.add),
         ),
       ),
     ));
@@ -195,11 +197,11 @@ class HomeScreen extends HookConsumerWidget {
     final appLocalizations = AppLocalizations.of(context)!;
     Widget createHeader(Widget profile) {
       return DrawerHeader(
-        child: Center(
-          child: profile,
-        ),
         decoration: BoxDecoration(
           color: theme.primaryColor,
+        ),
+        child: Center(
+          child: profile,
         ),
       );
     }
@@ -211,7 +213,7 @@ class HomeScreen extends HookConsumerWidget {
           const SizedBox(
             height: 50,
             width: 50,
-            child: const CircularProgressIndicator(),
+            child: CircularProgressIndicator(),
           ),
         ),
       );
@@ -234,7 +236,7 @@ class HomeScreen extends HookConsumerWidget {
                   backgroundImage: NetworkImage(photoUrl),
                   backgroundColor: Colors.transparent,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 Text(
@@ -264,7 +266,7 @@ class HomeScreen extends HookConsumerWidget {
       if (user != null) {
         list.add(
           ListTile(
-            leading: Icon(Icons.account_circle),
+            leading: const Icon(Icons.account_circle),
             title: Text(
               'プロフィール',
               style: theme.textTheme.bodyText1,

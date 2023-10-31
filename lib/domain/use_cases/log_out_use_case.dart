@@ -7,13 +7,13 @@ import '../repository/log_out_repository.dart';
 class LogOutUseCase extends StateNotifier<AsyncValue<void>> {
   final LogOutRepository _repository;
 
-  LogOutUseCase(this._repository) : super(AsyncValue.data(null)) {}
+  LogOutUseCase(this._repository) : super(const AsyncValue.data(null));
 
   Future<void> logout() async {
     try {
-      state = AsyncValue.loading();
+      state = const AsyncValue.loading();
       await _repository.logout();
-      state = AsyncValue.data(null);
+      state = const AsyncValue.data(null);
     } catch (error, stacktrace) {
       state = AsyncValue.error(error, stacktrace);
     }

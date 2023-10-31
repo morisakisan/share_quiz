@@ -16,19 +16,19 @@ import '../nav.dart';
 class QuizListPage extends HookConsumerWidget {
   final AutoDisposeStreamProvider<QuizList> _provider;
 
-  QuizListPage(this._provider);
+  const QuizListPage(this._provider, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var async = ref.watch(_provider);
     return async.when(
       data: (list) => ListView(
+        padding: const EdgeInsets.all(8.0),
         children: list.quizzes.map(
           (value) {
             return _getQuizView(context, value);
           },
         ).toList(),
-        padding: const EdgeInsets.all(8.0),
       ),
       loading: () => WidgetUtils.loading(),
       error: (error, stack) => Text(ErrorHandler.getMessage(error, stack)),
@@ -72,21 +72,21 @@ class QuizListPage extends HookConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 8,
           ),
           Text(
             quiz.title,
             style: theme.textTheme.headline5,
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
           Text(
             appLocalizations.questionText(quiz.question),
             style: theme.textTheme.headline6,
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
           Text(
