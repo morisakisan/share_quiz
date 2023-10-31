@@ -23,7 +23,7 @@ import '../../domain/use_cases/user_quizzes_use_case.dart';
 import '../nav.dart';
 
 final _profileRepositoryProvider =
-    Provider.autoDispose<ProfileRepository>((ref) {
+Provider.autoDispose<ProfileRepository>((ref) {
   return ProfileRepositoryImpl();
 });
 
@@ -37,8 +37,9 @@ final _userQuizzesProvider = Provider.autoDispose<UserQuizzesRepository>((ref) {
 });
 
 final _userQuizzesUseCaseProvider =
-    StateNotifierProvider.autoDispose<UserQuizzesUseCase, PaginationState<UserQuizzes>>(
-  (ref) {
+StateNotifierProvider.autoDispose<UserQuizzesUseCase,
+    PaginationState<UserQuizzes>>(
+      (ref) {
     final repository = ref.read(_userQuizzesProvider);
     return UserQuizzesUseCase(repository);
   },
@@ -47,7 +48,10 @@ final _userQuizzesUseCaseProvider =
 final _scrollControllerProvider = Provider.autoDispose<ScrollController>((ref) {
   final controller = ScrollController();
   controller.addListener(() {
-    if (controller.position.atEdge && controller.position.pixels != 0) {
+    var hasMore = ref.read(_userQuizzesUseCaseProvider).map(loading: (value) => false, success: (value) {
+      return value.data.pagination.hasMore;
+    }, error: (value) => false);
+    if (controller.position.atEdge && controller.position.pixels != 0 && hasMore) {
       ref.read(_userQuizzesUseCaseProvider.notifier).fetchQuizzes(1);
     }
   });
@@ -90,26 +94,31 @@ class ProfileScreen extends HookConsumerWidget {
           ),
         );
       },
-      error: (object, stackTrace) => Center(
-        child: Text('エラーが発生しました'),
-      ),
+      error: (object, stackTrace) =>
+          Center(
+            child: Text('エラーが発生しました'),
+          ),
       loading: () => WidgetUtils.loading(),
     );
 
     Widget quizzesWidget = userQuizzesState.when<Widget>(
-      loading: () => SliverToBoxAdapter(
-        child: CircularProgressIndicator(),
-      ),
-      success: (quizzes) => SliverList(
-        delegate: SliverChildBuilderDelegate(
-              (context, index) => _getQuizView(context, quizzes.quizzes[index]),
-          childCount: quizzes.quizzes.length,
-        ),
-      ),
-      error: (error, stackTrace, previousData) =>SliverToBoxAdapter(
-        child: Center(child: Text('エラーが発生しました: $error')),
-      )
-          ,
+      loading: () =>
+          SliverToBoxAdapter(
+            child: CircularProgressIndicator(),
+          ),
+      success: (quizzes) =>
+          SliverList(
+            delegate: SliverChildBuilderDelegate(
+                  (context, index) =>
+                  _getQuizView(context, quizzes.quizzes[index]),
+              childCount: quizzes.quizzes.length,
+            ),
+          ),
+      error: (error, stackTrace, previousData) =>
+          SliverToBoxAdapter(
+            child: Center(child: Text('エラーが発生しました: $error')),
+          )
+      ,
     );
 
     return Scaffold(
@@ -145,10 +154,11 @@ class ProfileScreen extends HookConsumerWidget {
 
     final List<Widget> list = [];
 
-    createImage(image) => Padding(
-      padding: const EdgeInsets.fromLTRB(8, 8, 16, 8),
-      child: image,
-    );
+    createImage(image) =>
+        Padding(
+          padding: const EdgeInsets.fromLTRB(8, 8, 16, 8),
+          child: image,
+        );
 
     const imageSize = 125.0;
     if (quiz.imageUrl != null) {
