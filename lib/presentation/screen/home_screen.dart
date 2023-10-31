@@ -241,7 +241,7 @@ class HomeScreen extends HookConsumerWidget {
                 ),
                 Text(
                   name,
-                  style: theme.primaryTextTheme.headline6,
+                  style: theme.primaryTextTheme.titleLarge,
                 ),
               ],
             ),
@@ -252,7 +252,7 @@ class HomeScreen extends HookConsumerWidget {
           createHeader(
             Text(
               appLocalizations.please_login,
-              style: theme.primaryTextTheme.headline6,
+              style: theme.primaryTextTheme.titleLarge,
             ),
           ),
         );
@@ -269,7 +269,7 @@ class HomeScreen extends HookConsumerWidget {
             leading: const Icon(Icons.account_circle),
             title: Text(
               'プロフィール',
-              style: theme.textTheme.bodyText1,
+              style: theme.textTheme.bodyLarge,
             ),
             onTap: () {
               Navigator.of(context).pushNamed(Nav.PROFILE);
@@ -280,7 +280,7 @@ class HomeScreen extends HookConsumerWidget {
           leading: const Icon(Icons.logout),
           title: Text(
             appLocalizations.logout,
-            style: theme.textTheme.bodyText1,
+            style: theme.textTheme.bodyLarge,
           ),
           onTap: () {
             showDialog(
@@ -313,7 +313,7 @@ class HomeScreen extends HookConsumerWidget {
           leading: const Icon(Icons.login),
           title: Text(
             appLocalizations.login,
-            style: theme.textTheme.bodyText1,
+            style: theme.textTheme.bodyLarge,
           ),
           onTap: () => loginUseCase.signInWithGoogle(),
         );
@@ -326,7 +326,7 @@ class HomeScreen extends HookConsumerWidget {
         leading: const Icon(Icons.settings),
         title: Text(
           appLocalizations.settings,
-          style: theme.textTheme.bodyText1,
+          style: theme.textTheme.bodyLarge,
         ),
         onTap: () {
           Navigator.of(context).pushNamed(Nav.SETTING);

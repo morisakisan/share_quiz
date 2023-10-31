@@ -207,14 +207,14 @@ class ProfileScreen extends HookConsumerWidget {
           ),
           Text(
             quiz.title,
-            style: theme.textTheme.headline5,
+            style: theme.textTheme.headlineSmall,
           ),
           const SizedBox(
             height: 16,
           ),
           Text(
             appLocalizations.questionText(quiz.question),
-            style: theme.textTheme.headline6,
+            style: theme.textTheme.titleLarge,
           ),
           const SizedBox(
             height: 16,
@@ -222,7 +222,7 @@ class ProfileScreen extends HookConsumerWidget {
           Text(
             appLocalizations.answerCountWithRate(
                 quiz.answerCount!, correctRate),
-            style: theme.textTheme.bodyText2,
+            style: theme.textTheme.bodyMedium,
           ),
         ],
       ),
@@ -256,7 +256,7 @@ class ProfileScreen extends HookConsumerWidget {
             padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
             child: Text(
               formatted,
-              style: theme.textTheme.caption,
+              style: theme.textTheme.bodySmall,
             ),
           ),
         ],

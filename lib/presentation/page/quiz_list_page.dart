@@ -77,14 +77,14 @@ class QuizListPage extends HookConsumerWidget {
           ),
           Text(
             quiz.title,
-            style: theme.textTheme.headline5,
+            style: theme.textTheme.headlineSmall,
           ),
           const SizedBox(
             height: 16,
           ),
           Text(
             appLocalizations.questionText(quiz.question),
-            style: theme.textTheme.headline6,
+            style: theme.textTheme.titleLarge,
           ),
           const SizedBox(
             height: 16,
@@ -92,7 +92,7 @@ class QuizListPage extends HookConsumerWidget {
           Text(
             appLocalizations.answerCountWithRate(
                 quiz.answerCount!, correctRate),
-            style: theme.textTheme.bodyText2,
+            style: theme.textTheme.bodyMedium,
           ),
         ],
       ),
@@ -123,10 +123,10 @@ class QuizListPage extends HookConsumerWidget {
             ],
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(8, 8, 0, 8),
+            padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
             child: Text(
               formatted,
-              style: theme.textTheme.caption,
+              style: theme.textTheme.bodySmall,
             ),
           ),
         ],
