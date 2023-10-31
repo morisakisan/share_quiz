@@ -1,11 +1,11 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
 // Package imports:
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
@@ -37,14 +37,14 @@ final _userQuizzesProvider = Provider.autoDispose<UserQuizzesRepository>((ref) {
 });
 
 final _userQuizzesUseCaseProvider =
-    StateNotifierProvider<UserQuizzesUseCase, PaginationState<UserQuizzes>>(
+    StateNotifierProvider.autoDispose<UserQuizzesUseCase, PaginationState<UserQuizzes>>(
   (ref) {
     final repository = ref.read(_userQuizzesProvider);
     return UserQuizzesUseCase(repository);
   },
 );
 
-final _scrollControllerProvider = Provider<ScrollController>((ref) {
+final _scrollControllerProvider = Provider.autoDispose<ScrollController>((ref) {
   final controller = ScrollController();
   controller.addListener(() {
     if (controller.position.atEdge && controller.position.pixels != 0) {

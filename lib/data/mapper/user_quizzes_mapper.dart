@@ -1,5 +1,5 @@
+// Project imports:
 import 'package:share_quiz/data/mapper/quiz_mapper.dart';
-
 import '../../domain/models/pagination/pagination.dart';
 import '../../domain/models/quiz/quiz.dart';
 import '../../domain/models/user_quizzes/user_quizzes.dart';

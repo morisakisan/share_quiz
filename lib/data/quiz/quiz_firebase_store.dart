@@ -56,7 +56,7 @@ class QuizFirebaseStore {
     const limit = 10;
     var query = _getCollection()
         .where("uid", isEqualTo: uid)
-        .orderBy("created_at")
+        .orderBy("created_at", descending: true)
         .limit(limit);
 
     if (lastDocument != null) {
@@ -75,10 +75,4 @@ class QuizFirebaseStore {
       }).toList();
     });
   }
-
-
-
-
-
-
 }

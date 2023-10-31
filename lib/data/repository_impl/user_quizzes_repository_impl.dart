@@ -1,5 +1,5 @@
+// Project imports:
 import 'package:share_quiz/data/firebase_auth/firebase_auth_store.dart';
-
 import '../../domain/models/pagination/pagination.dart';
 import '../../domain/models/user_quizzes/user_quizzes.dart';
 import '../../domain/models/user_quizzes/user_quizzes_repository.dart';
