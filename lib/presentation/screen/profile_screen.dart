@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 
 // Project imports:
 import 'package:share_quiz/domain/use_cases/profile_use_case.dart';
+import 'package:share_quiz/presentation/utility/error_handler.dart';
 import 'package:share_quiz/presentation/utility/widget_utils.dart';
 import '../../data/repository_impl/profile_repository_impl.dart';
 import '../../data/repository_impl/user_quizzes_repository_impl.dart';
@@ -23,7 +24,7 @@ import '../../domain/use_cases/user_quizzes_use_case.dart';
 import '../nav.dart';
 
 final _profileRepositoryProvider =
-Provider.autoDispose<ProfileRepository>((ref) {
+    Provider.autoDispose<ProfileRepository>((ref) {
   return ProfileRepositoryImpl();
 });
 
@@ -36,10 +37,9 @@ final _userQuizzesProvider = Provider.autoDispose<UserQuizzesRepository>((ref) {
   return UserQuizzesRepositoryImpl();
 });
 
-final _userQuizzesUseCaseProvider =
-StateNotifierProvider.autoDispose<UserQuizzesUseCase,
-    PaginationState<UserQuizzes>>(
-      (ref) {
+final _userQuizzesUseCaseProvider = StateNotifierProvider.autoDispose<
+    UserQuizzesUseCase, PaginationState<UserQuizzes>>(
+  (ref) {
     final repository = ref.read(_userQuizzesProvider);
     return UserQuizzesUseCase(repository);
   },
@@ -48,10 +48,15 @@ StateNotifierProvider.autoDispose<UserQuizzesUseCase,
 final _scrollControllerProvider = Provider.autoDispose<ScrollController>((ref) {
   final controller = ScrollController();
   controller.addListener(() {
-    var hasMore = ref.read(_userQuizzesUseCaseProvider).map(loading: (value) => false, success: (value) {
-      return value.data.pagination.hasMore;
-    }, error: (value) => false);
-    if (controller.position.atEdge && controller.position.pixels != 0 && hasMore) {
+    var hasMore = ref.read(_userQuizzesUseCaseProvider).map(
+        loading: (value) => false,
+        success: (value) {
+          return value.data.pagination.hasMore;
+        },
+        error: (value) => false);
+    if (controller.position.atEdge &&
+        controller.position.pixels != 0 &&
+        hasMore) {
       ref.read(_userQuizzesUseCaseProvider.notifier).fetchQuizzes(1);
     }
   });
@@ -94,31 +99,44 @@ class ProfileScreen extends HookConsumerWidget {
           ),
         );
       },
-      error: (object, stackTrace) =>
-          Center(
-            child: Text('エラーが発生しました'),
-          ),
+      error: (object, stackTrace) => Center(
+        child: Text('エラーが発生しました'),
+      ),
       loading: () => WidgetUtils.loading(),
     );
 
     Widget quizzesWidget = userQuizzesState.when<Widget>(
-      loading: () =>
-          SliverToBoxAdapter(
-            child: CircularProgressIndicator(),
+      loading: () => SliverToBoxAdapter(
+        child: WidgetUtils.loading(),
+      ),
+      success: (quizzes) {
+        if(quizzes.quizzes.isEmpty) {
+          return SliverToBoxAdapter(
+            child: Text("データがありません。"),
+          );
+        }
+
+        int length = quizzes.quizzes.length;
+        if (quizzes.pagination.hasMore) {
+          length++;
+        }
+
+        return SliverList(
+          delegate: SliverChildBuilderDelegate(
+            (context, index) {
+              if (index == quizzes.quizzes.length &&
+                  quizzes.pagination.hasMore) {
+                return WidgetUtils.loading();
+              }
+              return _getQuizView(context, quizzes.quizzes[index]);
+            },
+            childCount: length,
           ),
-      success: (quizzes) =>
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-                  (context, index) =>
-                  _getQuizView(context, quizzes.quizzes[index]),
-              childCount: quizzes.quizzes.length,
-            ),
-          ),
-      error: (error, stackTrace, previousData) =>
-          SliverToBoxAdapter(
-            child: Center(child: Text('エラーが発生しました: $error')),
-          )
-      ,
+        );
+      },
+      error: (error, stackTrace, previousData) => SliverToBoxAdapter(
+        child: Center(child: Text(ErrorHandler.getMessage(error, stackTrace))),
+      ),
     );
 
     return Scaffold(
@@ -154,8 +172,7 @@ class ProfileScreen extends HookConsumerWidget {
 
     final List<Widget> list = [];
 
-    createImage(image) =>
-        Padding(
+    createImage(image) => Padding(
           padding: const EdgeInsets.fromLTRB(8, 8, 16, 8),
           child: image,
         );

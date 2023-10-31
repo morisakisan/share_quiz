@@ -12,7 +12,7 @@ import 'package:share_quiz/domain/repository/current_login_repository.dart';
 import 'package:share_quiz/domain/use_cases/current_login_use_case.dart';
 import 'package:share_quiz/domain/use_cases/login_use_case.dart';
 import 'package:share_quiz/presentation/page/quiz_list_page.dart';
-import 'package:share_quiz/presentation/utility/firebase_error_handler.dart';
+import 'package:share_quiz/presentation/utility/error_handler.dart';
 import '../../data/repository_impl/log_out_repository_impl.dart';
 import '../../data/repository_impl/login_repository_impl.dart';
 import '../../domain/models/quiz_list/quiz_list.dart';
@@ -128,7 +128,7 @@ class HomeScreen extends HookConsumerWidget {
             } else if (currentUser is AsyncError) {
               var error = currentUser as AsyncError;
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                FirebaseErrorHandler.showErrorDialog(
+                ErrorHandler.showErrorDialog(
                     context, error.error, error.stackTrace);
               });
             }
@@ -146,12 +146,12 @@ class HomeScreen extends HookConsumerWidget {
       children.add(WidgetUtils.loading());
     } else if (login is AsyncError) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        FirebaseErrorHandler.showErrorDialog(
+        ErrorHandler.showErrorDialog(
             context, login.error, login.stackTrace);
       });
     } else if (logout is AsyncError) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        FirebaseErrorHandler.showErrorDialog(
+        ErrorHandler.showErrorDialog(
             context, logout.error, logout.stackTrace);
       });
     }
@@ -218,7 +218,7 @@ class HomeScreen extends HookConsumerWidget {
     } else if (state is AsyncError) {
       var error = state as AsyncError;
       list.add(createHeader(Text(
-          FirebaseErrorHandler.getMessage(state.error, error.stackTrace))));
+          ErrorHandler.getMessage(state.error, error.stackTrace))));
     } else if (state is AsyncData) {
       final user = (state as AsyncData).value;
       if (user != null) {

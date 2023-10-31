@@ -10,7 +10,7 @@ import 'package:share_plus/share_plus.dart';
 // Project imports:
 import 'package:share_quiz/data/repository_impl/quiz_answer_post_repository_impl.dart';
 import 'package:share_quiz/domain/use_cases/quiz_detail_use_case.dart';
-import 'package:share_quiz/presentation/utility/firebase_error_handler.dart';
+import 'package:share_quiz/presentation/utility/error_handler.dart';
 import 'package:share_quiz/presentation/utility/widget_utils.dart';
 import '../../data/repository_impl/login_repository_impl.dart';
 import '../../data/repository_impl/quiz_detail_repository_impl.dart';
@@ -68,7 +68,7 @@ class QuizDetailScreen extends HookConsumerWidget {
       return _loading();
     } else if (quizAnswer is AsyncError) {
       var error = (quizAnswer as AsyncError);
-      return Text(FirebaseErrorHandler.getMessage(error.error, error.stackTrace));
+      return Text(ErrorHandler.getMessage(error.error, error.stackTrace));
     } else if (quizAnswer is AsyncData) {
       return _success(
           context, (quizAnswer as AsyncData<QuizDetail>).value, ref);
@@ -264,7 +264,7 @@ class QuizDetailScreen extends HookConsumerWidget {
               Navigator.pop(dialogContext);
               return WidgetUtils.loadingScreen(context);
             } else if (state is AsyncError) {
-              return FirebaseErrorHandler.getAlertDialog(context, state.error, state.stackTrace);
+              return ErrorHandler.getAlertDialog(context, state.error, state.stackTrace);
             }
 
             return AlertDialog(

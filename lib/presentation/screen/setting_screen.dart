@@ -15,7 +15,7 @@ import '../../domain/models/setting/setting.dart';
 import '../../domain/repository/delete_user_repository.dart';
 import '../../domain/use_cases/delete_user_use_case.dart';
 import '../../domain/use_cases/setting_usecase.dart';
-import '../utility/firebase_error_handler.dart';
+import '../utility/error_handler.dart';
 
 final _settingRepositoryProvider =
     Provider.autoDispose<SettingRepository>((ref) {
@@ -54,12 +54,11 @@ class SettingScreen extends HookConsumerWidget {
     } else if (useCase is AsyncError) {
       var error = useCase as AsyncError;
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        FirebaseErrorHandler.showErrorDialog(
-            context, error.error, error.stackTrace);
+        ErrorHandler.showErrorDialog(context, error.error, error.stackTrace);
       });
     } else if (deleteUseCaseState is AsyncError) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        FirebaseErrorHandler.showErrorDialog(
+        ErrorHandler.showErrorDialog(
             context, deleteUseCaseState.error, deleteUseCaseState.stackTrace);
       });
     }
@@ -91,7 +90,23 @@ class SettingScreen extends HookConsumerWidget {
           title: "退会",
           leading: const Icon(Icons.exit_to_app),
           onPressed: (context) {
-            useCase.delete();
+            showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(content: Text("退会します。よろしいですか？"), actions: [
+                    TextButton(
+                      child: Text(appLocalizations.cancel),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    TextButton(
+                      child: Text(appLocalizations.ok),
+                      onPressed: () {
+                        useCase.delete();
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ]);
+                });
           }));
     }
 

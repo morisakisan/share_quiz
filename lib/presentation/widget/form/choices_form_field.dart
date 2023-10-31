@@ -27,20 +27,29 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
           },
           builder: (FormFieldState<Tuple2<List<String>, int>> state) {
             final selectedRadioTile = state.value!.item2;
-            final headerChildren = <Widget>[];
+            final footerChildren = <Widget>[];
             final appLocalizations = AppLocalizations.of(context)!;
-            headerChildren.add(
-              Text(
-                appLocalizations.choiceLabel,
-              ),
-            );
-            if (state.value!.item1.length < 5) {
-              headerChildren.add(
+
+            if (state.value!.item1.length > 1) {
+              footerChildren.add(
                 const SizedBox(
                   height: 8,
                 ),
               );
-              headerChildren.add(
+              footerChildren.add(
+                Text(
+                  appLocalizations.markCorrectChoice,
+                ),
+              );
+            }
+
+            if (state.value!.item1.length < 5) {
+              footerChildren.add(
+                const SizedBox(
+                  height: 8,
+                ),
+              );
+              footerChildren.add(
                 TextButton.icon(
                   label: Text(appLocalizations.addChoicePrompt),
                   icon: const Icon(Icons.add),
@@ -48,26 +57,14 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
                 ),
               );
             }
-            if (state.value!.item1.length > 1) {
-              headerChildren.add(
-                const SizedBox(
-                  height: 8,
-                ),
-              );
-              headerChildren.add(
-                Text(
-                  appLocalizations.markCorrectChoice,
-                ),
-              );
-            }
 
             if (state.hasError) {
-              headerChildren.add(
+              footerChildren.add(
                 const SizedBox(
                   height: 8,
                 ),
               );
-              headerChildren.add(
+              footerChildren.add(
                 Text(
                   state.errorText!,
                   style: TextStyle(
@@ -86,7 +83,19 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   // mainAxisSize: MainAxisSize.min,
-                  children: headerChildren,
+                  children: [
+                    Text(
+                      appLocalizations.choiceLabel,
+                    )
+                  ],
+                ),
+              ),
+              footer: Container(
+                alignment: Alignment.topLeft,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  // mainAxisSize: MainAxisSize.min,
+                  children: footerChildren,
                 ),
               ),
               onReorder: (oldIndex, newIndex) {

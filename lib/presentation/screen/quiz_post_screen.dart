@@ -13,7 +13,7 @@ import 'package:share_quiz/domain/models/quiz_form/quiz_form.dart';
 import 'package:share_quiz/domain/repository/quiz_post_repository.dart';
 import 'package:share_quiz/domain/use_cases/quiz_form_use_case.dart';
 import 'package:share_quiz/domain/use_cases/quiz_post_use_case.dart';
-import 'package:share_quiz/presentation/utility/firebase_error_handler.dart';
+import 'package:share_quiz/presentation/utility/error_handler.dart';
 import 'package:share_quiz/presentation/utility/widget_utils.dart';
 import 'package:share_quiz/presentation/widget/form/choices_form_field.dart';
 import 'package:share_quiz/presentation/widget/form/image_form_field.dart';
@@ -57,7 +57,7 @@ class QuizPostScreen extends HookConsumerWidget {
       children.add(WidgetUtils.loadingScreen(context));
     } else if (postState is AsyncError) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        FirebaseErrorHandler.showErrorDialog(
+        ErrorHandler.showErrorDialog(
             context, postState.error, postState.stackTrace);
       });
     } else if (postState is AsyncData) {
