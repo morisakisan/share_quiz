@@ -6,8 +6,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
-class FirebaseErrorHandler {
-  FirebaseErrorHandler._();
+class ErrorHandler {
+  ErrorHandler._();
 
   static String getMessage(Object? e, StackTrace stackTrace) {
     if (e is FirebaseAuthException) {
