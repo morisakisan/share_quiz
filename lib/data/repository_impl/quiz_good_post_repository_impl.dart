@@ -19,7 +19,6 @@ class QuizGoodPostRepositoryImpl implements QuizGoodPostRepository {
     return _transactionStore.runTransaction((transaction) async {
       final quizDoc = _quizFirebaseStore.getDoc(quizId);
       final updateQuiz = await transaction.get(quizDoc);
-      final updateQuizDto = QuizDto.fromJson(updateQuiz.data()!);
       final goods = await _goodFirebaseStore.fetchGood(quizDoc);
       final goodCount = goods.length + 1 + (isGood ? 1 : -1);
       var user = _firebaseAuthStore.getCurrentUser();
