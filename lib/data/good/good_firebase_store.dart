@@ -27,8 +27,8 @@ class GoodFirebaseStore {
   void addGoodInTransaction(
       Transaction transaction,
       DocumentReference<Map<String, dynamic>> quizReference,
-      Map<String, dynamic> answerJson) {
+      Map<String, dynamic> goodJson) {
     transaction.set(
-        _getGoodCollectionFromQuiz(quizReference).doc(), answerJson);
+        _getGoodCollectionFromQuiz(quizReference).doc(), goodJson);
   }
 }
