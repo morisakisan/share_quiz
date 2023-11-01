@@ -16,19 +16,19 @@ import '../nav.dart';
 class QuizListPage extends HookConsumerWidget {
   final AutoDisposeStreamProvider<QuizList> _provider;
 
-  QuizListPage(this._provider);
+  const QuizListPage(this._provider, {super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var async = ref.watch(_provider);
     return async.when(
       data: (list) => ListView(
+        padding: const EdgeInsets.all(8.0),
         children: list.quizzes.map(
           (value) {
             return _getQuizView(context, value);
           },
         ).toList(),
-        padding: const EdgeInsets.all(8.0),
       ),
       loading: () => WidgetUtils.loading(),
       error: (error, stack) => Text(ErrorHandler.getMessage(error, stack)),
@@ -72,27 +72,27 @@ class QuizListPage extends HookConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 8,
           ),
           Text(
             quiz.title,
-            style: theme.textTheme.headline5,
+            style: theme.textTheme.headlineSmall,
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
           Text(
             appLocalizations.questionText(quiz.question),
-            style: theme.textTheme.headline6,
+            style: theme.textTheme.titleLarge,
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
           Text(
             appLocalizations.answerCountWithRate(
                 quiz.answerCount!, correctRate),
-            style: theme.textTheme.bodyText2,
+            style: theme.textTheme.bodyMedium,
           ),
         ],
       ),
@@ -114,7 +114,7 @@ class QuizListPage extends HookConsumerWidget {
                 icon: const Icon(Icons.question_answer_rounded),
                 onPressed: () {
                   Navigator.of(context).pushNamed(
-                    Nav.QUIZ_DETAIL,
+                    Nav.quizDetail,
                     arguments: quiz.documentId,
                   );
                 },
@@ -123,10 +123,10 @@ class QuizListPage extends HookConsumerWidget {
             ],
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(8, 8, 0, 8),
+            padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
             child: Text(
               formatted,
-              style: theme.textTheme.caption,
+              style: theme.textTheme.bodySmall,
             ),
           ),
         ],

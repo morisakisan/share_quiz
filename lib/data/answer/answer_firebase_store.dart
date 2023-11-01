@@ -21,14 +21,12 @@ class AnswerFirebaseStore {
         .get()
         .then<List<AnswerDto>>((query) => query.docs.map((e) {
               var json = e.data();
-              json["quiz_id"] = e.reference.id;
               return AnswerDto.fromJson(json);
             }).toList());
   }
 
   Stream<AnswerDto?> fetchMyAnswers(String quizId, String userId) {
     return _getCollection(quizId)
-        .where("quiz_id", isEqualTo: quizId)
         .where("uid", isEqualTo: userId)
         .snapshots()
         .map((snapshot) {

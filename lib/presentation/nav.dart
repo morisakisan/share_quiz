@@ -12,15 +12,15 @@ import 'package:share_quiz/presentation/screen/setting_screen.dart';
 class Nav {
   Nav._();
 
-  static const QUIZ_POST = "quiz_post";
-  static const QUIZ_DETAIL = "quiz_detail";
-  static const SETTING = "setting";
-  static const PROFILE= "profile";
+  static const quizPost = "quiz_post";
+  static const quizDetail = "quiz_detail";
+  static const setting = "setting";
+  static const profile= "profile";
 
   static final routes = <String, WidgetBuilder>{
-    QUIZ_POST: (BuildContext context) => QuizPostScreen(),
-    QUIZ_DETAIL: (BuildContext context) => QuizDetailScreen(),
-    SETTING: (BuildContext context) => SettingScreen(),
-    PROFILE: (BuildContext context) => ProfileScreen()
+    quizPost: (BuildContext context) => QuizPostScreen(),
+    quizDetail: (BuildContext context) => const QuizDetailScreen(),
+    setting: (BuildContext context) => const SettingScreen(),
+    profile: (BuildContext context) => const ProfileScreen()
   };
 }

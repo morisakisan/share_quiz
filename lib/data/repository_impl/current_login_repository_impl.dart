@@ -1,6 +1,3 @@
-// Package imports:
-import 'package:rxdart/rxdart.dart';
-
 // Project imports:
 import 'package:share_quiz/domain/repository/current_login_repository.dart';
 import '../../domain/models/user/user_data.dart';

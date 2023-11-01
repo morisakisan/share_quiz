@@ -2,7 +2,6 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 
@@ -43,11 +42,11 @@ class ErrorHandler {
   static AlertDialog getAlertDialog(
       BuildContext context, Object? e, StackTrace stackTrace) {
     return AlertDialog(
-      title: Text('エラー'),
+      title: const Text('エラー'),
       content: Text(getMessage(e, stackTrace)),
       actions: [
         TextButton(
-          child: Text('OK'),
+          child: const Text('OK'),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ],

@@ -9,9 +9,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImageFormField extends FormField<File> {
-  ImageFormField({FormFieldSetter<File>? onSaved})
+  ImageFormField({super.key, super.onSaved})
       : super(
-          onSaved: onSaved,
           builder: (FormFieldState<File> state) {
             final appLocalizations = AppLocalizations.of(state.context)!;
             final icons = [

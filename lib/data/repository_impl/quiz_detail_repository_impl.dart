@@ -31,7 +31,7 @@ class QuizDetailRepositoryImpl extends QuizDetailRepository {
             .fetchMyAnswers(quizId, user.uid)
             .map((event) => Tuple2(true, event?.answer));
       } else {
-        return Stream.value(Tuple2(false, null));
+        return Stream.value(const Tuple2(false, null));
       }
     });
     return CombineLatestStream.combine2(
@@ -39,7 +39,7 @@ class QuizDetailRepositoryImpl extends QuizDetailRepository {
         userStream,
         (quiz, answer) => QuizDetail(
             quiz: quiz,
-            select_anser: answer.item2 ?? null,
+            selectAnswer: answer.item2,
             isLogin: answer.item1));
   }
 }

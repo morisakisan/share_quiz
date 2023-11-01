@@ -1,9 +1,6 @@
 // Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-// Project imports:
-import 'package:share_quiz/data/quiz/quiz_firebase_store.dart';
-
 class GoodFirebaseStore {
   CollectionReference<Map<String, dynamic>> _getCollection() =>
       FirebaseFirestore.instance.collection('good');

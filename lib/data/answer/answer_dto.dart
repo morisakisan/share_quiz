@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 
 // Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
+// ignore: depend_on_referenced_packages
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
@@ -17,7 +18,6 @@ abstract class AnswerDto with _$AnswerDto {
     @JsonKey(includeFromJson: false, includeToJson: false) String? id,
     @JsonKey(name: 'answer') required int answer,
     @JsonKey(name: 'uid') required String userId,
-    @JsonKey(name: 'quiz_id') required String quizId,
     @JsonKey(name: 'is_correct') required bool isCorrect,
     @TimestampConverter()
     @JsonKey(name: 'created_at')

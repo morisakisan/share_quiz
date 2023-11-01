@@ -11,16 +11,18 @@ import 'package:share_quiz/presentation/screen/home_screen.dart';
 import 'nav.dart';
 
 class Application extends HookWidget {
+  const Application({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      localizationsDelegates: [
+      localizationsDelegates: const [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
-      supportedLocales: [
+      supportedLocales: const [
         Locale('ja')
       ],
       theme: ThemeData(
@@ -33,7 +35,7 @@ class Application extends HookWidget {
         ),
       ),
       routes: Nav.routes,
-      home: HomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }

@@ -7,10 +7,9 @@ import 'package:tuple/tuple.dart';
 
 class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
   ChoicesFormField(BuildContext context,
-      {FormFieldSetter<Tuple2<List<String>, int>>? onSaved})
+      {super.key, super.onSaved})
       : super(
           initialValue: Tuple2([], 0),
-          onSaved: onSaved,
           validator: (value) {
             final appLocalizations = AppLocalizations.of(context)!;
             final list = value!.item1;
@@ -151,11 +150,11 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
       context: context,
       builder: (context) {
         String? choice;
-        final _formKey = GlobalKey<FormState>();
+        final formKey = GlobalKey<FormState>();
         return AlertDialog(
           title: Text(appLocalizations.enterChoicePrompt),
           content: Form(
-            key: _formKey,
+            key: formKey,
             child: TextFormField(
               keyboardType: TextInputType.multiline,
               maxLines: null,
@@ -183,9 +182,9 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
             TextButton(
               child: Text(appLocalizations.ok),
               onPressed: () {
-                if (!_formKey.currentState!.validate()) return;
+                if (!formKey.currentState!.validate()) return;
                 // 入力データが正常な場合の処理
-                _formKey.currentState!.save();
+                formKey.currentState!.save();
 
                 final list = state.value!.item1;
                 list.add(choice!);

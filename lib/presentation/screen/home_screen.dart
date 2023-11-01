@@ -33,19 +33,19 @@ final _quizListRepositoryProvider =
 
 final _quizListNewProvider = StreamProvider.autoDispose<QuizList>((ref) {
   var repository = ref.read(_quizListRepositoryProvider);
-  return QuizListUseCase(repository, QuizListOrderBy.CREATED_AT_DESC).build();
+  return QuizListUseCase(repository, QuizListOrderBy.createdAtDesc).build();
 });
 
 final _quizAnswersCountListNewProvider =
     StreamProvider.autoDispose<QuizList>((ref) {
   var repository = ref.read(_quizListRepositoryProvider);
-  return QuizListUseCase(repository, QuizListOrderBy.ANSWER_COUNT_DESC).build();
+  return QuizListUseCase(repository, QuizListOrderBy.answerCountDesc).build();
 });
 
 final _quizCorrectRateListNewProvider =
     StreamProvider.autoDispose<QuizList>((ref) {
   var repository = ref.read(_quizListRepositoryProvider);
-  return QuizListUseCase(repository, QuizListOrderBy.CORRECT_ANSWER_RATE_ASC)
+  return QuizListUseCase(repository, QuizListOrderBy.correctAnswerRateAsc)
       .build();
 });
 
@@ -80,6 +80,8 @@ final _logOutUseCaseProvider =
 });
 
 class HomeScreen extends HookConsumerWidget {
+  const HomeScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final appLocalizations = AppLocalizations.of(context)!;
@@ -121,7 +123,7 @@ class HomeScreen extends HookConsumerWidget {
             if (currentUser is AsyncData) {
               final user = (currentUser as AsyncData).value;
               if (user != null) {
-                Navigator.of(context).pushNamed(Nav.QUIZ_POST);
+                Navigator.of(context).pushNamed(Nav.quizPost);
               } else {
                 _showLoginDialog(context, ref);
               }
@@ -133,8 +135,8 @@ class HomeScreen extends HookConsumerWidget {
               });
             }
           },
-          child: const Icon(Icons.add),
           backgroundColor: Colors.green,
+          child: const Icon(Icons.add),
         ),
       ),
     ));
@@ -195,11 +197,11 @@ class HomeScreen extends HookConsumerWidget {
     final appLocalizations = AppLocalizations.of(context)!;
     Widget createHeader(Widget profile) {
       return DrawerHeader(
-        child: Center(
-          child: profile,
-        ),
         decoration: BoxDecoration(
           color: theme.primaryColor,
+        ),
+        child: Center(
+          child: profile,
         ),
       );
     }
@@ -211,7 +213,7 @@ class HomeScreen extends HookConsumerWidget {
           const SizedBox(
             height: 50,
             width: 50,
-            child: const CircularProgressIndicator(),
+            child: CircularProgressIndicator(),
           ),
         ),
       );
@@ -234,12 +236,12 @@ class HomeScreen extends HookConsumerWidget {
                   backgroundImage: NetworkImage(photoUrl),
                   backgroundColor: Colors.transparent,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 Text(
                   name,
-                  style: theme.primaryTextTheme.headline6,
+                  style: theme.primaryTextTheme.titleLarge,
                 ),
               ],
             ),
@@ -250,7 +252,7 @@ class HomeScreen extends HookConsumerWidget {
           createHeader(
             Text(
               appLocalizations.please_login,
-              style: theme.primaryTextTheme.headline6,
+              style: theme.primaryTextTheme.titleLarge,
             ),
           ),
         );
@@ -264,13 +266,13 @@ class HomeScreen extends HookConsumerWidget {
       if (user != null) {
         list.add(
           ListTile(
-            leading: Icon(Icons.account_circle),
+            leading: const Icon(Icons.account_circle),
             title: Text(
               'プロフィール',
-              style: theme.textTheme.bodyText1,
+              style: theme.textTheme.bodyLarge,
             ),
             onTap: () {
-              Navigator.of(context).pushNamed(Nav.PROFILE);
+              Navigator.of(context).pushNamed(Nav.profile);
             },
           ),
         );
@@ -278,7 +280,7 @@ class HomeScreen extends HookConsumerWidget {
           leading: const Icon(Icons.logout),
           title: Text(
             appLocalizations.logout,
-            style: theme.textTheme.bodyText1,
+            style: theme.textTheme.bodyLarge,
           ),
           onTap: () {
             showDialog(
@@ -311,7 +313,7 @@ class HomeScreen extends HookConsumerWidget {
           leading: const Icon(Icons.login),
           title: Text(
             appLocalizations.login,
-            style: theme.textTheme.bodyText1,
+            style: theme.textTheme.bodyLarge,
           ),
           onTap: () => loginUseCase.signInWithGoogle(),
         );
@@ -324,10 +326,10 @@ class HomeScreen extends HookConsumerWidget {
         leading: const Icon(Icons.settings),
         title: Text(
           appLocalizations.settings,
-          style: theme.textTheme.bodyText1,
+          style: theme.textTheme.bodyLarge,
         ),
         onTap: () {
-          Navigator.of(context).pushNamed(Nav.SETTING);
+          Navigator.of(context).pushNamed(Nav.setting);
         },
       ),
     );

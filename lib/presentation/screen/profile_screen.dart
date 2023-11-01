@@ -1,6 +1,5 @@
 // Flutter imports:
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 // Package imports:
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -64,6 +63,8 @@ final _scrollControllerProvider = Provider.autoDispose<ScrollController>((ref) {
 });
 
 class ProfileScreen extends HookConsumerWidget {
+  const ProfileScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final userQuizzesState = ref.watch(_userQuizzesUseCaseProvider);
@@ -85,11 +86,11 @@ class ProfileScreen extends HookConsumerWidget {
                 radius: 50.0,
                 backgroundImage: NetworkImage(user.photoUrl ?? ""),
               ),
-              SizedBox(height: 10.0),
+              const SizedBox(height: 10.0),
               // ユーザー名表示
               Text(
                 user.name ?? "",
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 20.0,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -99,7 +100,7 @@ class ProfileScreen extends HookConsumerWidget {
           ),
         );
       },
-      error: (object, stackTrace) => Center(
+      error: (object, stackTrace) => const Center(
         child: Text('エラーが発生しました'),
       ),
       loading: () => WidgetUtils.loading(),
@@ -111,7 +112,7 @@ class ProfileScreen extends HookConsumerWidget {
       ),
       success: (quizzes) {
         if(quizzes.quizzes.isEmpty) {
-          return SliverToBoxAdapter(
+          return const SliverToBoxAdapter(
             child: Text("データがありません。"),
           );
         }
@@ -201,27 +202,27 @@ class ProfileScreen extends HookConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 8,
           ),
           Text(
             quiz.title,
-            style: theme.textTheme.headline5,
+            style: theme.textTheme.headlineSmall,
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
           Text(
             appLocalizations.questionText(quiz.question),
-            style: theme.textTheme.headline6,
+            style: theme.textTheme.titleLarge,
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
           Text(
             appLocalizations.answerCountWithRate(
                 quiz.answerCount!, correctRate),
-            style: theme.textTheme.bodyText2,
+            style: theme.textTheme.bodyMedium,
           ),
         ],
       ),
@@ -243,7 +244,7 @@ class ProfileScreen extends HookConsumerWidget {
                 icon: const Icon(Icons.question_answer_rounded),
                 onPressed: () {
                   Navigator.of(context).pushNamed(
-                    Nav.QUIZ_DETAIL,
+                    Nav.quizDetail,
                     arguments: quiz.documentId,
                   );
                 },
@@ -252,10 +253,10 @@ class ProfileScreen extends HookConsumerWidget {
             ],
           ),
           Padding(
-            padding: EdgeInsets.fromLTRB(8, 8, 0, 8),
+            padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
             child: Text(
               formatted,
-              style: theme.textTheme.caption,
+              style: theme.textTheme.bodySmall,
             ),
           ),
         ],

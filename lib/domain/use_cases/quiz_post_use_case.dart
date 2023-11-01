@@ -12,9 +12,9 @@ class QuizPostUseCase extends StateNotifier<AsyncValue<void>?> {
 
   Future<void> post(QuizPostData post) async {
     try {
-      state = AsyncValue.loading();
+      state = const AsyncValue.loading();
       await _repository.store(post);
-      state = AsyncValue.data(null);
+      state = const AsyncValue.data(null);
     } catch (error, stacktrace) {
       state = AsyncValue.error(error, stacktrace);
     }

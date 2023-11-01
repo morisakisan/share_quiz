@@ -38,6 +38,8 @@ final _formNotifierProvider =
 class QuizPostScreen extends HookConsumerWidget {
   final _formKey = GlobalKey<FormState>();
 
+  QuizPostScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final postState = ref.watch(_postNotifierProvider);

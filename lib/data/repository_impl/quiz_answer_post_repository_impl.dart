@@ -25,13 +25,11 @@ class QuizAnswerPostRepositoryImpl extends QuizAnswerPostRepository {
         final answers = await _answerFirebaseStore.fetchAnswers(quizDoc);
         final answerCount = answers.length + 1;
         var correctAnswerCount = 0;
-        answers.forEach(
-          (dto) {
+        for (var dto in answers) {
             if (dto.answer == updateQuizDto.correctAnswer) {
               correctAnswerCount++;
             }
-          },
-        );
+          }
         if (isCorrect) {
           correctAnswerCount++;
         }

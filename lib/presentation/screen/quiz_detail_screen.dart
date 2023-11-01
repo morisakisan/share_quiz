@@ -59,6 +59,8 @@ StateNotifierProvider.autoDispose<LoginUseCase, AsyncValue<void>>((ref) {
 });
 
 class QuizDetailScreen extends HookConsumerWidget {
+  const QuizDetailScreen({super.key});
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final quizId =
@@ -104,7 +106,7 @@ class QuizDetailScreen extends HookConsumerWidget {
         padding: const EdgeInsets.only(top: 16),
         child: Text(
           appLocalizations.displayQuestion(quiz.question),
-          style: theme.textTheme.headline5,
+          style: theme.textTheme.headlineSmall,
         ),
       ),
     );
@@ -116,7 +118,7 @@ class QuizDetailScreen extends HookConsumerWidget {
           padding: const EdgeInsets.only(top: 8),
           child: Text(
             appLocalizations.displayCorrectRate((correctRate * 100).toInt()),
-            style: theme.textTheme.caption,
+            style: theme.textTheme.bodySmall,
           ),
         ),
       );
@@ -127,7 +129,7 @@ class QuizDetailScreen extends HookConsumerWidget {
         padding: const EdgeInsets.only(top: 24),
         child: Text(
           appLocalizations.chooseCorrectChoice,
-          style: theme.textTheme.bodyText1,
+          style: theme.textTheme.bodyLarge,
         ),
       ),
     );
@@ -148,7 +150,7 @@ class QuizDetailScreen extends HookConsumerWidget {
         );
 
     final Function()? answerOnPressed;
-    if (quizAnswerData.select_anser == null) {
+    if (quizAnswerData.selectAnswer == null) {
       list.addAll(
         createChoices(
           (v) {
@@ -165,7 +167,7 @@ class QuizDetailScreen extends HookConsumerWidget {
         _showAnswerDialog(context, selectValue, quiz);
       };
     } else {
-      selectValue = quizAnswerData.select_anser!;
+      selectValue = quizAnswerData.selectAnswer!;
       answerOnPressed = null;
 
       list.addAll(createChoices(null));
@@ -208,7 +210,7 @@ class QuizDetailScreen extends HookConsumerWidget {
 
     list.add(
       TextButton.icon(
-        icon: Icon(Icons.share),
+        icon: const Icon(Icons.share),
         onPressed: () {
           // _showCommentBottomSheet(context);
           Share.share(appLocalizations.shareFormat(quiz.title, quiz.question));
@@ -328,7 +330,7 @@ class QuizDetailScreen extends HookConsumerWidget {
           heightFactor: 0.8, // 画面の80%の高さ
           child: Container(
             color: Colors.white,
-            child: Center(
+            child: const Center(
               child: Text("Large Bottom Sheet"),
             ),
           ),

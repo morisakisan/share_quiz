@@ -9,7 +9,7 @@ import '../models/user_quizzes/user_quizzes_repository.dart';
 class UserQuizzesUseCase extends StateNotifier<PaginationState<UserQuizzes>> {
   final UserQuizzesRepository repository;
 
-  UserQuizzesUseCase(this.repository) : super(PaginationState.loading());
+  UserQuizzesUseCase(this.repository) : super(const PaginationState.loading());
 
   Future<void> fetchQuizzes(int page) async {
     try {
