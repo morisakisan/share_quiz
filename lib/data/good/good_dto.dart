@@ -16,7 +16,6 @@ part 'good_dto.g.dart';
 abstract class GoodDto with _$GoodDto {
   const factory GoodDto({
     @JsonKey(includeFromJson: false, includeToJson: false) String? id,
-    @JsonKey(name: 'quiz_id') required String quizId,
     @JsonKey(name: 'uid') required String userId,
     @TimestampConverter()
     @JsonKey(name: 'created_at')

@@ -16,7 +16,6 @@ part 'comment_dto.g.dart';
 abstract class CommentDto with _$CommentDto {
   const factory CommentDto({
     @JsonKey(includeFromJson: false, includeToJson: false) String? id,
-    @JsonKey(name: 'quiz_id') required String quizId,
     @JsonKey(name: 'content') required String content,
     @JsonKey(name: 'uid') required String userId,
     @TimestampConverter()

@@ -22,8 +22,6 @@ GoodDto _$GoodDtoFromJson(Map<String, dynamic> json) {
 mixin _$GoodDto {
   @JsonKey(includeFromJson: false, includeToJson: false)
   String? get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'quiz_id')
-  String get quizId => throw _privateConstructorUsedError;
   @JsonKey(name: 'uid')
   String get userId => throw _privateConstructorUsedError;
   @TimestampConverter()
@@ -42,7 +40,6 @@ abstract class $GoodDtoCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(includeFromJson: false, includeToJson: false) String? id,
-      @JsonKey(name: 'quiz_id') String quizId,
       @JsonKey(name: 'uid') String userId,
       @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt});
 }
@@ -61,7 +58,6 @@ class _$GoodDtoCopyWithImpl<$Res, $Val extends GoodDto>
   @override
   $Res call({
     Object? id = freezed,
-    Object? quizId = null,
     Object? userId = null,
     Object? createdAt = null,
   }) {
@@ -70,10 +66,6 @@ class _$GoodDtoCopyWithImpl<$Res, $Val extends GoodDto>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      quizId: null == quizId
-          ? _value.quizId
-          : quizId // ignore: cast_nullable_to_non_nullable
-              as String,
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -95,7 +87,6 @@ abstract class _$$GoodDtoImplCopyWith<$Res> implements $GoodDtoCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(includeFromJson: false, includeToJson: false) String? id,
-      @JsonKey(name: 'quiz_id') String quizId,
       @JsonKey(name: 'uid') String userId,
       @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt});
 }
@@ -112,7 +103,6 @@ class __$$GoodDtoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? quizId = null,
     Object? userId = null,
     Object? createdAt = null,
   }) {
@@ -121,10 +111,6 @@ class __$$GoodDtoImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      quizId: null == quizId
-          ? _value.quizId
-          : quizId // ignore: cast_nullable_to_non_nullable
-              as String,
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
@@ -142,7 +128,6 @@ class __$$GoodDtoImplCopyWithImpl<$Res>
 class _$GoodDtoImpl with DiagnosticableTreeMixin implements _GoodDto {
   const _$GoodDtoImpl(
       {@JsonKey(includeFromJson: false, includeToJson: false) this.id,
-      @JsonKey(name: 'quiz_id') required this.quizId,
       @JsonKey(name: 'uid') required this.userId,
       @TimestampConverter()
       @JsonKey(name: 'created_at')
@@ -155,9 +140,6 @@ class _$GoodDtoImpl with DiagnosticableTreeMixin implements _GoodDto {
   @JsonKey(includeFromJson: false, includeToJson: false)
   final String? id;
   @override
-  @JsonKey(name: 'quiz_id')
-  final String quizId;
-  @override
   @JsonKey(name: 'uid')
   final String userId;
   @override
@@ -167,7 +149,7 @@ class _$GoodDtoImpl with DiagnosticableTreeMixin implements _GoodDto {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'GoodDto(id: $id, quizId: $quizId, userId: $userId, createdAt: $createdAt)';
+    return 'GoodDto(id: $id, userId: $userId, createdAt: $createdAt)';
   }
 
   @override
@@ -176,7 +158,6 @@ class _$GoodDtoImpl with DiagnosticableTreeMixin implements _GoodDto {
     properties
       ..add(DiagnosticsProperty('type', 'GoodDto'))
       ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('quizId', quizId))
       ..add(DiagnosticsProperty('userId', userId))
       ..add(DiagnosticsProperty('createdAt', createdAt));
   }
@@ -187,7 +168,6 @@ class _$GoodDtoImpl with DiagnosticableTreeMixin implements _GoodDto {
         (other.runtimeType == runtimeType &&
             other is _$GoodDtoImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.quizId, quizId) || other.quizId == quizId) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt));
@@ -195,7 +175,7 @@ class _$GoodDtoImpl with DiagnosticableTreeMixin implements _GoodDto {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, quizId, userId, createdAt);
+  int get hashCode => Object.hash(runtimeType, id, userId, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -214,7 +194,6 @@ class _$GoodDtoImpl with DiagnosticableTreeMixin implements _GoodDto {
 abstract class _GoodDto implements GoodDto {
   const factory _GoodDto(
       {@JsonKey(includeFromJson: false, includeToJson: false) final String? id,
-      @JsonKey(name: 'quiz_id') required final String quizId,
       @JsonKey(name: 'uid') required final String userId,
       @TimestampConverter()
       @JsonKey(name: 'created_at')
@@ -225,9 +204,6 @@ abstract class _GoodDto implements GoodDto {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   String? get id;
-  @override
-  @JsonKey(name: 'quiz_id')
-  String get quizId;
   @override
   @JsonKey(name: 'uid')
   String get userId;
