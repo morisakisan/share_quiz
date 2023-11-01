@@ -35,7 +35,7 @@ class Application extends HookWidget {
         ),
       ),
       routes: Nav.routes,
-      home: HomeScreen(),
+      home: const HomeScreen(),
     );
   }
 }
