@@ -2,7 +2,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 // Project imports:
-import 'package:share_quiz/data/answer/answer_dto.dart';
 import 'package:share_quiz/data/comment/comment_dto.dart';
 
 class CommentFirebaseStore {
