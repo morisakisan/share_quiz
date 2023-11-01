@@ -7,10 +7,9 @@ import 'package:tuple/tuple.dart';
 
 class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
   ChoicesFormField(BuildContext context,
-      {FormFieldSetter<Tuple2<List<String>, int>>? onSaved})
+      {super.key, super.onSaved})
       : super(
-          initialValue: const Tuple2([], 0),
-          onSaved: onSaved,
+          initialValue: Tuple2([], 0),
           validator: (value) {
             final appLocalizations = AppLocalizations.of(context)!;
             final list = value!.item1;
