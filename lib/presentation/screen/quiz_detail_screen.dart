@@ -150,7 +150,7 @@ class QuizDetailScreen extends HookConsumerWidget {
         );
 
     final Function()? answerOnPressed;
-    if (quizAnswerData.select_anser == null) {
+    if (quizAnswerData.selectAnswer == null) {
       list.addAll(
         createChoices(
           (v) {
@@ -167,7 +167,7 @@ class QuizDetailScreen extends HookConsumerWidget {
         _showAnswerDialog(context, selectValue, quiz);
       };
     } else {
-      selectValue = quizAnswerData.select_anser!;
+      selectValue = quizAnswerData.selectAnswer!;
       answerOnPressed = null;
 
       list.addAll(createChoices(null));

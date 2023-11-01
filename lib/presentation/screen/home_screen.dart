@@ -33,19 +33,19 @@ final _quizListRepositoryProvider =
 
 final _quizListNewProvider = StreamProvider.autoDispose<QuizList>((ref) {
   var repository = ref.read(_quizListRepositoryProvider);
-  return QuizListUseCase(repository, QuizListOrderBy.CREATED_AT_DESC).build();
+  return QuizListUseCase(repository, QuizListOrderBy.createdAtDesc).build();
 });
 
 final _quizAnswersCountListNewProvider =
     StreamProvider.autoDispose<QuizList>((ref) {
   var repository = ref.read(_quizListRepositoryProvider);
-  return QuizListUseCase(repository, QuizListOrderBy.ANSWER_COUNT_DESC).build();
+  return QuizListUseCase(repository, QuizListOrderBy.answerCountDesc).build();
 });
 
 final _quizCorrectRateListNewProvider =
     StreamProvider.autoDispose<QuizList>((ref) {
   var repository = ref.read(_quizListRepositoryProvider);
-  return QuizListUseCase(repository, QuizListOrderBy.CORRECT_ANSWER_RATE_ASC)
+  return QuizListUseCase(repository, QuizListOrderBy.correctAnswerRateAsc)
       .build();
 });
 
@@ -123,7 +123,7 @@ class HomeScreen extends HookConsumerWidget {
             if (currentUser is AsyncData) {
               final user = (currentUser as AsyncData).value;
               if (user != null) {
-                Navigator.of(context).pushNamed(Nav.QUIZ_POST);
+                Navigator.of(context).pushNamed(Nav.quizPost);
               } else {
                 _showLoginDialog(context, ref);
               }
@@ -272,7 +272,7 @@ class HomeScreen extends HookConsumerWidget {
               style: theme.textTheme.bodyLarge,
             ),
             onTap: () {
-              Navigator.of(context).pushNamed(Nav.PROFILE);
+              Navigator.of(context).pushNamed(Nav.profile);
             },
           ),
         );
@@ -329,7 +329,7 @@ class HomeScreen extends HookConsumerWidget {
           style: theme.textTheme.bodyLarge,
         ),
         onTap: () {
-          Navigator.of(context).pushNamed(Nav.SETTING);
+          Navigator.of(context).pushNamed(Nav.setting);
         },
       ),
     );

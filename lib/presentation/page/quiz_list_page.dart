@@ -114,7 +114,7 @@ class QuizListPage extends HookConsumerWidget {
                 icon: const Icon(Icons.question_answer_rounded),
                 onPressed: () {
                   Navigator.of(context).pushNamed(
-                    Nav.QUIZ_DETAIL,
+                    Nav.quizDetail,
                     arguments: quiz.documentId,
                   );
                 },

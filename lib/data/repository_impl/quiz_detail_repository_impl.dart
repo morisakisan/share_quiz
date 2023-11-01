@@ -39,7 +39,7 @@ class QuizDetailRepositoryImpl extends QuizDetailRepository {
         userStream,
         (quiz, answer) => QuizDetail(
             quiz: quiz,
-            select_anser: answer.item2,
+            selectAnswer: answer.item2,
             isLogin: answer.item1));
   }
 }
