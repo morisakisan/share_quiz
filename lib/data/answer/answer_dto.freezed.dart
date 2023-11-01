@@ -26,8 +26,6 @@ mixin _$AnswerDto {
   int get answer => throw _privateConstructorUsedError;
   @JsonKey(name: 'uid')
   String get userId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'quiz_id')
-  String get quizId => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_correct')
   bool get isCorrect => throw _privateConstructorUsedError;
   @TimestampConverter()
@@ -49,7 +47,6 @@ abstract class $AnswerDtoCopyWith<$Res> {
       {@JsonKey(includeFromJson: false, includeToJson: false) String? id,
       @JsonKey(name: 'answer') int answer,
       @JsonKey(name: 'uid') String userId,
-      @JsonKey(name: 'quiz_id') String quizId,
       @JsonKey(name: 'is_correct') bool isCorrect,
       @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt});
 }
@@ -70,7 +67,6 @@ class _$AnswerDtoCopyWithImpl<$Res, $Val extends AnswerDto>
     Object? id = freezed,
     Object? answer = null,
     Object? userId = null,
-    Object? quizId = null,
     Object? isCorrect = null,
     Object? createdAt = null,
   }) {
@@ -86,10 +82,6 @@ class _$AnswerDtoCopyWithImpl<$Res, $Val extends AnswerDto>
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as String,
-      quizId: null == quizId
-          ? _value.quizId
-          : quizId // ignore: cast_nullable_to_non_nullable
               as String,
       isCorrect: null == isCorrect
           ? _value.isCorrect
@@ -115,7 +107,6 @@ abstract class _$$AnswerDtoImplCopyWith<$Res>
       {@JsonKey(includeFromJson: false, includeToJson: false) String? id,
       @JsonKey(name: 'answer') int answer,
       @JsonKey(name: 'uid') String userId,
-      @JsonKey(name: 'quiz_id') String quizId,
       @JsonKey(name: 'is_correct') bool isCorrect,
       @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt});
 }
@@ -134,7 +125,6 @@ class __$$AnswerDtoImplCopyWithImpl<$Res>
     Object? id = freezed,
     Object? answer = null,
     Object? userId = null,
-    Object? quizId = null,
     Object? isCorrect = null,
     Object? createdAt = null,
   }) {
@@ -150,10 +140,6 @@ class __$$AnswerDtoImplCopyWithImpl<$Res>
       userId: null == userId
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
-              as String,
-      quizId: null == quizId
-          ? _value.quizId
-          : quizId // ignore: cast_nullable_to_non_nullable
               as String,
       isCorrect: null == isCorrect
           ? _value.isCorrect
@@ -174,7 +160,6 @@ class _$AnswerDtoImpl with DiagnosticableTreeMixin implements _AnswerDto {
       {@JsonKey(includeFromJson: false, includeToJson: false) this.id,
       @JsonKey(name: 'answer') required this.answer,
       @JsonKey(name: 'uid') required this.userId,
-      @JsonKey(name: 'quiz_id') required this.quizId,
       @JsonKey(name: 'is_correct') required this.isCorrect,
       @TimestampConverter()
       @JsonKey(name: 'created_at')
@@ -193,9 +178,6 @@ class _$AnswerDtoImpl with DiagnosticableTreeMixin implements _AnswerDto {
   @JsonKey(name: 'uid')
   final String userId;
   @override
-  @JsonKey(name: 'quiz_id')
-  final String quizId;
-  @override
   @JsonKey(name: 'is_correct')
   final bool isCorrect;
   @override
@@ -205,7 +187,7 @@ class _$AnswerDtoImpl with DiagnosticableTreeMixin implements _AnswerDto {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AnswerDto(id: $id, answer: $answer, userId: $userId, quizId: $quizId, isCorrect: $isCorrect, createdAt: $createdAt)';
+    return 'AnswerDto(id: $id, answer: $answer, userId: $userId, isCorrect: $isCorrect, createdAt: $createdAt)';
   }
 
   @override
@@ -216,7 +198,6 @@ class _$AnswerDtoImpl with DiagnosticableTreeMixin implements _AnswerDto {
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('answer', answer))
       ..add(DiagnosticsProperty('userId', userId))
-      ..add(DiagnosticsProperty('quizId', quizId))
       ..add(DiagnosticsProperty('isCorrect', isCorrect))
       ..add(DiagnosticsProperty('createdAt', createdAt));
   }
@@ -229,7 +210,6 @@ class _$AnswerDtoImpl with DiagnosticableTreeMixin implements _AnswerDto {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.answer, answer) || other.answer == answer) &&
             (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.quizId, quizId) || other.quizId == quizId) &&
             (identical(other.isCorrect, isCorrect) ||
                 other.isCorrect == isCorrect) &&
             (identical(other.createdAt, createdAt) ||
@@ -238,8 +218,8 @@ class _$AnswerDtoImpl with DiagnosticableTreeMixin implements _AnswerDto {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, id, answer, userId, quizId, isCorrect, createdAt);
+  int get hashCode =>
+      Object.hash(runtimeType, id, answer, userId, isCorrect, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -260,7 +240,6 @@ abstract class _AnswerDto implements AnswerDto {
       {@JsonKey(includeFromJson: false, includeToJson: false) final String? id,
       @JsonKey(name: 'answer') required final int answer,
       @JsonKey(name: 'uid') required final String userId,
-      @JsonKey(name: 'quiz_id') required final String quizId,
       @JsonKey(name: 'is_correct') required final bool isCorrect,
       @TimestampConverter()
       @JsonKey(name: 'created_at')
@@ -278,9 +257,6 @@ abstract class _AnswerDto implements AnswerDto {
   @override
   @JsonKey(name: 'uid')
   String get userId;
-  @override
-  @JsonKey(name: 'quiz_id')
-  String get quizId;
   @override
   @JsonKey(name: 'is_correct')
   bool get isCorrect;

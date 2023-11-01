@@ -17,7 +17,6 @@ abstract class AnswerDto with _$AnswerDto {
     @JsonKey(includeFromJson: false, includeToJson: false) String? id,
     @JsonKey(name: 'answer') required int answer,
     @JsonKey(name: 'uid') required String userId,
-    @JsonKey(name: 'quiz_id') required String quizId,
     @JsonKey(name: 'is_correct') required bool isCorrect,
     @TimestampConverter()
     @JsonKey(name: 'created_at')
