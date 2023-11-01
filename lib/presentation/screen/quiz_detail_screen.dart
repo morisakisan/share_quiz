@@ -321,7 +321,7 @@ class QuizDetailScreen extends HookConsumerWidget {
     );
   }
 
-  void _showCommentBottomSheet(BuildContext context) {
+/*  void _showCommentBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -337,7 +337,7 @@ class QuizDetailScreen extends HookConsumerWidget {
         );
       },
     );
-  }
+  }*/
 }
 
 class _Select extends StateNotifier<int> {
