@@ -21,7 +21,7 @@ mixin _$Quiz {
   String get question => throw _privateConstructorUsedError;
   List<String> get choices => throw _privateConstructorUsedError;
   int get correctAnswer => throw _privateConstructorUsedError;
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   double? get correctAnswerRate => throw _privateConstructorUsedError;
   int? get answerCount => throw _privateConstructorUsedError;
   int? get goodCount => throw _privateConstructorUsedError;
@@ -42,7 +42,7 @@ abstract class $QuizCopyWith<$Res> {
       String question,
       List<String> choices,
       int correctAnswer,
-      DateTime createdAt,
+      DateTime? createdAt,
       double? correctAnswerRate,
       int? answerCount,
       int? goodCount,
@@ -67,7 +67,7 @@ class _$QuizCopyWithImpl<$Res, $Val extends Quiz>
     Object? question = null,
     Object? choices = null,
     Object? correctAnswer = null,
-    Object? createdAt = null,
+    Object? createdAt = freezed,
     Object? correctAnswerRate = freezed,
     Object? answerCount = freezed,
     Object? goodCount = freezed,
@@ -94,10 +94,10 @@ class _$QuizCopyWithImpl<$Res, $Val extends Quiz>
           ? _value.correctAnswer
           : correctAnswer // ignore: cast_nullable_to_non_nullable
               as int,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       correctAnswerRate: freezed == correctAnswerRate
           ? _value.correctAnswerRate
           : correctAnswerRate // ignore: cast_nullable_to_non_nullable
@@ -131,7 +131,7 @@ abstract class _$$QuizImplCopyWith<$Res> implements $QuizCopyWith<$Res> {
       String question,
       List<String> choices,
       int correctAnswer,
-      DateTime createdAt,
+      DateTime? createdAt,
       double? correctAnswerRate,
       int? answerCount,
       int? goodCount,
@@ -153,7 +153,7 @@ class __$$QuizImplCopyWithImpl<$Res>
     Object? question = null,
     Object? choices = null,
     Object? correctAnswer = null,
-    Object? createdAt = null,
+    Object? createdAt = freezed,
     Object? correctAnswerRate = freezed,
     Object? answerCount = freezed,
     Object? goodCount = freezed,
@@ -180,10 +180,10 @@ class __$$QuizImplCopyWithImpl<$Res>
           ? _value.correctAnswer
           : correctAnswer // ignore: cast_nullable_to_non_nullable
               as int,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       correctAnswerRate: freezed == correctAnswerRate
           ? _value.correctAnswerRate
           : correctAnswerRate // ignore: cast_nullable_to_non_nullable
@@ -237,7 +237,7 @@ class _$QuizImpl with DiagnosticableTreeMixin implements _Quiz {
   @override
   final int correctAnswer;
   @override
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @override
   final double? correctAnswerRate;
   @override
@@ -323,7 +323,7 @@ abstract class _Quiz implements Quiz {
       required final String question,
       required final List<String> choices,
       required final int correctAnswer,
-      required final DateTime createdAt,
+      required final DateTime? createdAt,
       required final double? correctAnswerRate,
       required final int? answerCount,
       required final int? goodCount,
@@ -340,7 +340,7 @@ abstract class _Quiz implements Quiz {
   @override
   int get correctAnswer;
   @override
-  DateTime get createdAt;
+  DateTime? get createdAt;
   @override
   double? get correctAnswerRate;
   @override

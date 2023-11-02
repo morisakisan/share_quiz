@@ -21,7 +21,7 @@ abstract class AnswerDto with _$AnswerDto {
     @JsonKey(name: 'is_correct') required bool isCorrect,
     @TimestampConverter()
     @JsonKey(name: 'created_at')
-    required DateTime createdAt,
+    required DateTime? createdAt,
   }) = _AnswerDto;
 
   factory AnswerDto.fromJson(Map<String, dynamic> json) =>

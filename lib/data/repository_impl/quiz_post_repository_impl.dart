@@ -26,7 +26,7 @@ class QuizPostRepositoryImpl extends QuizPostRepository {
             choices: post.choices,
             correctAnswer: post.answer,
             imageUrl: imageUrl,
-            createdAt: DateTime.now(),// 一時的にDateTimeを設定
+            createdAt: null,
             uid: userId,
             answerCount: null,
             goodCount: null,

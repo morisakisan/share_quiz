@@ -34,7 +34,7 @@ mixin _$QuizDto {
   List<String> get choices => throw _privateConstructorUsedError;
   @TimestampConverter()
   @JsonKey(name: 'created_at')
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'uid')
   String get uid => throw _privateConstructorUsedError;
   @JsonKey(name: 'correct_answer_rate')
@@ -61,7 +61,7 @@ abstract class $QuizDtoCopyWith<$Res> {
       @JsonKey(name: 'question') String question,
       @JsonKey(name: 'image_url') String? imageUrl,
       @JsonKey(name: 'choices') List<String> choices,
-      @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt,
+      @TimestampConverter() @JsonKey(name: 'created_at') DateTime? createdAt,
       @JsonKey(name: 'uid') String uid,
       @JsonKey(name: 'correct_answer_rate') double? correctAnswerRate,
       @JsonKey(name: 'answer_count') int? answerCount,
@@ -87,7 +87,7 @@ class _$QuizDtoCopyWithImpl<$Res, $Val extends QuizDto>
     Object? question = null,
     Object? imageUrl = freezed,
     Object? choices = null,
-    Object? createdAt = null,
+    Object? createdAt = freezed,
     Object? uid = null,
     Object? correctAnswerRate = freezed,
     Object? answerCount = freezed,
@@ -118,10 +118,10 @@ class _$QuizDtoCopyWithImpl<$Res, $Val extends QuizDto>
           ? _value.choices
           : choices // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
@@ -156,7 +156,7 @@ abstract class _$$QuizDtoImplCopyWith<$Res> implements $QuizDtoCopyWith<$Res> {
       @JsonKey(name: 'question') String question,
       @JsonKey(name: 'image_url') String? imageUrl,
       @JsonKey(name: 'choices') List<String> choices,
-      @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt,
+      @TimestampConverter() @JsonKey(name: 'created_at') DateTime? createdAt,
       @JsonKey(name: 'uid') String uid,
       @JsonKey(name: 'correct_answer_rate') double? correctAnswerRate,
       @JsonKey(name: 'answer_count') int? answerCount,
@@ -180,7 +180,7 @@ class __$$QuizDtoImplCopyWithImpl<$Res>
     Object? question = null,
     Object? imageUrl = freezed,
     Object? choices = null,
-    Object? createdAt = null,
+    Object? createdAt = freezed,
     Object? uid = null,
     Object? correctAnswerRate = freezed,
     Object? answerCount = freezed,
@@ -211,10 +211,10 @@ class __$$QuizDtoImplCopyWithImpl<$Res>
           ? _value._choices
           : choices // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
       uid: null == uid
           ? _value.uid
           : uid // ignore: cast_nullable_to_non_nullable
@@ -284,7 +284,7 @@ class _$QuizDtoImpl with DiagnosticableTreeMixin implements _QuizDto {
   @override
   @TimestampConverter()
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @override
   @JsonKey(name: 'uid')
   final String uid;
@@ -386,7 +386,7 @@ abstract class _QuizDto implements QuizDto {
       @JsonKey(name: 'choices') required final List<String> choices,
       @TimestampConverter()
       @JsonKey(name: 'created_at')
-      required final DateTime createdAt,
+      required final DateTime? createdAt,
       @JsonKey(name: 'uid') required final String uid,
       @JsonKey(name: 'correct_answer_rate')
       required final double? correctAnswerRate,
@@ -417,7 +417,7 @@ abstract class _QuizDto implements QuizDto {
   @override
   @TimestampConverter()
   @JsonKey(name: 'created_at')
-  DateTime get createdAt;
+  DateTime? get createdAt;
   @override
   @JsonKey(name: 'uid')
   String get uid;

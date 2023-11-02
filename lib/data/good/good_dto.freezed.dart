@@ -26,7 +26,7 @@ mixin _$GoodDto {
   String get userId => throw _privateConstructorUsedError;
   @TimestampConverter()
   @JsonKey(name: 'created_at')
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -41,7 +41,7 @@ abstract class $GoodDtoCopyWith<$Res> {
   $Res call(
       {@JsonKey(includeFromJson: false, includeToJson: false) String? id,
       @JsonKey(name: 'uid') String userId,
-      @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt});
+      @TimestampConverter() @JsonKey(name: 'created_at') DateTime? createdAt});
 }
 
 /// @nodoc
@@ -59,7 +59,7 @@ class _$GoodDtoCopyWithImpl<$Res, $Val extends GoodDto>
   $Res call({
     Object? id = freezed,
     Object? userId = null,
-    Object? createdAt = null,
+    Object? createdAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -70,10 +70,10 @@ class _$GoodDtoCopyWithImpl<$Res, $Val extends GoodDto>
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -88,7 +88,7 @@ abstract class _$$GoodDtoImplCopyWith<$Res> implements $GoodDtoCopyWith<$Res> {
   $Res call(
       {@JsonKey(includeFromJson: false, includeToJson: false) String? id,
       @JsonKey(name: 'uid') String userId,
-      @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt});
+      @TimestampConverter() @JsonKey(name: 'created_at') DateTime? createdAt});
 }
 
 /// @nodoc
@@ -104,7 +104,7 @@ class __$$GoodDtoImplCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? userId = null,
-    Object? createdAt = null,
+    Object? createdAt = freezed,
   }) {
     return _then(_$GoodDtoImpl(
       id: freezed == id
@@ -115,10 +115,10 @@ class __$$GoodDtoImplCopyWithImpl<$Res>
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ));
   }
 }
@@ -145,7 +145,7 @@ class _$GoodDtoImpl with DiagnosticableTreeMixin implements _GoodDto {
   @override
   @TimestampConverter()
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -197,7 +197,7 @@ abstract class _GoodDto implements GoodDto {
       @JsonKey(name: 'uid') required final String userId,
       @TimestampConverter()
       @JsonKey(name: 'created_at')
-      required final DateTime createdAt}) = _$GoodDtoImpl;
+      required final DateTime? createdAt}) = _$GoodDtoImpl;
 
   factory _GoodDto.fromJson(Map<String, dynamic> json) = _$GoodDtoImpl.fromJson;
 
@@ -210,7 +210,7 @@ abstract class _GoodDto implements GoodDto {
   @override
   @TimestampConverter()
   @JsonKey(name: 'created_at')
-  DateTime get createdAt;
+  DateTime? get createdAt;
   @override
   @JsonKey(ignore: true)
   _$$GoodDtoImplCopyWith<_$GoodDtoImpl> get copyWith =>

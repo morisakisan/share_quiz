@@ -30,7 +30,7 @@ mixin _$AnswerDto {
   bool get isCorrect => throw _privateConstructorUsedError;
   @TimestampConverter()
   @JsonKey(name: 'created_at')
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -48,7 +48,7 @@ abstract class $AnswerDtoCopyWith<$Res> {
       @JsonKey(name: 'answer') int answer,
       @JsonKey(name: 'uid') String userId,
       @JsonKey(name: 'is_correct') bool isCorrect,
-      @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt});
+      @TimestampConverter() @JsonKey(name: 'created_at') DateTime? createdAt});
 }
 
 /// @nodoc
@@ -68,7 +68,7 @@ class _$AnswerDtoCopyWithImpl<$Res, $Val extends AnswerDto>
     Object? answer = null,
     Object? userId = null,
     Object? isCorrect = null,
-    Object? createdAt = null,
+    Object? createdAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -87,10 +87,10 @@ class _$AnswerDtoCopyWithImpl<$Res, $Val extends AnswerDto>
           ? _value.isCorrect
           : isCorrect // ignore: cast_nullable_to_non_nullable
               as bool,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -108,7 +108,7 @@ abstract class _$$AnswerDtoImplCopyWith<$Res>
       @JsonKey(name: 'answer') int answer,
       @JsonKey(name: 'uid') String userId,
       @JsonKey(name: 'is_correct') bool isCorrect,
-      @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt});
+      @TimestampConverter() @JsonKey(name: 'created_at') DateTime? createdAt});
 }
 
 /// @nodoc
@@ -126,7 +126,7 @@ class __$$AnswerDtoImplCopyWithImpl<$Res>
     Object? answer = null,
     Object? userId = null,
     Object? isCorrect = null,
-    Object? createdAt = null,
+    Object? createdAt = freezed,
   }) {
     return _then(_$AnswerDtoImpl(
       id: freezed == id
@@ -145,10 +145,10 @@ class __$$AnswerDtoImplCopyWithImpl<$Res>
           ? _value.isCorrect
           : isCorrect // ignore: cast_nullable_to_non_nullable
               as bool,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ));
   }
 }
@@ -183,7 +183,7 @@ class _$AnswerDtoImpl with DiagnosticableTreeMixin implements _AnswerDto {
   @override
   @TimestampConverter()
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -243,7 +243,7 @@ abstract class _AnswerDto implements AnswerDto {
       @JsonKey(name: 'is_correct') required final bool isCorrect,
       @TimestampConverter()
       @JsonKey(name: 'created_at')
-      required final DateTime createdAt}) = _$AnswerDtoImpl;
+      required final DateTime? createdAt}) = _$AnswerDtoImpl;
 
   factory _AnswerDto.fromJson(Map<String, dynamic> json) =
       _$AnswerDtoImpl.fromJson;
@@ -263,7 +263,7 @@ abstract class _AnswerDto implements AnswerDto {
   @override
   @TimestampConverter()
   @JsonKey(name: 'created_at')
-  DateTime get createdAt;
+  DateTime? get createdAt;
   @override
   @JsonKey(ignore: true)
   _$$AnswerDtoImplCopyWith<_$AnswerDtoImpl> get copyWith =>

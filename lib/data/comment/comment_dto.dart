@@ -20,7 +20,7 @@ abstract class CommentDto with _$CommentDto {
     @JsonKey(name: 'uid') required String userId,
     @TimestampConverter()
     @JsonKey(name: 'created_at')
-    required DateTime createdAt,
+    required DateTime? createdAt,
   }) = _CommentDto;
 
   factory CommentDto.fromJson(Map<String, dynamic> json) =>

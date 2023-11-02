@@ -1,5 +1,6 @@
 // Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:share_quiz/data/answer/answer_dto.dart';
 
 // Project imports:
 import 'package:share_quiz/data/firebase_auth/firebase_auth_store.dart';
@@ -17,7 +18,8 @@ class QuizAnswerPostRepositoryImpl extends QuizAnswerPostRepository {
 
   @override
   Future<void> post(String quizDocId, int select) {
-    return _transactionStore.runTransaction((transaction) async {
+    return _transactionStore.runTransaction(
+      (transaction) async {
         final quizDoc = _quizFirebaseStore.getDoc(quizDocId);
         final updateQuiz = await transaction.get(quizDoc);
         final updateQuizDto = QuizDto.fromJson(updateQuiz.data()!);
@@ -26,21 +28,22 @@ class QuizAnswerPostRepositoryImpl extends QuizAnswerPostRepository {
         final answerCount = answers.length + 1;
         var correctAnswerCount = 0;
         for (var dto in answers) {
-            if (dto.answer == updateQuizDto.correctAnswer) {
-              correctAnswerCount++;
-            }
+          if (dto.answer == updateQuizDto.correctAnswer) {
+            correctAnswerCount++;
           }
+        }
         if (isCorrect) {
           correctAnswerCount++;
         }
         final rate = correctAnswerCount / answerCount;
         var user = _firebaseAuthStore.getCurrentUser();
-        var answerJson = {
-          "answer": select,
-          "uid": user!.uid,
-          "is_correct": isCorrect,
-          "created_at": FieldValue.serverTimestamp()
-        };
+        var answerJson = AnswerDto(
+                answer: select,
+                userId: user!.uid,
+                isCorrect: isCorrect,
+                createdAt: null)
+            .toJson();
+        answerJson["created_at"] = FieldValue.serverTimestamp();
         _answerFirebaseStore.addAnswerInTransaction(
             transaction, updateQuiz.reference, answerJson);
         _quizFirebaseStore.updateQuizInTransaction(

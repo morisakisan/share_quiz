@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:share_quiz/data/good/good_dto.dart';
 
 import '../../domain/repository/quiz_good_repository.dart';
 import '../firebase_auth/firebase_auth_store.dart';
 import '../firestore_transaction/fire_store_transaction_store.dart';
 import '../good/good_firebase_store.dart';
-import '../quiz/quiz_dto.dart';
 import '../quiz/quiz_firebase_store.dart';
 
 class QuizGoodPostRepositoryImpl implements QuizGoodPostRepository {
@@ -22,10 +22,8 @@ class QuizGoodPostRepositoryImpl implements QuizGoodPostRepository {
         final goods = await _goodFirebaseStore.fetchGood(quizDoc);
         final goodCount = goods.length + 1 + (isGood ? 1 : -1);
         var user = _firebaseAuthStore.getCurrentUser();
-        var goodJson = {
-          "uid": user!.uid,
-          "created_at": FieldValue.serverTimestamp()
-        };
+        var goodJson = GoodDto(userId: user!.uid, createdAt: null).toJson();
+        goodJson['created_at'] = FieldValue.serverTimestamp();
         _goodFirebaseStore.addGoodInTransaction(
             transaction, updateQuiz.reference, goodJson);
         _quizFirebaseStore.updateQuizGoodCountInTransaction(
