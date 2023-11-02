@@ -8,7 +8,6 @@ import '../quiz/quiz_dto.dart';
 import '../quiz/quiz_firebase_store.dart';
 
 class QuizGoodPostRepositoryImpl implements QuizGoodPostRepository {
-
   final _firebaseAuthStore = FirebaseAuthStore();
   final _goodFirebaseStore = GoodFirebaseStore();
   final _quizFirebaseStore = QuizFirebaseStore();
@@ -16,25 +15,22 @@ class QuizGoodPostRepositoryImpl implements QuizGoodPostRepository {
 
   @override
   Future<void> post(String quizId, bool isGood) async {
-    return _transactionStore.runTransaction((transaction) async {
-      final quizDoc = _quizFirebaseStore.getDoc(quizId);
-      final updateQuiz = await transaction.get(quizDoc);
-      final goods = await _goodFirebaseStore.fetchGood(quizDoc);
-      final goodCount = goods.length + 1 + (isGood ? 1 : -1);
-      var user = _firebaseAuthStore.getCurrentUser();
-      var answerJson = {
-        "answer": select,
-        "uid": user!.uid,
-        "is_correct": isCorrect,
-        "created_at": FieldValue.serverTimestamp()
-      };
-      _goodFirebaseStore.addGoodInTransaction(
-          transaction, updateQuiz.reference, answerJson);
-      _quizFirebaseStore.updateQuizInTransaction(
-          transaction, updateQuiz.reference, rate, answerCount);
-    },
+    return _transactionStore.runTransaction(
+      (transaction) async {
+        final quizDoc = _quizFirebaseStore.getDoc(quizId);
+        final updateQuiz = await transaction.get(quizDoc);
+        final goods = await _goodFirebaseStore.fetchGood(quizDoc);
+        final goodCount = goods.length + 1 + (isGood ? 1 : -1);
+        var user = _firebaseAuthStore.getCurrentUser();
+        var goodJson = {
+          "uid": user!.uid,
+          "created_at": FieldValue.serverTimestamp()
+        };
+        _goodFirebaseStore.addGoodInTransaction(
+            transaction, updateQuiz.reference, goodJson);
+        _quizFirebaseStore.updateQuizGoodCountInTransaction(
+            transaction, updateQuiz.reference, goodCount);
+      },
     );
   }
-}
-
 }

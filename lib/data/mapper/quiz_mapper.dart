@@ -7,15 +7,15 @@ class QuizMapper {
 
   static Quiz transform(QuizDto dto) {
     return Quiz(
-      documentId: dto.docId!,
-      title: dto.title,
-      question: dto.question,
-      choices: dto.choices,
-      correctAnswer: dto.correctAnswer,
-      imageUrl: dto.imageUrl,
-      createdAt: dto.createdAt,
-      car: dto.car,
-      answerCount: dto.answerCount
-    );
+        documentId: dto.docId!,
+        title: dto.title,
+        question: dto.question,
+        choices: dto.choices,
+        correctAnswer: dto.correctAnswer,
+        imageUrl: dto.imageUrl,
+        createdAt: dto.createdAt,
+        correctAnswerRate: dto.correctAnswerRate,
+        answerCount: dto.answerCount,
+        goodCount: dto.goodCount);
   }
 }

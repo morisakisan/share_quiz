@@ -50,6 +50,13 @@ class QuizFirebaseStore {
     });
   }
 
+  void updateQuizGoodCountInTransaction(Transaction transaction,
+      DocumentReference quizReference, int goodCount) {
+    transaction.update(quizReference, {
+      "good_count": goodCount,
+    });
+  }
+
   DocumentSnapshot? lastDocument;
 
   Future<List<QuizDto>> fetchMyQuiz(String uid) {

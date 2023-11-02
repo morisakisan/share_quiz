@@ -190,9 +190,9 @@ class ProfileScreen extends HookConsumerWidget {
     }
 
     final String correctRate;
-    if (quiz.car != null) {
+    if (quiz.correctAnswerRate != null) {
       correctRate =
-          appLocalizations.correctRateWithPercent((quiz.car! * 100).toInt());
+          appLocalizations.correctRateWithPercent((quiz.correctAnswerRate! * 100).toInt());
     } else {
       correctRate = "";
     }

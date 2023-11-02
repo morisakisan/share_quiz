@@ -111,7 +111,7 @@ class QuizDetailScreen extends HookConsumerWidget {
       ),
     );
 
-    final correctRate = quiz.car;
+    final correctRate = quiz.correctAnswerRate;
     if (correctRate != null) {
       list.add(
         Padding(

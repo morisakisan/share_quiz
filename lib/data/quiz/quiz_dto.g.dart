@@ -17,9 +17,10 @@ _$QuizDtoImpl _$$QuizDtoImplFromJson(Map<String, dynamic> json) =>
           (json['choices'] as List<dynamic>).map((e) => e as String).toList(),
       createdAt:
           const TimestampConverter().fromJson(json['created_at'] as Timestamp),
-      userId: json['uid'] as String,
-      car: (json['correct_answer_rate'] as num?)?.toDouble(),
-      answerCount: json['answer_count'] as int,
+      uid: json['uid'] as String,
+      correctAnswerRate: (json['correct_answer_rate'] as num?)?.toDouble(),
+      answerCount: json['answer_count'] as int?,
+      goodCount: json['good_count'] as int?,
     );
 
 Map<String, dynamic> _$$QuizDtoImplToJson(_$QuizDtoImpl instance) =>
@@ -31,7 +32,8 @@ Map<String, dynamic> _$$QuizDtoImplToJson(_$QuizDtoImpl instance) =>
       'image_url': instance.imageUrl,
       'choices': instance.choices,
       'created_at': const TimestampConverter().toJson(instance.createdAt),
-      'uid': instance.userId,
-      'correct_answer_rate': instance.car,
+      'uid': instance.uid,
+      'correct_answer_rate': instance.correctAnswerRate,
       'answer_count': instance.answerCount,
+      'good_count': instance.goodCount,
     };
