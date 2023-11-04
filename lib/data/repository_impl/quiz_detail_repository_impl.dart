@@ -3,10 +3,10 @@ import 'dart:async';
 
 // Package imports:
 import 'package:rxdart/rxdart.dart';
-import 'package:share_quiz/data/good/good_firebase_store.dart';
 
 // Project imports:
 import 'package:share_quiz/data/firebase_auth/firebase_auth_store.dart';
+import 'package:share_quiz/data/good/good_firebase_store.dart';
 import '../../domain/models/quiz_detail/quiz_detail.dart';
 import '../../domain/models/user_quiz_interaction/user_quiz_interaction.dart';
 import '../../domain/repository/quiz_detail_repository.dart';
