@@ -7,6 +7,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
 import '../quiz/quiz.dart';
+import '../user_quiz_interaction/user_quiz_interaction.dart';
 
 // Project imports:
 
@@ -16,7 +17,6 @@ part 'quiz_detail.freezed.dart';
 abstract class QuizDetail with _$QuizDetail {
   const factory QuizDetail({
     required Quiz quiz,
-    required int? selectAnswer,
-    required bool isLogin,
+    required UserQuizInteraction userQuizInteraction
   }) = _QuizDetail;
 }

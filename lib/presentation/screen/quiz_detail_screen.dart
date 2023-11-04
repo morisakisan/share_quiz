@@ -150,7 +150,7 @@ class QuizDetailScreen extends HookConsumerWidget {
         );
 
     final Function()? answerOnPressed;
-    if (quizAnswerData.selectAnswer == null) {
+    if (quizAnswerData.userQuizInteraction.selectAnswer == null) {
       list.addAll(
         createChoices(
           (v) {
@@ -160,14 +160,14 @@ class QuizDetailScreen extends HookConsumerWidget {
       );
 
       answerOnPressed = () {
-        if (!quizAnswerData.isLogin) {
+        if (!quizAnswerData.userQuizInteraction.isLogin) {
           _showLoginDialog(context, userLoginUseCase);
           return;
         }
         _showAnswerDialog(context, selectValue, quiz);
       };
     } else {
-      selectValue = quizAnswerData.selectAnswer!;
+      selectValue = quizAnswerData.userQuizInteraction.selectAnswer!;
       answerOnPressed = null;
 
       list.addAll(createChoices(null));

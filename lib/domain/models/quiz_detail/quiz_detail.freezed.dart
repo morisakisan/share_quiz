@@ -17,8 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$QuizDetail {
   Quiz get quiz => throw _privateConstructorUsedError;
-  int? get selectAnswer => throw _privateConstructorUsedError;
-  bool get isLogin => throw _privateConstructorUsedError;
+  UserQuizInteraction get userQuizInteraction =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $QuizDetailCopyWith<QuizDetail> get copyWith =>
@@ -31,9 +31,10 @@ abstract class $QuizDetailCopyWith<$Res> {
           QuizDetail value, $Res Function(QuizDetail) then) =
       _$QuizDetailCopyWithImpl<$Res, QuizDetail>;
   @useResult
-  $Res call({Quiz quiz, int? selectAnswer, bool isLogin});
+  $Res call({Quiz quiz, UserQuizInteraction userQuizInteraction});
 
   $QuizCopyWith<$Res> get quiz;
+  $UserQuizInteractionCopyWith<$Res> get userQuizInteraction;
 }
 
 /// @nodoc
@@ -50,22 +51,17 @@ class _$QuizDetailCopyWithImpl<$Res, $Val extends QuizDetail>
   @override
   $Res call({
     Object? quiz = null,
-    Object? selectAnswer = freezed,
-    Object? isLogin = null,
+    Object? userQuizInteraction = null,
   }) {
     return _then(_value.copyWith(
       quiz: null == quiz
           ? _value.quiz
           : quiz // ignore: cast_nullable_to_non_nullable
               as Quiz,
-      selectAnswer: freezed == selectAnswer
-          ? _value.selectAnswer
-          : selectAnswer // ignore: cast_nullable_to_non_nullable
-              as int?,
-      isLogin: null == isLogin
-          ? _value.isLogin
-          : isLogin // ignore: cast_nullable_to_non_nullable
-              as bool,
+      userQuizInteraction: null == userQuizInteraction
+          ? _value.userQuizInteraction
+          : userQuizInteraction // ignore: cast_nullable_to_non_nullable
+              as UserQuizInteraction,
     ) as $Val);
   }
 
@@ -74,6 +70,15 @@ class _$QuizDetailCopyWithImpl<$Res, $Val extends QuizDetail>
   $QuizCopyWith<$Res> get quiz {
     return $QuizCopyWith<$Res>(_value.quiz, (value) {
       return _then(_value.copyWith(quiz: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $UserQuizInteractionCopyWith<$Res> get userQuizInteraction {
+    return $UserQuizInteractionCopyWith<$Res>(_value.userQuizInteraction,
+        (value) {
+      return _then(_value.copyWith(userQuizInteraction: value) as $Val);
     });
   }
 }
@@ -86,10 +91,12 @@ abstract class _$$QuizDetailImplCopyWith<$Res>
       __$$QuizDetailImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Quiz quiz, int? selectAnswer, bool isLogin});
+  $Res call({Quiz quiz, UserQuizInteraction userQuizInteraction});
 
   @override
   $QuizCopyWith<$Res> get quiz;
+  @override
+  $UserQuizInteractionCopyWith<$Res> get userQuizInteraction;
 }
 
 /// @nodoc
@@ -104,22 +111,17 @@ class __$$QuizDetailImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? quiz = null,
-    Object? selectAnswer = freezed,
-    Object? isLogin = null,
+    Object? userQuizInteraction = null,
   }) {
     return _then(_$QuizDetailImpl(
       quiz: null == quiz
           ? _value.quiz
           : quiz // ignore: cast_nullable_to_non_nullable
               as Quiz,
-      selectAnswer: freezed == selectAnswer
-          ? _value.selectAnswer
-          : selectAnswer // ignore: cast_nullable_to_non_nullable
-              as int?,
-      isLogin: null == isLogin
-          ? _value.isLogin
-          : isLogin // ignore: cast_nullable_to_non_nullable
-              as bool,
+      userQuizInteraction: null == userQuizInteraction
+          ? _value.userQuizInteraction
+          : userQuizInteraction // ignore: cast_nullable_to_non_nullable
+              as UserQuizInteraction,
     ));
   }
 }
@@ -128,18 +130,16 @@ class __$$QuizDetailImplCopyWithImpl<$Res>
 
 class _$QuizDetailImpl with DiagnosticableTreeMixin implements _QuizDetail {
   const _$QuizDetailImpl(
-      {required this.quiz, required this.selectAnswer, required this.isLogin});
+      {required this.quiz, required this.userQuizInteraction});
 
   @override
   final Quiz quiz;
   @override
-  final int? selectAnswer;
-  @override
-  final bool isLogin;
+  final UserQuizInteraction userQuizInteraction;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'QuizDetail(quiz: $quiz, selectAnswer: $selectAnswer, isLogin: $isLogin)';
+    return 'QuizDetail(quiz: $quiz, userQuizInteraction: $userQuizInteraction)';
   }
 
   @override
@@ -148,8 +148,7 @@ class _$QuizDetailImpl with DiagnosticableTreeMixin implements _QuizDetail {
     properties
       ..add(DiagnosticsProperty('type', 'QuizDetail'))
       ..add(DiagnosticsProperty('quiz', quiz))
-      ..add(DiagnosticsProperty('selectAnswer', selectAnswer))
-      ..add(DiagnosticsProperty('isLogin', isLogin));
+      ..add(DiagnosticsProperty('userQuizInteraction', userQuizInteraction));
   }
 
   @override
@@ -158,13 +157,12 @@ class _$QuizDetailImpl with DiagnosticableTreeMixin implements _QuizDetail {
         (other.runtimeType == runtimeType &&
             other is _$QuizDetailImpl &&
             (identical(other.quiz, quiz) || other.quiz == quiz) &&
-            (identical(other.selectAnswer, selectAnswer) ||
-                other.selectAnswer == selectAnswer) &&
-            (identical(other.isLogin, isLogin) || other.isLogin == isLogin));
+            (identical(other.userQuizInteraction, userQuizInteraction) ||
+                other.userQuizInteraction == userQuizInteraction));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, quiz, selectAnswer, isLogin);
+  int get hashCode => Object.hash(runtimeType, quiz, userQuizInteraction);
 
   @JsonKey(ignore: true)
   @override
@@ -175,16 +173,14 @@ class _$QuizDetailImpl with DiagnosticableTreeMixin implements _QuizDetail {
 
 abstract class _QuizDetail implements QuizDetail {
   const factory _QuizDetail(
-      {required final Quiz quiz,
-      required final int? selectAnswer,
-      required final bool isLogin}) = _$QuizDetailImpl;
+          {required final Quiz quiz,
+          required final UserQuizInteraction userQuizInteraction}) =
+      _$QuizDetailImpl;
 
   @override
   Quiz get quiz;
   @override
-  int? get selectAnswer;
-  @override
-  bool get isLogin;
+  UserQuizInteraction get userQuizInteraction;
   @override
   @JsonKey(ignore: true)
   _$$QuizDetailImplCopyWith<_$QuizDetailImpl> get copyWith =>
