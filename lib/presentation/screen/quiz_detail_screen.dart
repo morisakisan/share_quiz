@@ -198,11 +198,7 @@ class _Success extends HookConsumerWidget {
       } else {
         text = appLocalizations.wrongAnswer;
       }
-      list.add(
-        Text(
-          text,
-        ),
-      );
+      list.add(Text(text));
     }
 
     list.add(
