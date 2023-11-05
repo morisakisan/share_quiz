@@ -208,7 +208,6 @@ class _Success extends HookConsumerWidget {
       TextButton.icon(
         icon: const Icon(Icons.share),
         onPressed: () {
-          // _showCommentBottomSheet(context);
           Share.share(appLocalizations.shareFormat(quiz.title, quiz.question));
         },
         label: Text(appLocalizations.share),
@@ -219,22 +218,14 @@ class _Success extends HookConsumerWidget {
       appBar: AppBar(
         title: Text(quiz.title),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SingleChildScrollView(
-            child: Container(
-              margin: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: list,
-              ),
-            ),
+      body: SingleChildScrollView(
+        child: Container(
+          margin: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: list,
           ),
-          const SizedBox(
-            height: 8,
-          )
-        ],
+        ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: answerOnPressed,
