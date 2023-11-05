@@ -175,11 +175,7 @@ class _Success extends HookConsumerWidget {
 
       list.addAll(createChoices(null));
 
-      list.add(
-        const SizedBox(
-          height: 16,
-        ),
-      );
+      list.add(const SizedBox(height: 16));
 
       list.add(
         Text(
@@ -187,11 +183,8 @@ class _Success extends HookConsumerWidget {
         ),
       );
 
-      list.add(
-        const SizedBox(
-          height: 8,
-        ),
-      );
+      list.add(const SizedBox(height: 8));
+
       final String text;
       if (selectValue == quiz.correctAnswer) {
         text = appLocalizations.correctAnswer;
@@ -201,11 +194,7 @@ class _Success extends HookConsumerWidget {
       list.add(Text(text));
     }
 
-    list.add(
-      const SizedBox(
-        height: 16,
-      ),
-    );
+    list.add(const SizedBox(height: 16));
 
     return Scaffold(
       appBar: AppBar(
@@ -235,8 +224,7 @@ class _Success extends HookConsumerWidget {
             ),
             TextButton.icon(
               icon: const Icon(Icons.thumb_up),
-              onPressed: () {
-              },
+              onPressed: () {},
               label: const Text("good"),
             )
             // ... その他のアイコンボタン ...
