@@ -217,34 +217,29 @@ class QuizDetailScreen extends HookConsumerWidget {
       ),
     );
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(quiz.title),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Container(
-                margin: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: list,
-                ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            child: Container(
+              margin: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: list,
               ),
             ),
           ),
-          ElevatedButton.icon(
-            icon: const Icon(Icons.question_answer_rounded),
-            label: Text(appLocalizations.answer),
-            onPressed: answerOnPressed,
-          ),
-          const SizedBox(
-            height: 8,
-          )
-        ],
-      ),
+        ),
+        ElevatedButton.icon(
+          icon: const Icon(Icons.question_answer_rounded),
+          label: Text(appLocalizations.answer),
+          onPressed: answerOnPressed,
+        ),
+        const SizedBox(
+          height: 8,
+        )
+      ],
     );
   }
 
