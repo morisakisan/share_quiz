@@ -211,16 +211,6 @@ class _Success extends HookConsumerWidget {
       ),
     );
 
-    list.add(
-      TextButton.icon(
-        icon: const Icon(Icons.share),
-        onPressed: () {
-          Share.share(appLocalizations.shareFormat(quiz.title, quiz.question));
-        },
-        label: Text(appLocalizations.share),
-      ),
-    );
-
     return Scaffold(
       appBar: AppBar(
         title: Text(quiz.title),
@@ -235,6 +225,28 @@ class _Success extends HookConsumerWidget {
         label: Text(appLocalizations.answer),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            TextButton.icon(
+              icon: const Icon(Icons.share),
+              onPressed: () {
+                Share.share(
+                    appLocalizations.shareFormat(quiz.title, quiz.question));
+              },
+              label: Text(appLocalizations.share),
+            ),
+            TextButton.icon(
+              icon: const Icon(Icons.thumb_up),
+              onPressed: () {
+              },
+              label: const Text("good"),
+            )
+            // ... その他のアイコンボタン ...
+          ],
+        ),
+      ),
     );
   }
 
