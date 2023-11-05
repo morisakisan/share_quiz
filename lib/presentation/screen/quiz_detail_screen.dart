@@ -90,12 +90,19 @@ class _Success extends HookConsumerWidget {
     final theme = Theme.of(context);
     final quiz = _quizDetail.quiz;
 
-    List<Widget> list = [];
+    Widget image;
     if (quiz.imageUrl != null) {
-      list.add(WidgetUtils.getQuizImage(250.0, quiz.imageUrl!));
+      image = WidgetUtils.getQuizImage(250.0, quiz.imageUrl!);
     } else {
-      list.add(WidgetUtils.getNoImage(context, 100));
+      image = WidgetUtils.getNoImage(context, 100);
     }
+
+    List<Widget> list = [];
+    list.add(Row(
+      crossAxisAlignment: CrossAxisAlignment.start, // ここで指定
+      children: <Widget>[image],
+    ));
+
     final appLocalizations = AppLocalizations.of(context)!;
     list.add(
       Padding(
@@ -218,14 +225,9 @@ class _Success extends HookConsumerWidget {
       appBar: AppBar(
         title: Text(quiz.title),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          margin: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: list,
-          ),
-        ),
+      body: ListView(
+        padding: const EdgeInsets.all(16.0),
+        children: list,
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: answerOnPressed,
