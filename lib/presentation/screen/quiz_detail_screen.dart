@@ -53,7 +53,7 @@ final _loginRepositoryProvider = Provider.autoDispose<LoginRepository>((ref) {
 });
 
 final _loginUseCaseProvider =
-StateNotifierProvider.autoDispose<LoginUseCase, AsyncValue<void>>((ref) {
+    StateNotifierProvider.autoDispose<LoginUseCase, AsyncValue<void>>((ref) {
   var repository = ref.read(_loginRepositoryProvider);
   return LoginUseCase(repository);
 });
@@ -65,25 +65,23 @@ class QuizDetailScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final quizId =
         useState<String>(ModalRoute.of(context)!.settings.arguments as String);
-    final quizAnswer = ref.watch(_quizDetailProvider(quizId.value));
-    if (quizAnswer is AsyncLoading) {
-      return _loading();
-    } else if (quizAnswer is AsyncError) {
-      var error = (quizAnswer as AsyncError);
-      return Text(ErrorHandler.getMessage(error.error, error.stackTrace));
-    } else if (quizAnswer is AsyncData) {
-      return _success(
-          context, (quizAnswer as AsyncData<QuizDetail>).value, ref);
-    } else {
-      throw Exception();
-    }
-  }
+    final quizDetail = ref.watch(_quizDetailProvider(quizId.value));
 
-  Widget _loading() {
+    String title = "";
+    Widget body = quizDetail.when(data: (data) {
+      title = data.quiz.title;
+      return _success(context, data, ref);
+    }, error: (error, stackTrace) {
+      return Text(ErrorHandler.getMessage(error, stackTrace));
+    }, loading: () {
+      return _Loading();
+    });
+
     return Scaffold(
-      appBar: AppBar(),
-      body: WidgetUtils.loading(),
-    );
+        appBar: AppBar(
+          title: Text(title),
+        ),
+        body: body);
   }
 
   Widget _success(
@@ -266,7 +264,8 @@ class QuizDetailScreen extends HookConsumerWidget {
               Navigator.pop(dialogContext);
               return WidgetUtils.loadingScreen(context);
             } else if (state is AsyncError) {
-              return ErrorHandler.getAlertDialog(context, state.error, state.stackTrace);
+              return ErrorHandler.getAlertDialog(
+                  context, state.error, state.stackTrace);
             }
 
             return AlertDialog(
@@ -338,6 +337,13 @@ class QuizDetailScreen extends HookConsumerWidget {
       },
     );
   }*/
+}
+
+class _Loading extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return WidgetUtils.loading();
+  }
 }
 
 class _Select extends StateNotifier<int> {
