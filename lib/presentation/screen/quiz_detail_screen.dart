@@ -70,7 +70,7 @@ class QuizDetailScreen extends HookConsumerWidget {
     String title = "";
     Widget body = quizDetail.when(data: (data) {
       title = data.quiz.title;
-      return _success(context, data, ref);
+      return _Success(data);
     }, error: (error, stackTrace) {
       return Text(ErrorHandler.getMessage(error, stackTrace));
     }, loading: () {
@@ -84,13 +84,40 @@ class QuizDetailScreen extends HookConsumerWidget {
         body: body);
   }
 
-  Widget _success(
-      BuildContext context, QuizDetail quizAnswerData, WidgetRef ref) {
+
+
+/*  void _showCommentBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return FractionallySizedBox(
+          heightFactor: 0.8, // 画面の80%の高さ
+          child: Container(
+            color: Colors.white,
+            child: const Center(
+              child: Text("Large Bottom Sheet"),
+            ),
+          ),
+        );
+      },
+    );
+  }*/
+}
+
+class _Success extends HookConsumerWidget {
+
+  final QuizDetail _quizDetail;
+
+  const _Success(this._quizDetail);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     var userLoginUseCase = ref.watch(_loginUseCaseProvider.notifier);
     final selectNotifier = ref.read(_selectProvider.notifier);
     var selectValue = ref.watch(_selectProvider.select((value) => value));
     final theme = Theme.of(context);
-    final quiz = quizAnswerData.quiz;
+    final quiz = _quizDetail.quiz;
 
     List<Widget> list = [];
     if (quiz.imageUrl != null) {
@@ -134,7 +161,7 @@ class QuizDetailScreen extends HookConsumerWidget {
 
     createChoices(ValueChanged<int?>? onChanged) =>
         quiz.choices.asMap().entries.map(
-          (entry) {
+              (entry) {
             final idx = entry.key;
             final val = entry.value;
             return RadioListTile<int>(
@@ -148,24 +175,24 @@ class QuizDetailScreen extends HookConsumerWidget {
         );
 
     final Function()? answerOnPressed;
-    if (quizAnswerData.userQuizInteraction.selectAnswer == null) {
+    if (_quizDetail.userQuizInteraction.selectAnswer == null) {
       list.addAll(
         createChoices(
-          (v) {
+              (v) {
             selectNotifier.select = v!;
           },
         ),
       );
 
       answerOnPressed = () {
-        if (!quizAnswerData.userQuizInteraction.isLogin) {
+        if (!_quizDetail.userQuizInteraction.isLogin) {
           _showLoginDialog(context, userLoginUseCase);
           return;
         }
         _showAnswerDialog(context, selectValue, quiz);
       };
     } else {
-      selectValue = quizAnswerData.userQuizInteraction.selectAnswer!;
+      selectValue = _quizDetail.userQuizInteraction.selectAnswer!;
       answerOnPressed = null;
 
       list.addAll(createChoices(null));
@@ -286,9 +313,9 @@ class QuizDetailScreen extends HookConsumerWidget {
   }
 
   _showLoginDialog(
-    BuildContext context,
-    LoginUseCase notifier,
-  ) {
+      BuildContext context,
+      LoginUseCase notifier,
+      ) {
     final appLocalizations = AppLocalizations.of(context)!;
     showDialog(
       barrierDismissible: false,
@@ -315,23 +342,6 @@ class QuizDetailScreen extends HookConsumerWidget {
     );
   }
 
-/*  void _showCommentBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) {
-        return FractionallySizedBox(
-          heightFactor: 0.8, // 画面の80%の高さ
-          child: Container(
-            color: Colors.white,
-            child: const Center(
-              child: Text("Large Bottom Sheet"),
-            ),
-          ),
-        );
-      },
-    );
-  }*/
 }
 
 class _Loading extends StatelessWidget {
