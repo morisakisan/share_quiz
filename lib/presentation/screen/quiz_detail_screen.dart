@@ -215,17 +215,17 @@ class _Success extends HookConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             TextButton.icon(
+              icon: const Icon(Icons.thumb_up),
+              onPressed: () {},
+              label: Text("いいね ${_quizDetail.quiz.goodCount ?? 0}"),
+            ),
+            TextButton.icon(
               icon: const Icon(Icons.share),
               onPressed: () {
                 Share.share(
                     appLocalizations.shareFormat(quiz.title, quiz.question));
               },
               label: Text(appLocalizations.share),
-            ),
-            TextButton.icon(
-              icon: const Icon(Icons.thumb_up),
-              onPressed: () {},
-              label: const Text("good"),
             )
             // ... その他のアイコンボタン ...
           ],
