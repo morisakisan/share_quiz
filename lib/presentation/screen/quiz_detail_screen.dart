@@ -67,46 +67,17 @@ class QuizDetailScreen extends HookConsumerWidget {
         useState<String>(ModalRoute.of(context)!.settings.arguments as String);
     final quizDetail = ref.watch(_quizDetailProvider(quizId.value));
 
-    String title = "";
-    Widget body = quizDetail.when(data: (data) {
-      title = data.quiz.title;
+    return quizDetail.when(data: (data) {
       return _Success(data);
     }, error: (error, stackTrace) {
-      return Text(ErrorHandler.getMessage(error, stackTrace));
+      return _Error(error, stackTrace);
     }, loading: () {
       return _Loading();
     });
-
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(title),
-        ),
-        body: body);
   }
-
-
-
-/*  void _showCommentBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      builder: (context) {
-        return FractionallySizedBox(
-          heightFactor: 0.8, // 画面の80%の高さ
-          child: Container(
-            color: Colors.white,
-            child: const Center(
-              child: Text("Large Bottom Sheet"),
-            ),
-          ),
-        );
-      },
-    );
-  }*/
 }
 
 class _Success extends HookConsumerWidget {
-
   final QuizDetail _quizDetail;
 
   const _Success(this._quizDetail);
@@ -161,7 +132,7 @@ class _Success extends HookConsumerWidget {
 
     createChoices(ValueChanged<int?>? onChanged) =>
         quiz.choices.asMap().entries.map(
-              (entry) {
+          (entry) {
             final idx = entry.key;
             final val = entry.value;
             return RadioListTile<int>(
@@ -178,7 +149,7 @@ class _Success extends HookConsumerWidget {
     if (_quizDetail.userQuizInteraction.selectAnswer == null) {
       list.addAll(
         createChoices(
-              (v) {
+          (v) {
             selectNotifier.select = v!;
           },
         ),
@@ -244,11 +215,14 @@ class _Success extends HookConsumerWidget {
       ),
     );
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Expanded(
-          child: SingleChildScrollView(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(quiz.title),
+      ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SingleChildScrollView(
             child: Container(
               margin: const EdgeInsets.all(16.0),
               child: Column(
@@ -257,16 +231,17 @@ class _Success extends HookConsumerWidget {
               ),
             ),
           ),
-        ),
-        ElevatedButton.icon(
-          icon: const Icon(Icons.question_answer_rounded),
-          label: Text(appLocalizations.answer),
-          onPressed: answerOnPressed,
-        ),
-        const SizedBox(
-          height: 8,
-        )
-      ],
+          const SizedBox(
+            height: 8,
+          )
+        ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: answerOnPressed,
+        icon: const Icon(Icons.question_answer_rounded),
+        label: Text(appLocalizations.answer),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 
@@ -313,9 +288,9 @@ class _Success extends HookConsumerWidget {
   }
 
   _showLoginDialog(
-      BuildContext context,
-      LoginUseCase notifier,
-      ) {
+    BuildContext context,
+    LoginUseCase notifier,
+  ) {
     final appLocalizations = AppLocalizations.of(context)!;
     showDialog(
       barrierDismissible: false,
@@ -342,12 +317,42 @@ class _Success extends HookConsumerWidget {
     );
   }
 
+/*  void _showCommentBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) {
+        return FractionallySizedBox(
+          heightFactor: 0.8, // 画面の80%の高さ
+          child: Container(
+            color: Colors.white,
+            child: const Center(
+              child: Text("Large Bottom Sheet"),
+            ),
+          ),
+        );
+      },
+    );
+  }*/
 }
 
 class _Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return WidgetUtils.loading();
+    return Scaffold(appBar: AppBar(), body: WidgetUtils.loading());
+  }
+}
+
+class _Error extends StatelessWidget {
+  final Object? _e;
+  final StackTrace _stackTrace;
+
+  const _Error(this._e, this._stackTrace);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(), body: Text(ErrorHandler.getMessage(_e, _stackTrace)));
   }
 }
 
