@@ -105,7 +105,11 @@ class _Success extends HookConsumerWidget {
     var selectValue = ref.watch(_selectProvider.select((value) => value));
     final theme = Theme.of(context);
     final quiz = _quizDetail.quiz;
-
+    final appLocalizations = AppLocalizations.of(context)!;
+    final question = Text(
+      appLocalizations.displayQuestion(quiz.question),
+      style: theme.textTheme.headlineSmall,
+    );
     List<Widget> list = [];
     if (quiz.imageUrl != null) {
       Widget image = WidgetUtils.getQuizImage(250.0, quiz.imageUrl!);
@@ -113,18 +117,16 @@ class _Success extends HookConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start, // ここで指定
         children: <Widget>[image],
       ));
-    }
 
-    final appLocalizations = AppLocalizations.of(context)!;
-    list.add(
-      Padding(
-        padding: const EdgeInsets.only(top: 16),
-        child: Text(
-          appLocalizations.displayQuestion(quiz.question),
-          style: theme.textTheme.headlineSmall,
+      list.add(
+        Padding(
+          padding: const EdgeInsets.only(top: 16),
+          child: question,
         ),
-      ),
-    );
+      );
+    } else {
+      list.add(question);
+    }
 
     final correctRate = quiz.correctAnswerRate;
     if (correctRate != null) {
@@ -249,7 +251,7 @@ class _Success extends HookConsumerWidget {
         ),
       ),
     ));
-    
+
     var quizGoodPost = ref.watch(_quizGoodPostUseCaseProvider);
     if (quizGoodPost is AsyncLoading) {
       stackChildren.add(WidgetUtils.loading());
