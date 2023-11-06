@@ -217,7 +217,7 @@ class _Success extends HookConsumerWidget {
             TextButton.icon(
               icon: const Icon(Icons.thumb_up),
               onPressed: () {},
-              label: Text("いいね ${_quizDetail.quiz.goodCount ?? 0}"),
+              label: Text("${_quizDetail.quiz.goodCount ?? 0}"),
             ),
             TextButton.icon(
               icon: const Icon(Icons.share),
