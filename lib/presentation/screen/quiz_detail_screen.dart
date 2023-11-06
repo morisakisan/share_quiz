@@ -9,11 +9,13 @@ import 'package:share_plus/share_plus.dart';
 
 // Project imports:
 import 'package:share_quiz/data/repository_impl/quiz_answer_post_repository_impl.dart';
+import 'package:share_quiz/domain/repository/quiz_good_post_repository.dart';
 import 'package:share_quiz/domain/use_cases/quiz_detail_use_case.dart';
 import 'package:share_quiz/presentation/utility/error_handler.dart';
 import 'package:share_quiz/presentation/utility/widget_utils.dart';
 import '../../data/repository_impl/login_repository_impl.dart';
 import '../../data/repository_impl/quiz_detail_repository_impl.dart';
+import '../../data/repository_impl/quiz_good_post_repository_impl.dart';
 import '../../domain/models/quiz/quiz.dart';
 import '../../domain/models/quiz_detail/quiz_detail.dart';
 import '../../domain/repository/login_repository.dart';
@@ -21,6 +23,7 @@ import '../../domain/repository/quiz_answer_post_repository.dart';
 import '../../domain/repository/quiz_detail_repository.dart';
 import '../../domain/use_cases/login_use_case.dart';
 import '../../domain/use_cases/quiz_answer_post_use_case.dart';
+import '../../domain/use_cases/quiz_good_post_use_case.dart';
 
 final _repositoryProvider =
     Provider.autoDispose<QuizAnswerPostRepository>((ref) {
@@ -58,6 +61,18 @@ final _loginUseCaseProvider =
   return LoginUseCase(repository);
 });
 
+final _quizGoodPostRepositoryProvider =
+    Provider.autoDispose<QuizGoodPostRepository>((ref) {
+  return QuizGoodPostRepositoryImpl();
+});
+
+final _quizGoodPostUseCaseProvider =
+    StateNotifierProvider.autoDispose<QuizGoodPostUseCase, AsyncValue<void>?>(
+        (ref) {
+  var repository = ref.read(_quizGoodPostRepositoryProvider);
+  return QuizGoodPostUseCase(repository);
+});
+
 class QuizDetailScreen extends HookConsumerWidget {
   const QuizDetailScreen({super.key});
 
@@ -84,24 +99,22 @@ class _Success extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    var quizGoodPostUseCase = ref.read(_quizGoodPostUseCaseProvider.notifier);
+    var quizGoodPost = ref.watch(_quizGoodPostUseCaseProvider);
     var userLoginUseCase = ref.watch(_loginUseCaseProvider.notifier);
     final selectNotifier = ref.read(_selectProvider.notifier);
     var selectValue = ref.watch(_selectProvider.select((value) => value));
     final theme = Theme.of(context);
     final quiz = _quizDetail.quiz;
 
-    Widget image;
-    if (quiz.imageUrl != null) {
-      image = WidgetUtils.getQuizImage(250.0, quiz.imageUrl!);
-    } else {
-      image = WidgetUtils.getNoImage(context, 100);
-    }
-
     List<Widget> list = [];
-    list.add(Row(
-      crossAxisAlignment: CrossAxisAlignment.start, // ここで指定
-      children: <Widget>[image],
-    ));
+    if (quiz.imageUrl != null) {
+      Widget image = WidgetUtils.getQuizImage(250.0, quiz.imageUrl!);
+      list.add(Row(
+        crossAxisAlignment: CrossAxisAlignment.start, // ここで指定
+        children: <Widget>[image],
+      ));
+    }
 
     final appLocalizations = AppLocalizations.of(context)!;
     list.add(
@@ -215,8 +228,13 @@ class _Success extends HookConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: <Widget>[
             TextButton.icon(
-              icon: const Icon(Icons.thumb_up),
-              onPressed: () {},
+              icon: Icon(_quizDetail.userQuizInteraction.hasGood
+                  ? Icons.thumb_up_alt
+                  : Icons.thumb_up_off_alt),
+              onPressed: () {
+                quizGoodPostUseCase.post(
+                    quiz.documentId, !_quizDetail.userQuizInteraction.hasGood);
+              },
               label: Text("${_quizDetail.quiz.goodCount ?? 0}"),
             ),
             TextButton.icon(
