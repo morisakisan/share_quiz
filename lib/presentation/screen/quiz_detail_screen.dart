@@ -234,6 +234,10 @@ class _Success extends HookConsumerWidget {
                   ? Icons.thumb_up_alt
                   : Icons.thumb_up_off_alt),
               onPressed: () {
+                if (!_quizDetail.userQuizInteraction.isLogin) {
+                  _showLoginDialog(context, userLoginUseCase);
+                  return;
+                }
                 quizGoodPostUseCase.post(quiz.documentId);
               },
               label: Text("${_quizDetail.quiz.goodCount ?? 0}"),
