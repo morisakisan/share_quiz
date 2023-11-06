@@ -100,7 +100,6 @@ class _Success extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var quizGoodPostUseCase = ref.read(_quizGoodPostUseCaseProvider.notifier);
-    var quizGoodPost = ref.watch(_quizGoodPostUseCaseProvider);
     var userLoginUseCase = ref.watch(_loginUseCaseProvider.notifier);
     final selectNotifier = ref.read(_selectProvider.notifier);
     var selectValue = ref.watch(_selectProvider.select((value) => value));
@@ -209,7 +208,8 @@ class _Success extends HookConsumerWidget {
 
     list.add(const SizedBox(height: 16));
 
-    return Scaffold(
+    List<Widget> stackChildren = [];
+    stackChildren.add(Scaffold(
       appBar: AppBar(
         title: Text(quiz.title),
       ),
@@ -248,7 +248,18 @@ class _Success extends HookConsumerWidget {
           ],
         ),
       ),
-    );
+    ));
+    
+    var quizGoodPost = ref.watch(_quizGoodPostUseCaseProvider);
+    if (quizGoodPost is AsyncLoading) {
+      stackChildren.add(WidgetUtils.loading());
+    } else if (quizGoodPost is AsyncError) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ErrorHandler.showErrorDialog(
+            context, quizGoodPost.error, quizGoodPost.stackTrace);
+      });
+    }
+    return Stack(children: stackChildren);
   }
 
   _showAnswerDialog(BuildContext context, int select, Quiz quiz) {
