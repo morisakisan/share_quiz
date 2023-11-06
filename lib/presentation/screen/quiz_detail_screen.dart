@@ -232,8 +232,7 @@ class _Success extends HookConsumerWidget {
                   ? Icons.thumb_up_alt
                   : Icons.thumb_up_off_alt),
               onPressed: () {
-                quizGoodPostUseCase.post(
-                    quiz.documentId, !_quizDetail.userQuizInteraction.hasGood);
+                quizGoodPostUseCase.post(quiz.documentId);
               },
               label: Text("${_quizDetail.quiz.goodCount ?? 0}"),
             ),

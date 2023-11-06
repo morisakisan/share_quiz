@@ -1,3 +1,3 @@
 abstract class QuizGoodPostRepository {
-  Future<void> post(String quizId, bool isGood);
+  Future<void> post(String quizId);
 }

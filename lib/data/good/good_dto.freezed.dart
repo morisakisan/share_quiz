@@ -129,9 +129,7 @@ class _$GoodDtoImpl with DiagnosticableTreeMixin implements _GoodDto {
   const _$GoodDtoImpl(
       {@JsonKey(includeFromJson: false, includeToJson: false) this.id,
       @JsonKey(name: 'uid') required this.userId,
-      @TimestampConverter()
-      @JsonKey(name: 'created_at')
-      required this.createdAt});
+      @TimestampConverter() @JsonKey(name: 'created_at') this.createdAt});
 
   factory _$GoodDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$GoodDtoImplFromJson(json);
@@ -197,7 +195,7 @@ abstract class _GoodDto implements GoodDto {
       @JsonKey(name: 'uid') required final String userId,
       @TimestampConverter()
       @JsonKey(name: 'created_at')
-      required final DateTime? createdAt}) = _$GoodDtoImpl;
+      final DateTime? createdAt}) = _$GoodDtoImpl;
 
   factory _GoodDto.fromJson(Map<String, dynamic> json) = _$GoodDtoImpl.fromJson;
 

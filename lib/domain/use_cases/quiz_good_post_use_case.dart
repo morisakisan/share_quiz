@@ -9,10 +9,10 @@ class QuizGoodPostUseCase extends StateNotifier<AsyncValue<void>?> {
 
   QuizGoodPostUseCase(this._repository) : super(null);
 
-  Future<void> post(String quizDocId, bool isGood) async {
+  Future<void> post(String quizDocId) async {
     try {
       state = const AsyncValue.loading();
-      await _repository.post(quizDocId, isGood);
+      await _repository.post(quizDocId);
       state = const AsyncValue.data(null);
     } catch (error, stacktrace) {
       state = AsyncValue.error(error, stacktrace);
