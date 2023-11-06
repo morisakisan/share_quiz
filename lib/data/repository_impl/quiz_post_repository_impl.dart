@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 // Project imports:
 import 'package:share_quiz/data/firebase_auth/firebase_auth_store.dart';
+import 'package:share_quiz/data/quiz/quiz_dto.dart';
 import '../../domain/models/quiz_post/quiz_post_data.dart';
 import '../../domain/repository/quiz_post_repository.dart';
 import '../quiz/quiz_firebase_store.dart';
@@ -18,16 +19,20 @@ class QuizPostRepositoryImpl extends QuizPostRepository {
     final user = _userFireStore.getCurrentUser();
     final userId = user!.uid;
     final imageUrl = await _storage.uploadFile(post.imageFile, userId);
-    final json = {
-      "title": post.title,
-      "question": post.question,
-      "choices": post.choices,
-      "correct_answer": post.answer,
-      "image_url": imageUrl,
-      "created_at": FieldValue.serverTimestamp(),
-      "uid": userId,
-      "answer_count": 0
-    };
+
+    var json = QuizDto(
+            title: post.title,
+            question: post.question,
+            choices: post.choices,
+            correctAnswer: post.answer,
+            imageUrl: imageUrl,
+            createdAt: null,
+            uid: userId,
+            answerCount: null,
+            goodCount: null,
+            correctAnswerRate: null)
+        .toJson();
+    json['created_at'] = FieldValue.serverTimestamp();
     return await _quizFireStore.post(json);
   }
 }

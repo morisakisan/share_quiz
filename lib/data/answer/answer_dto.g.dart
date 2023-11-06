@@ -11,8 +11,8 @@ _$AnswerDtoImpl _$$AnswerDtoImplFromJson(Map<String, dynamic> json) =>
       answer: json['answer'] as int,
       userId: json['uid'] as String,
       isCorrect: json['is_correct'] as bool,
-      createdAt:
-          const TimestampConverter().fromJson(json['created_at'] as Timestamp),
+      createdAt: _$JsonConverterFromJson<Timestamp, DateTime>(
+          json['created_at'], const TimestampConverter().fromJson),
     );
 
 Map<String, dynamic> _$$AnswerDtoImplToJson(_$AnswerDtoImpl instance) =>
@@ -20,5 +20,18 @@ Map<String, dynamic> _$$AnswerDtoImplToJson(_$AnswerDtoImpl instance) =>
       'answer': instance.answer,
       'uid': instance.userId,
       'is_correct': instance.isCorrect,
-      'created_at': const TimestampConverter().toJson(instance.createdAt),
+      'created_at': _$JsonConverterToJson<Timestamp, DateTime>(
+          instance.createdAt, const TimestampConverter().toJson),
     };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) =>
+    json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) =>
+    value == null ? null : toJson(value);

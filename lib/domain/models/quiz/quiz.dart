@@ -15,9 +15,10 @@ abstract class Quiz with _$Quiz {
     required String question,
     required List<String> choices,
     required int correctAnswer,
-    required DateTime createdAt,
-    required double? car,
+    required DateTime? createdAt,
+    required double? correctAnswerRate,
     required int? answerCount,
+    required int? goodCount,
     @Default(null) String? imageUrl,
   }) = _Quiz;
 }

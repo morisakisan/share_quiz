@@ -34,13 +34,15 @@ mixin _$QuizDto {
   List<String> get choices => throw _privateConstructorUsedError;
   @TimestampConverter()
   @JsonKey(name: 'created_at')
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'uid')
-  String get userId => throw _privateConstructorUsedError;
+  String get uid => throw _privateConstructorUsedError;
   @JsonKey(name: 'correct_answer_rate')
-  double? get car => throw _privateConstructorUsedError;
+  double? get correctAnswerRate => throw _privateConstructorUsedError;
   @JsonKey(name: 'answer_count')
-  int get answerCount => throw _privateConstructorUsedError;
+  int? get answerCount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'good_count')
+  int? get goodCount => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -59,10 +61,11 @@ abstract class $QuizDtoCopyWith<$Res> {
       @JsonKey(name: 'question') String question,
       @JsonKey(name: 'image_url') String? imageUrl,
       @JsonKey(name: 'choices') List<String> choices,
-      @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'uid') String userId,
-      @JsonKey(name: 'correct_answer_rate') double? car,
-      @JsonKey(name: 'answer_count') int answerCount});
+      @TimestampConverter() @JsonKey(name: 'created_at') DateTime? createdAt,
+      @JsonKey(name: 'uid') String uid,
+      @JsonKey(name: 'correct_answer_rate') double? correctAnswerRate,
+      @JsonKey(name: 'answer_count') int? answerCount,
+      @JsonKey(name: 'good_count') int? goodCount});
 }
 
 /// @nodoc
@@ -84,10 +87,11 @@ class _$QuizDtoCopyWithImpl<$Res, $Val extends QuizDto>
     Object? question = null,
     Object? imageUrl = freezed,
     Object? choices = null,
-    Object? createdAt = null,
-    Object? userId = null,
-    Object? car = freezed,
-    Object? answerCount = null,
+    Object? createdAt = freezed,
+    Object? uid = null,
+    Object? correctAnswerRate = freezed,
+    Object? answerCount = freezed,
+    Object? goodCount = freezed,
   }) {
     return _then(_value.copyWith(
       docId: freezed == docId
@@ -114,22 +118,26 @@ class _$QuizDtoCopyWithImpl<$Res, $Val extends QuizDto>
           ? _value.choices
           : choices // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      uid: null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      car: freezed == car
-          ? _value.car
-          : car // ignore: cast_nullable_to_non_nullable
+      correctAnswerRate: freezed == correctAnswerRate
+          ? _value.correctAnswerRate
+          : correctAnswerRate // ignore: cast_nullable_to_non_nullable
               as double?,
-      answerCount: null == answerCount
+      answerCount: freezed == answerCount
           ? _value.answerCount
           : answerCount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
+      goodCount: freezed == goodCount
+          ? _value.goodCount
+          : goodCount // ignore: cast_nullable_to_non_nullable
+              as int?,
     ) as $Val);
   }
 }
@@ -148,10 +156,11 @@ abstract class _$$QuizDtoImplCopyWith<$Res> implements $QuizDtoCopyWith<$Res> {
       @JsonKey(name: 'question') String question,
       @JsonKey(name: 'image_url') String? imageUrl,
       @JsonKey(name: 'choices') List<String> choices,
-      @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt,
-      @JsonKey(name: 'uid') String userId,
-      @JsonKey(name: 'correct_answer_rate') double? car,
-      @JsonKey(name: 'answer_count') int answerCount});
+      @TimestampConverter() @JsonKey(name: 'created_at') DateTime? createdAt,
+      @JsonKey(name: 'uid') String uid,
+      @JsonKey(name: 'correct_answer_rate') double? correctAnswerRate,
+      @JsonKey(name: 'answer_count') int? answerCount,
+      @JsonKey(name: 'good_count') int? goodCount});
 }
 
 /// @nodoc
@@ -171,10 +180,11 @@ class __$$QuizDtoImplCopyWithImpl<$Res>
     Object? question = null,
     Object? imageUrl = freezed,
     Object? choices = null,
-    Object? createdAt = null,
-    Object? userId = null,
-    Object? car = freezed,
-    Object? answerCount = null,
+    Object? createdAt = freezed,
+    Object? uid = null,
+    Object? correctAnswerRate = freezed,
+    Object? answerCount = freezed,
+    Object? goodCount = freezed,
   }) {
     return _then(_$QuizDtoImpl(
       docId: freezed == docId
@@ -201,22 +211,26 @@ class __$$QuizDtoImplCopyWithImpl<$Res>
           ? _value._choices
           : choices // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      userId: null == userId
-          ? _value.userId
-          : userId // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      uid: null == uid
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
               as String,
-      car: freezed == car
-          ? _value.car
-          : car // ignore: cast_nullable_to_non_nullable
+      correctAnswerRate: freezed == correctAnswerRate
+          ? _value.correctAnswerRate
+          : correctAnswerRate // ignore: cast_nullable_to_non_nullable
               as double?,
-      answerCount: null == answerCount
+      answerCount: freezed == answerCount
           ? _value.answerCount
           : answerCount // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
+      goodCount: freezed == goodCount
+          ? _value.goodCount
+          : goodCount // ignore: cast_nullable_to_non_nullable
+              as int?,
     ));
   }
 }
@@ -234,9 +248,10 @@ class _$QuizDtoImpl with DiagnosticableTreeMixin implements _QuizDto {
       @TimestampConverter()
       @JsonKey(name: 'created_at')
       required this.createdAt,
-      @JsonKey(name: 'uid') required this.userId,
-      @JsonKey(name: 'correct_answer_rate') required this.car,
-      @JsonKey(name: 'answer_count') required this.answerCount})
+      @JsonKey(name: 'uid') required this.uid,
+      @JsonKey(name: 'correct_answer_rate') required this.correctAnswerRate,
+      @JsonKey(name: 'answer_count') required this.answerCount,
+      @JsonKey(name: 'good_count') required this.goodCount})
       : _choices = choices;
 
   factory _$QuizDtoImpl.fromJson(Map<String, dynamic> json) =>
@@ -269,20 +284,23 @@ class _$QuizDtoImpl with DiagnosticableTreeMixin implements _QuizDto {
   @override
   @TimestampConverter()
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
   @override
   @JsonKey(name: 'uid')
-  final String userId;
+  final String uid;
   @override
   @JsonKey(name: 'correct_answer_rate')
-  final double? car;
+  final double? correctAnswerRate;
   @override
   @JsonKey(name: 'answer_count')
-  final int answerCount;
+  final int? answerCount;
+  @override
+  @JsonKey(name: 'good_count')
+  final int? goodCount;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'QuizDto(docId: $docId, correctAnswer: $correctAnswer, title: $title, question: $question, imageUrl: $imageUrl, choices: $choices, createdAt: $createdAt, userId: $userId, car: $car, answerCount: $answerCount)';
+    return 'QuizDto(docId: $docId, correctAnswer: $correctAnswer, title: $title, question: $question, imageUrl: $imageUrl, choices: $choices, createdAt: $createdAt, uid: $uid, correctAnswerRate: $correctAnswerRate, answerCount: $answerCount, goodCount: $goodCount)';
   }
 
   @override
@@ -297,9 +315,10 @@ class _$QuizDtoImpl with DiagnosticableTreeMixin implements _QuizDto {
       ..add(DiagnosticsProperty('imageUrl', imageUrl))
       ..add(DiagnosticsProperty('choices', choices))
       ..add(DiagnosticsProperty('createdAt', createdAt))
-      ..add(DiagnosticsProperty('userId', userId))
-      ..add(DiagnosticsProperty('car', car))
-      ..add(DiagnosticsProperty('answerCount', answerCount));
+      ..add(DiagnosticsProperty('uid', uid))
+      ..add(DiagnosticsProperty('correctAnswerRate', correctAnswerRate))
+      ..add(DiagnosticsProperty('answerCount', answerCount))
+      ..add(DiagnosticsProperty('goodCount', goodCount));
   }
 
   @override
@@ -318,10 +337,13 @@ class _$QuizDtoImpl with DiagnosticableTreeMixin implements _QuizDto {
             const DeepCollectionEquality().equals(other._choices, _choices) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
-            (identical(other.userId, userId) || other.userId == userId) &&
-            (identical(other.car, car) || other.car == car) &&
+            (identical(other.uid, uid) || other.uid == uid) &&
+            (identical(other.correctAnswerRate, correctAnswerRate) ||
+                other.correctAnswerRate == correctAnswerRate) &&
             (identical(other.answerCount, answerCount) ||
-                other.answerCount == answerCount));
+                other.answerCount == answerCount) &&
+            (identical(other.goodCount, goodCount) ||
+                other.goodCount == goodCount));
   }
 
   @JsonKey(ignore: true)
@@ -335,9 +357,10 @@ class _$QuizDtoImpl with DiagnosticableTreeMixin implements _QuizDto {
       imageUrl,
       const DeepCollectionEquality().hash(_choices),
       createdAt,
-      userId,
-      car,
-      answerCount);
+      uid,
+      correctAnswerRate,
+      answerCount,
+      goodCount);
 
   @JsonKey(ignore: true)
   @override
@@ -363,11 +386,13 @@ abstract class _QuizDto implements QuizDto {
       @JsonKey(name: 'choices') required final List<String> choices,
       @TimestampConverter()
       @JsonKey(name: 'created_at')
-      required final DateTime createdAt,
-      @JsonKey(name: 'uid') required final String userId,
-      @JsonKey(name: 'correct_answer_rate') required final double? car,
-      @JsonKey(name: 'answer_count')
-      required final int answerCount}) = _$QuizDtoImpl;
+      required final DateTime? createdAt,
+      @JsonKey(name: 'uid') required final String uid,
+      @JsonKey(name: 'correct_answer_rate')
+      required final double? correctAnswerRate,
+      @JsonKey(name: 'answer_count') required final int? answerCount,
+      @JsonKey(name: 'good_count')
+      required final int? goodCount}) = _$QuizDtoImpl;
 
   factory _QuizDto.fromJson(Map<String, dynamic> json) = _$QuizDtoImpl.fromJson;
 
@@ -392,16 +417,19 @@ abstract class _QuizDto implements QuizDto {
   @override
   @TimestampConverter()
   @JsonKey(name: 'created_at')
-  DateTime get createdAt;
+  DateTime? get createdAt;
   @override
   @JsonKey(name: 'uid')
-  String get userId;
+  String get uid;
   @override
   @JsonKey(name: 'correct_answer_rate')
-  double? get car;
+  double? get correctAnswerRate;
   @override
   @JsonKey(name: 'answer_count')
-  int get answerCount;
+  int? get answerCount;
+  @override
+  @JsonKey(name: 'good_count')
+  int? get goodCount;
   @override
   @JsonKey(ignore: true)
   _$$QuizDtoImplCopyWith<_$QuizDtoImpl> get copyWith =>

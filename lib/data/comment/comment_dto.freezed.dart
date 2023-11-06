@@ -22,15 +22,13 @@ CommentDto _$CommentDtoFromJson(Map<String, dynamic> json) {
 mixin _$CommentDto {
   @JsonKey(includeFromJson: false, includeToJson: false)
   String? get id => throw _privateConstructorUsedError;
-  @JsonKey(name: 'quiz_id')
-  String get quizId => throw _privateConstructorUsedError;
   @JsonKey(name: 'content')
   String get content => throw _privateConstructorUsedError;
   @JsonKey(name: 'uid')
   String get userId => throw _privateConstructorUsedError;
   @TimestampConverter()
   @JsonKey(name: 'created_at')
-  DateTime get createdAt => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -46,10 +44,9 @@ abstract class $CommentDtoCopyWith<$Res> {
   @useResult
   $Res call(
       {@JsonKey(includeFromJson: false, includeToJson: false) String? id,
-      @JsonKey(name: 'quiz_id') String quizId,
       @JsonKey(name: 'content') String content,
       @JsonKey(name: 'uid') String userId,
-      @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt});
+      @TimestampConverter() @JsonKey(name: 'created_at') DateTime? createdAt});
 }
 
 /// @nodoc
@@ -66,20 +63,15 @@ class _$CommentDtoCopyWithImpl<$Res, $Val extends CommentDto>
   @override
   $Res call({
     Object? id = freezed,
-    Object? quizId = null,
     Object? content = null,
     Object? userId = null,
-    Object? createdAt = null,
+    Object? createdAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      quizId: null == quizId
-          ? _value.quizId
-          : quizId // ignore: cast_nullable_to_non_nullable
-              as String,
       content: null == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
@@ -88,10 +80,10 @@ class _$CommentDtoCopyWithImpl<$Res, $Val extends CommentDto>
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -106,10 +98,9 @@ abstract class _$$CommentDtoImplCopyWith<$Res>
   @useResult
   $Res call(
       {@JsonKey(includeFromJson: false, includeToJson: false) String? id,
-      @JsonKey(name: 'quiz_id') String quizId,
       @JsonKey(name: 'content') String content,
       @JsonKey(name: 'uid') String userId,
-      @TimestampConverter() @JsonKey(name: 'created_at') DateTime createdAt});
+      @TimestampConverter() @JsonKey(name: 'created_at') DateTime? createdAt});
 }
 
 /// @nodoc
@@ -124,20 +115,15 @@ class __$$CommentDtoImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? quizId = null,
     Object? content = null,
     Object? userId = null,
-    Object? createdAt = null,
+    Object? createdAt = freezed,
   }) {
     return _then(_$CommentDtoImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String?,
-      quizId: null == quizId
-          ? _value.quizId
-          : quizId // ignore: cast_nullable_to_non_nullable
-              as String,
       content: null == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
@@ -146,10 +132,10 @@ class __$$CommentDtoImplCopyWithImpl<$Res>
           ? _value.userId
           : userId // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: null == createdAt
+      createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ));
   }
 }
@@ -159,7 +145,6 @@ class __$$CommentDtoImplCopyWithImpl<$Res>
 class _$CommentDtoImpl with DiagnosticableTreeMixin implements _CommentDto {
   const _$CommentDtoImpl(
       {@JsonKey(includeFromJson: false, includeToJson: false) this.id,
-      @JsonKey(name: 'quiz_id') required this.quizId,
       @JsonKey(name: 'content') required this.content,
       @JsonKey(name: 'uid') required this.userId,
       @TimestampConverter()
@@ -173,9 +158,6 @@ class _$CommentDtoImpl with DiagnosticableTreeMixin implements _CommentDto {
   @JsonKey(includeFromJson: false, includeToJson: false)
   final String? id;
   @override
-  @JsonKey(name: 'quiz_id')
-  final String quizId;
-  @override
   @JsonKey(name: 'content')
   final String content;
   @override
@@ -184,11 +166,11 @@ class _$CommentDtoImpl with DiagnosticableTreeMixin implements _CommentDto {
   @override
   @TimestampConverter()
   @JsonKey(name: 'created_at')
-  final DateTime createdAt;
+  final DateTime? createdAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'CommentDto(id: $id, quizId: $quizId, content: $content, userId: $userId, createdAt: $createdAt)';
+    return 'CommentDto(id: $id, content: $content, userId: $userId, createdAt: $createdAt)';
   }
 
   @override
@@ -197,7 +179,6 @@ class _$CommentDtoImpl with DiagnosticableTreeMixin implements _CommentDto {
     properties
       ..add(DiagnosticsProperty('type', 'CommentDto'))
       ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('quizId', quizId))
       ..add(DiagnosticsProperty('content', content))
       ..add(DiagnosticsProperty('userId', userId))
       ..add(DiagnosticsProperty('createdAt', createdAt));
@@ -209,7 +190,6 @@ class _$CommentDtoImpl with DiagnosticableTreeMixin implements _CommentDto {
         (other.runtimeType == runtimeType &&
             other is _$CommentDtoImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.quizId, quizId) || other.quizId == quizId) &&
             (identical(other.content, content) || other.content == content) &&
             (identical(other.userId, userId) || other.userId == userId) &&
             (identical(other.createdAt, createdAt) ||
@@ -218,8 +198,7 @@ class _$CommentDtoImpl with DiagnosticableTreeMixin implements _CommentDto {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, quizId, content, userId, createdAt);
+  int get hashCode => Object.hash(runtimeType, id, content, userId, createdAt);
 
   @JsonKey(ignore: true)
   @override
@@ -238,12 +217,11 @@ class _$CommentDtoImpl with DiagnosticableTreeMixin implements _CommentDto {
 abstract class _CommentDto implements CommentDto {
   const factory _CommentDto(
       {@JsonKey(includeFromJson: false, includeToJson: false) final String? id,
-      @JsonKey(name: 'quiz_id') required final String quizId,
       @JsonKey(name: 'content') required final String content,
       @JsonKey(name: 'uid') required final String userId,
       @TimestampConverter()
       @JsonKey(name: 'created_at')
-      required final DateTime createdAt}) = _$CommentDtoImpl;
+      required final DateTime? createdAt}) = _$CommentDtoImpl;
 
   factory _CommentDto.fromJson(Map<String, dynamic> json) =
       _$CommentDtoImpl.fromJson;
@@ -251,9 +229,6 @@ abstract class _CommentDto implements CommentDto {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   String? get id;
-  @override
-  @JsonKey(name: 'quiz_id')
-  String get quizId;
   @override
   @JsonKey(name: 'content')
   String get content;
@@ -263,7 +238,7 @@ abstract class _CommentDto implements CommentDto {
   @override
   @TimestampConverter()
   @JsonKey(name: 'created_at')
-  DateTime get createdAt;
+  DateTime? get createdAt;
   @override
   @JsonKey(ignore: true)
   _$$CommentDtoImplCopyWith<_$CommentDtoImpl> get copyWith =>

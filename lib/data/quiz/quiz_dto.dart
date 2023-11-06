@@ -24,10 +24,11 @@ abstract class QuizDto with _$QuizDto {
     @JsonKey(name: 'choices') required List<String> choices,
     @TimestampConverter()
     @JsonKey(name: 'created_at')
-    required DateTime createdAt,
-    @JsonKey(name: 'uid') required String userId,
-    @JsonKey(name: 'correct_answer_rate') required double? car,
-    @JsonKey(name: 'answer_count') required int answerCount,
+    required DateTime? createdAt,
+    @JsonKey(name: 'uid') required String uid,
+    @JsonKey(name: 'correct_answer_rate') required double? correctAnswerRate,
+    @JsonKey(name: 'answer_count') required int? answerCount,
+    @JsonKey(name: 'good_count') required int? goodCount,
   }) = _QuizDto;
 
   factory QuizDto.fromJson(Map<String, dynamic> json) =>

@@ -9,11 +9,13 @@ import 'package:share_plus/share_plus.dart';
 
 // Project imports:
 import 'package:share_quiz/data/repository_impl/quiz_answer_post_repository_impl.dart';
+import 'package:share_quiz/domain/repository/quiz_good_post_repository.dart';
 import 'package:share_quiz/domain/use_cases/quiz_detail_use_case.dart';
 import 'package:share_quiz/presentation/utility/error_handler.dart';
 import 'package:share_quiz/presentation/utility/widget_utils.dart';
 import '../../data/repository_impl/login_repository_impl.dart';
 import '../../data/repository_impl/quiz_detail_repository_impl.dart';
+import '../../data/repository_impl/quiz_good_post_repository_impl.dart';
 import '../../domain/models/quiz/quiz.dart';
 import '../../domain/models/quiz_detail/quiz_detail.dart';
 import '../../domain/repository/login_repository.dart';
@@ -21,6 +23,7 @@ import '../../domain/repository/quiz_answer_post_repository.dart';
 import '../../domain/repository/quiz_detail_repository.dart';
 import '../../domain/use_cases/login_use_case.dart';
 import '../../domain/use_cases/quiz_answer_post_use_case.dart';
+import '../../domain/use_cases/quiz_good_post_use_case.dart';
 
 final _repositoryProvider =
     Provider.autoDispose<QuizAnswerPostRepository>((ref) {
@@ -53,9 +56,21 @@ final _loginRepositoryProvider = Provider.autoDispose<LoginRepository>((ref) {
 });
 
 final _loginUseCaseProvider =
-StateNotifierProvider.autoDispose<LoginUseCase, AsyncValue<void>>((ref) {
+    StateNotifierProvider.autoDispose<LoginUseCase, AsyncValue<void>>((ref) {
   var repository = ref.read(_loginRepositoryProvider);
   return LoginUseCase(repository);
+});
+
+final _quizGoodPostRepositoryProvider =
+    Provider.autoDispose<QuizGoodPostRepository>((ref) {
+  return QuizGoodPostRepositoryImpl();
+});
+
+final _quizGoodPostUseCaseProvider =
+    StateNotifierProvider.autoDispose<QuizGoodPostUseCase, AsyncValue<void>?>(
+        (ref) {
+  var repository = ref.read(_quizGoodPostRepositoryProvider);
+  return QuizGoodPostUseCase(repository);
 });
 
 class QuizDetailScreen extends HookConsumerWidget {
@@ -65,53 +80,55 @@ class QuizDetailScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final quizId =
         useState<String>(ModalRoute.of(context)!.settings.arguments as String);
-    final quizAnswer = ref.watch(_quizDetailProvider(quizId.value));
-    if (quizAnswer is AsyncLoading) {
-      return _loading();
-    } else if (quizAnswer is AsyncError) {
-      var error = (quizAnswer as AsyncError);
-      return Text(ErrorHandler.getMessage(error.error, error.stackTrace));
-    } else if (quizAnswer is AsyncData) {
-      return _success(
-          context, (quizAnswer as AsyncData<QuizDetail>).value, ref);
-    } else {
-      throw Exception();
-    }
-  }
+    final quizDetail = ref.watch(_quizDetailProvider(quizId.value));
 
-  Widget _loading() {
-    return Scaffold(
-      appBar: AppBar(),
-      body: WidgetUtils.loading(),
-    );
+    return quizDetail.when(data: (data) {
+      return _Success(data);
+    }, error: (error, stackTrace) {
+      return _Error(error, stackTrace);
+    }, loading: () {
+      return _Loading();
+    });
   }
+}
 
-  Widget _success(
-      BuildContext context, QuizDetail quizAnswerData, WidgetRef ref) {
+class _Success extends HookConsumerWidget {
+  final QuizDetail _quizDetail;
+
+  const _Success(this._quizDetail);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    var quizGoodPostUseCase = ref.read(_quizGoodPostUseCaseProvider.notifier);
     var userLoginUseCase = ref.watch(_loginUseCaseProvider.notifier);
     final selectNotifier = ref.read(_selectProvider.notifier);
     var selectValue = ref.watch(_selectProvider.select((value) => value));
     final theme = Theme.of(context);
-    final quiz = quizAnswerData.quiz;
-
+    final quiz = _quizDetail.quiz;
+    final appLocalizations = AppLocalizations.of(context)!;
+    final question = Text(
+      appLocalizations.displayQuestion(quiz.question),
+      style: theme.textTheme.headlineSmall,
+    );
     List<Widget> list = [];
     if (quiz.imageUrl != null) {
-      list.add(WidgetUtils.getQuizImage(250.0, quiz.imageUrl!));
-    } else {
-      list.add(WidgetUtils.getNoImage(context, 100));
-    }
-    final appLocalizations = AppLocalizations.of(context)!;
-    list.add(
-      Padding(
-        padding: const EdgeInsets.only(top: 16),
-        child: Text(
-          appLocalizations.displayQuestion(quiz.question),
-          style: theme.textTheme.headlineSmall,
-        ),
-      ),
-    );
+      Widget image = WidgetUtils.getQuizImage(250.0, quiz.imageUrl!);
+      list.add(Row(
+        crossAxisAlignment: CrossAxisAlignment.start, // ここで指定
+        children: <Widget>[image],
+      ));
 
-    final correctRate = quiz.car;
+      list.add(
+        Padding(
+          padding: const EdgeInsets.only(top: 16),
+          child: question,
+        ),
+      );
+    } else {
+      list.add(question);
+    }
+
+    final correctRate = quiz.correctAnswerRate;
     if (correctRate != null) {
       list.add(
         Padding(
@@ -150,7 +167,7 @@ class QuizDetailScreen extends HookConsumerWidget {
         );
 
     final Function()? answerOnPressed;
-    if (quizAnswerData.selectAnswer == null) {
+    if (_quizDetail.userQuizInteraction.selectAnswer == null) {
       list.addAll(
         createChoices(
           (v) {
@@ -160,23 +177,19 @@ class QuizDetailScreen extends HookConsumerWidget {
       );
 
       answerOnPressed = () {
-        if (!quizAnswerData.isLogin) {
+        if (!_quizDetail.userQuizInteraction.isLogin) {
           _showLoginDialog(context, userLoginUseCase);
           return;
         }
         _showAnswerDialog(context, selectValue, quiz);
       };
     } else {
-      selectValue = quizAnswerData.selectAnswer!;
+      selectValue = _quizDetail.userQuizInteraction.selectAnswer!;
       answerOnPressed = null;
 
       list.addAll(createChoices(null));
 
-      list.add(
-        const SizedBox(
-          height: 16,
-        ),
-      );
+      list.add(const SizedBox(height: 16));
 
       list.add(
         Text(
@@ -184,70 +197,75 @@ class QuizDetailScreen extends HookConsumerWidget {
         ),
       );
 
-      list.add(
-        const SizedBox(
-          height: 8,
-        ),
-      );
+      list.add(const SizedBox(height: 8));
+
       final String text;
       if (selectValue == quiz.correctAnswer) {
         text = appLocalizations.correctAnswer;
       } else {
         text = appLocalizations.wrongAnswer;
       }
-      list.add(
-        Text(
-          text,
-        ),
-      );
+      list.add(Text(text));
     }
 
-    list.add(
-      const SizedBox(
-        height: 16,
-      ),
-    );
+    list.add(const SizedBox(height: 16));
 
-    list.add(
-      TextButton.icon(
-        icon: const Icon(Icons.share),
-        onPressed: () {
-          // _showCommentBottomSheet(context);
-          Share.share(appLocalizations.shareFormat(quiz.title, quiz.question));
-        },
-        label: Text(appLocalizations.share),
-      ),
-    );
-
-    return Scaffold(
+    List<Widget> stackChildren = [];
+    stackChildren.add(Scaffold(
       appBar: AppBar(
         title: Text(quiz.title),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Container(
-                margin: const EdgeInsets.all(16.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: list,
-                ),
-              ),
-            ),
-          ),
-          ElevatedButton.icon(
-            icon: const Icon(Icons.question_answer_rounded),
-            label: Text(appLocalizations.answer),
-            onPressed: answerOnPressed,
-          ),
-          const SizedBox(
-            height: 8,
-          )
-        ],
+      body: ListView(
+        padding: const EdgeInsets.all(16.0),
+        children: list,
       ),
-    );
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: answerOnPressed,
+        icon: const Icon(Icons.question_answer_rounded),
+        label: Text(appLocalizations.answer),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      bottomNavigationBar: BottomAppBar(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: <Widget>[
+            TextButton.icon(
+              icon: Icon(_quizDetail.userQuizInteraction.hasGood
+                  ? Icons.thumb_up_alt
+                  : Icons.thumb_up_off_alt),
+              onPressed: () {
+                if (!_quizDetail.userQuizInteraction.isLogin) {
+                  _showLoginDialog(context, userLoginUseCase);
+                  return;
+                }
+                quizGoodPostUseCase.post(quiz.documentId);
+              },
+              label: Text("${_quizDetail.quiz.goodCount ?? 0}"),
+            ),
+            TextButton.icon(
+              icon: const Icon(Icons.share),
+              onPressed: () {
+                Share.share(
+                    appLocalizations.shareFormat(quiz.title, quiz.question));
+              },
+              label: Text(appLocalizations.share),
+            )
+            // ... その他のアイコンボタン ...
+          ],
+        ),
+      ),
+    ));
+
+    var quizGoodPost = ref.watch(_quizGoodPostUseCaseProvider);
+    if (quizGoodPost is AsyncLoading) {
+      stackChildren.add(WidgetUtils.loading());
+    } else if (quizGoodPost is AsyncError) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ErrorHandler.showErrorDialog(
+            context, quizGoodPost.error, quizGoodPost.stackTrace);
+      });
+    }
+    return Stack(children: stackChildren);
   }
 
   _showAnswerDialog(BuildContext context, int select, Quiz quiz) {
@@ -266,7 +284,8 @@ class QuizDetailScreen extends HookConsumerWidget {
               Navigator.pop(dialogContext);
               return WidgetUtils.loadingScreen(context);
             } else if (state is AsyncError) {
-              return ErrorHandler.getAlertDialog(context, state.error, state.stackTrace);
+              return ErrorHandler.getAlertDialog(
+                  context, state.error, state.stackTrace);
             }
 
             return AlertDialog(
@@ -321,7 +340,7 @@ class QuizDetailScreen extends HookConsumerWidget {
     );
   }
 
-  void _showCommentBottomSheet(BuildContext context) {
+/*  void _showCommentBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -337,6 +356,26 @@ class QuizDetailScreen extends HookConsumerWidget {
         );
       },
     );
+  }*/
+}
+
+class _Loading extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(appBar: AppBar(), body: WidgetUtils.loading());
+  }
+}
+
+class _Error extends StatelessWidget {
+  final Object? _e;
+  final StackTrace _stackTrace;
+
+  const _Error(this._e, this._stackTrace);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        appBar: AppBar(), body: Text(ErrorHandler.getMessage(_e, _stackTrace)));
   }
 }
 

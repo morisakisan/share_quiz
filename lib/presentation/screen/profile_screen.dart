@@ -169,7 +169,10 @@ class ProfileScreen extends HookConsumerWidget {
     final appLocalizations = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final formatter = DateFormat(appLocalizations.dateFormat, "ja_JP");
-    final formatted = formatter.format(quiz.createdAt); // Dateから
+    String? formatted;
+    if (quiz.createdAt != null) {
+      formatted = formatter.format(quiz.createdAt!);
+    }
 
     final List<Widget> list = [];
 
@@ -190,9 +193,9 @@ class ProfileScreen extends HookConsumerWidget {
     }
 
     final String correctRate;
-    if (quiz.car != null) {
+    if (quiz.correctAnswerRate != null) {
       correctRate =
-          appLocalizations.correctRateWithPercent((quiz.car! * 100).toInt());
+          appLocalizations.correctRateWithPercent((quiz.correctAnswerRate! * 100).toInt());
     } else {
       correctRate = "";
     }
@@ -221,7 +224,7 @@ class ProfileScreen extends HookConsumerWidget {
           ),
           Text(
             appLocalizations.answerCountWithRate(
-                quiz.answerCount!, correctRate),
+                quiz.answerCount ?? 0, correctRate),
             style: theme.textTheme.bodyMedium,
           ),
         ],
@@ -255,7 +258,7 @@ class ProfileScreen extends HookConsumerWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
             child: Text(
-              formatted,
+              formatted ?? "",
               style: theme.textTheme.bodySmall,
             ),
           ),

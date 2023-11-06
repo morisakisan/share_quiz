@@ -22,14 +22,15 @@ class QuizListPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var async = ref.watch(_provider);
     return async.when(
-      data: (list) => ListView(
-        padding: const EdgeInsets.all(8.0),
-        children: list.quizzes.map(
-          (value) {
-            return _getQuizView(context, value);
-          },
-        ).toList(),
-      ),
+      data: (list) =>
+          ListView(
+            padding: const EdgeInsets.all(8.0),
+            children: list.quizzes.map(
+                  (value) {
+                return _getQuizView(context, value);
+              },
+            ).toList(),
+          ),
       loading: () => WidgetUtils.loading(),
       error: (error, stack) => Text(ErrorHandler.getMessage(error, stack)),
     );
@@ -38,12 +39,16 @@ class QuizListPage extends HookConsumerWidget {
   Widget _getQuizView(BuildContext context, Quiz quiz) {
     final appLocalizations = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
-    final formatter = DateFormat(appLocalizations.dateFormat, "ja_JP");
-    final formatted = formatter.format(quiz.createdAt); // Dateから
 
+    String? formatted;
+    if (quiz.createdAt != null) {
+      final formatter = DateFormat(appLocalizations.dateFormat, "ja_JP");
+      formatted = formatter.format(quiz.createdAt!);
+    }
     final List<Widget> list = [];
 
-    createImage(image) => Padding(
+    createImage(image) =>
+        Padding(
           padding: const EdgeInsets.fromLTRB(8, 8, 16, 8),
           child: image,
         );
@@ -60,9 +65,9 @@ class QuizListPage extends HookConsumerWidget {
     }
 
     final String correctRate;
-    if (quiz.car != null) {
-      correctRate =
-          appLocalizations.correctRateWithPercent((quiz.car! * 100).toInt());
+    if (quiz.correctAnswerRate != null) {
+      correctRate = appLocalizations
+          .correctRateWithPercent((quiz.correctAnswerRate! * 100).toInt());
     } else {
       correctRate = "";
     }
@@ -91,7 +96,7 @@ class QuizListPage extends HookConsumerWidget {
           ),
           Text(
             appLocalizations.answerCountWithRate(
-                quiz.answerCount!, correctRate),
+                quiz.answerCount ?? 0, correctRate),
             style: theme.textTheme.bodyMedium,
           ),
         ],
@@ -125,7 +130,7 @@ class QuizListPage extends HookConsumerWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(8, 8, 0, 8),
             child: Text(
-              formatted,
+              formatted ?? "",
               style: theme.textTheme.bodySmall,
             ),
           ),
