@@ -25,11 +25,23 @@ class GoodFirebaseStore {
             }).toList());
   }
 
-  void addGoodInTransaction(
+  Future<void> addGoodInTransaction(
       Transaction transaction,
       DocumentReference<Map<String, dynamic>> quizReference,
-      Map<String, dynamic> goodJson) {
+      Map<String, dynamic> goodJson) async {
     transaction.set(_getGoodCollectionFromQuiz(quizReference).doc(), goodJson);
+  }
+
+  Future<void> deleteGoodInTransaction(
+      Transaction transaction,
+      DocumentReference<Map<String, dynamic>> quizReference,
+      String uid) async {
+    final goodCollection = _getGoodCollectionFromQuiz(quizReference);
+    QuerySnapshot<Map<String, dynamic>> querySnapshot =
+        await goodCollection.where('uid', isEqualTo: uid).limit(1).get();
+    if (querySnapshot.docs.isNotEmpty) {
+      transaction.delete(querySnapshot.docs.first.reference);
+    }
   }
 
   Stream<GoodDto?> fetchMyGood(String quizId, String userId) {

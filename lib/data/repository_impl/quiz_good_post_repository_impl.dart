@@ -22,12 +22,18 @@ class QuizGoodPostRepositoryImpl implements QuizGoodPostRepository {
         final quizDoc = _quizFirebaseStore.getDoc(quizId);
         final updateQuiz = await transaction.get(quizDoc);
         final goods = await _goodFirebaseStore.fetchGood(quizDoc);
-        final goodCount = goods.length + 1 + (isGood ? 1 : -1);
+        final goodCount = goods.length + (isGood ? 1 : -1);
         var user = _firebaseAuthStore.getCurrentUser();
-        var goodJson = GoodDto(userId: user!.uid, createdAt: null).toJson();
-        goodJson['created_at'] = FieldValue.serverTimestamp();
-        _goodFirebaseStore.addGoodInTransaction(
-            transaction, updateQuiz.reference, goodJson);
+        if(isGood) {
+          var goodJson = GoodDto(userId: user!.uid, createdAt: null).toJson();
+          goodJson['created_at'] = FieldValue.serverTimestamp();
+          await _goodFirebaseStore.addGoodInTransaction(
+              transaction, updateQuiz.reference, goodJson);
+        } else {
+          await _goodFirebaseStore.deleteGoodInTransaction(
+              transaction, updateQuiz.reference, user!.uid);
+        }
+
         _quizFirebaseStore.updateQuizGoodCountInTransaction(
             transaction, updateQuiz.reference, goodCount);
       },
