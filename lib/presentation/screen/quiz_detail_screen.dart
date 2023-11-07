@@ -19,10 +19,8 @@ import '../../domain/models/quiz/quiz.dart';
 import '../../domain/models/quiz_detail/quiz_detail.dart';
 import '../../domain/repository/quiz_answer_post_repository.dart';
 import '../../domain/repository/quiz_detail_repository.dart';
-import '../../domain/use_cases/login_use_case.dart';
 import '../../domain/use_cases/quiz_answer_post_use_case.dart';
 import '../../domain/use_cases/quiz_good_post_use_case.dart';
-import '../../provider/login_use_case_provider.dart';
 import '../common/login_dialog.dart';
 
 final _repositoryProvider =
@@ -90,7 +88,6 @@ class _Success extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var quizGoodPostUseCase = ref.read(_quizGoodPostUseCaseProvider.notifier);
-    var userLoginUseCase = ref.watch(loginUseCaseProvider.notifier);
     final selectNotifier = ref.read(_selectProvider.notifier);
     var selectValue = ref.watch(_selectProvider.select((value) => value));
     final theme = Theme.of(context);
@@ -168,7 +165,7 @@ class _Success extends HookConsumerWidget {
 
       answerOnPressed = () {
         if (!_quizDetail.userQuizInteraction.isLogin) {
-          _showLoginDialog(context, userLoginUseCase);
+          _showLoginDialog(context);
           return;
         }
         _showAnswerDialog(context, selectValue, quiz);
@@ -225,7 +222,7 @@ class _Success extends HookConsumerWidget {
                   : Icons.thumb_up_off_alt),
               onPressed: () {
                 if (!_quizDetail.userQuizInteraction.isLogin) {
-                  _showLoginDialog(context, userLoginUseCase);
+                  _showLoginDialog(context);
                   return;
                 }
                 quizGoodPostUseCase.post(quiz.documentId);
@@ -300,10 +297,7 @@ class _Success extends HookConsumerWidget {
     );
   }
 
-  _showLoginDialog(
-    BuildContext context,
-    LoginUseCase notifier,
-  ) {
+  _showLoginDialog(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
     showDialog(
         barrierDismissible: false,

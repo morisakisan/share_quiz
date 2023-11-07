@@ -6,16 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../data/repository_impl/login_repository_impl.dart';
 import '../../domain/repository/login_repository.dart';
 import '../../domain/use_cases/login_use_case.dart';
-
-final _loginRepositoryProvider = Provider.autoDispose<LoginRepository>((ref) {
-  return LoginRepositoryImpl();
-});
-
-final _loginUseCaseProvider =
-    StateNotifierProvider.autoDispose<LoginUseCase, AsyncValue<void>>((ref) {
-  var repository = ref.read(_loginRepositoryProvider);
-  return LoginUseCase(repository);
-});
+import '../../provider/login_use_case_provider.dart';
 
 class LoginDialog extends HookConsumerWidget {
   final String contentText;
@@ -24,7 +15,7 @@ class LoginDialog extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var loginUseCase = ref.read(_loginUseCaseProvider.notifier);
+    var loginUseCase = ref.watch(loginUseCaseProvider.notifier);
     final appLocalizations = AppLocalizations.of(context)!;
     return AlertDialog(
       content: Text(contentText),
