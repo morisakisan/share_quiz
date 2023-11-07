@@ -4,7 +4,6 @@ import '../../domain/models/pagination/pagination.dart';
 import '../../domain/models/user_quizzes/user_quizzes.dart';
 import '../../domain/repository/user_quizzes_repository.dart';
 import '../mapper/user_quizzes_mapper.dart';
-import '../quiz/quiz_dto.dart';
 import '../quiz/quiz_firebase_store.dart';
 
 class UserQuizzesRepositoryImpl implements UserQuizzesRepository {
@@ -14,8 +13,8 @@ class UserQuizzesRepositoryImpl implements UserQuizzesRepository {
   @override
   Future<UserQuizzes> getUserQuizzes(int page) async {
     final uid = _firebaseAuthStore.getCurrentUser()!.uid;
-    List<QuizDto> dtoList = await _firebaseStore.fetchMyQuiz(uid);
-    Pagination pagination = Pagination(currentPage: page, hasMore: dtoList.length == 10);
+    final dtoList = await _firebaseStore.fetchMyQuiz(uid);
+    final pagination = Pagination(currentPage: page, hasMore: dtoList.length == 10);
     return UserQuizzesMapper.transformToUserQuizzes(dtoList, pagination);
   }
 }
