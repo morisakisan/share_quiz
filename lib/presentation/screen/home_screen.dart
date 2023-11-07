@@ -19,9 +19,6 @@ import '../page/quiz_list_page.dart';
 import '../utility/error_handler.dart';
 import '../utility/widget_utils.dart';
 
-// Project imports:
-
-
 class HomeScreen extends HookConsumerWidget {
   const HomeScreen({super.key});
 
