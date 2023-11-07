@@ -1,13 +1,21 @@
+import 'package:share_quiz/provider/profile_repository_provider.dart';
+import 'package:share_quiz/provider/profile_use_case_provider.dart';
 import 'package:share_quiz/provider/quiz_list_repository_provider.dart';
+import 'package:share_quiz/provider/user_quizzes_repository_provider.dart';
+import 'package:share_quiz/provider/user_quizzes_use_case_provider.dart';
 
 import '../data/repository_impl/current_user_data_repository_impl.dart';
 import '../data/repository_impl/log_out_repository_impl.dart';
 import '../data/repository_impl/login_repository_impl.dart';
+import '../data/repository_impl/profile_repository_impl.dart';
 import '../data/repository_impl/quiz_list_repository_impl.dart';
+import '../data/repository_impl/user_quizzes_repository_impl.dart';
 import '../domain/use_cases/current_user_data_use_case.dart';
 import '../domain/use_cases/log_out_use_case.dart';
 import '../domain/use_cases/login_use_case.dart';
+import '../domain/use_cases/profile_use_case.dart';
 import '../domain/use_cases/quiz_list_use_case.dart';
+import '../domain/use_cases/user_quizzes_use_case.dart';
 import '../domain/value_object/quiz_list_order_by.dart';
 import 'quiz_new_list_provider.dart';
 import 'quiz_answers_count_list_provider.dart';
@@ -37,7 +45,8 @@ final globalOverrides = [
             QuizListOrderBy.correctAnswerRateAsc)
         .build();
   }),
-  currentUserRepositoryProvider.overrideWithValue(CurrentUserDataRepositoryImpl()),
+  currentUserRepositoryProvider
+      .overrideWithValue(CurrentUserDataRepositoryImpl()),
   currentUserProvider.overrideWith((ref) {
     var repository = ref.read(currentUserRepositoryProvider);
     return CurrentUserDataUseCase(repository).build();
@@ -51,5 +60,15 @@ final globalOverrides = [
   logOutUseCaseProvider.overrideWith((ref) {
     var repository = ref.read(logOutRepositoryProvider);
     return LogOutUseCase(repository);
+  }),
+  profileRepositoryProvider.overrideWithValue(ProfileRepositoryImpl()),
+  profileUseCaseProvider.overrideWith((ref) {
+    final repository = ref.read(profileRepositoryProvider);
+    return ProfileUseCase(repository).fetch();
+  }),
+  userQuizzesRepositoryProvider.overrideWithValue(UserQuizzesRepositoryImpl()),
+  userQuizzesUseCaseProvider.overrideWith((ref) {
+    final repository = ref.read(userQuizzesRepositoryProvider);
+    return UserQuizzesUseCase(repository);
   }),
 ];

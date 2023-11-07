@@ -1,0 +1,10 @@
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import '../domain/models/pagination_state/pagination_state.dart';
+import '../domain/models/user_quizzes/user_quizzes.dart';
+import '../domain/use_cases/user_quizzes_use_case.dart';
+
+final userQuizzesUseCaseProvider = StateNotifierProvider.autoDispose<
+    UserQuizzesUseCase, PaginationState<UserQuizzes>>((ref) {
+  throw UnimplementedError();
+});
