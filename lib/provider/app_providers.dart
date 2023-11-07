@@ -10,10 +10,13 @@ import 'package:share_quiz/provider/quiz_good_post_use_case_provider.dart';
 import 'package:share_quiz/provider/quiz_list_repository_provider.dart';
 import 'package:share_quiz/provider/quiz_post_repository_provider.dart';
 import 'package:share_quiz/provider/quiz_post_use_case_provider.dart';
+import 'package:share_quiz/provider/setting_repository_provider.dart';
+import 'package:share_quiz/provider/setting_use_case_provider.dart';
 import 'package:share_quiz/provider/user_quizzes_repository_provider.dart';
 import 'package:share_quiz/provider/user_quizzes_use_case_provider.dart';
 
 import '../data/repository_impl/current_user_data_repository_impl.dart';
+import '../data/repository_impl/delete_user_repository_impl.dart';
 import '../data/repository_impl/log_out_repository_impl.dart';
 import '../data/repository_impl/login_repository_impl.dart';
 import '../data/repository_impl/profile_repository_impl.dart';
@@ -22,8 +25,10 @@ import '../data/repository_impl/quiz_detail_repository_impl.dart';
 import '../data/repository_impl/quiz_good_post_repository_impl.dart';
 import '../data/repository_impl/quiz_list_repository_impl.dart';
 import '../data/repository_impl/quiz_post_repository_impl.dart';
+import '../data/repository_impl/setting_repository_impl.dart';
 import '../data/repository_impl/user_quizzes_repository_impl.dart';
 import '../domain/use_cases/current_user_data_use_case.dart';
+import '../domain/use_cases/delete_user_use_case.dart';
 import '../domain/use_cases/log_out_use_case.dart';
 import '../domain/use_cases/login_use_case.dart';
 import '../domain/use_cases/profile_use_case.dart';
@@ -33,8 +38,11 @@ import '../domain/use_cases/quiz_form_use_case.dart';
 import '../domain/use_cases/quiz_good_post_use_case.dart';
 import '../domain/use_cases/quiz_list_use_case.dart';
 import '../domain/use_cases/quiz_post_use_case.dart';
+import '../domain/use_cases/setting_usecase.dart';
 import '../domain/use_cases/user_quizzes_use_case.dart';
 import '../domain/value_object/quiz_list_order_by.dart';
+import 'delete_user_repository_provider.dart';
+import 'delete_user_use_case_provider.dart';
 import 'quiz_new_list_provider.dart';
 import 'quiz_answers_count_list_provider.dart';
 import 'quiz_correct_rate_list_provider.dart';
@@ -112,5 +120,13 @@ final globalOverrides = [
   }),
   quizFormUseCaseProvider.overrideWith((ref) {
     return QuizFormUseCase();
+  }),
+  settingRepositoryProvider.overrideWithValue(SettingRepositoryImpl()),
+  settingUseCaseProvider.overrideWith((ref) {
+    return SettingUseCase(ref.read(settingRepositoryProvider)).build();
+  }),
+  deleteUserRepositoryProvider.overrideWithValue(DeleteUserRepositoryImpl()),
+  deleteUserUseCaseProvider.overrideWith((ref) {
+    return DeleteUserUseCase(ref.read(deleteUserRepositoryProvider));
   }),
 ];
