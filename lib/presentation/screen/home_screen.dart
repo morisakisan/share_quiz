@@ -23,6 +23,7 @@ import '../../domain/repository/quiz_list_repository.dart';
 import '../../domain/use_cases/log_out_use_case.dart';
 import '../../domain/use_cases/quiz_list_use_case.dart';
 import '../../domain/value_object/quiz_list_order_by.dart';
+import '../common/login_dialog.dart';
 import '../nav.dart';
 import '../utility/widget_utils.dart';
 
@@ -125,7 +126,7 @@ class HomeScreen extends HookConsumerWidget {
               if (user != null) {
                 Navigator.of(context).pushNamed(Nav.quizPost);
               } else {
-                _showLoginDialog(context, ref);
+                _showLoginDialog(context);
               }
             } else if (currentUser is AsyncError) {
               var error = currentUser as AsyncError;
@@ -148,51 +149,30 @@ class HomeScreen extends HookConsumerWidget {
       children.add(WidgetUtils.loading());
     } else if (login is AsyncError) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        ErrorHandler.showErrorDialog(
-            context, login.error, login.stackTrace);
+        ErrorHandler.showErrorDialog(context, login.error, login.stackTrace);
       });
     } else if (logout is AsyncError) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        ErrorHandler.showErrorDialog(
-            context, logout.error, logout.stackTrace);
+        ErrorHandler.showErrorDialog(context, logout.error, logout.stackTrace);
       });
     }
 
     return Stack(children: children);
   }
 
-  _showLoginDialog(BuildContext context, WidgetRef ref) {
+  _showLoginDialog(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
-    var loginUseCase = ref.read(_loginUseCaseProvider.notifier);
     showDialog(
       barrierDismissible: false,
       context: context,
       builder: (_) {
-        return AlertDialog(
-          content: Text(appLocalizations.login_required_to_post),
-          actions: [
-            // ボタン領域
-            TextButton(
-              child: Text(appLocalizations.cancel),
-              onPressed: () => Navigator.pop(context),
-            ),
-            TextButton(
-              child: Text(appLocalizations.ok),
-              onPressed: () {
-                Navigator.pop(context);
-                loginUseCase.signInWithGoogle();
-              },
-            ),
-          ],
-        );
+        return LoginDialog(appLocalizations.login_required_to_post);
       },
     );
   }
-
 }
 
 class _HomeDrawer extends HookConsumerWidget {
-
   final AsyncValue<UserData?> _state;
 
   const _HomeDrawer(this._state);
@@ -227,8 +207,8 @@ class _HomeDrawer extends HookConsumerWidget {
       );
     } else if (_state is AsyncError) {
       var error = _state as AsyncError;
-      list.add(createHeader(Text(
-          ErrorHandler.getMessage(_state.error, error.stackTrace))));
+      list.add(createHeader(
+          Text(ErrorHandler.getMessage(_state.error, error.stackTrace))));
     } else if (_state is AsyncData) {
       final user = (_state as AsyncData).value;
       if (user != null) {
@@ -284,7 +264,7 @@ class _HomeDrawer extends HookConsumerWidget {
             },
           ),
         );
-        final login = ListTile(
+        final logout = ListTile(
           leading: const Icon(Icons.logout),
           title: Text(
             appLocalizations.logout,
@@ -315,7 +295,7 @@ class _HomeDrawer extends HookConsumerWidget {
             );
           },
         );
-        list.add(login);
+        list.add(logout);
       } else {
         final login = ListTile(
           leading: const Icon(Icons.login),
@@ -350,5 +330,4 @@ class _HomeDrawer extends HookConsumerWidget {
       ),
     );
   }
-
 }
