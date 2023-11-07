@@ -12,7 +12,6 @@ import 'package:intl/date_symbol_data_local.dart';
 
 // Project imports:
 import 'package:share_quiz/presentation/application.dart';
-
 import 'package:share_quiz/provider/app_providers.dart';
 
 void main() async {

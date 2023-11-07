@@ -1,3 +1,4 @@
+// Project imports:
 import 'package:share_quiz/provider/profile_repository_provider.dart';
 import 'package:share_quiz/provider/profile_use_case_provider.dart';
 import 'package:share_quiz/provider/quiz_answer_post_repository_provider.dart';
@@ -14,7 +15,6 @@ import 'package:share_quiz/provider/setting_repository_provider.dart';
 import 'package:share_quiz/provider/setting_use_case_provider.dart';
 import 'package:share_quiz/provider/user_quizzes_repository_provider.dart';
 import 'package:share_quiz/provider/user_quizzes_use_case_provider.dart';
-
 import '../data/repository_impl/current_user_data_repository_impl.dart';
 import '../data/repository_impl/delete_user_repository_impl.dart';
 import '../data/repository_impl/log_out_repository_impl.dart';
@@ -41,17 +41,17 @@ import '../domain/use_cases/quiz_post_use_case.dart';
 import '../domain/use_cases/setting_usecase.dart';
 import '../domain/use_cases/user_quizzes_use_case.dart';
 import '../domain/value_object/quiz_list_order_by.dart';
-import 'delete_user_repository_provider.dart';
-import 'delete_user_use_case_provider.dart';
-import 'quiz_new_list_provider.dart';
-import 'quiz_answers_count_list_provider.dart';
-import 'quiz_correct_rate_list_provider.dart';
 import 'current_user_provider.dart';
 import 'current_user_repository_provider.dart';
-import 'login_repository_provider.dart';
-import 'login_use_case_provider.dart';
+import 'delete_user_repository_provider.dart';
+import 'delete_user_use_case_provider.dart';
 import 'log_out_repository_provider.dart';
 import 'log_out_use_case_provider.dart';
+import 'login_repository_provider.dart';
+import 'login_use_case_provider.dart';
+import 'quiz_answers_count_list_provider.dart';
+import 'quiz_correct_rate_list_provider.dart';
+import 'quiz_new_list_provider.dart';
 
 // You can define global overrides here if needed
 final globalOverrides = [
