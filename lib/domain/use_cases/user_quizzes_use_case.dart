@@ -4,7 +4,7 @@ import 'package:state_notifier/state_notifier.dart';
 // Project imports:
 import '../models/pagination_state/pagination_state.dart';
 import '../models/user_quizzes/user_quizzes.dart';
-import '../models/user_quizzes/user_quizzes_repository.dart';
+import '../repository/user_quizzes_repository.dart';
 
 class UserQuizzesUseCase extends StateNotifier<PaginationState<UserQuizzes>> {
   final UserQuizzesRepository repository;

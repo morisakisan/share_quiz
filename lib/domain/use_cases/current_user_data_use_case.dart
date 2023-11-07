@@ -2,7 +2,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
-import 'package:share_quiz/domain/models/user/user_data.dart';
+import '../../domain/models/user/user_data.dart';
 import '../repository/current_user_data_repository.dart';
 
 class CurrentUserDataUseCase extends StreamNotifier<UserData?> {

@@ -2,7 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 // Project imports:
-import 'package:share_quiz/data/answer/answer_dto.dart';
+import '../../data/answer/answer_dto.dart';
 
 class AnswerFirebaseStore {
   CollectionReference<Map<String, dynamic>> _getCollection(String quizId) {

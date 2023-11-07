@@ -2,7 +2,7 @@
 import 'package:share_quiz/data/firebase_auth/firebase_auth_store.dart';
 import '../../domain/models/pagination/pagination.dart';
 import '../../domain/models/user_quizzes/user_quizzes.dart';
-import '../../domain/models/user_quizzes/user_quizzes_repository.dart';
+import '../../domain/repository/user_quizzes_repository.dart';
 import '../mapper/user_quizzes_mapper.dart';
 import '../quiz/quiz_dto.dart';
 import '../quiz/quiz_firebase_store.dart';
