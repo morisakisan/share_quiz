@@ -27,7 +27,7 @@ final _scrollControllerProvider = Provider.autoDispose<ScrollController>((ref) {
     if (controller.position.atEdge &&
         controller.position.pixels != 0 &&
         hasMore) {
-      ref.read(userQuizzesUseCaseProvider.notifier).fetchQuizzes(1);
+      ref.read(userQuizzesUseCaseProvider.notifier).fetchQuizzes();
     }
   });
   return controller;
@@ -42,7 +42,7 @@ class ProfileScreen extends HookConsumerWidget {
     final scrollController = ref.watch(_scrollControllerProvider);
     var profile = ref.watch(profileUseCaseProvider);
     useEffect(() {
-      ref.read(userQuizzesUseCaseProvider.notifier).fetchQuizzes(1);
+      ref.read(userQuizzesUseCaseProvider.notifier).fetchQuizzes();
       return null;
     }, const []);
 
