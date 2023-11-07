@@ -6,18 +6,12 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
-import 'package:share_quiz/data/repository_impl/current_user_data_repository_impl.dart';
-import 'package:share_quiz/domain/repository/current_user_data_repository.dart';
-import 'package:share_quiz/domain/use_cases/current_user_data_use_case.dart';
-import 'package:share_quiz/domain/use_cases/login_use_case.dart';
 import 'package:share_quiz/presentation/page/quiz_list_page.dart';
 import 'package:share_quiz/presentation/utility/error_handler.dart';
-import '../../data/repository_impl/log_out_repository_impl.dart';
-import '../../data/repository_impl/login_repository_impl.dart';
 import '../../domain/models/user/user_data.dart';
-import '../../domain/repository/log_out_repository.dart';
-import '../../domain/repository/login_repository.dart';
-import '../../domain/use_cases/log_out_use_case.dart';
+import '../../provider/current_user_provider.dart';
+import '../../provider/log_out_use_case_provider.dart';
+import '../../provider/login_use_case_provider.dart';
 import '../common/login_dialog.dart';
 import '../nav.dart';
 import '../utility/widget_utils.dart';
@@ -26,35 +20,6 @@ import 'package:share_quiz/provider/quiz_new_list_provider.dart';
 import 'package:share_quiz/provider/quiz_answers_count_list_provider.dart';
 import 'package:share_quiz/provider/quiz_correct_rate_list_provider.dart';
 
-final _currentUserRepositoryProvider =
-    Provider.autoDispose<CurrentUserDataRepository>((ref) {
-  return CurrentUserDataRepositoryImpl();
-});
-
-final _currentUserProvider = StreamProvider.autoDispose<UserData?>((ref) {
-  var repository = ref.read(_currentUserRepositoryProvider);
-  return CurrentUserDataUseCase(repository).build();
-});
-
-final _loginRepositoryProvider = Provider.autoDispose<LoginRepository>((ref) {
-  return LoginRepositoryImpl();
-});
-
-final _loginUseCaseProvider =
-    StateNotifierProvider.autoDispose<LoginUseCase, AsyncValue<void>>((ref) {
-  var repository = ref.read(_loginRepositoryProvider);
-  return LoginUseCase(repository);
-});
-
-final _logOutRepositoryProvider = Provider.autoDispose<LogOutRepository>((ref) {
-  return LogOutRepositoryImpl();
-});
-
-final _logOutUseCaseProvider =
-    StateNotifierProvider.autoDispose<LogOutUseCase, AsyncValue<void>>((ref) {
-  var repository = ref.read(_logOutRepositoryProvider);
-  return LogOutUseCase(repository);
-});
 
 class HomeScreen extends HookConsumerWidget {
   const HomeScreen({super.key});
@@ -68,7 +33,7 @@ class HomeScreen extends HookConsumerWidget {
       Tab(text: appLocalizations.correct_rate),
     ];
 
-    var currentUser = ref.watch(_currentUserProvider);
+    var currentUser = ref.watch(currentUserProvider);
 
     List<Widget> stackChildren = [];
 
@@ -112,9 +77,9 @@ class HomeScreen extends HookConsumerWidget {
       ),
     ));
 
-    var login = ref.watch(_loginUseCaseProvider);
+    var login = ref.watch(loginUseCaseProvider);
 
-    var logout = ref.watch(_logOutUseCaseProvider);
+    var logout = ref.watch(logOutUseCaseProvider);
     if (login is AsyncLoading || logout is AsyncLoading) {
       stackChildren.add(WidgetUtils.loading());
     } else if (login is AsyncError) {
@@ -149,8 +114,8 @@ class _HomeDrawer extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var loginUseCase = ref.read(_loginUseCaseProvider.notifier);
-    var logOutUseCase = ref.read(_logOutUseCaseProvider.notifier);
+    var loginUseCase = ref.read(loginUseCaseProvider.notifier);
+    var logOutUseCase = ref.read(logOutUseCaseProvider.notifier);
     final theme = Theme.of(context);
     final appLocalizations = AppLocalizations.of(context)!;
     Widget createHeader(Widget profile) {
