@@ -19,7 +19,6 @@ import '../../domain/models/quiz_list/quiz_list.dart';
 import '../../domain/models/user/user_data.dart';
 import '../../domain/repository/log_out_repository.dart';
 import '../../domain/repository/login_repository.dart';
-import '../../domain/repository/quiz_list_repository.dart';
 import '../../domain/use_cases/log_out_use_case.dart';
 import '../../domain/use_cases/quiz_list_use_case.dart';
 import '../../domain/value_object/quiz_list_order_by.dart';
@@ -27,25 +26,22 @@ import '../common/login_dialog.dart';
 import '../nav.dart';
 import '../utility/widget_utils.dart';
 
-final _quizListRepositoryProvider =
-    Provider.autoDispose<QuizListRepository>((ref) {
-  return QuizListRepositoryImpl();
-});
+import 'package:share_quiz/provider/quiz_list_repository_provider.dart';
 
-final _quizListNewProvider = StreamProvider.autoDispose<QuizList>((ref) {
-  var repository = ref.read(_quizListRepositoryProvider);
+final _quizNewListProvider = StreamProvider.autoDispose<QuizList>((ref) {
+  var repository = ref.read(quizListRepositoryProvider);
   return QuizListUseCase(repository, QuizListOrderBy.createdAtDesc).build();
 });
 
 final _quizAnswersCountListNewProvider =
     StreamProvider.autoDispose<QuizList>((ref) {
-  var repository = ref.read(_quizListRepositoryProvider);
+  var repository = ref.read(quizListRepositoryProvider);
   return QuizListUseCase(repository, QuizListOrderBy.answerCountDesc).build();
 });
 
 final _quizCorrectRateListNewProvider =
     StreamProvider.autoDispose<QuizList>((ref) {
-  var repository = ref.read(_quizListRepositoryProvider);
+  var repository = ref.read(quizListRepositoryProvider);
   return QuizListUseCase(repository, QuizListOrderBy.correctAnswerRateAsc)
       .build();
 });
@@ -108,7 +104,7 @@ class HomeScreen extends HookConsumerWidget {
         drawer: _HomeDrawer(currentUser),
         body: TabBarView(
           children: [
-            QuizListPage(_quizListNewProvider),
+            QuizListPage(_quizNewListProvider),
             QuizListPage(_quizAnswersCountListNewProvider),
             QuizListPage(_quizCorrectRateListNewProvider),
           ],

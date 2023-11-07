@@ -13,6 +13,8 @@ import 'package:intl/date_symbol_data_local.dart';
 // Project imports:
 import 'package:share_quiz/presentation/application.dart';
 
+import 'package:share_quiz/provider/app_providers.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -20,7 +22,7 @@ void main() async {
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   runZonedGuarded(() {
     runApp(
-      const ProviderScope(overrides: [], child: Application()),
+      ProviderScope(overrides: globalOverrides, child: const Application()),
     );
   }, (error, stackTrace) {
     FirebaseCrashlytics.instance.recordError(error, stackTrace);
