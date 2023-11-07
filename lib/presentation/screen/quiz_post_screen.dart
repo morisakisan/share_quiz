@@ -8,32 +8,13 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
-import 'package:share_quiz/data/repository_impl/quiz_post_repository_impl.dart';
-import 'package:share_quiz/domain/models/quiz_form/quiz_form.dart';
-import 'package:share_quiz/domain/repository/quiz_post_repository.dart';
-import 'package:share_quiz/domain/use_cases/quiz_form_use_case.dart';
-import 'package:share_quiz/domain/use_cases/quiz_post_use_case.dart';
 import 'package:share_quiz/presentation/utility/error_handler.dart';
 import 'package:share_quiz/presentation/utility/widget_utils.dart';
 import 'package:share_quiz/presentation/widget/form/choices_form_field.dart';
 import 'package:share_quiz/presentation/widget/form/image_form_field.dart';
 import '../../domain/models/quiz_post/quiz_post_data.dart';
-
-final _quizPostRepositoryProvider =
-    Provider.autoDispose<QuizPostRepository>((ref) {
-  return QuizPostRepositoryImpl();
-});
-
-final _postNotifierProvider =
-    StateNotifierProvider.autoDispose<QuizPostUseCase, AsyncValue<Object?>?>(
-        (ref) {
-  return QuizPostUseCase(ref.read(_quizPostRepositoryProvider));
-});
-
-final _formNotifierProvider =
-    StateNotifierProvider.autoDispose<QuizFromUseCase, QuizForm>((ref) {
-  return QuizFromUseCase();
-});
+import '../../provider/quiz_form_use_case_provider.dart';
+import '../../provider/quiz_post_use_case_provider.dart';
 
 class QuizPostScreen extends HookConsumerWidget {
   final _formKey = GlobalKey<FormState>();
@@ -42,7 +23,7 @@ class QuizPostScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final postState = ref.watch(_postNotifierProvider);
+    final postState = ref.watch(quizPostUseCaseProvider);
     final List<Widget> children = [];
 
     final appLocalizations = AppLocalizations.of(context)!;
@@ -72,7 +53,7 @@ class QuizPostScreen extends HookConsumerWidget {
   }
 
   Widget _form(BuildContext context, WidgetRef ref) {
-    final quizFromUseCase = ref.watch(_formNotifierProvider.notifier);
+    final quizFromUseCase = ref.watch(quizFormUseCaseProvider.notifier);
     final appLocalizations = AppLocalizations.of(context)!;
     return Container(
       margin: const EdgeInsets.all(16.0),
@@ -140,8 +121,8 @@ class QuizPostScreen extends HookConsumerWidget {
                 }
                 // 入力データが正常な場合の処理
                 _formKey.currentState!.save();
-                var postUseCase = ref.read(_postNotifierProvider.notifier);
-                final quizFrom = ref.read(_formNotifierProvider);
+                var postUseCase = ref.read(quizPostUseCaseProvider.notifier);
+                final quizFrom = ref.read(quizFormUseCaseProvider);
                 var post = QuizPostData(
                   title: quizFrom.title!,
                   question: quizFrom.question!,
