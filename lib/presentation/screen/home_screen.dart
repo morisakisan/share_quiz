@@ -7,7 +7,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
 import 'package:share_quiz/data/repository_impl/current_login_repository_impl.dart';
-import 'package:share_quiz/data/repository_impl/quiz_list_repository_impl.dart';
 import 'package:share_quiz/domain/repository/current_login_repository.dart';
 import 'package:share_quiz/domain/use_cases/current_login_use_case.dart';
 import 'package:share_quiz/domain/use_cases/login_use_case.dart';
@@ -15,36 +14,17 @@ import 'package:share_quiz/presentation/page/quiz_list_page.dart';
 import 'package:share_quiz/presentation/utility/error_handler.dart';
 import '../../data/repository_impl/log_out_repository_impl.dart';
 import '../../data/repository_impl/login_repository_impl.dart';
-import '../../domain/models/quiz_list/quiz_list.dart';
 import '../../domain/models/user/user_data.dart';
 import '../../domain/repository/log_out_repository.dart';
 import '../../domain/repository/login_repository.dart';
 import '../../domain/use_cases/log_out_use_case.dart';
-import '../../domain/use_cases/quiz_list_use_case.dart';
-import '../../domain/value_object/quiz_list_order_by.dart';
 import '../common/login_dialog.dart';
 import '../nav.dart';
 import '../utility/widget_utils.dart';
 
-import 'package:share_quiz/provider/quiz_list_repository_provider.dart';
-
-final _quizNewListProvider = StreamProvider.autoDispose<QuizList>((ref) {
-  var repository = ref.read(quizListRepositoryProvider);
-  return QuizListUseCase(repository, QuizListOrderBy.createdAtDesc).build();
-});
-
-final _quizAnswersCountListNewProvider =
-    StreamProvider.autoDispose<QuizList>((ref) {
-  var repository = ref.read(quizListRepositoryProvider);
-  return QuizListUseCase(repository, QuizListOrderBy.answerCountDesc).build();
-});
-
-final _quizCorrectRateListNewProvider =
-    StreamProvider.autoDispose<QuizList>((ref) {
-  var repository = ref.read(quizListRepositoryProvider);
-  return QuizListUseCase(repository, QuizListOrderBy.correctAnswerRateAsc)
-      .build();
-});
+import 'package:share_quiz/provider/quiz_new_list_provider.dart';
+import 'package:share_quiz/provider/quiz_answers_count_list_provider.dart';
+import 'package:share_quiz/provider/quiz_correct_rate_list_provider.dart';
 
 final _currentUserRepositoryProvider =
     Provider.autoDispose<CurrentLoginRepository>((ref) {
@@ -104,9 +84,9 @@ class HomeScreen extends HookConsumerWidget {
         drawer: _HomeDrawer(currentUser),
         body: TabBarView(
           children: [
-            QuizListPage(_quizNewListProvider),
-            QuizListPage(_quizAnswersCountListNewProvider),
-            QuizListPage(_quizCorrectRateListNewProvider),
+            QuizListPage(quizNewListProvider),
+            QuizListPage(quizAnswersCountListProvider),
+            QuizListPage(quizCorrectRateListProvider),
           ],
         ),
         floatingActionButton: FloatingActionButton(
