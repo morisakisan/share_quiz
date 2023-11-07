@@ -13,17 +13,16 @@ import 'package:share_quiz/domain/repository/quiz_good_post_repository.dart';
 import 'package:share_quiz/domain/use_cases/quiz_detail_use_case.dart';
 import 'package:share_quiz/presentation/utility/error_handler.dart';
 import 'package:share_quiz/presentation/utility/widget_utils.dart';
-import '../../data/repository_impl/login_repository_impl.dart';
 import '../../data/repository_impl/quiz_detail_repository_impl.dart';
 import '../../data/repository_impl/quiz_good_post_repository_impl.dart';
 import '../../domain/models/quiz/quiz.dart';
 import '../../domain/models/quiz_detail/quiz_detail.dart';
-import '../../domain/repository/login_repository.dart';
 import '../../domain/repository/quiz_answer_post_repository.dart';
 import '../../domain/repository/quiz_detail_repository.dart';
 import '../../domain/use_cases/login_use_case.dart';
 import '../../domain/use_cases/quiz_answer_post_use_case.dart';
 import '../../domain/use_cases/quiz_good_post_use_case.dart';
+import '../../provider/login_use_case_provider.dart';
 import '../common/login_dialog.dart';
 
 final _repositoryProvider =
@@ -51,16 +50,6 @@ final _quizDetailProvider =
 
 final _selectProvider =
     StateNotifierProvider.autoDispose<_Select, int>((_) => _Select());
-
-final _loginRepositoryProvider = Provider.autoDispose<LoginRepository>((ref) {
-  return LoginRepositoryImpl();
-});
-
-final _loginUseCaseProvider =
-    StateNotifierProvider.autoDispose<LoginUseCase, AsyncValue<void>>((ref) {
-  var repository = ref.read(_loginRepositoryProvider);
-  return LoginUseCase(repository);
-});
 
 final _quizGoodPostRepositoryProvider =
     Provider.autoDispose<QuizGoodPostRepository>((ref) {
@@ -101,7 +90,7 @@ class _Success extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var quizGoodPostUseCase = ref.read(_quizGoodPostUseCaseProvider.notifier);
-    var userLoginUseCase = ref.watch(_loginUseCaseProvider.notifier);
+    var userLoginUseCase = ref.watch(loginUseCaseProvider.notifier);
     final selectNotifier = ref.read(_selectProvider.notifier);
     var selectValue = ref.watch(_selectProvider.select((value) => value));
     final theme = Theme.of(context);
