@@ -3,12 +3,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
 import 'package:share_quiz/domain/models/user/user_data.dart';
-import '../repository/current_login_repository.dart';
+import '../repository/current_user_data_repository.dart';
 
-class CurrentLoginUseCase extends StreamNotifier<UserData?> {
-  final CurrentLoginRepository _repository;
+class CurrentUserDataUseCase extends StreamNotifier<UserData?> {
+  final CurrentUserDataRepository _repository;
 
-  CurrentLoginUseCase(this._repository) : super();
+  CurrentUserDataUseCase(this._repository) : super();
 
   @override
   Stream<UserData?> build() {

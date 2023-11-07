@@ -6,9 +6,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
-import 'package:share_quiz/data/repository_impl/current_login_repository_impl.dart';
-import 'package:share_quiz/domain/repository/current_login_repository.dart';
-import 'package:share_quiz/domain/use_cases/current_login_use_case.dart';
+import 'package:share_quiz/data/repository_impl/current_user_data_repository_impl.dart';
+import 'package:share_quiz/domain/repository/current_user_data_repository.dart';
+import 'package:share_quiz/domain/use_cases/current_user_data_use_case.dart';
 import 'package:share_quiz/domain/use_cases/login_use_case.dart';
 import 'package:share_quiz/presentation/page/quiz_list_page.dart';
 import 'package:share_quiz/presentation/utility/error_handler.dart';
@@ -27,13 +27,13 @@ import 'package:share_quiz/provider/quiz_answers_count_list_provider.dart';
 import 'package:share_quiz/provider/quiz_correct_rate_list_provider.dart';
 
 final _currentUserRepositoryProvider =
-    Provider.autoDispose<CurrentLoginRepository>((ref) {
-  return CurrentLoginRepositoryImpl();
+    Provider.autoDispose<CurrentUserDataRepository>((ref) {
+  return CurrentUserDataRepositoryImpl();
 });
 
 final _currentUserProvider = StreamProvider.autoDispose<UserData?>((ref) {
   var repository = ref.read(_currentUserRepositoryProvider);
-  return CurrentLoginUseCase(repository).build();
+  return CurrentUserDataUseCase(repository).build();
 });
 
 final _loginRepositoryProvider = Provider.autoDispose<LoginRepository>((ref) {
