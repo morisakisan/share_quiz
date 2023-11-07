@@ -8,12 +8,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
-import 'package:share_quiz/presentation/utility/error_handler.dart';
-import 'package:share_quiz/presentation/utility/widget_utils.dart';
 import '../../domain/models/quiz/quiz.dart';
 import '../../provider/profile_use_case_provider.dart';
 import '../../provider/user_quizzes_use_case_provider.dart';
 import '../nav.dart';
+import '../utility/error_handler.dart';
+import '../utility/widget_utils.dart';
 
 final _scrollControllerProvider = Provider.autoDispose<ScrollController>((ref) {
   final controller = ScrollController();
