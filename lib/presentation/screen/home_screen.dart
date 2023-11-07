@@ -94,9 +94,9 @@ class HomeScreen extends HookConsumerWidget {
 
     var currentUser = ref.watch(_currentUserProvider);
 
-    List<Widget> children = [];
+    List<Widget> stackChildren = [];
 
-    children.add(DefaultTabController(
+    stackChildren.add(DefaultTabController(
       length: tab.length,
       child: Scaffold(
         appBar: AppBar(
@@ -108,15 +108,9 @@ class HomeScreen extends HookConsumerWidget {
         drawer: _HomeDrawer(currentUser),
         body: TabBarView(
           children: [
-            QuizListPage(
-              _quizListNewProvider,
-            ),
-            QuizListPage(
-              _quizAnswersCountListNewProvider,
-            ),
-            QuizListPage(
-              _quizCorrectRateListNewProvider,
-            ),
+            QuizListPage(_quizListNewProvider),
+            QuizListPage(_quizAnswersCountListNewProvider),
+            QuizListPage(_quizCorrectRateListNewProvider),
           ],
         ),
         floatingActionButton: FloatingActionButton(
@@ -146,7 +140,7 @@ class HomeScreen extends HookConsumerWidget {
 
     var logout = ref.watch(_logOutUseCaseProvider);
     if (login is AsyncLoading || logout is AsyncLoading) {
-      children.add(WidgetUtils.loading());
+      stackChildren.add(WidgetUtils.loading());
     } else if (login is AsyncError) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ErrorHandler.showErrorDialog(context, login.error, login.stackTrace);
@@ -157,7 +151,7 @@ class HomeScreen extends HookConsumerWidget {
       });
     }
 
-    return Stack(children: children);
+    return Stack(children: stackChildren);
   }
 
   _showLoginDialog(BuildContext context) {

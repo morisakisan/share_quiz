@@ -20,9 +20,7 @@ void main() async {
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   runZonedGuarded(() {
     runApp(
-      const ProviderScope(
-        child: Application(),
-      ),
+      const ProviderScope(overrides: [], child: Application()),
     );
   }, (error, stackTrace) {
     FirebaseCrashlytics.instance.recordError(error, stackTrace);
