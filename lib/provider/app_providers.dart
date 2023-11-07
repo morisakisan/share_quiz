@@ -12,17 +12,17 @@ final globalOverrides = [
   quizListRepositoryProvider.overrideWithValue(QuizListRepositoryImpl()),
   quizNewListProvider.overrideWith((ref) {
     return QuizListUseCase(
-            QuizListRepositoryImpl(), QuizListOrderBy.createdAtDesc)
+            ref.read(quizListRepositoryProvider), QuizListOrderBy.createdAtDesc)
         .build();
   }),
   quizAnswersCountListProvider.overrideWith((ref) {
-    return QuizListUseCase(
-            QuizListRepositoryImpl(), QuizListOrderBy.answerCountDesc)
+    return QuizListUseCase(ref.read(quizListRepositoryProvider),
+            QuizListOrderBy.answerCountDesc)
         .build();
   }),
   quizCorrectRateListProvider.overrideWith((ref) {
-    return QuizListUseCase(
-            QuizListRepositoryImpl(), QuizListOrderBy.correctAnswerRateAsc)
+    return QuizListUseCase(ref.read(quizListRepositoryProvider),
+            QuizListOrderBy.correctAnswerRateAsc)
         .build();
   }),
   // Add other overrides here
