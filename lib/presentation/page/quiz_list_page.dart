@@ -7,10 +7,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
-import '../../presentation/utility/error_handler.dart';
-import '../../presentation/utility/widget_utils.dart';
 import '../../domain/models/quiz/quiz.dart';
 import '../../domain/models/quiz_list/quiz_list.dart';
+import '../../presentation/utility/error_handler.dart';
+import '../../presentation/utility/widget_utils.dart';
 import '../nav.dart';
 
 class QuizListPage extends HookConsumerWidget {

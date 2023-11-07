@@ -7,8 +7,8 @@ import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
-import '../../presentation/utility/widget_utils.dart';
 import '../../domain/models/setting/setting.dart';
+import '../../presentation/utility/widget_utils.dart';
 import '../../provider/delete_user_use_case_provider.dart';
 import '../../provider/setting_use_case_provider.dart';
 import '../utility/error_handler.dart';
