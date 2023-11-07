@@ -1,5 +1,11 @@
 import 'package:share_quiz/provider/profile_repository_provider.dart';
 import 'package:share_quiz/provider/profile_use_case_provider.dart';
+import 'package:share_quiz/provider/quiz_answer_post_repository_provider.dart';
+import 'package:share_quiz/provider/quiz_answer_post_use_case_provider.dart';
+import 'package:share_quiz/provider/quiz_detail_provider.dart';
+import 'package:share_quiz/provider/quiz_detail_repository_provider.dart';
+import 'package:share_quiz/provider/quiz_good_post_repository_provider.dart';
+import 'package:share_quiz/provider/quiz_good_post_use_case_provider.dart';
 import 'package:share_quiz/provider/quiz_list_repository_provider.dart';
 import 'package:share_quiz/provider/user_quizzes_repository_provider.dart';
 import 'package:share_quiz/provider/user_quizzes_use_case_provider.dart';
@@ -8,12 +14,18 @@ import '../data/repository_impl/current_user_data_repository_impl.dart';
 import '../data/repository_impl/log_out_repository_impl.dart';
 import '../data/repository_impl/login_repository_impl.dart';
 import '../data/repository_impl/profile_repository_impl.dart';
+import '../data/repository_impl/quiz_answer_post_repository_impl.dart';
+import '../data/repository_impl/quiz_detail_repository_impl.dart';
+import '../data/repository_impl/quiz_good_post_repository_impl.dart';
 import '../data/repository_impl/quiz_list_repository_impl.dart';
 import '../data/repository_impl/user_quizzes_repository_impl.dart';
 import '../domain/use_cases/current_user_data_use_case.dart';
 import '../domain/use_cases/log_out_use_case.dart';
 import '../domain/use_cases/login_use_case.dart';
 import '../domain/use_cases/profile_use_case.dart';
+import '../domain/use_cases/quiz_answer_post_use_case.dart';
+import '../domain/use_cases/quiz_detail_use_case.dart';
+import '../domain/use_cases/quiz_good_post_use_case.dart';
 import '../domain/use_cases/quiz_list_use_case.dart';
 import '../domain/use_cases/user_quizzes_use_case.dart';
 import '../domain/value_object/quiz_list_order_by.dart';
@@ -70,5 +82,20 @@ final globalOverrides = [
   userQuizzesUseCaseProvider.overrideWith((ref) {
     final repository = ref.read(userQuizzesRepositoryProvider);
     return UserQuizzesUseCase(repository);
+  }),
+  quizAnswerPostRepositoryProvider.overrideWithValue(QuizAnswerPostRepositoryImpl()),
+  quizAnswerPostUseCaseProvider.overrideWith((ref) {
+    final repo = ref.read(quizAnswerPostRepositoryProvider);
+    return QuizAnswerPostUseCase(repo);
+  }),
+  quizDetailRepositoryProvider.overrideWithValue(QuizDetailRepositoryImpl()),
+  quizDetailProvider.overrideWith((ref, quizId) {
+    final repo = ref.read(quizDetailRepositoryProvider);
+    return QuizDetailUseCase(repo, quizId).build();
+  }),
+  quizGoodPostRepositoryProvider.overrideWithValue(QuizGoodPostRepositoryImpl()),
+  quizGoodPostUseCaseProvider.overrideWith((ref) {
+    final repository = ref.read(quizGoodPostRepositoryProvider);
+    return QuizGoodPostUseCase(repository);
   }),
 ];
