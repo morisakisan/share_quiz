@@ -24,6 +24,7 @@ import '../../domain/repository/quiz_detail_repository.dart';
 import '../../domain/use_cases/login_use_case.dart';
 import '../../domain/use_cases/quiz_answer_post_use_case.dart';
 import '../../domain/use_cases/quiz_good_post_use_case.dart';
+import '../common/login_dialog.dart';
 
 final _repositoryProvider =
     Provider.autoDispose<QuizAnswerPostRepository>((ref) {
@@ -316,28 +317,11 @@ class _Success extends HookConsumerWidget {
   ) {
     final appLocalizations = AppLocalizations.of(context)!;
     showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (_) {
-        return AlertDialog(
-          content: Text(appLocalizations.login_required_to_post),
-          actions: [
-            // ボタン領域
-            TextButton(
-              child: Text(appLocalizations.cancel),
-              onPressed: () => Navigator.pop(context),
-            ),
-            TextButton(
-              child: Text(appLocalizations.ok),
-              onPressed: () {
-                Navigator.pop(context);
-                notifier.signInWithGoogle();
-              },
-            ),
-          ],
-        );
-      },
-    );
+        barrierDismissible: false,
+        context: context,
+        builder: (_) {
+          return LoginDialog(appLocalizations.login_required_to_post);
+        });
   }
 
 /*  void _showCommentBottomSheet(BuildContext context) {
