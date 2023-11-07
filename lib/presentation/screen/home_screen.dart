@@ -104,7 +104,7 @@ class HomeScreen extends HookConsumerWidget {
             tabs: tab,
           ),
         ),
-        drawer: _createDrawer(context, ref, currentUser),
+        drawer: _HomeDrawer(currentUser),
         body: TabBarView(
           children: [
             QuizListPage(
@@ -189,8 +189,16 @@ class HomeScreen extends HookConsumerWidget {
     );
   }
 
-  Widget _createDrawer(
-      BuildContext context, WidgetRef ref, AsyncValue<UserData?> state) {
+}
+
+class _HomeDrawer extends HookConsumerWidget {
+
+  final AsyncValue<UserData?> _state;
+
+  const _HomeDrawer(this._state);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     var loginUseCase = ref.read(_loginUseCaseProvider.notifier);
     var logOutUseCase = ref.read(_logOutUseCaseProvider.notifier);
     final theme = Theme.of(context);
@@ -207,7 +215,7 @@ class HomeScreen extends HookConsumerWidget {
     }
 
     final List<Widget> list = [];
-    if (state is AsyncLoading) {
+    if (_state is AsyncLoading) {
       list.add(
         createHeader(
           const SizedBox(
@@ -217,12 +225,12 @@ class HomeScreen extends HookConsumerWidget {
           ),
         ),
       );
-    } else if (state is AsyncError) {
-      var error = state as AsyncError;
+    } else if (_state is AsyncError) {
+      var error = _state as AsyncError;
       list.add(createHeader(Text(
-          ErrorHandler.getMessage(state.error, error.stackTrace))));
-    } else if (state is AsyncData) {
-      final user = (state as AsyncData).value;
+          ErrorHandler.getMessage(_state.error, error.stackTrace))));
+    } else if (_state is AsyncData) {
+      final user = (_state as AsyncData).value;
       if (user != null) {
         final name = user?.name ?? "";
         final photoUrl = user?.photoUrl ?? "";
@@ -261,8 +269,8 @@ class HomeScreen extends HookConsumerWidget {
       throw Exception();
     }
 
-    if (state is AsyncData) {
-      final user = (state as AsyncData).value;
+    if (_state is AsyncData) {
+      final user = (_state as AsyncData).value;
       if (user != null) {
         list.add(
           ListTile(
@@ -342,4 +350,5 @@ class HomeScreen extends HookConsumerWidget {
       ),
     );
   }
+
 }
