@@ -15,31 +15,32 @@ import '../nav.dart';
 import '../utility/error_handler.dart';
 import '../utility/widget_utils.dart';
 
-final _scrollControllerProvider = Provider.autoDispose<ScrollController>((ref) {
-  final controller = ScrollController();
-  controller.addListener(() {
-    var hasMore = ref.read(userQuizzesUseCaseProvider).map(
-        loading: (value) => false,
-        success: (value) {
-          return value.data.pagination.hasMore;
-        },
-        error: (value) => false);
-    if (controller.position.atEdge &&
-        controller.position.pixels != 0 &&
-        hasMore) {
-      ref.read(userQuizzesUseCaseProvider.notifier).fetchQuizzes();
-    }
-  });
-  return controller;
-});
-
 class ProfileScreen extends HookConsumerWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final scrollController = useScrollController();
+    useEffect(() {
+      scrollController.addListener(() {
+        var hasMore = ref.read(userQuizzesUseCaseProvider).map(
+            loading: (value) => false,
+            success: (value) {
+              return value.data.pagination.hasMore;
+            },
+            error: (value) => false);
+        if (scrollController.position.atEdge &&
+            scrollController.position.pixels != 0 &&
+            hasMore) {
+          ref.read(userQuizzesUseCaseProvider.notifier).fetchQuizzes();
+        }
+      });
+
+      // ウィジェットがツリーから削除される時にリスナーを解除します。
+      return () => scrollController.removeListener(() {});
+    }, [scrollController]);
+
     final userQuizzesState = ref.watch(userQuizzesUseCaseProvider);
-    final scrollController = ref.watch(_scrollControllerProvider);
     var profile = ref.watch(profileUseCaseProvider);
     useEffect(() {
       ref.read(userQuizzesUseCaseProvider.notifier).fetchQuizzes();
