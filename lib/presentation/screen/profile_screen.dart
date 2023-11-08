@@ -8,70 +8,42 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
 
 // Project imports:
-import 'package:share_quiz/domain/use_cases/profile_use_case.dart';
-import 'package:share_quiz/presentation/utility/error_handler.dart';
-import 'package:share_quiz/presentation/utility/widget_utils.dart';
-import '../../data/repository_impl/profile_repository_impl.dart';
-import '../../data/repository_impl/user_quizzes_repository_impl.dart';
-import '../../domain/models/pagination_state/pagination_state.dart';
 import '../../domain/models/quiz/quiz.dart';
-import '../../domain/models/user/user_data.dart';
-import '../../domain/models/user_quizzes/user_quizzes.dart';
-import '../../domain/models/user_quizzes/user_quizzes_repository.dart';
-import '../../domain/repository/profile_repository.dart';
-import '../../domain/use_cases/user_quizzes_use_case.dart';
+import '../../provider/profile_use_case_provider.dart';
+import '../../provider/user_quizzes_use_case_provider.dart';
 import '../nav.dart';
-
-final _profileRepositoryProvider =
-    Provider.autoDispose<ProfileRepository>((ref) {
-  return ProfileRepositoryImpl();
-});
-
-final _profileUseCaseProvider = FutureProvider.autoDispose<UserData>((ref) {
-  var repository = ref.read(_profileRepositoryProvider);
-  return ProfileUseCase(repository).fetch();
-});
-
-final _userQuizzesProvider = Provider.autoDispose<UserQuizzesRepository>((ref) {
-  return UserQuizzesRepositoryImpl();
-});
-
-final _userQuizzesUseCaseProvider = StateNotifierProvider.autoDispose<
-    UserQuizzesUseCase, PaginationState<UserQuizzes>>(
-  (ref) {
-    final repository = ref.read(_userQuizzesProvider);
-    return UserQuizzesUseCase(repository);
-  },
-);
-
-final _scrollControllerProvider = Provider.autoDispose<ScrollController>((ref) {
-  final controller = ScrollController();
-  controller.addListener(() {
-    var hasMore = ref.read(_userQuizzesUseCaseProvider).map(
-        loading: (value) => false,
-        success: (value) {
-          return value.data.pagination.hasMore;
-        },
-        error: (value) => false);
-    if (controller.position.atEdge &&
-        controller.position.pixels != 0 &&
-        hasMore) {
-      ref.read(_userQuizzesUseCaseProvider.notifier).fetchQuizzes(1);
-    }
-  });
-  return controller;
-});
+import '../utility/error_handler.dart';
+import '../utility/widget_utils.dart';
 
 class ProfileScreen extends HookConsumerWidget {
   const ProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userQuizzesState = ref.watch(_userQuizzesUseCaseProvider);
-    final scrollController = ref.watch(_scrollControllerProvider);
-    var profile = ref.watch(_profileUseCaseProvider);
+    final scrollController = useScrollController();
     useEffect(() {
-      ref.read(_userQuizzesUseCaseProvider.notifier).fetchQuizzes(1);
+      scrollController.addListener(() {
+        var hasMore = ref.read(userQuizzesUseCaseProvider).map(
+            loading: (value) => false,
+            success: (value) {
+              return value.data.pagination.hasMore;
+            },
+            error: (value) => false);
+        if (scrollController.position.atEdge &&
+            scrollController.position.pixels != 0 &&
+            hasMore) {
+          ref.read(userQuizzesUseCaseProvider.notifier).fetchQuizzes();
+        }
+      });
+
+      // ウィジェットがツリーから削除される時にリスナーを解除します。
+      return () => scrollController.removeListener(() {});
+    }, [scrollController]);
+
+    final userQuizzesState = ref.watch(userQuizzesUseCaseProvider);
+    var profile = ref.watch(profileUseCaseProvider);
+    useEffect(() {
+      ref.read(userQuizzesUseCaseProvider.notifier).fetchQuizzes();
       return null;
     }, const []);
 
@@ -111,7 +83,7 @@ class ProfileScreen extends HookConsumerWidget {
         child: WidgetUtils.loading(),
       ),
       success: (quizzes) {
-        if(quizzes.quizzes.isEmpty) {
+        if (quizzes.quizzes.isEmpty) {
           return const SliverToBoxAdapter(
             child: Text("データがありません。"),
           );
@@ -194,8 +166,8 @@ class ProfileScreen extends HookConsumerWidget {
 
     final String correctRate;
     if (quiz.correctAnswerRate != null) {
-      correctRate =
-          appLocalizations.correctRateWithPercent((quiz.correctAnswerRate! * 100).toInt());
+      correctRate = appLocalizations
+          .correctRateWithPercent((quiz.correctAnswerRate! * 100).toInt());
     } else {
       correctRate = "";
     }

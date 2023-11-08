@@ -1,6 +1,6 @@
 // Project imports:
 import '../models/user/user_data.dart';
 
-abstract class CurrentLoginRepository {
+abstract class CurrentUserDataRepository {
   Stream<UserData?> fetch();
 }

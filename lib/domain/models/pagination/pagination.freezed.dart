@@ -16,7 +16,6 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$Pagination {
-  int get currentPage => throw _privateConstructorUsedError;
   bool get hasMore => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,7 +29,7 @@ abstract class $PaginationCopyWith<$Res> {
           Pagination value, $Res Function(Pagination) then) =
       _$PaginationCopyWithImpl<$Res, Pagination>;
   @useResult
-  $Res call({int currentPage, bool hasMore});
+  $Res call({bool hasMore});
 }
 
 /// @nodoc
@@ -46,14 +45,9 @@ class _$PaginationCopyWithImpl<$Res, $Val extends Pagination>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? currentPage = null,
     Object? hasMore = null,
   }) {
     return _then(_value.copyWith(
-      currentPage: null == currentPage
-          ? _value.currentPage
-          : currentPage // ignore: cast_nullable_to_non_nullable
-              as int,
       hasMore: null == hasMore
           ? _value.hasMore
           : hasMore // ignore: cast_nullable_to_non_nullable
@@ -70,7 +64,7 @@ abstract class _$$PaginationImplCopyWith<$Res>
       __$$PaginationImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int currentPage, bool hasMore});
+  $Res call({bool hasMore});
 }
 
 /// @nodoc
@@ -84,14 +78,9 @@ class __$$PaginationImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? currentPage = null,
     Object? hasMore = null,
   }) {
     return _then(_$PaginationImpl(
-      currentPage: null == currentPage
-          ? _value.currentPage
-          : currentPage // ignore: cast_nullable_to_non_nullable
-              as int,
       hasMore: null == hasMore
           ? _value.hasMore
           : hasMore // ignore: cast_nullable_to_non_nullable
@@ -103,16 +92,14 @@ class __$$PaginationImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$PaginationImpl with DiagnosticableTreeMixin implements _Pagination {
-  const _$PaginationImpl({required this.currentPage, required this.hasMore});
+  const _$PaginationImpl({required this.hasMore});
 
-  @override
-  final int currentPage;
   @override
   final bool hasMore;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Pagination(currentPage: $currentPage, hasMore: $hasMore)';
+    return 'Pagination(hasMore: $hasMore)';
   }
 
   @override
@@ -120,7 +107,6 @@ class _$PaginationImpl with DiagnosticableTreeMixin implements _Pagination {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Pagination'))
-      ..add(DiagnosticsProperty('currentPage', currentPage))
       ..add(DiagnosticsProperty('hasMore', hasMore));
   }
 
@@ -129,13 +115,11 @@ class _$PaginationImpl with DiagnosticableTreeMixin implements _Pagination {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PaginationImpl &&
-            (identical(other.currentPage, currentPage) ||
-                other.currentPage == currentPage) &&
             (identical(other.hasMore, hasMore) || other.hasMore == hasMore));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, currentPage, hasMore);
+  int get hashCode => Object.hash(runtimeType, hasMore);
 
   @JsonKey(ignore: true)
   @override
@@ -145,12 +129,8 @@ class _$PaginationImpl with DiagnosticableTreeMixin implements _Pagination {
 }
 
 abstract class _Pagination implements Pagination {
-  const factory _Pagination(
-      {required final int currentPage,
-      required final bool hasMore}) = _$PaginationImpl;
+  const factory _Pagination({required final bool hasMore}) = _$PaginationImpl;
 
-  @override
-  int get currentPage;
   @override
   bool get hasMore;
   @override

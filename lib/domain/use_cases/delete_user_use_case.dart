@@ -2,7 +2,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
-import 'package:share_quiz/domain/repository/delete_user_repository.dart';
+import '../../domain/repository/delete_user_repository.dart';
 
 class DeleteUserUseCase extends StateNotifier<AsyncValue<void>?> {
   final DeleteUserRepository _repository;

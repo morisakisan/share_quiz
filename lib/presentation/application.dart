@@ -7,7 +7,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 // Project imports:
-import 'package:share_quiz/presentation/screen/home_screen.dart';
+import '../presentation/screen/home_screen.dart';
 import 'nav.dart';
 
 class Application extends HookWidget {

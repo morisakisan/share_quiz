@@ -8,70 +8,17 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 
 // Project imports:
-import 'package:share_quiz/data/repository_impl/quiz_answer_post_repository_impl.dart';
-import 'package:share_quiz/domain/repository/quiz_good_post_repository.dart';
-import 'package:share_quiz/domain/use_cases/quiz_detail_use_case.dart';
-import 'package:share_quiz/presentation/utility/error_handler.dart';
-import 'package:share_quiz/presentation/utility/widget_utils.dart';
-import '../../data/repository_impl/login_repository_impl.dart';
-import '../../data/repository_impl/quiz_detail_repository_impl.dart';
-import '../../data/repository_impl/quiz_good_post_repository_impl.dart';
 import '../../domain/models/quiz/quiz.dart';
 import '../../domain/models/quiz_detail/quiz_detail.dart';
-import '../../domain/repository/login_repository.dart';
-import '../../domain/repository/quiz_answer_post_repository.dart';
-import '../../domain/repository/quiz_detail_repository.dart';
-import '../../domain/use_cases/login_use_case.dart';
-import '../../domain/use_cases/quiz_answer_post_use_case.dart';
-import '../../domain/use_cases/quiz_good_post_use_case.dart';
-
-final _repositoryProvider =
-    Provider.autoDispose<QuizAnswerPostRepository>((ref) {
-  return QuizAnswerPostRepositoryImpl();
-});
-
-final _postNotifierProvider =
-    StateNotifierProvider.autoDispose<QuizAnswerPostUseCase, AsyncValue<void>?>(
-        (ref) {
-  var repo = ref.read(_repositoryProvider);
-  return QuizAnswerPostUseCase(repo);
-});
-
-final _quizDetailRepositoryProvider =
-    Provider.autoDispose<QuizDetailRepository>((ref) {
-  return QuizDetailRepositoryImpl();
-});
-
-final _quizDetailProvider =
-    StreamProvider.autoDispose.family<QuizDetail, String>((ref, quizId) {
-  var repo = ref.read(_quizDetailRepositoryProvider);
-  return QuizDetailUseCase(repo, quizId).build();
-});
+import '../../presentation/utility/error_handler.dart';
+import '../../presentation/utility/widget_utils.dart';
+import '../../provider/quiz_answer_post_use_case_provider.dart';
+import '../../provider/quiz_detail_provider.dart';
+import '../../provider/quiz_good_post_use_case_provider.dart';
+import '../common/login_dialog.dart';
 
 final _selectProvider =
-    StateNotifierProvider.autoDispose<_Select, int>((_) => _Select());
-
-final _loginRepositoryProvider = Provider.autoDispose<LoginRepository>((ref) {
-  return LoginRepositoryImpl();
-});
-
-final _loginUseCaseProvider =
-    StateNotifierProvider.autoDispose<LoginUseCase, AsyncValue<void>>((ref) {
-  var repository = ref.read(_loginRepositoryProvider);
-  return LoginUseCase(repository);
-});
-
-final _quizGoodPostRepositoryProvider =
-    Provider.autoDispose<QuizGoodPostRepository>((ref) {
-  return QuizGoodPostRepositoryImpl();
-});
-
-final _quizGoodPostUseCaseProvider =
-    StateNotifierProvider.autoDispose<QuizGoodPostUseCase, AsyncValue<void>?>(
-        (ref) {
-  var repository = ref.read(_quizGoodPostRepositoryProvider);
-  return QuizGoodPostUseCase(repository);
-});
+StateNotifierProvider.autoDispose<_Select, int>((_) => _Select());
 
 class QuizDetailScreen extends HookConsumerWidget {
   const QuizDetailScreen({super.key});
@@ -80,7 +27,7 @@ class QuizDetailScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final quizId =
         useState<String>(ModalRoute.of(context)!.settings.arguments as String);
-    final quizDetail = ref.watch(_quizDetailProvider(quizId.value));
+    final quizDetail = ref.watch(quizDetailProvider(quizId.value));
 
     return quizDetail.when(data: (data) {
       return _Success(data);
@@ -99,8 +46,7 @@ class _Success extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var quizGoodPostUseCase = ref.read(_quizGoodPostUseCaseProvider.notifier);
-    var userLoginUseCase = ref.watch(_loginUseCaseProvider.notifier);
+    var quizGoodPostUseCase = ref.read(quizGoodPostUseCaseProvider.notifier);
     final selectNotifier = ref.read(_selectProvider.notifier);
     var selectValue = ref.watch(_selectProvider.select((value) => value));
     final theme = Theme.of(context);
@@ -178,7 +124,7 @@ class _Success extends HookConsumerWidget {
 
       answerOnPressed = () {
         if (!_quizDetail.userQuizInteraction.isLogin) {
-          _showLoginDialog(context, userLoginUseCase);
+          _showLoginDialog(context);
           return;
         }
         _showAnswerDialog(context, selectValue, quiz);
@@ -235,7 +181,7 @@ class _Success extends HookConsumerWidget {
                   : Icons.thumb_up_off_alt),
               onPressed: () {
                 if (!_quizDetail.userQuizInteraction.isLogin) {
-                  _showLoginDialog(context, userLoginUseCase);
+                  _showLoginDialog(context);
                   return;
                 }
                 quizGoodPostUseCase.post(quiz.documentId);
@@ -256,7 +202,7 @@ class _Success extends HookConsumerWidget {
       ),
     ));
 
-    var quizGoodPost = ref.watch(_quizGoodPostUseCaseProvider);
+    var quizGoodPost = ref.watch(quizGoodPostUseCaseProvider);
     if (quizGoodPost is AsyncLoading) {
       stackChildren.add(WidgetUtils.loading());
     } else if (quizGoodPost is AsyncError) {
@@ -276,8 +222,8 @@ class _Success extends HookConsumerWidget {
         final appLocalizations = AppLocalizations.of(dialogContext)!;
         return Consumer(
           builder: (context, ref, child) {
-            final state = ref.watch(_postNotifierProvider);
-            final quizAnswerNotifier = ref.read(_postNotifierProvider.notifier);
+            final state = ref.watch(quizAnswerPostUseCaseProvider);
+            final quizAnswerNotifier = ref.read(quizAnswerPostUseCaseProvider.notifier);
             if (state is AsyncLoading) {
               return WidgetUtils.loadingScreen(context);
             } else if (state is AsyncData) {
@@ -310,34 +256,14 @@ class _Success extends HookConsumerWidget {
     );
   }
 
-  _showLoginDialog(
-    BuildContext context,
-    LoginUseCase notifier,
-  ) {
+  _showLoginDialog(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
     showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (_) {
-        return AlertDialog(
-          content: Text(appLocalizations.login_required_to_post),
-          actions: [
-            // ボタン領域
-            TextButton(
-              child: Text(appLocalizations.cancel),
-              onPressed: () => Navigator.pop(context),
-            ),
-            TextButton(
-              child: Text(appLocalizations.ok),
-              onPressed: () {
-                Navigator.pop(context);
-                notifier.signInWithGoogle();
-              },
-            ),
-          ],
-        );
-      },
-    );
+        barrierDismissible: false,
+        context: context,
+        builder: (_) {
+          return LoginDialog(appLocalizations.login_required_to_post);
+        });
   }
 
 /*  void _showCommentBottomSheet(BuildContext context) {

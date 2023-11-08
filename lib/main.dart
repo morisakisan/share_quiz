@@ -11,7 +11,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 // Project imports:
-import 'package:share_quiz/presentation/application.dart';
+import '../presentation/application.dart';
+import '../provider/app_providers.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,9 +21,7 @@ void main() async {
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   runZonedGuarded(() {
     runApp(
-      const ProviderScope(
-        child: Application(),
-      ),
+      ProviderScope(overrides: globalOverrides, child: const Application()),
     );
   }, (error, stackTrace) {
     FirebaseCrashlytics.instance.recordError(error, stackTrace);
