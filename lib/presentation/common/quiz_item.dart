@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
@@ -7,7 +6,6 @@ import '../../domain/models/quiz/quiz.dart';
 import '../nav.dart';
 
 class QuizItem extends StatelessWidget {
-
   final Quiz quiz;
 
   const QuizItem(this.quiz, {super.key});
@@ -23,19 +21,19 @@ class QuizItem extends StatelessWidget {
     }
 
     final correctRate = quiz.correctAnswerRate != null
-        ? appLocalizations.correctRateWithPercent(
-        (quiz.correctAnswerRate! * 100).toInt())
+        ? appLocalizations
+            .correctRateWithPercent((quiz.correctAnswerRate! * 100).toInt())
         : "";
 
-    return InkWell(
-      onTap: () {
-        Navigator.of(context).pushNamed(
-          Nav.quizDetail,
-          arguments: quiz.documentId,
-        );
-      },
-      child: Card(
-        clipBehavior: Clip.antiAlias,
+    return Card(
+      clipBehavior: Clip.antiAlias,
+      child: InkWell(
+        onTap: () {
+          Navigator.of(context).pushNamed(
+            Nav.quizDetail,
+            arguments: quiz.documentId,
+          );
+        },
         child: Stack(
           children: [
             Row(
@@ -85,4 +83,3 @@ class QuizItem extends StatelessWidget {
     );
   }
 }
-
