@@ -8,7 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Project imports:
 import '../../provider/profile_use_case_provider.dart';
 import '../../provider/user_quizzes_use_case_provider.dart';
-import '../common/quiz_item.dart';
+import '../common/quiz_list_item.dart';
 import '../utility/error_handler.dart';
 import '../utility/widget_utils.dart';
 
@@ -98,7 +98,7 @@ class ProfileScreen extends HookConsumerWidget {
                   quizzes.pagination.hasMore) {
                 return WidgetUtils.loading();
               }
-              return QuizItem(quizzes.quizzes[index]);
+              return QuizListItem(quizzes.quizzes[index]);
             },
             childCount: length,
           ),

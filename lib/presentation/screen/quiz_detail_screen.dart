@@ -18,7 +18,7 @@ import '../../provider/quiz_good_post_use_case_provider.dart';
 import '../common/login_dialog.dart';
 
 final _selectProvider =
-StateNotifierProvider.autoDispose<_Select, int>((_) => _Select());
+    StateNotifierProvider.autoDispose<_Select, int>((_) => _Select());
 
 class QuizDetailScreen extends HookConsumerWidget {
   const QuizDetailScreen({super.key});
@@ -29,13 +29,17 @@ class QuizDetailScreen extends HookConsumerWidget {
         useState<String>(ModalRoute.of(context)!.settings.arguments as String);
     final quizDetail = ref.watch(quizDetailProvider(quizId.value));
 
-    return quizDetail.when(data: (data) {
-      return _Success(data);
-    }, error: (error, stackTrace) {
-      return _Error(error, stackTrace);
-    }, loading: () {
-      return _Loading();
-    });
+    return quizDetail.when(
+      data: (data) {
+        return _Success(data);
+      },
+      error: (error, stackTrace) {
+        return _Error(error, stackTrace);
+      },
+      loading: () {
+        return _Loading();
+      },
+    );
   }
 }
 
@@ -51,6 +55,7 @@ class _Success extends HookConsumerWidget {
     var selectValue = ref.watch(_selectProvider.select((value) => value));
     final theme = Theme.of(context);
     final quiz = _quizDetail.quiz;
+    final userQuizInteraction = _quizDetail.userQuizInteraction;
     final appLocalizations = AppLocalizations.of(context)!;
     final question = Text(
       appLocalizations.displayQuestion(quiz.question),
@@ -59,10 +64,12 @@ class _Success extends HookConsumerWidget {
     List<Widget> list = [];
     if (quiz.imageUrl != null) {
       Widget image = WidgetUtils.getQuizImage(250.0, quiz.imageUrl!);
-      list.add(Row(
-        crossAxisAlignment: CrossAxisAlignment.start, // ここで指定
-        children: <Widget>[image],
-      ));
+      list.add(
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[image],
+        ),
+      );
 
       list.add(
         Padding(
@@ -113,7 +120,7 @@ class _Success extends HookConsumerWidget {
         );
 
     final Function()? answerOnPressed;
-    if (_quizDetail.userQuizInteraction.selectAnswer == null) {
+    if (userQuizInteraction.selectAnswer == null) {
       list.addAll(
         createChoices(
           (v) {
@@ -123,14 +130,14 @@ class _Success extends HookConsumerWidget {
       );
 
       answerOnPressed = () {
-        if (!_quizDetail.userQuizInteraction.isLogin) {
+        if (!userQuizInteraction.isLogin) {
           _showLoginDialog(context);
           return;
         }
         _showAnswerDialog(context, selectValue, quiz);
       };
     } else {
-      selectValue = _quizDetail.userQuizInteraction.selectAnswer!;
+      selectValue = userQuizInteraction.selectAnswer!;
       answerOnPressed = null;
 
       list.addAll(createChoices(null));
@@ -157,59 +164,63 @@ class _Success extends HookConsumerWidget {
     list.add(const SizedBox(height: 16));
 
     List<Widget> stackChildren = [];
-    stackChildren.add(Scaffold(
-      appBar: AppBar(
-        title: Text(quiz.title),
-      ),
-      body: ListView(
-        padding: const EdgeInsets.all(16.0),
-        children: list,
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: answerOnPressed,
-        icon: const Icon(Icons.question_answer_rounded),
-        label: Text(appLocalizations.answer),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      bottomNavigationBar: BottomAppBar(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: <Widget>[
-            TextButton.icon(
-              icon: Icon(_quizDetail.userQuizInteraction.hasGood
-                  ? Icons.thumb_up_alt
-                  : Icons.thumb_up_off_alt),
-              onPressed: () {
-                if (!_quizDetail.userQuizInteraction.isLogin) {
-                  _showLoginDialog(context);
-                  return;
-                }
-                quizGoodPostUseCase.post(quiz.documentId);
-              },
-              label: Text("${_quizDetail.quiz.goodCount ?? 0}"),
-            ),
-            TextButton.icon(
-              icon: const Icon(Icons.share),
-              onPressed: () {
-                Share.share(
-                    appLocalizations.shareFormat(quiz.title, quiz.question));
-              },
-              label: Text(appLocalizations.share),
-            )
-            // ... その他のアイコンボタン ...
-          ],
+    stackChildren.add(
+      Scaffold(
+        appBar: AppBar(
+          title: Text(quiz.title),
+        ),
+        body: ListView(
+          padding: const EdgeInsets.all(16.0),
+          children: list,
+        ),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: answerOnPressed,
+          icon: const Icon(Icons.question_answer_rounded),
+          label: Text(appLocalizations.answer),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        bottomNavigationBar: BottomAppBar(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: <Widget>[
+              TextButton.icon(
+                icon: Icon(userQuizInteraction.hasGood
+                    ? Icons.thumb_up_alt
+                    : Icons.thumb_up_off_alt),
+                onPressed: () {
+                  if (!userQuizInteraction.isLogin) {
+                    _showLoginDialog(context);
+                    return;
+                  }
+                  quizGoodPostUseCase.post(quiz.documentId);
+                },
+                label: Text("${_quizDetail.quiz.goodCount ?? 0}"),
+              ),
+              TextButton.icon(
+                icon: const Icon(Icons.share),
+                onPressed: () {
+                  Share.share(
+                      appLocalizations.shareFormat(quiz.title, quiz.question));
+                },
+                label: Text(appLocalizations.share),
+              )
+              // ... その他のアイコンボタン ...
+            ],
+          ),
         ),
       ),
-    ));
+    );
 
     var quizGoodPost = ref.watch(quizGoodPostUseCaseProvider);
     if (quizGoodPost is AsyncLoading) {
       stackChildren.add(WidgetUtils.loading());
     } else if (quizGoodPost is AsyncError) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        ErrorHandler.showErrorDialog(
-            context, quizGoodPost.error, quizGoodPost.stackTrace);
-      });
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) {
+          ErrorHandler.showErrorDialog(
+              context, quizGoodPost.error, quizGoodPost.stackTrace);
+        },
+      );
     }
     return Stack(children: stackChildren);
   }
@@ -223,7 +234,8 @@ class _Success extends HookConsumerWidget {
         return Consumer(
           builder: (context, ref, child) {
             final state = ref.watch(quizAnswerPostUseCaseProvider);
-            final quizAnswerNotifier = ref.read(quizAnswerPostUseCaseProvider.notifier);
+            final quizAnswerNotifier =
+                ref.read(quizAnswerPostUseCaseProvider.notifier);
             if (state is AsyncLoading) {
               return WidgetUtils.loadingScreen(context);
             } else if (state is AsyncData) {
@@ -259,11 +271,12 @@ class _Success extends HookConsumerWidget {
   _showLoginDialog(BuildContext context) {
     final appLocalizations = AppLocalizations.of(context)!;
     showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (_) {
-          return LoginDialog(appLocalizations.login_required_to_post);
-        });
+      barrierDismissible: false,
+      context: context,
+      builder: (_) {
+        return LoginDialog(appLocalizations.login_required_to_post);
+      },
+    );
   }
 
 /*  void _showCommentBottomSheet(BuildContext context) {

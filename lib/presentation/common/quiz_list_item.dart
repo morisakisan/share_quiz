@@ -5,10 +5,10 @@ import 'package:intl/intl.dart';
 import '../../domain/models/quiz/quiz.dart';
 import '../nav.dart';
 
-class QuizItem extends StatelessWidget {
+class QuizListItem extends StatelessWidget {
   final Quiz quiz;
 
-  const QuizItem(this.quiz, {super.key});
+  const QuizListItem(this.quiz, {super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -5,13 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:share_quiz/presentation/common/quiz_grid_item.dart';
 
 // Project imports:
 import '../../domain/models/quiz/quiz.dart';
 import '../../domain/models/quiz_list/quiz_list.dart';
 import '../../presentation/utility/error_handler.dart';
 import '../../presentation/utility/widget_utils.dart';
-import '../common/quiz_item.dart';
+import '../common/quiz_list_item.dart';
 import '../nav.dart';
 
 class QuizListPage extends HookConsumerWidget {
@@ -23,13 +24,18 @@ class QuizListPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var async = ref.watch(_provider);
     return async.when(
-      data: (list) => ListView(
+      data: (list) => GridView.builder(
         padding: const EdgeInsets.all(8.0),
-        children: list.quizzes.map(
-          (value) {
-            return QuizItem(value);
-          },
-        ).toList(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, // 2列
+          childAspectRatio: 0.8, // カードの縦横比
+          crossAxisSpacing: 8.0, // 横のスペース
+          mainAxisSpacing: 8.0, // 縦のスペース
+        ),
+        itemCount: list.quizzes.length,
+        itemBuilder: (context, index) {
+          return QuizGridItem(list.quizzes[index]);
+        },
       ),
       loading: () => WidgetUtils.loading(),
       error: (error, stack) => Text(

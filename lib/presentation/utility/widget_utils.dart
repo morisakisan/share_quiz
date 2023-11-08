@@ -24,22 +24,6 @@ class WidgetUtils {
     );
   }
 
-  static Widget getNoImage(BuildContext context, double imageSize) {
-    final appLocalizations = AppLocalizations.of(context)!;
-    return Container(
-      height: imageSize,
-      width: imageSize,
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.black54),
-      ),
-      child: Center(
-        child: Text(
-          appLocalizations.noImage,
-        ),
-      ),
-    );
-  }
-
   static Widget getQuizImage(double imageSize, String imageUrl) {
     return Hero(
       tag: imageUrl,
