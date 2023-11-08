@@ -20,7 +20,6 @@ class LoginDialog extends HookConsumerWidget {
     return AlertDialog(
       content: Text(contentText),
       actions: [
-        // ボタン領域
         TextButton(
           child: Text(appLocalizations.cancel),
           onPressed: () => Navigator.pop(context),
