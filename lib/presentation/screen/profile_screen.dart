@@ -69,8 +69,8 @@ class ProfileScreen extends HookConsumerWidget {
           ),
         );
       },
-      error: (object, stackTrace) => const Center(
-        child: Text('エラーが発生しました'),
+      error: (object, stackTrace) => Center(
+        child: Text(ErrorHandler.getMessage(object, stackTrace)),
       ),
       loading: () => WidgetUtils.loading(),
     );
@@ -133,5 +133,4 @@ class ProfileScreen extends HookConsumerWidget {
       ),
     );
   }
-
 }
