@@ -69,7 +69,6 @@ class HomeScreen extends HookConsumerWidget {
               });
             }
           },
-          backgroundColor: Colors.green,
           child: const Icon(Icons.add),
         ),
       ),
