@@ -10,9 +10,10 @@ import '../../domain/models/user/user_data.dart';
 import '../../provider/current_user_provider.dart';
 import '../../provider/log_out_use_case_provider.dart';
 import '../../provider/login_use_case_provider.dart';
-import '../../provider/quiz_answers_count_list_provider.dart';
-import '../../provider/quiz_correct_rate_list_provider.dart';
-import '../../provider/quiz_new_list_provider.dart';
+import '../../provider/quiz_list_answers_count_provider.dart';
+import '../../provider/quiz_list_correct_rate_provider.dart';
+import '../../provider/quiz_list_new_provider.dart';
+import '../../provider/quiz_list_good_count.dart';
 import '../common/login_dialog.dart';
 import '../nav.dart';
 import '../page/quiz_list_page.dart';
@@ -27,6 +28,7 @@ class HomeScreen extends HookConsumerWidget {
     final appLocalizations = AppLocalizations.of(context)!;
     final tab = [
       Tab(text: appLocalizations.new_arrivals),
+      Tab(text: appLocalizations.good_count),
       Tab(text: appLocalizations.answer_count),
       Tab(text: appLocalizations.correct_rate),
     ];
@@ -48,9 +50,10 @@ class HomeScreen extends HookConsumerWidget {
           drawer: _HomeDrawer(currentUser),
           body: TabBarView(
             children: [
-              QuizListPage(quizNewListProvider),
-              QuizListPage(quizAnswersCountListProvider),
-              QuizListPage(quizCorrectRateListProvider),
+              QuizListPage(quizListNewProvider),
+              QuizListPage(quizListGoodCountProvider),
+              QuizListPage(quizListAnswersCountProvider),
+              QuizListPage(quizListCorrectRateProvider),
             ],
           ),
           floatingActionButton: FloatingActionButton(

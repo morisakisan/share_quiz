@@ -1,7 +1,8 @@
 enum QuizListOrderBy {
   correctAnswerRateAsc,
   answerCountDesc,
-  createdAtDesc
+  createdAtDesc,
+  goodCountDesc,
 }
 
 extension QuizListOrderByExtension on QuizListOrderBy {
@@ -13,6 +14,8 @@ extension QuizListOrderByExtension on QuizListOrderBy {
         return 'answer_count';
       case QuizListOrderBy.createdAtDesc:
         return 'created_at';
+      case QuizListOrderBy.goodCountDesc:
+        return 'good_count';
     }
   }
 
@@ -23,6 +26,8 @@ extension QuizListOrderByExtension on QuizListOrderBy {
       case QuizListOrderBy.answerCountDesc:
         return true;
       case QuizListOrderBy.createdAtDesc:
+        return true;
+      case QuizListOrderBy.goodCountDesc:
         return true;
     }
   }
