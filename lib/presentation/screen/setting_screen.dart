@@ -25,26 +25,31 @@ class SettingScreen extends HookConsumerWidget {
     Widget? body;
 
     if (useCase is AsyncData) {
-      body =
-          _buildSettingsList(useCase.value!, context, ref, deleteUseCaseState);
+      body = _SettingItems(useCase.value!);
     } else if (useCase is AsyncError) {
       var error = useCase as AsyncError;
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        ErrorHandler.showErrorDialog(context, error.error, error.stackTrace);
-      });
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) {
+          ErrorHandler.showErrorDialog(context, error.error, error.stackTrace);
+        },
+      );
     } else if (deleteUseCaseState is AsyncError) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        ErrorHandler.showErrorDialog(
-            context, deleteUseCaseState.error, deleteUseCaseState.stackTrace);
-      });
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) {
+          ErrorHandler.showErrorDialog(
+              context, deleteUseCaseState.error, deleteUseCaseState.stackTrace);
+        },
+      );
     }
 
-    children.add(Scaffold(
-      appBar: AppBar(
-        title: Text(appLocalizations.settings),
+    children.add(
+      Scaffold(
+        appBar: AppBar(
+          title: Text(appLocalizations.settings),
+        ),
+        body: body,
       ),
-      body: body,
-    ));
+    );
 
     if (useCase is AsyncLoading || deleteUseCaseState is AsyncLoading) {
       children.add(WidgetUtils.loadingScreen(context));
@@ -54,22 +59,31 @@ class SettingScreen extends HookConsumerWidget {
       children: children,
     );
   }
+}
 
-  Widget _buildSettingsList(Setting setting, BuildContext context,
-      WidgetRef ref, AsyncValue<void>? deleteUseCaseState) {
+class _SettingItems extends HookConsumerWidget {
+  final Setting _setting;
+
+  const _SettingItems(this._setting);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
     final useCase = ref.watch(deleteUserUseCaseProvider.notifier);
     final appLocalizations = AppLocalizations.of(context)!;
     List<AbstractTile> tiles = [];
 
-    if (setting.isLogin) {
-      tiles.add(SettingsTile(
+    if (_setting.isLogin) {
+      tiles.add(
+        SettingsTile(
           title: "退会",
           leading: const Icon(Icons.exit_to_app),
           onPressed: (context) {
             showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(content: const Text("退会します。よろしいですか？"), actions: [
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  content: const Text("退会します。よろしいですか？"),
+                  actions: [
                     TextButton(
                       child: Text(appLocalizations.cancel),
                       onPressed: () => Navigator.pop(context),
@@ -81,28 +95,36 @@ class SettingScreen extends HookConsumerWidget {
                         Navigator.pop(context);
                       },
                     ),
-                  ]);
-                });
-          }));
+                  ],
+                );
+              },
+            );
+          },
+        ),
+      );
     }
 
-    tiles.add(SettingsTile(
-      title: appLocalizations.license,
-      leading: const Icon(Icons.gavel),
-      onPressed: (context) {
-        showLicensePage(
-          context: context,
-          applicationName: setting.packageInfo.appName,
-          applicationVersion: setting.packageInfo.version,
-        );
-      },
-    ));
+    tiles.add(
+      SettingsTile(
+        title: appLocalizations.license,
+        leading: const Icon(Icons.gavel),
+        onPressed: (context) {
+          showLicensePage(
+            context: context,
+            applicationName: _setting.packageInfo.appName,
+            applicationVersion: _setting.packageInfo.version,
+          );
+        },
+      ),
+    );
 
-    tiles.add(SettingsTile(
-      title: appLocalizations.version,
-      leading: const Icon(Icons.info_outline),
-      trailing: Text(setting.packageInfo.version),
-    ));
+    tiles.add(
+      SettingsTile(
+        title: appLocalizations.version,
+        leading: const Icon(Icons.info_outline),
+        trailing: Text(_setting.packageInfo.version),
+      ),
+    );
 
     return SettingsList(
       sections: [
