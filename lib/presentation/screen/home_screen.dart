@@ -28,9 +28,9 @@ class HomeScreen extends HookConsumerWidget {
     final appLocalizations = AppLocalizations.of(context)!;
     final tab = [
       Tab(text: appLocalizations.new_arrivals),
+      Tab(text: appLocalizations.good_count),
       Tab(text: appLocalizations.answer_count),
       Tab(text: appLocalizations.correct_rate),
-      Tab(text: appLocalizations.good_count)
     ];
 
     var currentUser = ref.watch(currentUserProvider);
@@ -51,9 +51,9 @@ class HomeScreen extends HookConsumerWidget {
           body: TabBarView(
             children: [
               QuizListPage(quizListNewProvider),
+              QuizListPage(quizListGoodCountProvider),
               QuizListPage(quizListAnswersCountProvider),
               QuizListPage(quizListCorrectRateProvider),
-              QuizListPage(quizListGoodCountProvider)
             ],
           ),
           floatingActionButton: FloatingActionButton(
