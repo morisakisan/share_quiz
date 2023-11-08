@@ -55,7 +55,9 @@ import 'user_quizzes_use_case_provider.dart';
 
 // You can define global overrides here if needed
 final globalOverrides = [
-  quizListRepositoryProvider.overrideWithValue(QuizListRepositoryImpl()),
+  quizListRepositoryProvider.overrideWith((ref) {
+    return QuizListRepositoryImpl();
+  }),
   quizNewListProvider.overrideWith((ref) {
     return QuizListUseCase(
             ref.read(quizListRepositoryProvider), QuizListOrderBy.createdAtDesc)
@@ -71,61 +73,80 @@ final globalOverrides = [
             QuizListOrderBy.correctAnswerRateAsc)
         .build();
   }),
-  currentUserRepositoryProvider
-      .overrideWithValue(CurrentUserDataRepositoryImpl()),
+  currentUserRepositoryProvider.overrideWith((ref) {
+    return CurrentUserDataRepositoryImpl();
+  }),
   currentUserProvider.overrideWith((ref) {
     var repository = ref.read(currentUserRepositoryProvider);
     return CurrentUserDataUseCase(repository).build();
   }),
-  loginRepositoryProvider.overrideWithValue(LoginRepositoryImpl()),
+  loginRepositoryProvider.overrideWith((ref) {
+    return LoginRepositoryImpl();
+  }),
   loginUseCaseProvider.overrideWith((ref) {
     var repository = ref.read(loginRepositoryProvider);
     return LoginUseCase(repository);
   }),
-  logOutRepositoryProvider.overrideWithValue(LogOutRepositoryImpl()),
+  logOutRepositoryProvider.overrideWith((ref) {
+    return LogOutRepositoryImpl();
+  }),
   logOutUseCaseProvider.overrideWith((ref) {
     var repository = ref.read(logOutRepositoryProvider);
     return LogOutUseCase(repository);
   }),
-  profileRepositoryProvider.overrideWithValue(ProfileRepositoryImpl()),
+  profileRepositoryProvider.overrideWith((ref) {
+    return ProfileRepositoryImpl();
+  }),
   profileUseCaseProvider.overrideWith((ref) {
     final repository = ref.read(profileRepositoryProvider);
     return ProfileUseCase(repository).fetch();
   }),
-  userQuizzesRepositoryProvider.overrideWithValue(UserQuizzesRepositoryImpl()),
+  userQuizzesRepositoryProvider.overrideWith((ref) {
+    return UserQuizzesRepositoryImpl();
+  }),
   userQuizzesUseCaseProvider.overrideWith((ref) {
     final repository = ref.read(userQuizzesRepositoryProvider);
     return UserQuizzesUseCase(repository);
   }),
-  quizAnswerPostRepositoryProvider
-      .overrideWithValue(QuizAnswerPostRepositoryImpl()),
+  quizAnswerPostRepositoryProvider.overrideWith((ref) {
+    return QuizAnswerPostRepositoryImpl();
+  }),
   quizAnswerPostUseCaseProvider.overrideWith((ref) {
     final repo = ref.read(quizAnswerPostRepositoryProvider);
     return QuizAnswerPostUseCase(repo);
   }),
-  quizDetailRepositoryProvider.overrideWithValue(QuizDetailRepositoryImpl()),
+  quizDetailRepositoryProvider.overrideWith((ref) {
+    return QuizDetailRepositoryImpl();
+  }),
   quizDetailProvider.overrideWith((ref, quizId) {
     final repo = ref.read(quizDetailRepositoryProvider);
     return QuizDetailUseCase(repo, quizId).build();
   }),
-  quizGoodPostRepositoryProvider
-      .overrideWithValue(QuizGoodPostRepositoryImpl()),
+  quizGoodPostRepositoryProvider.overrideWith((ref) {
+    return QuizGoodPostRepositoryImpl();
+  }),
   quizGoodPostUseCaseProvider.overrideWith((ref) {
     final repository = ref.read(quizGoodPostRepositoryProvider);
     return QuizGoodPostUseCase(repository);
   }),
-  quizPostRepositoryProvider.overrideWithValue(QuizPostRepositoryImpl()),
+  quizPostRepositoryProvider.overrideWith((ref) {
+    return QuizPostRepositoryImpl();
+  }),
   quizPostUseCaseProvider.overrideWith((ref) {
     return QuizPostUseCase(ref.read(quizPostRepositoryProvider));
   }),
   quizFormUseCaseProvider.overrideWith((ref) {
     return QuizFormUseCase();
   }),
-  settingRepositoryProvider.overrideWithValue(SettingRepositoryImpl()),
+  settingRepositoryProvider.overrideWith((ref) {
+    return SettingRepositoryImpl();
+  }),
   settingUseCaseProvider.overrideWith((ref) {
     return SettingUseCase(ref.read(settingRepositoryProvider)).build();
   }),
-  deleteUserRepositoryProvider.overrideWithValue(DeleteUserRepositoryImpl()),
+  deleteUserRepositoryProvider.overrideWith((ref) {
+    return DeleteUserRepositoryImpl();
+  }),
   deleteUserUseCaseProvider.overrideWith((ref) {
     return DeleteUserUseCase(ref.read(deleteUserRepositoryProvider));
   }),
