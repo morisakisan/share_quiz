@@ -35,44 +35,48 @@ class HomeScreen extends HookConsumerWidget {
 
     List<Widget> stackChildren = [];
 
-    stackChildren.add(DefaultTabController(
-      length: tab.length,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(appLocalizations.app_title),
-          bottom: TabBar(
-            tabs: tab,
+    stackChildren.add(
+      DefaultTabController(
+        length: tab.length,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(appLocalizations.app_title),
+            bottom: TabBar(
+              tabs: tab,
+            ),
+          ),
+          drawer: _HomeDrawer(currentUser),
+          body: TabBarView(
+            children: [
+              QuizListPage(quizNewListProvider),
+              QuizListPage(quizAnswersCountListProvider),
+              QuizListPage(quizCorrectRateListProvider),
+            ],
+          ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              if (currentUser is AsyncData) {
+                final user = (currentUser as AsyncData).value;
+                if (user != null) {
+                  Navigator.of(context).pushNamed(Nav.quizPost);
+                } else {
+                  _showLoginDialog(context);
+                }
+              } else if (currentUser is AsyncError) {
+                var error = currentUser as AsyncError;
+                WidgetsBinding.instance.addPostFrameCallback(
+                  (_) {
+                    ErrorHandler.showErrorDialog(
+                        context, error.error, error.stackTrace);
+                  },
+                );
+              }
+            },
+            child: const Icon(Icons.add),
           ),
         ),
-        drawer: _HomeDrawer(currentUser),
-        body: TabBarView(
-          children: [
-            QuizListPage(quizNewListProvider),
-            QuizListPage(quizAnswersCountListProvider),
-            QuizListPage(quizCorrectRateListProvider),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            if (currentUser is AsyncData) {
-              final user = (currentUser as AsyncData).value;
-              if (user != null) {
-                Navigator.of(context).pushNamed(Nav.quizPost);
-              } else {
-                _showLoginDialog(context);
-              }
-            } else if (currentUser is AsyncError) {
-              var error = currentUser as AsyncError;
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                ErrorHandler.showErrorDialog(
-                    context, error.error, error.stackTrace);
-              });
-            }
-          },
-          child: const Icon(Icons.add),
-        ),
       ),
-    ));
+    );
 
     var login = ref.watch(loginUseCaseProvider);
 
@@ -80,13 +84,18 @@ class HomeScreen extends HookConsumerWidget {
     if (login is AsyncLoading || logout is AsyncLoading) {
       stackChildren.add(WidgetUtils.loading());
     } else if (login is AsyncError) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        ErrorHandler.showErrorDialog(context, login.error, login.stackTrace);
-      });
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) {
+          ErrorHandler.showErrorDialog(context, login.error, login.stackTrace);
+        },
+      );
     } else if (logout is AsyncError) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        ErrorHandler.showErrorDialog(context, logout.error, logout.stackTrace);
-      });
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) {
+          ErrorHandler.showErrorDialog(
+              context, logout.error, logout.stackTrace);
+        },
+      );
     }
 
     return Stack(children: stackChildren);
@@ -139,8 +148,13 @@ class _HomeDrawer extends HookConsumerWidget {
       );
     } else if (_state is AsyncError) {
       var error = _state as AsyncError;
-      list.add(createHeader(
-          Text(ErrorHandler.getMessage(_state.error, error.stackTrace))));
+      list.add(
+        createHeader(
+          Text(
+            ErrorHandler.getMessage(_state.error, error.stackTrace),
+          ),
+        ),
+      );
     } else if (_state is AsyncData) {
       final user = (_state as AsyncData).value;
       if (user != null) {

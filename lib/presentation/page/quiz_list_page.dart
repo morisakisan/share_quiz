@@ -23,17 +23,18 @@ class QuizListPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var async = ref.watch(_provider);
     return async.when(
-      data: (list) =>
-          ListView(
-            padding: const EdgeInsets.all(8.0),
-            children: list.quizzes.map(
-                  (value) {
-                return QuizItem(value);
-              },
-            ).toList(),
-          ),
+      data: (list) => ListView(
+        padding: const EdgeInsets.all(8.0),
+        children: list.quizzes.map(
+          (value) {
+            return QuizItem(value);
+          },
+        ).toList(),
+      ),
       loading: () => WidgetUtils.loading(),
-      error: (error, stack) => Text(ErrorHandler.getMessage(error, stack)),
+      error: (error, stack) => Text(
+        ErrorHandler.getMessage(error, stack),
+      ),
     );
   }
 }
