@@ -3,6 +3,7 @@
   "new_arrivals": "新着",
   "answer_count": "回答数",
   "correct_rate": "正解率",
+  "good_count": "いいね数",
   "login_required_to_post": "クイズを投稿するにはログインが必要です。ログインしますか？",
   "cancel": "Cancel",
   "ok": "OK",
