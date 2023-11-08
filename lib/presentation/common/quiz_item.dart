@@ -5,9 +5,9 @@ import 'package:intl/intl.dart';
 
 import '../../domain/models/quiz/quiz.dart';
 import '../nav.dart';
-import '../utility/widget_utils.dart';
 
 class QuizItem extends StatelessWidget {
+
   final Quiz quiz;
 
   const QuizItem(this.quiz, {super.key});
@@ -60,18 +60,18 @@ class QuizItem extends StatelessWidget {
                         const SizedBox(height: 4),
                         Text(
                           appLocalizations.questionText(quiz.question),
-                          style: theme.textTheme.bodyText2,
+                          style: theme.textTheme.bodyMedium,
                         ),
                         const SizedBox(height: 4),
                         Text(
                           appLocalizations.answerCountWithRate(
                               quiz.answerCount ?? 0, correctRate),
-                          style: theme.textTheme.caption,
+                          style: theme.textTheme.bodySmall,
                         ),
                         const SizedBox(height: 4),
                         Text(
                           formatted ?? "",
-                          style: theme.textTheme.overline,
+                          style: theme.textTheme.labelSmall,
                         ),
                       ],
                     ),
@@ -85,5 +85,4 @@ class QuizItem extends StatelessWidget {
     );
   }
 }
-
 
