@@ -21,9 +21,39 @@ class QuizListItem extends StatelessWidget {
     }
 
     final correctRate = quiz.correctAnswerRate != null
-        ? appLocalizations
-            .correctRateWithPercent((quiz.correctAnswerRate! * 100).toInt())
-        : "";
+        ? (quiz.correctAnswerRate! * 100).toInt()
+        : null;
+    final texts = <Widget>[];
+    texts.add(
+      Row(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          const Icon(
+            Icons.thumb_up_alt,
+            size: 12,
+          ),
+          const SizedBox(width: 4.0),
+          Text(
+            "${quiz.goodCount ?? 0}",
+            style: theme.textTheme.bodySmall,
+          ),
+        ],
+      ),
+    );
+    texts.add(
+      Text(
+        appLocalizations.answerCount(quiz.answerCount ?? 0),
+        style: theme.textTheme.bodySmall,
+      ),
+    );
+    if (correctRate != null) {
+      texts.add(
+        Text(
+          appLocalizations.answerRate(correctRate),
+          style: theme.textTheme.bodySmall,
+        ),
+      );
+    }
 
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -61,10 +91,10 @@ class QuizListItem extends StatelessWidget {
                           style: theme.textTheme.bodyMedium,
                         ),
                         const SizedBox(height: 4),
-                        Text(
-                          appLocalizations.answerCountWithRate(
-                              quiz.answerCount ?? 0, correctRate),
-                          style: theme.textTheme.bodySmall,
+                        Wrap(
+                          spacing: 8.0, // 横の隙間
+                          runSpacing: 4.0, // 縦の隙間（改行後の隙間）
+                          children: texts,
                         ),
                         const SizedBox(height: 4),
                         Text(
