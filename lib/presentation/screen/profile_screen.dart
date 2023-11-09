@@ -43,7 +43,6 @@ class ProfileScreen extends HookConsumerWidget {
       ref.read(userQuizzesUseCaseProvider.notifier).fetchQuizzes();
       return null;
     }, const []);
-    final theme = Theme.of(context);
     Widget profileWidget = profile.when<Widget>(
       data: (user) {
         return Center(
@@ -122,7 +121,7 @@ class ProfileScreen extends HookConsumerWidget {
                 fit: StackFit.expand,
                 children: [
                   // 背景色や背景画像などを設定できます
-                  Container(color: theme.primaryColor),
+                  Container(),
                   profileWidget
                 ],
               ),

@@ -165,7 +165,7 @@ class _HomeDrawerHeader extends StatelessWidget {
     }
 
     return DrawerHeader(
-      decoration: BoxDecoration(color: theme.primaryColor),
+      decoration: BoxDecoration(color: theme.appBarTheme.backgroundColor),
       child: Center(child: content),
     );
   }
