@@ -6,10 +6,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
-import 'package:share_quiz/domain/models/user_quiz_interaction/user_quiz_interaction.dart';
-import 'package:share_quiz/presentation/common/custom_alert_dialog.dart';
 
 // Project imports:
+import 'package:share_quiz/domain/models/user_quiz_interaction/user_quiz_interaction.dart';
+import 'package:share_quiz/presentation/common/custom_alert_dialog.dart';
 import '../../domain/models/quiz/quiz.dart';
 import '../../presentation/utility/error_handler.dart';
 import '../../provider/quiz_answer_post_use_case_provider.dart';
