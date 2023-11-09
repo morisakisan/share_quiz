@@ -23,6 +23,7 @@ class AppTheme {
     ),
 
     floatingActionButtonTheme: FloatingActionButtonThemeData(
+      foregroundColor: Colors.white,
       backgroundColor: Colors.yellow[900],
     ),
 
@@ -84,6 +85,7 @@ class AppTheme {
 
     // フローティングアクションボタンのテーマ
     floatingActionButtonTheme: FloatingActionButtonThemeData(
+      foregroundColor: Colors.white,
       backgroundColor: Colors.yellow[900],
     ),
 
