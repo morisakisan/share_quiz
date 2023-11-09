@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:share_quiz/presentation/common/loading_screen.dart';
 
 // Project imports:
 import '../../domain/models/user/user_data.dart';
@@ -15,7 +16,6 @@ import '../../provider/quiz_list_correct_rate_provider.dart';
 import '../../provider/quiz_list_good_count.dart';
 import '../../provider/quiz_list_new_provider.dart';
 import '../common/custom_alert_dialog.dart';
-import '../common/loading.dart';
 import '../common/login_dialog.dart';
 import '../nav.dart';
 import '../page/quiz_list_page.dart';
@@ -86,7 +86,7 @@ class HomeScreen extends HookConsumerWidget {
 
     var logout = ref.watch(logOutUseCaseProvider);
     if (login is AsyncLoading || logout is AsyncLoading) {
-      stackChildren.add(const Loading());
+      stackChildren.add(const LoadingScreen());
     } else if (login is AsyncError) {
       WidgetsBinding.instance.addPostFrameCallback(
         (_) {

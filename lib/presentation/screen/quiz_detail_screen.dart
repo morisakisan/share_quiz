@@ -10,12 +10,12 @@ import 'package:share_plus/share_plus.dart';
 // Project imports:
 import 'package:share_quiz/domain/models/user_quiz_interaction/user_quiz_interaction.dart';
 import 'package:share_quiz/presentation/common/custom_alert_dialog.dart';
+import 'package:share_quiz/presentation/common/loading_screen.dart';
 import '../../domain/models/quiz/quiz.dart';
 import '../../presentation/utility/error_handler.dart';
 import '../../provider/quiz_answer_post_use_case_provider.dart';
 import '../../provider/quiz_detail_provider.dart';
 import '../../provider/quiz_good_post_use_case_provider.dart';
-import '../common/loading.dart';
 import '../common/login_dialog.dart';
 import '../common/quiz_image.dart';
 
@@ -168,7 +168,7 @@ class QuizDetailScreen extends HookConsumerWidget {
     if (quizGoodPost is AsyncLoading ||
         quizAnswerPost is AsyncLoading ||
         quizDetail is AsyncLoading) {
-      stackChildren.add(const Loading());
+      stackChildren.add(const LoadingScreen());
     } else if (quizDetail is AsyncError) {
       WidgetsBinding.instance.addPostFrameCallback(
         (_) {
