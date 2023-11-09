@@ -149,7 +149,6 @@ class _HomeDrawerHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     Widget content;
 
     if (state is AsyncLoading) {
@@ -160,12 +159,11 @@ class _HomeDrawerHeader extends StatelessWidget {
     } else if (state is AsyncData<UserData?> && state.value != null) {
       content = _UserHeaderContent(user: state.value!);
     } else {
-      content = Text(AppLocalizations.of(context)!.please_login,
-          style: theme.primaryTextTheme.titleLarge);
+      content = Text(AppLocalizations.of(context)!.please_login);
     }
 
     return DrawerHeader(
-      decoration: BoxDecoration(color: theme.primaryColor),
+      decoration: const BoxDecoration(),
       child: Center(child: content),
     );
   }
