@@ -28,9 +28,9 @@ class QuizDetailScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final quizId =
-        useState<String>(ModalRoute.of(context)!.settings.arguments as String);
-    final quizDetail = ref.watch(quizDetailProvider(quizId.value));
+    final quiz =
+        useState<Quiz>(ModalRoute.of(context)!.settings.arguments as Quiz);
+    final quizDetail = ref.watch(quizDetailProvider(quiz.value.documentId));
 
     return quizDetail.when(
       data: (data) => _Success(data),
