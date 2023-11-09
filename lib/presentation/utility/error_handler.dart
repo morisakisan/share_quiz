@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:share_quiz/presentation/common/error_dialog.dart';
 
 class ErrorHandler {
   ErrorHandler._();
@@ -39,26 +40,12 @@ class ErrorHandler {
     await FirebaseCrashlytics.instance.recordError(error, stackTrace);
   }
 
-  static AlertDialog getAlertDialog(
-      BuildContext context, Object? e, StackTrace stackTrace) {
-    return AlertDialog(
-      title: const Text('エラー'),
-      content: Text(getMessage(e, stackTrace)),
-      actions: [
-        TextButton(
-          child: const Text('OK'),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-      ],
-    );
-  }
-
   static void showErrorDialog(
       BuildContext context, Object? e, StackTrace stackTrace) {
     showDialog(
       context: context,
       builder: (context) {
-        return getAlertDialog(context, e, stackTrace);
+        return ErrorDialog(e, stackTrace);
       },
     );
   }

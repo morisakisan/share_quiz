@@ -14,6 +14,7 @@ import '../../presentation/utility/error_handler.dart';
 import '../../provider/quiz_answer_post_use_case_provider.dart';
 import '../../provider/quiz_detail_provider.dart';
 import '../../provider/quiz_good_post_use_case_provider.dart';
+import '../common/error_dialog.dart';
 import '../common/loading.dart';
 import '../common/loading_screen.dart';
 import '../common/login_dialog.dart';
@@ -244,8 +245,7 @@ class _Success extends HookConsumerWidget {
               Navigator.pop(dialogContext);
               return const LoadingScreen();
             } else if (state is AsyncError) {
-              return ErrorHandler.getAlertDialog(
-                  context, state.error, state.stackTrace);
+              return ErrorDialog(state.error, state.stackTrace);
             }
 
             return AlertDialog(
