@@ -1,6 +1,5 @@
 // Project imports:
 import 'package:share_quiz/provider/quiz_list_good_count.dart';
-
 import '../data/repository_impl/current_user_data_repository_impl.dart';
 import '../data/repository_impl/delete_user_repository_impl.dart';
 import '../data/repository_impl/log_out_repository_impl.dart';
@@ -39,15 +38,15 @@ import 'profile_repository_provider.dart';
 import 'profile_use_case_provider.dart';
 import 'quiz_answer_post_repository_provider.dart';
 import 'quiz_answer_post_use_case_provider.dart';
-import 'quiz_list_answers_count_provider.dart';
-import 'quiz_list_correct_rate_provider.dart';
 import 'quiz_detail_provider.dart';
 import 'quiz_detail_repository_provider.dart';
 import 'quiz_form_use_case_provider.dart';
 import 'quiz_good_post_repository_provider.dart';
 import 'quiz_good_post_use_case_provider.dart';
-import 'quiz_list_repository_provider.dart';
+import 'quiz_list_answers_count_provider.dart';
+import 'quiz_list_correct_rate_provider.dart';
 import 'quiz_list_new_provider.dart';
+import 'quiz_list_repository_provider.dart';
 import 'quiz_post_repository_provider.dart';
 import 'quiz_post_use_case_provider.dart';
 import 'setting_repository_provider.dart';

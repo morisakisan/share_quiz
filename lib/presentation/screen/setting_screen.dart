@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:share_quiz/presentation/common/custom_alert_dialog.dart';
 
 // Project imports:
+import 'package:share_quiz/presentation/common/custom_alert_dialog.dart';
 import '../../domain/models/setting/setting.dart';
 import '../../presentation/utility/widget_utils.dart';
 import '../../provider/delete_user_use_case_provider.dart';
