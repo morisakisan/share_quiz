@@ -1,5 +1,4 @@
 // Flutter imports:
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // Project imports:
@@ -9,7 +8,7 @@ class ErrorDialog extends StatelessWidget {
   final Object? e;
   final StackTrace stackTrace;
 
-  ErrorDialog(this.e, this.stackTrace, {super.key});
+  const ErrorDialog(this.e, this.stackTrace, {super.key});
 
   @override
   Widget build(BuildContext context) {
