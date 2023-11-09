@@ -127,22 +127,12 @@ class _HomeDrawer extends HookConsumerWidget {
     var logOutUseCase = ref.read(logOutUseCaseProvider.notifier);
     final theme = Theme.of(context);
     final appLocalizations = AppLocalizations.of(context)!;
-    Widget createHeader(Widget profile) {
-      return DrawerHeader(
-        decoration: BoxDecoration(
-          color: theme.primaryColor,
-        ),
-        child: Center(
-          child: profile,
-        ),
-      );
-    }
 
     final List<Widget> list = [];
     if (_state is AsyncLoading) {
       list.add(
-        createHeader(
-          const SizedBox(
+        const _Header(
+          SizedBox(
             height: 50,
             width: 50,
             child: CircularProgressIndicator(),
@@ -152,7 +142,7 @@ class _HomeDrawer extends HookConsumerWidget {
     } else if (_state is AsyncError) {
       var error = _state as AsyncError;
       list.add(
-        createHeader(
+        _Header(
           Text(
             ErrorHandler.getMessage(_state.error, error.stackTrace),
           ),
@@ -164,7 +154,7 @@ class _HomeDrawer extends HookConsumerWidget {
         final name = user?.name ?? "";
         final photoUrl = user?.photoUrl ?? "";
         list.add(
-          createHeader(
+          _Header(
             Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -186,7 +176,7 @@ class _HomeDrawer extends HookConsumerWidget {
         );
       } else {
         list.add(
-          createHeader(
+          _Header(
             Text(
               appLocalizations.please_login,
               style: theme.primaryTextTheme.titleLarge,
@@ -279,4 +269,25 @@ class _HomeDrawer extends HookConsumerWidget {
       ),
     );
   }
+}
+
+class _Header extends StatelessWidget {
+
+  final Widget child;
+
+  const _Header(this.child);
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return DrawerHeader(
+      decoration: BoxDecoration(
+        color: theme.primaryColor,
+      ),
+      child: Center(
+        child: child,
+      ),
+    );
+  }
+
 }
