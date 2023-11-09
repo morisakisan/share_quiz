@@ -65,9 +65,9 @@ class _Success extends HookConsumerWidget {
           children: <Widget>[image],
         ),
       );
-    }
 
-    list.add(const SizedBox(height: 16));
+      list.add(const SizedBox(height: 16));
+    }
 
     //問題文
     list.add(
