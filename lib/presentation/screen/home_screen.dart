@@ -14,6 +14,7 @@ import '../../provider/quiz_list_answers_count_provider.dart';
 import '../../provider/quiz_list_correct_rate_provider.dart';
 import '../../provider/quiz_list_new_provider.dart';
 import '../../provider/quiz_list_good_count.dart';
+import '../common/custom_alert_dialog.dart';
 import '../common/login_dialog.dart';
 import '../nav.dart';
 import '../page/quiz_list_page.dart';
@@ -226,21 +227,12 @@ class _LogoutTile extends HookConsumerWidget {
     showDialog(
       barrierDismissible: false,
       context: context,
-      builder: (_) => AlertDialog(
-        content: Text(appLocalizations.confirm_logout),
-        actions: [
-          TextButton(
-            child: Text(appLocalizations.cancel),
-            onPressed: () => Navigator.pop(context),
-          ),
-          TextButton(
-            child: Text(appLocalizations.ok),
-            onPressed: () {
-              ref.read(logOutUseCaseProvider.notifier).logout();
-              Navigator.pop(context);
-            },
-          ),
-        ],
+      builder: (_) => CustomAlertDialog(
+        title: appLocalizations.logout,
+        message: appLocalizations.confirm_logout,
+        onOkPressed: () {
+          ref.read(logOutUseCaseProvider.notifier).logout();
+        },
       ),
     );
   }
