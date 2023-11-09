@@ -1,8 +1,12 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
+
+// Package imports:
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
-import 'package:share_quiz/presentation/utility/widget_utils.dart';
 
+// Project imports:
+import 'package:share_quiz/presentation/utility/widget_utils.dart';
 import '../../domain/models/quiz/quiz.dart';
 import '../nav.dart';
 

@@ -18,7 +18,7 @@ class Nav {
   static const profile= "profile";
 
   static final routes = <String, WidgetBuilder>{
-    quizPost: (BuildContext context) => QuizPostScreen(),
+    quizPost: (BuildContext context) => const QuizPostScreen(),
     quizDetail: (BuildContext context) => const QuizDetailScreen(),
     setting: (BuildContext context) => const SettingScreen(),
     profile: (BuildContext context) => const ProfileScreen()

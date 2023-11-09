@@ -2,18 +2,13 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:intl/intl.dart';
-import 'package:share_quiz/presentation/common/quiz_grid_item.dart';
 
 // Project imports:
-import '../../domain/models/quiz/quiz.dart';
+import 'package:share_quiz/presentation/common/quiz_grid_item.dart';
 import '../../domain/models/quiz_list/quiz_list.dart';
 import '../../presentation/utility/error_handler.dart';
 import '../../presentation/utility/widget_utils.dart';
-import '../common/quiz_list_item.dart';
-import '../nav.dart';
 
 class QuizListPage extends HookConsumerWidget {
   final AutoDisposeStreamProvider<QuizList> _provider;

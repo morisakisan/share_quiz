@@ -7,6 +7,7 @@ import 'package:flutter_settings_ui/flutter_settings_ui.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
+import 'package:share_quiz/presentation/common/custom_alert_dialog.dart';
 import '../../domain/models/setting/setting.dart';
 import '../../presentation/utility/widget_utils.dart';
 import '../../provider/delete_user_use_case_provider.dart';
@@ -81,21 +82,12 @@ class _SettingItems extends HookConsumerWidget {
             showDialog(
               context: context,
               builder: (context) {
-                return AlertDialog(
-                  content: const Text("退会します。よろしいですか？"),
-                  actions: [
-                    TextButton(
-                      child: Text(appLocalizations.cancel),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    TextButton(
-                      child: Text(appLocalizations.ok),
-                      onPressed: () {
-                        useCase.delete();
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
+                return CustomAlertDialog(
+                  title: "退会",
+                  message: "退会します。よろしいですか？",
+                  onOkPressed: () {
+                    useCase.delete();
+                  },
                 );
               },
             );
