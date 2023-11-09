@@ -51,9 +51,9 @@ class AppTheme {
     tabBarTheme: TabBarTheme(
       labelColor: Colors.white, // 選択中のタブのテキスト色
       unselectedLabelColor: Colors.grey[300], // 非選択のタブのテキスト色
-      indicator: UnderlineTabIndicator(
+      indicator: const UnderlineTabIndicator(
         borderSide: BorderSide(
-          color: Colors.yellow[700]!, // インジケータの色
+          color: Colors.deepOrange,
           width: 2.0, // インジケータの太さ
         ),
       ),
