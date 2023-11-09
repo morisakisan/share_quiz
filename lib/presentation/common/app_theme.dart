@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static final lightTheme = ThemeData(
+    useMaterial3: true,
     brightness: Brightness.light,
     primaryColor: Colors.yellow[800],
     colorScheme: ColorScheme.light(
@@ -73,6 +74,7 @@ class AppTheme {
   );
 
   static final ThemeData darkTheme = ThemeData(
+    useMaterial3: true,
     // Brightnessをdarkに設定
     brightness: Brightness.dark,
 
