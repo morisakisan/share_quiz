@@ -8,7 +8,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_quiz/presentation/common/quiz_grid_item.dart';
 import '../../domain/models/quiz_list/quiz_list.dart';
 import '../../presentation/utility/error_handler.dart';
-import '../../presentation/utility/widget_utils.dart';
+import '../common/loading.dart';
 
 class QuizListPage extends HookConsumerWidget {
   final AutoDisposeStreamProvider<QuizList> _provider;
@@ -32,7 +32,7 @@ class QuizListPage extends HookConsumerWidget {
           return QuizGridItem(list.quizzes[index]);
         },
       ),
-      loading: () => WidgetUtils.loading(),
+      loading: () => const Loading(),
       error: (error, stack) => Text(
         ErrorHandler.getMessage(error, stack),
       ),

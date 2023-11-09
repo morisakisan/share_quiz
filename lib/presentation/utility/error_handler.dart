@@ -35,7 +35,7 @@ class ErrorHandler {
     }
   }
 
-  static _reportError(dynamic error, StackTrace stackTrace) async {
+  static _reportError(Object? error, StackTrace stackTrace) async {
     await FirebaseCrashlytics.instance.recordError(error, stackTrace);
   }
 

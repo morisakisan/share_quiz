@@ -8,9 +8,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Project imports:
 import '../../provider/profile_use_case_provider.dart';
 import '../../provider/user_quizzes_use_case_provider.dart';
+import '../common/loading.dart';
 import '../common/quiz_list_item.dart';
 import '../utility/error_handler.dart';
-import '../utility/widget_utils.dart';
 
 class ProfileScreen extends HookConsumerWidget {
   const ProfileScreen({super.key});
@@ -72,12 +72,12 @@ class ProfileScreen extends HookConsumerWidget {
       error: (object, stackTrace) => Center(
         child: Text(ErrorHandler.getMessage(object, stackTrace)),
       ),
-      loading: () => WidgetUtils.loading(),
+      loading: () => const Loading(),
     );
 
     Widget quizzesWidget = userQuizzesState.when<Widget>(
-      loading: () => SliverToBoxAdapter(
-        child: WidgetUtils.loading(),
+      loading: () => const SliverToBoxAdapter(
+        child: Loading(),
       ),
       success: (quizzes) {
         if (quizzes.quizzes.isEmpty) {
@@ -96,7 +96,7 @@ class ProfileScreen extends HookConsumerWidget {
             (context, index) {
               if (index == quizzes.quizzes.length &&
                   quizzes.pagination.hasMore) {
-                return WidgetUtils.loading();
+                return const Loading();
               }
               return QuizListItem(quizzes.quizzes[index]);
             },

@@ -15,11 +15,11 @@ import '../../provider/quiz_list_correct_rate_provider.dart';
 import '../../provider/quiz_list_good_count.dart';
 import '../../provider/quiz_list_new_provider.dart';
 import '../common/custom_alert_dialog.dart';
+import '../common/loading.dart';
 import '../common/login_dialog.dart';
 import '../nav.dart';
 import '../page/quiz_list_page.dart';
 import '../utility/error_handler.dart';
-import '../utility/widget_utils.dart';
 
 class HomeScreen extends HookConsumerWidget {
   const HomeScreen({super.key});
@@ -86,7 +86,7 @@ class HomeScreen extends HookConsumerWidget {
 
     var logout = ref.watch(logOutUseCaseProvider);
     if (login is AsyncLoading || logout is AsyncLoading) {
-      stackChildren.add(WidgetUtils.loading());
+      stackChildren.add(const Loading());
     } else if (login is AsyncError) {
       WidgetsBinding.instance.addPostFrameCallback(
         (_) {

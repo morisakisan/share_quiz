@@ -10,11 +10,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Project imports:
 import '../../domain/models/quiz_post/quiz_post_data.dart';
 import '../../presentation/utility/error_handler.dart';
-import '../../presentation/utility/widget_utils.dart';
 import '../../presentation/widget/form/choices_form_field.dart';
 import '../../presentation/widget/form/image_form_field.dart';
 import '../../provider/quiz_form_use_case_provider.dart';
 import '../../provider/quiz_post_use_case_provider.dart';
+import '../common/loading_screen.dart';
 
 class QuizPostScreen extends HookConsumerWidget {
   const QuizPostScreen({super.key});
@@ -35,7 +35,7 @@ class QuizPostScreen extends HookConsumerWidget {
     );
 
     if (postState is AsyncLoading) {
-      children.add(WidgetUtils.loadingScreen(context));
+      children.add(const LoadingScreen());
     } else if (postState is AsyncError) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ErrorHandler.showErrorDialog(

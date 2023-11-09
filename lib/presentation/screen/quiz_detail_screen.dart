@@ -11,11 +11,13 @@ import 'package:share_plus/share_plus.dart';
 import '../../domain/models/quiz/quiz.dart';
 import '../../domain/models/quiz_detail/quiz_detail.dart';
 import '../../presentation/utility/error_handler.dart';
-import '../../presentation/utility/widget_utils.dart';
 import '../../provider/quiz_answer_post_use_case_provider.dart';
 import '../../provider/quiz_detail_provider.dart';
 import '../../provider/quiz_good_post_use_case_provider.dart';
+import '../common/loading.dart';
+import '../common/loading_screen.dart';
 import '../common/login_dialog.dart';
+import '../common/quiz_image.dart';
 
 final _selectProvider =
     StateNotifierProvider.autoDispose<_Select, int>((_) => _Select());
@@ -63,7 +65,7 @@ class _Success extends HookConsumerWidget {
     );
     List<Widget> list = [];
     if (quiz.imageUrl != null) {
-      Widget image = WidgetUtils.getQuizImage(250.0, quiz.imageUrl!);
+      Widget image = QuizImage(imageSize: 250.0, imageUrl: quiz.imageUrl!);
       list.add(
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -213,7 +215,7 @@ class _Success extends HookConsumerWidget {
 
     var quizGoodPost = ref.watch(quizGoodPostUseCaseProvider);
     if (quizGoodPost is AsyncLoading) {
-      stackChildren.add(WidgetUtils.loading());
+      stackChildren.add(const Loading());
     } else if (quizGoodPost is AsyncError) {
       WidgetsBinding.instance.addPostFrameCallback(
         (_) {
@@ -237,10 +239,10 @@ class _Success extends HookConsumerWidget {
             final quizAnswerNotifier =
                 ref.read(quizAnswerPostUseCaseProvider.notifier);
             if (state is AsyncLoading) {
-              return WidgetUtils.loadingScreen(context);
+              return const LoadingScreen();
             } else if (state is AsyncData) {
               Navigator.pop(dialogContext);
-              return WidgetUtils.loadingScreen(context);
+              return const LoadingScreen();
             } else if (state is AsyncError) {
               return ErrorHandler.getAlertDialog(
                   context, state.error, state.stackTrace);
@@ -301,7 +303,7 @@ class _Success extends HookConsumerWidget {
 class _Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(appBar: AppBar(), body: WidgetUtils.loading());
+    return Scaffold(appBar: AppBar(), body: const Loading());
   }
 }
 

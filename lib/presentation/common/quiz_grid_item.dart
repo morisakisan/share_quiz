@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
+import 'package:share_quiz/presentation/common/quiz_image.dart';
 
 // Project imports:
-import 'package:share_quiz/presentation/utility/widget_utils.dart';
 import '../../domain/models/quiz/quiz.dart';
 import '../nav.dart';
 
@@ -73,7 +73,7 @@ class QuizGridItem extends StatelessWidget {
           children: [
             Expanded(
               child: quiz.imageUrl != null
-                  ? WidgetUtils.getQuizImage(125.0, quiz.imageUrl!)
+                  ? QuizImage(imageSize: 125.0, imageUrl: quiz.imageUrl!)
                   : Container(
                       color: Colors.grey, // 画像がない場合のプレースホルダー
                       child: const Icon(Icons.image,
