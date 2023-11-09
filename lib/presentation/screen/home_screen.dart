@@ -123,171 +123,168 @@ class _HomeDrawer extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var loginUseCase = ref.read(loginUseCaseProvider.notifier);
-    var logOutUseCase = ref.read(logOutUseCaseProvider.notifier);
     final theme = Theme.of(context);
     final appLocalizations = AppLocalizations.of(context)!;
-
-    final List<Widget> list = [];
-    if (_state is AsyncLoading) {
-      list.add(
-        const _Header(
-          SizedBox(
-            height: 50,
-            width: 50,
-            child: CircularProgressIndicator(),
-          ),
-        ),
-      );
-    } else if (_state is AsyncError) {
-      var error = _state as AsyncError;
-      list.add(
-        _Header(
-          Text(
-            ErrorHandler.getMessage(_state.error, error.stackTrace),
-          ),
-        ),
-      );
-    } else if (_state is AsyncData) {
-      final user = (_state as AsyncData).value;
-      if (user != null) {
-        final name = user?.name ?? "";
-        final photoUrl = user?.photoUrl ?? "";
-        list.add(
-          _Header(
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                CircleAvatar(
-                  radius: 30.0,
-                  backgroundImage: NetworkImage(photoUrl),
-                  backgroundColor: Colors.transparent,
-                ),
-                const SizedBox(
-                  height: 16,
-                ),
-                Text(
-                  name,
-                  style: theme.primaryTextTheme.titleLarge,
-                ),
-              ],
-            ),
-          ),
-        );
-      } else {
-        list.add(
-          _Header(
-            Text(
-              appLocalizations.please_login,
-              style: theme.primaryTextTheme.titleLarge,
-            ),
-          ),
-        );
-      }
-    } else {
-      throw Exception();
-    }
-
-    if (_state is AsyncData) {
-      final user = (_state as AsyncData).value;
-      if (user != null) {
-        list.add(
-          ListTile(
-            leading: const Icon(Icons.account_circle),
-            title: Text(
-              'プロフィール',
-              style: theme.textTheme.bodyLarge,
-            ),
-            onTap: () {
-              Navigator.of(context).pushNamed(Nav.profile);
-            },
-          ),
-        );
-        final logout = ListTile(
-          leading: const Icon(Icons.logout),
-          title: Text(
-            appLocalizations.logout,
-            style: theme.textTheme.bodyLarge,
-          ),
-          onTap: () {
-            showDialog(
-              barrierDismissible: false,
-              context: context,
-              builder: (_) {
-                return AlertDialog(
-                  content: Text(appLocalizations.confirm_logout),
-                  actions: [
-                    TextButton(
-                      child: Text(appLocalizations.cancel),
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    TextButton(
-                      child: Text(appLocalizations.ok),
-                      onPressed: () {
-                        logOutUseCase.logout();
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
-                );
-              },
-            );
-          },
-        );
-        list.add(logout);
-      } else {
-        final login = ListTile(
-          leading: const Icon(Icons.login),
-          title: Text(
-            appLocalizations.login,
-            style: theme.textTheme.bodyLarge,
-          ),
-          onTap: () => loginUseCase.signInWithGoogle(),
-        );
-        list.add(login);
-      }
-    }
-
-    list.add(
-      ListTile(
-        leading: const Icon(Icons.settings),
-        title: Text(
-          appLocalizations.settings,
-          style: theme.textTheme.bodyLarge,
-        ),
-        onTap: () {
-          Navigator.of(context).pushNamed(Nav.setting);
-        },
-      ),
-    );
 
     return SafeArea(
       child: Drawer(
         child: ListView(
-          children: list,
+          children: [
+            _HomeDrawerHeader(state: _state),
+            if (_state.value != null)
+              ..._buildUserTiles(context, ref, appLocalizations, theme),
+            if (_state.value == null)
+              _LoginTile(ref: ref),
+            const _SettingsTile(),
+          ],
         ),
       ),
     );
   }
+
+  List<Widget> _buildUserTiles(BuildContext context, WidgetRef ref, AppLocalizations appLocalizations, ThemeData theme) {
+    return [
+      const _ProfileTile(),
+      _LogoutTile(ref: ref),
+    ];
+  }
 }
 
-class _Header extends StatelessWidget {
+class _HomeDrawerHeader extends StatelessWidget {
+  final AsyncValue<UserData?> state;
 
-  final Widget child;
-
-  const _Header(this.child);
+  const _HomeDrawerHeader({required this.state});
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    Widget content;
+
+    if (state is AsyncLoading) {
+      content = const CircularProgressIndicator();
+    } else if (state is AsyncError) {
+      content = Text(ErrorHandler.getMessage(state.error, (state as AsyncError).stackTrace));
+    } else if (state is AsyncData<UserData?> && state.value != null) {
+      content = _UserHeaderContent(user: state.value!);
+    } else {
+      content = Text(AppLocalizations.of(context)!.please_login, style: theme.primaryTextTheme.titleLarge);
+    }
+
     return DrawerHeader(
-      decoration: BoxDecoration(
-        color: theme.primaryColor,
-      ),
-      child: Center(
-        child: child,
-      ),
+      decoration: BoxDecoration(color: theme.primaryColor),
+      child: Center(child: content),
+    );
+  }
+}
+
+class _UserHeaderContent extends StatelessWidget {
+  final UserData user;
+
+  const _UserHeaderContent({required this.user});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        CircleAvatar(
+          radius: 30.0,
+          backgroundImage: NetworkImage(user.photoUrl ?? ""),
+          backgroundColor: Colors.transparent,
+        ),
+        const SizedBox(height: 16),
+        Text(user.name ?? "", style: theme.primaryTextTheme.titleLarge),
+      ],
+    );
+  }
+}
+
+class _ProfileTile extends StatelessWidget {
+
+  const _ProfileTile();
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return ListTile(
+      leading: const Icon(Icons.account_circle),
+      title: Text('プロフィール', style: theme.textTheme.bodyLarge),
+      onTap: () => Navigator.of(context).pushNamed(Nav.profile),
+    );
+  }
+}
+
+class _LogoutTile extends StatelessWidget {
+  final WidgetRef ref;
+
+  const _LogoutTile({required this.ref});
+
+  @override
+  Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+    return ListTile(
+      leading: const Icon(Icons.logout),
+      title: Text(appLocalizations.logout, style: theme.textTheme.bodyLarge),
+      onTap: () => _showLogoutDialog(context, appLocalizations),
     );
   }
 
+  void _showLogoutDialog(BuildContext context, AppLocalizations appLocalizations) {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (_) => AlertDialog(
+        content: Text(appLocalizations.confirm_logout),
+        actions: [
+          TextButton(
+            child: Text(appLocalizations.cancel),
+            onPressed: () => Navigator.pop(context),
+          ),
+          TextButton(
+            child: Text(appLocalizations.ok),
+            onPressed: () {
+              ref.read(logOutUseCaseProvider.notifier).logout();
+              Navigator.pop(context);
+            },
+          ),
+        ],
+      ),
+    );
+  }
 }
+
+class _LoginTile extends StatelessWidget {
+  final WidgetRef ref;
+
+  const _LoginTile({required this.ref});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final appLocalizations = AppLocalizations.of(context)!;
+    return ListTile(
+      leading: const Icon(Icons.login),
+      title: Text(appLocalizations.login, style: theme.textTheme.bodyLarge),
+      onTap: () => ref.read(loginUseCaseProvider.notifier).signInWithGoogle(),
+    );
+  }
+}
+
+class _SettingsTile extends StatelessWidget {
+
+  const _SettingsTile();
+
+  @override
+  Widget build(BuildContext context) {
+    final appLocalizations = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+    return ListTile(
+      leading: const Icon(Icons.settings),
+      title: Text(appLocalizations.settings, style: theme.textTheme.bodyLarge),
+      onTap: () => Navigator.of(context).pushNamed(Nav.setting),
+    );
+  }
+}
+
