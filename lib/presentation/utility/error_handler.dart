@@ -11,7 +11,7 @@ import 'package:share_quiz/presentation/common/error_dialog.dart';
 class ErrorHandler {
   ErrorHandler._();
 
-  static String getMessage(Object? e, StackTrace stackTrace) {
+  static String getMessage(Object? e, StackTrace? stackTrace) {
     if (e is FirebaseAuthException) {
       switch (e.code) {
         case 'account-exists-with-different-credential':
@@ -38,12 +38,12 @@ class ErrorHandler {
     }
   }
 
-  static _reportError(Object? error, StackTrace stackTrace) async {
+  static _reportError(Object? error, StackTrace? stackTrace) async {
     await FirebaseCrashlytics.instance.recordError(error, stackTrace);
   }
 
   static void showErrorDialog(
-      BuildContext context, Object? e, StackTrace stackTrace) {
+      BuildContext context, Object? e, StackTrace? stackTrace) {
     showDialog(
       context: context,
       builder: (context) {
