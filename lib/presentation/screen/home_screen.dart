@@ -123,18 +123,14 @@ class _HomeDrawer extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final theme = Theme.of(context);
-    final appLocalizations = AppLocalizations.of(context)!;
-
     return SafeArea(
       child: Drawer(
         child: ListView(
           children: [
             _HomeDrawerHeader(state: _state),
             if (_state.value != null)
-              ..._buildUserTiles(context, ref, appLocalizations, theme),
-            if (_state.value == null)
-              _LoginTile(ref: ref),
+              ..._buildUserTiles(context),
+            if (_state.value == null) const _LoginTile(),
             const _SettingsTile(),
           ],
         ),
@@ -142,10 +138,10 @@ class _HomeDrawer extends HookConsumerWidget {
     );
   }
 
-  List<Widget> _buildUserTiles(BuildContext context, WidgetRef ref, AppLocalizations appLocalizations, ThemeData theme) {
+  List<Widget> _buildUserTiles(BuildContext context) {
     return [
       const _ProfileTile(),
-      _LogoutTile(ref: ref),
+      const _LogoutTile(),
     ];
   }
 }
@@ -163,11 +159,13 @@ class _HomeDrawerHeader extends StatelessWidget {
     if (state is AsyncLoading) {
       content = const CircularProgressIndicator();
     } else if (state is AsyncError) {
-      content = Text(ErrorHandler.getMessage(state.error, (state as AsyncError).stackTrace));
+      content = Text(ErrorHandler.getMessage(
+          state.error, (state as AsyncError).stackTrace));
     } else if (state is AsyncData<UserData?> && state.value != null) {
       content = _UserHeaderContent(user: state.value!);
     } else {
-      content = Text(AppLocalizations.of(context)!.please_login, style: theme.primaryTextTheme.titleLarge);
+      content = Text(AppLocalizations.of(context)!.please_login,
+          style: theme.primaryTextTheme.titleLarge);
     }
 
     return DrawerHeader(
@@ -201,7 +199,6 @@ class _UserHeaderContent extends StatelessWidget {
 }
 
 class _ProfileTile extends StatelessWidget {
-
   const _ProfileTile();
 
   @override
@@ -215,23 +212,23 @@ class _ProfileTile extends StatelessWidget {
   }
 }
 
-class _LogoutTile extends StatelessWidget {
-  final WidgetRef ref;
-
-  const _LogoutTile({required this.ref});
+class _LogoutTile extends HookConsumerWidget {
+  const _LogoutTile();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final appLocalizations = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     return ListTile(
       leading: const Icon(Icons.logout),
       title: Text(appLocalizations.logout, style: theme.textTheme.bodyLarge),
-      onTap: () => _showLogoutDialog(context, appLocalizations),
+      onTap: () => _showLogoutDialog(context, ref),
     );
   }
 
-  void _showLogoutDialog(BuildContext context, AppLocalizations appLocalizations) {
+  void _showLogoutDialog(
+      BuildContext context, WidgetRef ref) {
+    final appLocalizations = AppLocalizations.of(context)!;
     showDialog(
       barrierDismissible: false,
       context: context,
@@ -255,13 +252,12 @@ class _LogoutTile extends StatelessWidget {
   }
 }
 
-class _LoginTile extends StatelessWidget {
-  final WidgetRef ref;
-
-  const _LoginTile({required this.ref});
+class _LoginTile extends HookConsumerWidget {
+  
+  const _LoginTile();
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
     final appLocalizations = AppLocalizations.of(context)!;
     return ListTile(
@@ -273,7 +269,6 @@ class _LoginTile extends StatelessWidget {
 }
 
 class _SettingsTile extends StatelessWidget {
-
   const _SettingsTile();
 
   @override
@@ -287,4 +282,3 @@ class _SettingsTile extends StatelessWidget {
     );
   }
 }
-
