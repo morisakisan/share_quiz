@@ -9,6 +9,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Project imports:
 import 'package:share_quiz/presentation/common/custom_alert_dialog.dart';
 import '../../domain/models/setting/setting.dart';
+import '../../provider/app_theme_selector_provider.dart';
 import '../../provider/delete_user_use_case_provider.dart';
 import '../../provider/setting_use_case_provider.dart';
 import '../common/loading_screen.dart';
@@ -72,6 +73,34 @@ class _SettingItems extends HookConsumerWidget {
     final useCase = ref.watch(deleteUserUseCaseProvider.notifier);
     final appLocalizations = AppLocalizations.of(context)!;
     List<AbstractTile> tiles = [];
+
+    final themeMode = ref.watch(appThemeSelectorProvider);
+    
+    tiles.add(
+      SettingsTile(
+        title: "テーマ選択",
+        leading: const Icon(Icons.palette),
+        onPressed: (context) {
+          showDialog(
+            context: context,
+            builder: (context) {
+              return SimpleDialog(
+                title: const Text("テーマを選択"),
+                children: ThemeMode.values.map((mode) {
+                  return SimpleDialogOption(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      ref.read(appThemeSelectorProvider.notifier).changeAndSave(mode);
+                    },
+                    child: Text(mode.toString().split('.').last),
+                  );
+                }).toList(),
+              );
+            },
+          );
+        },
+      ),
+    );
 
     if (_setting.isLogin) {
       tiles.add(
