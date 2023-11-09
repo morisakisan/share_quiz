@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:share_quiz/presentation/common/loading_screen.dart';
 
 // Project imports:
+import 'package:share_quiz/presentation/common/loading_screen.dart';
 import '../../domain/models/user/user_data.dart';
 import '../../provider/current_user_provider.dart';
 import '../../provider/log_out_use_case_provider.dart';
