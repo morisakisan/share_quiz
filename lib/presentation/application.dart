@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:share_quiz/presentation/common/app_theme.dart';
-import 'package:share_quiz/provider/app_theme_selector_provider.dart';
 
 // Project imports:
+import 'package:share_quiz/presentation/common/app_theme.dart';
+import 'package:share_quiz/provider/app_theme_selector_provider.dart';
 import '../presentation/screen/home_screen.dart';
 import 'nav.dart';
 
