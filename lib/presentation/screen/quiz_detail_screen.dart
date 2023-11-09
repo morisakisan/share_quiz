@@ -96,10 +96,9 @@ class QuizDetailScreen extends HookConsumerWidget {
       ),
     );
 
-    final Function()? answerOnPressed;
+    FloatingActionButton? answerButton;
     if (userQuizInteraction == null) {
       list.addAll(_createChoices(quiz, selectValue, null));
-      answerOnPressed = null;
     } else if (userQuizInteraction.selectAnswer == null) {
       list.addAll(
         _createChoices(
@@ -111,16 +110,19 @@ class QuizDetailScreen extends HookConsumerWidget {
         ),
       );
 
-      answerOnPressed = () {
-        if (!userQuizInteraction.isLogin) {
-          _showLoginDialog(context);
-          return;
-        }
-        _showAnswerDialog(context, ref, selectValue, quiz);
-      };
+      answerButton = FloatingActionButton.extended(
+        onPressed: () {
+          if (!userQuizInteraction.isLogin) {
+            _showLoginDialog(context);
+            return;
+          }
+          _showAnswerDialog(context, ref, selectValue, quiz);
+        },
+        icon: const Icon(Icons.question_answer_rounded),
+        label: Text(appLocalizations.answer),
+      );
     } else {
       selectValue = userQuizInteraction.selectAnswer!;
-      answerOnPressed = null;
 
       list.addAll(_createChoices(quiz, selectValue, null));
 
@@ -155,14 +157,10 @@ class QuizDetailScreen extends HookConsumerWidget {
             padding: const EdgeInsets.all(16.0),
             children: list,
           ),
-          floatingActionButton: FloatingActionButton.extended(
-            onPressed: answerOnPressed,
-            icon: const Icon(Icons.question_answer_rounded),
-            label: Text(appLocalizations.answer),
-          ),
+          floatingActionButton: answerButton,
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
-          bottomNavigationBar: QuizDetailBottomBar(quiz, userQuizInteraction)),
+          bottomNavigationBar: _QuizDetailBottomBar(quiz, userQuizInteraction)),
     );
 
     var quizGoodPost = ref.watch(quizGoodPostUseCaseProvider);
@@ -235,11 +233,11 @@ class QuizDetailScreen extends HookConsumerWidget {
   }
 }
 
-class QuizDetailBottomBar extends HookConsumerWidget {
+class _QuizDetailBottomBar extends HookConsumerWidget {
   final Quiz quiz;
   final UserQuizInteraction? userQuizInteraction;
 
-  const QuizDetailBottomBar(this.quiz, this.userQuizInteraction, {super.key});
+  const _QuizDetailBottomBar(this.quiz, this.userQuizInteraction);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
