@@ -243,38 +243,43 @@ class _QuizDetailBottomBar extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var quizGoodPostUseCase = ref.read(quizGoodPostUseCaseProvider.notifier);
     final appLocalizations = AppLocalizations.of(context)!;
-    var children = <Widget>[];
-    if (userQuizInteraction != null) {
-      children.add(
-        TextButton.icon(
-          icon: Icon(userQuizInteraction!.hasGood
-              ? Icons.thumb_up_alt
-              : Icons.thumb_up_off_alt),
-          onPressed: () {
-            if (!userQuizInteraction!.isLogin) {
-              _showLoginDialog(context);
-              return;
-            }
-            quizGoodPostUseCase.post(quiz.documentId);
-          },
-          label: Text("${quiz.goodCount ?? 0}"),
-        ),
-      );
-    }
-    children.add(
-      TextButton.icon(
-        icon: const Icon(Icons.share),
-        onPressed: () {
-          Share.share(appLocalizations.shareFormat(quiz.title, quiz.question));
-        },
-        label: Text(appLocalizations.share),
-      ),
-    );
 
     return BottomAppBar(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: children,
+        children: [
+          Visibility(
+            visible: userQuizInteraction != null,
+            maintainSize: true,
+            maintainAnimation: true,
+            maintainState: true,
+            child: TextButton.icon(
+              icon: Icon(
+                userQuizInteraction?.hasGood == null
+                    ? null
+                    : (userQuizInteraction!.hasGood
+                        ? Icons.thumb_up_alt
+                        : Icons.thumb_up_off_alt),
+              ),
+              onPressed: () {
+                if (userQuizInteraction?.isLogin == false) {
+                  _showLoginDialog(context);
+                  return;
+                }
+                quizGoodPostUseCase.post(quiz.documentId);
+              },
+              label: Text("${quiz.goodCount ?? 0}"),
+            ),
+          ),
+          TextButton.icon(
+            icon: const Icon(Icons.share),
+            onPressed: () {
+              Share.share(
+                  appLocalizations.shareFormat(quiz.title, quiz.question));
+            },
+            label: Text(appLocalizations.share),
+          ),
+        ],
       ),
     );
   }
