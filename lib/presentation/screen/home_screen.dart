@@ -128,20 +128,16 @@ class _HomeDrawer extends HookConsumerWidget {
         child: ListView(
           children: [
             _HomeDrawerHeader(state: _state),
-            if (_state.value != null) ..._buildUserTiles(context),
+            if (_state.value != null) ...[
+              const _ProfileTile(),
+              const _LogoutTile(),
+            ],
             if (_state.value == null) const _LoginTile(),
             const _SettingsTile(),
           ],
         ),
       ),
     );
-  }
-
-  List<Widget> _buildUserTiles(BuildContext context) {
-    return [
-      const _ProfileTile(),
-      const _LogoutTile(),
-    ];
   }
 }
 
