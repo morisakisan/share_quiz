@@ -128,8 +128,7 @@ class _HomeDrawer extends HookConsumerWidget {
         child: ListView(
           children: [
             _HomeDrawerHeader(state: _state),
-            if (_state.value != null)
-              ..._buildUserTiles(context),
+            if (_state.value != null) ..._buildUserTiles(context),
             if (_state.value == null) const _LoginTile(),
             const _SettingsTile(),
           ],
@@ -226,8 +225,7 @@ class _LogoutTile extends HookConsumerWidget {
     );
   }
 
-  void _showLogoutDialog(
-      BuildContext context, WidgetRef ref) {
+  void _showLogoutDialog(BuildContext context, WidgetRef ref) {
     final appLocalizations = AppLocalizations.of(context)!;
     showDialog(
       barrierDismissible: false,
@@ -253,7 +251,6 @@ class _LogoutTile extends HookConsumerWidget {
 }
 
 class _LoginTile extends HookConsumerWidget {
-  
   const _LoginTile();
 
   @override
