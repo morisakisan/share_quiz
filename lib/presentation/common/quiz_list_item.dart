@@ -65,7 +65,7 @@ class QuizListItem extends StatelessWidget {
         onTap: () {
           Navigator.of(context).pushNamed(
             Nav.quizDetail,
-            arguments: quiz.documentId,
+            arguments: quiz,
           );
         },
         child: Stack(

@@ -6,7 +6,7 @@ import 'package:share_quiz/presentation/utility/error_handler.dart';
 
 class ErrorDialog extends StatelessWidget {
   final Object? e;
-  final StackTrace stackTrace;
+  final StackTrace? stackTrace;
 
   const ErrorDialog(this.e, this.stackTrace, {super.key});
 

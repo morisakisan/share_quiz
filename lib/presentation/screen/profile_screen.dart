@@ -76,7 +76,7 @@ class ProfileScreen extends HookConsumerWidget {
     );
 
     Widget quizzesWidget = userQuizzesState.when<Widget>(
-      loading: () => const SliverToBoxAdapter(
+      loading: () => const SliverFillRemaining(
         child: Loading(),
       ),
       success: (quizzes) {
@@ -104,7 +104,7 @@ class ProfileScreen extends HookConsumerWidget {
           ),
         );
       },
-      error: (error, stackTrace, previousData) => SliverToBoxAdapter(
+      error: (error, stackTrace, previousData) => SliverFillRemaining(
         child: Center(child: Text(ErrorHandler.getMessage(error, stackTrace))),
       ),
     );
