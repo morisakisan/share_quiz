@@ -33,15 +33,9 @@ class QuizDetailScreen extends HookConsumerWidget {
     final quizDetail = ref.watch(quizDetailProvider(quizId.value));
 
     return quizDetail.when(
-      data: (data) {
-        return _Success(data);
-      },
-      error: (error, stackTrace) {
-        return _Error(error, stackTrace);
-      },
-      loading: () {
-        return _Loading();
-      },
+      data: (data) => _Success(data),
+      error: (error, stackTrace) => _Error(error, stackTrace),
+      loading: () => _Loading(),
     );
   }
 }
