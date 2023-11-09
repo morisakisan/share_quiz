@@ -9,9 +9,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 // Project imports:
 import 'package:share_quiz/presentation/common/custom_alert_dialog.dart';
 import '../../domain/models/setting/setting.dart';
-import '../../presentation/utility/widget_utils.dart';
 import '../../provider/delete_user_use_case_provider.dart';
 import '../../provider/setting_use_case_provider.dart';
+import '../common/loading_screen.dart';
 import '../utility/error_handler.dart';
 
 class SettingScreen extends HookConsumerWidget {
@@ -53,7 +53,7 @@ class SettingScreen extends HookConsumerWidget {
     );
 
     if (useCase is AsyncLoading || deleteUseCaseState is AsyncLoading) {
-      children.add(WidgetUtils.loadingScreen(context));
+      children.add(const LoadingScreen());
     }
 
     return Stack(
