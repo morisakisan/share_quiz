@@ -1,5 +1,8 @@
+// Flutter imports:
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+// Project imports:
 import 'package:share_quiz/presentation/utility/error_handler.dart';
 
 class ErrorDialog extends StatelessWidget {

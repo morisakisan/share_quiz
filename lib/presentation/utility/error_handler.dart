@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+
+// Project imports:
 import 'package:share_quiz/presentation/common/error_dialog.dart';
 
 class ErrorHandler {
