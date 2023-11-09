@@ -56,6 +56,17 @@ class AppTheme {
       ),
     ),
 
+    tabBarTheme: TabBarTheme(
+      labelColor: Colors.white, // 選択中のタブのテキスト色
+      unselectedLabelColor: Colors.grey[300], // 非選択のタブのテキスト色
+      indicator: UnderlineTabIndicator(
+        borderSide: BorderSide(
+          color: Colors.yellow[700]!, // インジケータの色
+          width: 2.0, // インジケータの太さ
+        ),
+      ),
+    ),
+
   );
 
   static final ThemeData darkTheme = ThemeData(
@@ -118,6 +129,17 @@ class AppTheme {
       elevation: 1,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
+      ),
+    ),
+
+    tabBarTheme: TabBarTheme(
+      labelColor: Colors.white, // 選択中のタブのテキスト色
+      unselectedLabelColor: Colors.grey, // 非選択のタブのテキスト色
+      indicator: UnderlineTabIndicator(
+        borderSide: BorderSide(
+          color: Colors.blue[300]!, // インジケータの色
+          width: 2.0, // インジケータの太さ
+        ),
       ),
     ),
 
