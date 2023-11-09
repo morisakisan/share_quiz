@@ -75,7 +75,7 @@ class _SettingItems extends HookConsumerWidget {
     List<AbstractTile> tiles = [];
 
     final themeMode = ref.watch(appThemeSelectorProvider);
-    
+
     tiles.add(
       SettingsTile(
         title: "テーマ選択",
@@ -87,12 +87,22 @@ class _SettingItems extends HookConsumerWidget {
               return SimpleDialog(
                 title: const Text("テーマを選択"),
                 children: ThemeMode.values.map((mode) {
-                  return SimpleDialogOption(
-                    onPressed: () {
+                  return ListTile(
+                    leading: Radio<ThemeMode>(
+                      value: mode,
+                      groupValue: themeMode,
+                      onChanged: (ThemeMode? value) {
+                        if (value != null) {
+                          Navigator.pop(context);
+                          ref.read(appThemeSelectorProvider.notifier).changeAndSave(value);
+                        }
+                      },
+                    ),
+                    title: Text(mode.toString().split('.').last),
+                    onTap: () {
                       Navigator.pop(context);
                       ref.read(appThemeSelectorProvider.notifier).changeAndSave(mode);
                     },
-                    child: Text(mode.toString().split('.').last),
                   );
                 }).toList(),
               );
