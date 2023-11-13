@@ -6,6 +6,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
+import '../../domain/models/quiz/quiz.dart';
 import '../../provider/profile_use_case_provider.dart';
 import '../../provider/user_quizzes_use_case_provider.dart';
 import '../common/loading.dart';
@@ -19,19 +20,17 @@ class ProfileScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final scrollController = useScrollController();
     useEffect(() {
-      scrollController.addListener(() {
-        var hasMore = ref.read(userQuizzesUseCaseProvider).map(
-            loading: (value) => false,
-            success: (value) {
-              return value.data.pagination.hasMore;
-            },
-            error: (value) => false);
-        if (scrollController.position.atEdge &&
-            scrollController.position.pixels != 0 &&
-            hasMore) {
-          ref.read(userQuizzesUseCaseProvider.notifier).fetchQuizzes();
-        }
-      });
+      scrollController.addListener(
+        () {
+          final hasMore =
+              ref.read(userQuizzesUseCaseProvider)?.pagination.hasMore;
+          if (scrollController.position.atEdge &&
+              scrollController.position.pixels != 0 &&
+              hasMore == true) {
+            ref.read(userQuizzesUseCaseProvider.notifier).fetchQuizzes();
+          }
+        },
+      );
 
       // ウィジェットがツリーから削除される時にリスナーを解除します。
       return () => scrollController.removeListener(() {});
@@ -74,38 +73,42 @@ class ProfileScreen extends HookConsumerWidget {
       loading: () => const Loading(),
     );
 
-    Widget quizzesWidget = userQuizzesState.when<Widget>(
-      loading: () => const SliverFillRemaining(
-        child: Loading(),
-      ),
-      success: (quizzes) {
-        if (quizzes.quizzes.isEmpty) {
-          return const SliverToBoxAdapter(
-            child: Text("データがありません。"),
+    var pagination = userQuizzesState?.pagination;
+    Widget quizzesWidget = StreamBuilder(
+      stream: userQuizzesState?.quizzes,
+      builder: (BuildContext context, AsyncSnapshot<List<Quiz>> snapshot) {
+        if (snapshot.hasData) {
+          var quizzes = snapshot.data;
+          if (quizzes== null || quizzes.isEmpty == true) {
+            return const SliverToBoxAdapter(
+              child: Text("データがありません。"),
+            );
+          }
+          int length = quizzes.length;
+          if (pagination?.hasMore == true) {
+            length++;
+          }
+
+          return SliverList(
+            delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                if (index == quizzes.length &&
+                    pagination?.hasMore == true) {
+                  return const Loading();
+                }
+                return QuizListItem(quizzes[index]);
+              },
+              childCount: length,
+            ),
+          );
+        } else if (snapshot.hasError) {
+          return Text('エラー: ${snapshot.error}');
+        } else {
+          return const SliverFillRemaining(
+            child: Loading(),
           );
         }
-
-        int length = quizzes.quizzes.length;
-        if (quizzes.pagination.hasMore) {
-          length++;
-        }
-
-        return SliverList(
-          delegate: SliverChildBuilderDelegate(
-            (context, index) {
-              if (index == quizzes.quizzes.length &&
-                  quizzes.pagination.hasMore) {
-                return const Loading();
-              }
-              return QuizListItem(quizzes.quizzes[index]);
-            },
-            childCount: length,
-          ),
-        );
       },
-      error: (error, stackTrace, previousData) => SliverFillRemaining(
-        child: Center(child: Text(ErrorHandler.getMessage(error, stackTrace))),
-      ),
     );
 
     return Scaffold(

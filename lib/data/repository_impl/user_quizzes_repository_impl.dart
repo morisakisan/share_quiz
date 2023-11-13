@@ -11,10 +11,14 @@ class UserQuizzesRepositoryImpl implements UserQuizzesRepository {
   final _firebaseAuthStore = FirebaseAuthStore();
 
   @override
-  Future<UserQuizzes> getUserQuizzes() async {
+  Future<UserQuizzes> getUserQuizzes(int page) async {
     final uid = _firebaseAuthStore.getCurrentUser()!.uid;
-    final dtoList = await _firebaseStore.fetchMyQuiz(uid);
-    final pagination = Pagination(hasMore: dtoList.length == 10);
-    return UserQuizzesMapper.transformToUserQuizzes(dtoList, pagination);
+    final stream = _firebaseStore.fetchMyQuizStream(uid, page);
+    var quizzesStream = UserQuizzesMapper.transformList(stream);
+    var pagination = quizzesStream.map((quizzes) {
+      return Pagination(hasMore: quizzes.length % 10 == 0, currentPage: page);
+    }).first;
+    UserQuizzes q = UserQuizzes(quizzes: quizzesStream, pagination: await pagination);
+    return q;
   }
 }

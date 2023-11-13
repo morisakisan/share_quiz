@@ -7,6 +7,6 @@ import '../domain/models/user_quizzes/user_quizzes.dart';
 import '../domain/use_cases/user_quizzes_use_case.dart';
 
 final userQuizzesUseCaseProvider = StateNotifierProvider.autoDispose<
-    UserQuizzesUseCase, PaginationState<UserQuizzes>>((ref) {
+    UserQuizzesUseCase, UserQuizzes?>((ref) {
   throw UnimplementedError();
 });

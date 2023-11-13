@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$UserQuizzes {
-  List<Quiz> get quizzes => throw _privateConstructorUsedError;
+  Stream<List<Quiz>> get quizzes => throw _privateConstructorUsedError;
   Pagination get pagination => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -30,7 +30,7 @@ abstract class $UserQuizzesCopyWith<$Res> {
           UserQuizzes value, $Res Function(UserQuizzes) then) =
       _$UserQuizzesCopyWithImpl<$Res, UserQuizzes>;
   @useResult
-  $Res call({List<Quiz> quizzes, Pagination pagination});
+  $Res call({Stream<List<Quiz>> quizzes, Pagination pagination});
 
   $PaginationCopyWith<$Res> get pagination;
 }
@@ -55,7 +55,7 @@ class _$UserQuizzesCopyWithImpl<$Res, $Val extends UserQuizzes>
       quizzes: null == quizzes
           ? _value.quizzes
           : quizzes // ignore: cast_nullable_to_non_nullable
-              as List<Quiz>,
+              as Stream<List<Quiz>>,
       pagination: null == pagination
           ? _value.pagination
           : pagination // ignore: cast_nullable_to_non_nullable
@@ -80,7 +80,7 @@ abstract class _$$UserQuizzesImplCopyWith<$Res>
       __$$UserQuizzesImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Quiz> quizzes, Pagination pagination});
+  $Res call({Stream<List<Quiz>> quizzes, Pagination pagination});
 
   @override
   $PaginationCopyWith<$Res> get pagination;
@@ -102,9 +102,9 @@ class __$$UserQuizzesImplCopyWithImpl<$Res>
   }) {
     return _then(_$UserQuizzesImpl(
       quizzes: null == quizzes
-          ? _value._quizzes
+          ? _value.quizzes
           : quizzes // ignore: cast_nullable_to_non_nullable
-              as List<Quiz>,
+              as Stream<List<Quiz>>,
       pagination: null == pagination
           ? _value.pagination
           : pagination // ignore: cast_nullable_to_non_nullable
@@ -116,18 +116,10 @@ class __$$UserQuizzesImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$UserQuizzesImpl with DiagnosticableTreeMixin implements _UserQuizzes {
-  const _$UserQuizzesImpl(
-      {required final List<Quiz> quizzes, required this.pagination})
-      : _quizzes = quizzes;
+  const _$UserQuizzesImpl({required this.quizzes, required this.pagination});
 
-  final List<Quiz> _quizzes;
   @override
-  List<Quiz> get quizzes {
-    if (_quizzes is EqualUnmodifiableListView) return _quizzes;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_quizzes);
-  }
-
+  final Stream<List<Quiz>> quizzes;
   @override
   final Pagination pagination;
 
@@ -150,14 +142,13 @@ class _$UserQuizzesImpl with DiagnosticableTreeMixin implements _UserQuizzes {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UserQuizzesImpl &&
-            const DeepCollectionEquality().equals(other._quizzes, _quizzes) &&
+            (identical(other.quizzes, quizzes) || other.quizzes == quizzes) &&
             (identical(other.pagination, pagination) ||
                 other.pagination == pagination));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_quizzes), pagination);
+  int get hashCode => Object.hash(runtimeType, quizzes, pagination);
 
   @JsonKey(ignore: true)
   @override
@@ -168,11 +159,11 @@ class _$UserQuizzesImpl with DiagnosticableTreeMixin implements _UserQuizzes {
 
 abstract class _UserQuizzes implements UserQuizzes {
   const factory _UserQuizzes(
-      {required final List<Quiz> quizzes,
+      {required final Stream<List<Quiz>> quizzes,
       required final Pagination pagination}) = _$UserQuizzesImpl;
 
   @override
-  List<Quiz> get quizzes;
+  Stream<List<Quiz>> get quizzes;
   @override
   Pagination get pagination;
   @override

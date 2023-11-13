@@ -10,5 +10,6 @@ part 'pagination.freezed.dart';
 abstract class Pagination with _$Pagination {
   const factory Pagination({
     required bool hasMore,
+    required int currentPage
   }) = _Pagination;
 }

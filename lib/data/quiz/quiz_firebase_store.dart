@@ -57,24 +57,15 @@ class QuizFirebaseStore {
     });
   }
 
-  DocumentSnapshot? lastDocument;
-
-  Future<List<QuizDto>> fetchMyQuiz(String uid) {
-    const limit = 10;
+  Stream<List<QuizDto>> fetchMyQuizStream(String uid, int page) {
+    final limit = 10 * page;
     var query = _getCollection()
         .where("uid", isEqualTo: uid)
         .orderBy("created_at", descending: true)
         .limit(limit);
 
-    if (lastDocument != null) {
-      query = query.startAfterDocument(lastDocument!);
-    }
-
-    return query.get().then<List<QuizDto>>((querySnapshot) {
-      if (querySnapshot.docs.isNotEmpty) {
-        lastDocument = querySnapshot.docs.last;
-      }
-
+    return query.snapshots().map((querySnapshot) {
+      // DTOへの変換と返却
       return querySnapshot.docs.map((e) {
         var json = e.data();
         final dto = QuizDto.fromJson(json);
@@ -82,4 +73,5 @@ class QuizFirebaseStore {
       }).toList();
     });
   }
+
 }

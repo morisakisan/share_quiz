@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$Pagination {
   bool get hasMore => throw _privateConstructorUsedError;
+  int get currentPage => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $PaginationCopyWith<Pagination> get copyWith =>
@@ -29,7 +30,7 @@ abstract class $PaginationCopyWith<$Res> {
           Pagination value, $Res Function(Pagination) then) =
       _$PaginationCopyWithImpl<$Res, Pagination>;
   @useResult
-  $Res call({bool hasMore});
+  $Res call({bool hasMore, int currentPage});
 }
 
 /// @nodoc
@@ -46,12 +47,17 @@ class _$PaginationCopyWithImpl<$Res, $Val extends Pagination>
   @override
   $Res call({
     Object? hasMore = null,
+    Object? currentPage = null,
   }) {
     return _then(_value.copyWith(
       hasMore: null == hasMore
           ? _value.hasMore
           : hasMore // ignore: cast_nullable_to_non_nullable
               as bool,
+      currentPage: null == currentPage
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -64,7 +70,7 @@ abstract class _$$PaginationImplCopyWith<$Res>
       __$$PaginationImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool hasMore});
+  $Res call({bool hasMore, int currentPage});
 }
 
 /// @nodoc
@@ -79,12 +85,17 @@ class __$$PaginationImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? hasMore = null,
+    Object? currentPage = null,
   }) {
     return _then(_$PaginationImpl(
       hasMore: null == hasMore
           ? _value.hasMore
           : hasMore // ignore: cast_nullable_to_non_nullable
               as bool,
+      currentPage: null == currentPage
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -92,14 +103,16 @@ class __$$PaginationImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$PaginationImpl with DiagnosticableTreeMixin implements _Pagination {
-  const _$PaginationImpl({required this.hasMore});
+  const _$PaginationImpl({required this.hasMore, required this.currentPage});
 
   @override
   final bool hasMore;
+  @override
+  final int currentPage;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Pagination(hasMore: $hasMore)';
+    return 'Pagination(hasMore: $hasMore, currentPage: $currentPage)';
   }
 
   @override
@@ -107,7 +120,8 @@ class _$PaginationImpl with DiagnosticableTreeMixin implements _Pagination {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Pagination'))
-      ..add(DiagnosticsProperty('hasMore', hasMore));
+      ..add(DiagnosticsProperty('hasMore', hasMore))
+      ..add(DiagnosticsProperty('currentPage', currentPage));
   }
 
   @override
@@ -115,11 +129,13 @@ class _$PaginationImpl with DiagnosticableTreeMixin implements _Pagination {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PaginationImpl &&
-            (identical(other.hasMore, hasMore) || other.hasMore == hasMore));
+            (identical(other.hasMore, hasMore) || other.hasMore == hasMore) &&
+            (identical(other.currentPage, currentPage) ||
+                other.currentPage == currentPage));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, hasMore);
+  int get hashCode => Object.hash(runtimeType, hasMore, currentPage);
 
   @JsonKey(ignore: true)
   @override
@@ -129,10 +145,14 @@ class _$PaginationImpl with DiagnosticableTreeMixin implements _Pagination {
 }
 
 abstract class _Pagination implements Pagination {
-  const factory _Pagination({required final bool hasMore}) = _$PaginationImpl;
+  const factory _Pagination(
+      {required final bool hasMore,
+      required final int currentPage}) = _$PaginationImpl;
 
   @override
   bool get hasMore;
+  @override
+  int get currentPage;
   @override
   @JsonKey(ignore: true)
   _$$PaginationImplCopyWith<_$PaginationImpl> get copyWith =>
