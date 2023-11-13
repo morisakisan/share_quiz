@@ -12,13 +12,13 @@ dependencies:
   hooks_riverpod: 2.4.5
 
   firebase_core: 2.22.0
-  firebase_analytics: 10.6.3
+  firebase_analytics: 10.6.4
   firebase_auth: 4.13.0
-  cloud_firestore: 4.12.2
+  cloud_firestore: 4.13.0
   google_sign_in: 6.1.6
-  firebase_storage: 11.4.1
+  firebase_storage: 11.5.0
   tuple: 2.0.2
-  firebase_crashlytics: 3.4.3
+  firebase_crashlytics: 3.4.4
   crypto: 3.0.3
   image_picker: 1.0.4
   flutter_launcher_icons: 0.13.1
