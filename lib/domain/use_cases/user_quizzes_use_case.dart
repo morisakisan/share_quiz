@@ -17,6 +17,6 @@ class UserQuizzesUseCase extends StateNotifier<UserQuizzes?> {
   }
 
   Future<void> loadMoreQuizzes() async {
-    fetchQuizzes();
+    await fetchQuizzes();
   }
 }

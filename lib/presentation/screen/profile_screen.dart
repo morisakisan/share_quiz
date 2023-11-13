@@ -102,7 +102,7 @@ class ProfileScreen extends HookConsumerWidget {
             ),
           );
         } else if (snapshot.hasError) {
-          return Text('エラー: ${snapshot.error}');
+          return Text(ErrorHandler.getMessage(snapshot.error, snapshot.stackTrace));
         } else {
           return const SliverFillRemaining(
             child: Loading(),
