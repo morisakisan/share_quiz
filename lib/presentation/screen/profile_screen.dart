@@ -43,8 +43,17 @@ class ProfileScreen extends HookConsumerWidget {
       ref.read(userQuizzesUseCaseProvider.notifier).fetchQuizzes();
       return null;
     }, const []);
+    Widget? title;
     Widget profileWidget = profile.when<Widget>(
       data: (user) {
+        title = Text(
+          user.name ?? "",
+          style: const TextStyle(
+            fontSize: 20.0,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        );
         return Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -54,24 +63,33 @@ class ProfileScreen extends HookConsumerWidget {
                 radius: 50.0,
                 backgroundImage: NetworkImage(user.photoUrl ?? ""),
               ),
-              const SizedBox(height: 10.0),
-              // ユーザー名表示
-              Text(
-                user.name ?? "",
-                style: const TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
             ],
           ),
         );
+        // ユーザー名表示
+
+
       },
       error: (object, stackTrace) => Center(
         child: Text(ErrorHandler.getMessage(object, stackTrace)),
       ),
       loading: () => const Loading(),
+    );
+
+    var appBar= SliverAppBar(
+      expandedHeight: 250.0,
+      floating: false,
+      pinned: true,
+      flexibleSpace: FlexibleSpaceBar(
+        background: Stack(
+          fit: StackFit.expand,
+          children: [
+            profileWidget
+          ],
+        ),
+        title: title,
+        centerTitle: true,
+      ),
     );
 
     Widget quizzesWidget = userQuizzesState.when<Widget>(
@@ -112,21 +130,7 @@ class ProfileScreen extends HookConsumerWidget {
       body: CustomScrollView(
         controller: scrollController,
         slivers: [
-          SliverAppBar(
-            expandedHeight: 250.0,
-            floating: false,
-            pinned: true,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Stack(
-                fit: StackFit.expand,
-                children: [
-                  // 背景色や背景画像などを設定できます
-                  Container(),
-                  profileWidget
-                ],
-              ),
-            ),
-          ),
+          appBar,
           quizzesWidget,
         ],
       ),
