@@ -9,7 +9,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_hooks: 0.20.3
-  hooks_riverpod: 2.4.5
+  hooks_riverpod: 2.4.6
 
   firebase_core: 2.22.0
   firebase_analytics: 10.6.4
