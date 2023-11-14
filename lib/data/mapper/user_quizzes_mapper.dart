@@ -12,10 +12,10 @@ class UserQuizzesMapper {
     return dtoList.map((dto) => QuizMapper.transform(dto)).toList();
   }
 
-  static UserQuizzes transformToUserQuizzes(List<QuizDto> dtoList, Pagination pagination) {
+  static UserQuizzes transformToUserQuizzes(List<QuizDto> dtoList) {
     return UserQuizzes(
         quizzes: transformList(dtoList),
-        pagination: pagination
+        pagination: Pagination(hasMore: dtoList.length == 10)
     );
   }
 }
