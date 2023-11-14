@@ -36,33 +36,30 @@ class ProfileScreen extends HookConsumerWidget {
       // ウィジェットがツリーから削除される時にリスナーを解除します。
       return () => scrollController.removeListener(() {});
     }, [scrollController]);
-
-    final userQuizzesState = ref.watch(userQuizzesUseCaseProvider);
-    var profile = ref.watch(profileUseCaseProvider);
     useEffect(() {
       ref.read(userQuizzesUseCaseProvider.notifier).fetchQuizzes();
       return null;
     }, const []);
+    final userQuizzesState = ref.watch(userQuizzesUseCaseProvider);
+    var profile = ref.watch(profileUseCaseProvider);
+    Widget? title;
     Widget profileWidget = profile.when<Widget>(
       data: (user) {
+        title = Text(
+          user.name ?? "",
+          style: const TextStyle(
+            fontSize: 20.0,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        );
         return Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // アバター表示
               CircleAvatar(
                 radius: 50.0,
                 backgroundImage: NetworkImage(user.photoUrl ?? ""),
-              ),
-              const SizedBox(height: 10.0),
-              // ユーザー名表示
-              Text(
-                user.name ?? "",
-                style: const TextStyle(
-                  fontSize: 20.0,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
               ),
             ],
           ),
@@ -72,6 +69,22 @@ class ProfileScreen extends HookConsumerWidget {
         child: Text(ErrorHandler.getMessage(object, stackTrace)),
       ),
       loading: () => const Loading(),
+    );
+
+    var appBar= SliverAppBar(
+      expandedHeight: 250.0,
+      floating: false,
+      pinned: true,
+      flexibleSpace: FlexibleSpaceBar(
+        background: Stack(
+          fit: StackFit.expand,
+          children: [
+            profileWidget
+          ],
+        ),
+        title: title,
+        centerTitle: true,
+      ),
     );
 
     Widget quizzesWidget = userQuizzesState.when<Widget>(
@@ -112,21 +125,7 @@ class ProfileScreen extends HookConsumerWidget {
       body: CustomScrollView(
         controller: scrollController,
         slivers: [
-          SliverAppBar(
-            expandedHeight: 250.0,
-            floating: false,
-            pinned: true,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Stack(
-                fit: StackFit.expand,
-                children: [
-                  // 背景色や背景画像などを設定できます
-                  Container(),
-                  profileWidget
-                ],
-              ),
-            ),
-          ),
+          appBar,
           quizzesWidget,
         ],
       ),

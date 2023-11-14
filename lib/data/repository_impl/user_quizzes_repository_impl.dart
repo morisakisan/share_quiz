@@ -1,6 +1,5 @@
 // Project imports:
 import 'package:share_quiz/data/firebase_auth/firebase_auth_store.dart';
-import '../../domain/models/pagination/pagination.dart';
 import '../../domain/models/user_quizzes/user_quizzes.dart';
 import '../../domain/repository/user_quizzes_repository.dart';
 import '../mapper/user_quizzes_mapper.dart';
@@ -14,7 +13,6 @@ class UserQuizzesRepositoryImpl implements UserQuizzesRepository {
   Future<UserQuizzes> getUserQuizzes() async {
     final uid = _firebaseAuthStore.getCurrentUser()!.uid;
     final dtoList = await _firebaseStore.fetchMyQuiz(uid);
-    final pagination = Pagination(hasMore: dtoList.length == 10);
-    return UserQuizzesMapper.transformToUserQuizzes(dtoList, pagination);
+    return UserQuizzesMapper.transformToUserQuizzes(dtoList);
   }
 }
