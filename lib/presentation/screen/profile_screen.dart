@@ -58,7 +58,6 @@ class ProfileScreen extends HookConsumerWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // アバター表示
               CircleAvatar(
                 radius: 50.0,
                 backgroundImage: NetworkImage(user.photoUrl ?? ""),
