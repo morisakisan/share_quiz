@@ -65,9 +65,6 @@ class ProfileScreen extends HookConsumerWidget {
             ],
           ),
         );
-        // ユーザー名表示
-
-
       },
       error: (object, stackTrace) => Center(
         child: Text(ErrorHandler.getMessage(object, stackTrace)),
