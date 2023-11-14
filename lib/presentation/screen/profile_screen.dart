@@ -36,13 +36,12 @@ class ProfileScreen extends HookConsumerWidget {
       // ウィジェットがツリーから削除される時にリスナーを解除します。
       return () => scrollController.removeListener(() {});
     }, [scrollController]);
-
-    final userQuizzesState = ref.watch(userQuizzesUseCaseProvider);
-    var profile = ref.watch(profileUseCaseProvider);
     useEffect(() {
       ref.read(userQuizzesUseCaseProvider.notifier).fetchQuizzes();
       return null;
     }, const []);
+    final userQuizzesState = ref.watch(userQuizzesUseCaseProvider);
+    var profile = ref.watch(profileUseCaseProvider);
     Widget? title;
     Widget profileWidget = profile.when<Widget>(
       data: (user) {
