@@ -11,6 +11,7 @@ import '../../provider/delete_quiz_use_case_provider.dart';
 import '../../provider/profile_use_case_provider.dart';
 import '../../provider/user_quizzes_use_case_provider.dart';
 import '../common/loading.dart';
+import '../common/loading_screen.dart';
 import '../common/quiz_list_item.dart';
 import '../utility/error_handler.dart';
 
@@ -146,16 +147,28 @@ class ProfileScreen extends HookConsumerWidget {
       ),
     );
 
-    var deleteAsyncValue = ref.watch(deleteQuizUseCaseProvider.notifier);
+    var deleteAsyncValue = ref.watch(deleteQuizUseCaseProvider);
+    if (deleteAsyncValue is AsyncError) {
+      WidgetsBinding.instance.addPostFrameCallback(
+            (_) {
+          ErrorHandler.showErrorDialog(context, deleteAsyncValue.error, deleteAsyncValue.stackTrace);
+        },
+      );
+    }
 
-    return Scaffold(
-      body: CustomScrollView(
-        controller: scrollController,
-        slivers: [
-          appBar,
-          quizzesWidget,
-        ],
-      ),
+    return Stack(
+      children: [
+        Scaffold(
+          body: CustomScrollView(
+            controller: scrollController,
+            slivers: [
+              appBar,
+              quizzesWidget,
+            ],
+          ),
+        ),
+        if (deleteAsyncValue is AsyncLoading) const LoadingScreen()
+      ],
     );
   }
 }
