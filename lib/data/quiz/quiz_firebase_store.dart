@@ -9,6 +9,11 @@ class QuizFirebaseStore {
     return FirebaseFirestore.instance.collection('quiz');
   }
 
+  Future<void> deleteDocument(String documentId) async {
+    CollectionReference<Map<String, dynamic>> collection = _getCollection();
+    await collection.doc(documentId).delete();
+  }
+
   Stream<List<QuizDto>> fetchList(Object field, bool descending) {
     return _getCollection()
         .orderBy(field, descending: descending)
