@@ -122,7 +122,14 @@ class ProfileScreen extends HookConsumerWidget {
                         onOkPressed: () {
                           ref
                               .read(deleteQuizUseCaseProvider.notifier)
-                              .deleteQuiz(quizId, () {});
+                              .deleteQuiz(
+                            quizId,
+                            () {
+                              ref
+                                  .read(userQuizzesUseCaseProvider.notifier)
+                                  .deleteQuiz(quizId);
+                            },
+                          );
                         },
                       );
                     },
@@ -138,6 +145,8 @@ class ProfileScreen extends HookConsumerWidget {
         child: Center(child: Text(ErrorHandler.getMessage(error, stackTrace))),
       ),
     );
+
+    var deleteAsyncValue = ref.watch(deleteQuizUseCaseProvider.notifier);
 
     return Scaffold(
       body: CustomScrollView(

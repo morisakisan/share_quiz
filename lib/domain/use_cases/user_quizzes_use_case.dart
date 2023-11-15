@@ -1,17 +1,18 @@
 // Package imports:
+import 'package:share_quiz/domain/models/quiz/quiz.dart';
 import 'package:state_notifier/state_notifier.dart';
 
 // Project imports:
 import '../models/pagination_state/pagination_state.dart';
 import '../models/user_quizzes/user_quizzes.dart';
-import '../repository/delete_quiz_repository.dart';
 import '../repository/user_quizzes_repository.dart';
 
 class UserQuizzesUseCase extends StateNotifier<PaginationState<UserQuizzes>> {
   final UserQuizzesRepository repository;
 
-
   UserQuizzesUseCase(this.repository) : super(const PaginationState.loading());
+
+  final deleteQuizIds = <String>[];
 
   Future<void> fetchQuizzes() async {
     try {
@@ -40,4 +41,14 @@ class UserQuizzesUseCase extends StateNotifier<PaginationState<UserQuizzes>> {
         error: (error, stackTrace, previousData) => {});
   }
 
+  Future<void> deleteQuiz(String quizId) async {
+    state.when(
+        loading: () => {},
+        success: (quizzes) {
+          var modifiableList = List<Quiz>.from(quizzes.quizzes);
+          modifiableList.removeWhere((element) => element.documentId == quizId);
+          state = PaginationState.success(quizzes.copyWith(quizzes: modifiableList));
+        },
+        error: (error, stackTrace, previousData) => {});
+  }
 }
