@@ -2,7 +2,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 // Project imports:
-import 'package:share_quiz/data/comment/comment_dto.dart';
+import 'comment_dto.dart';
 
 class CommentFirebaseStore {
   // CollectionReference<Map<String, dynamic>> _getCollection(String quizId) {

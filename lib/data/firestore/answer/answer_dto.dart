@@ -7,22 +7,23 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 // Project imports:
-import '../json_converter/timestamp_converter.dart';
+import 'package:share_quiz/data/json_converter/timestamp_converter.dart';
 
-part 'comment_dto.freezed.dart';
-part 'comment_dto.g.dart';
+part 'answer_dto.freezed.dart';
+part 'answer_dto.g.dart';
 
 @freezed
-abstract class CommentDto with _$CommentDto {
-  const factory CommentDto({
+abstract class AnswerDto with _$AnswerDto {
+  const factory AnswerDto({
     @JsonKey(includeFromJson: false, includeToJson: false) String? id,
-    @JsonKey(name: 'content') required String content,
+    @JsonKey(name: 'answer') required int answer,
     @JsonKey(name: 'uid') required String userId,
+    @JsonKey(name: 'is_correct') required bool isCorrect,
     @TimestampConverter()
     @JsonKey(name: 'created_at')
     required DateTime? createdAt,
-  }) = _CommentDto;
+  }) = _AnswerDto;
 
-  factory CommentDto.fromJson(Map<String, dynamic> json) =>
-      _$CommentDtoFromJson(json);
+  factory AnswerDto.fromJson(Map<String, dynamic> json) =>
+      _$AnswerDtoFromJson(json);
 }

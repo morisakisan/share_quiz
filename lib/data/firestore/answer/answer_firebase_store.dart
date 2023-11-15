@@ -1,8 +1,9 @@
 // Package imports:
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import 'answer_dto.dart';
+
 // Project imports:
-import '../../data/answer/answer_dto.dart';
 
 class AnswerFirebaseStore {
   CollectionReference<Map<String, dynamic>> _getCollection(String quizId) {

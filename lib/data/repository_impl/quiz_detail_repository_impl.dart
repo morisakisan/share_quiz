@@ -6,13 +6,13 @@ import 'package:rxdart/rxdart.dart';
 
 // Project imports:
 import 'package:share_quiz/data/firebase_auth/firebase_auth_store.dart';
-import 'package:share_quiz/data/good/good_firebase_store.dart';
+import 'package:share_quiz/data/firestore/answer/answer_firebase_store.dart';
+import 'package:share_quiz/data/firestore/good/good_firebase_store.dart';
+import 'package:share_quiz/data/firestore/quiz/quiz_firebase_store.dart';
 import '../../domain/models/quiz_detail/quiz_detail.dart';
 import '../../domain/models/user_quiz_interaction/user_quiz_interaction.dart';
 import '../../domain/repository/quiz_detail_repository.dart';
-import '../answer/answer_firebase_store.dart';
 import '../mapper/quiz_mapper.dart';
-import '../quiz/quiz_firebase_store.dart';
 
 class QuizDetailRepositoryImpl extends QuizDetailRepository {
   final _quizDataStore = QuizFirebaseStore();
