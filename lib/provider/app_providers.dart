@@ -1,4 +1,5 @@
 // Project imports:
+import 'package:share_quiz/data/repository_impl/delete_quiz_repository_impl.dart';
 import 'package:share_quiz/provider/quiz_list_good_count.dart';
 import '../data/repository_impl/current_user_data_repository_impl.dart';
 import '../data/repository_impl/delete_user_repository_impl.dart';
@@ -28,6 +29,7 @@ import '../domain/use_cases/user_quizzes_use_case.dart';
 import '../domain/value_object/quiz_list_order_by.dart';
 import 'current_user_provider.dart';
 import 'current_user_repository_provider.dart';
+import 'delete_quiz_repository_provider.dart';
 import 'delete_user_repository_provider.dart';
 import 'delete_user_use_case_provider.dart';
 import 'log_out_repository_provider.dart';
@@ -110,9 +112,13 @@ final globalOverrides = [
   userQuizzesRepositoryProvider.overrideWith((ref) {
     return UserQuizzesRepositoryImpl();
   }),
+  deleteQuizRepositoryProvider.overrideWith((ref) {
+    return DeleteQuizRepositoryImpl();
+  }),
   userQuizzesUseCaseProvider.overrideWith((ref) {
+    final deleteRepository = ref.read(deleteQuizRepositoryProvider);
     final repository = ref.read(userQuizzesRepositoryProvider);
-    return UserQuizzesUseCase(repository);
+    return UserQuizzesUseCase(repository, deleteRepository);
   }),
   quizAnswerPostRepositoryProvider.overrideWith((ref) {
     return QuizAnswerPostRepositoryImpl();

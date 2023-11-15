@@ -11,8 +11,9 @@ import '../nav.dart';
 
 class QuizListItem extends StatelessWidget {
   final Quiz quiz;
+  final Function(String) delete;
 
-  const QuizListItem(this.quiz, {super.key});
+  const QuizListItem(this.quiz, this.delete, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +110,9 @@ class QuizListItem extends StatelessWidget {
             ),
             IconButton(
               icon: const Icon(Icons.delete),
-              onPressed: () {},
+              onPressed: () {
+                delete(quiz.documentId);
+              },
             )
           ],
         ),

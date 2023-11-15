@@ -71,16 +71,14 @@ class ProfileScreen extends HookConsumerWidget {
       loading: () => const Loading(),
     );
 
-    var appBar= SliverAppBar(
+    var appBar = SliverAppBar(
       expandedHeight: 250.0,
       floating: false,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
         background: Stack(
           fit: StackFit.expand,
-          children: [
-            profileWidget
-          ],
+          children: [profileWidget],
         ),
         title: title,
         centerTitle: true,
@@ -110,7 +108,9 @@ class ProfileScreen extends HookConsumerWidget {
                   quizzes.pagination.hasMore) {
                 return const Loading();
               }
-              return QuizListItem(quizzes.quizzes[index]);
+              return QuizListItem(quizzes.quizzes[index], (quizId) {
+                ref.read(userQuizzesUseCaseProvider.notifier).deleteQuiz(quizId);
+              });
             },
             childCount: length,
           ),

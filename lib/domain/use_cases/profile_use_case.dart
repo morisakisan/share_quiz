@@ -1,4 +1,6 @@
 // Project imports:
+import 'package:share_quiz/domain/repository/delete_quiz_repository.dart';
+
 import '../models/user/user_data.dart';
 import '../repository/profile_repository.dart';
 
