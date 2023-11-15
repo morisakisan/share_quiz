@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:share_quiz/presentation/common/custom_alert_dialog.dart';
 
 // Project imports:
+import '../../provider/delete_quiz_use_case_provider.dart';
 import '../../provider/profile_use_case_provider.dart';
 import '../../provider/user_quizzes_use_case_provider.dart';
 import '../common/loading.dart';
@@ -120,8 +121,8 @@ class ProfileScreen extends HookConsumerWidget {
                         message: "削除しますか？",
                         onOkPressed: () {
                           ref
-                              .read(userQuizzesUseCaseProvider.notifier)
-                              .deleteQuiz(quizId);
+                              .read(deleteQuizUseCaseProvider.notifier)
+                              .deleteQuiz(quizId, () {});
                         },
                       );
                     },

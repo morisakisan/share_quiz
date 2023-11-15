@@ -9,9 +9,9 @@ import '../repository/user_quizzes_repository.dart';
 
 class UserQuizzesUseCase extends StateNotifier<PaginationState<UserQuizzes>> {
   final UserQuizzesRepository repository;
-  final DeleteQuizRepository _deleteQuizRepository;
 
-  UserQuizzesUseCase(this.repository, this._deleteQuizRepository) : super(const PaginationState.loading());
+
+  UserQuizzesUseCase(this.repository) : super(const PaginationState.loading());
 
   Future<void> fetchQuizzes() async {
     try {
@@ -40,10 +40,4 @@ class UserQuizzesUseCase extends StateNotifier<PaginationState<UserQuizzes>> {
         error: (error, stackTrace, previousData) => {});
   }
 
-  Future<void> deleteQuiz(quizId) async {
-    var now = state;
-    state = const PaginationState.loading();
-    await _deleteQuizRepository.deleteQuiz(quizId);
-    state = now;
-  }
 }
