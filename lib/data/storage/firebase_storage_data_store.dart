@@ -36,4 +36,17 @@ class FirebaseStorageDataStore {
     await uploadTask.whenComplete(() {});
     return uploadTask.snapshot.ref.getDownloadURL();
   }
+
+  Future<void> deleteFileFromURL(String fileUrl) async {
+    // URLからファイルパスを抽出
+    Uri fileUri = Uri.parse(fileUrl);
+    String filePath = fileUri.pathSegments.last;
+
+    // Firebase Storageの参照を取得
+    FirebaseStorage storage = FirebaseStorage.instance;
+    Reference ref = storage.ref().child(filePath);
+
+    // ファイルを削除
+    await ref.delete();
+  }
 }

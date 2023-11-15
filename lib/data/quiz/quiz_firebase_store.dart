@@ -47,6 +47,16 @@ class QuizFirebaseStore {
     return _getCollection().doc(quizDocId);
   }
 
+  Future<QuizDto?> getDto(String quizDocId) async {
+    var doc = await getDoc(quizDocId).get();
+    final json = doc.data();
+    if (json == null) {
+      return null;
+    }
+    final dto = QuizDto.fromJson(json);
+    return dto.copyWith(docId: doc.id);
+  }
+
   void updateQuizInTransaction(Transaction transaction,
       DocumentReference quizReference, double rate, int answerCount) {
     transaction.update(quizReference, {

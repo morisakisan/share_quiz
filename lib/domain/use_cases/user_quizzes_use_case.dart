@@ -41,6 +41,9 @@ class UserQuizzesUseCase extends StateNotifier<PaginationState<UserQuizzes>> {
   }
 
   Future<void> deleteQuiz(quizId) async {
+    var now = state;
+    state = const PaginationState.loading();
     await _deleteQuizRepository.deleteQuiz(quizId);
+    state = now;
   }
 }
