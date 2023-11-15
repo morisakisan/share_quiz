@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:share_quiz/presentation/common/custom_alert_dialog.dart';
 
 // Project imports:
 import '../../provider/profile_use_case_provider.dart';
@@ -108,9 +109,25 @@ class ProfileScreen extends HookConsumerWidget {
                   quizzes.pagination.hasMore) {
                 return const Loading();
               }
-              return QuizListItem(quizzes.quizzes[index], (quizId) {
-                ref.read(userQuizzesUseCaseProvider.notifier).deleteQuiz(quizId);
-              });
+              return QuizListItem(
+                quizzes.quizzes[index],
+                (quizId) {
+                  showDialog(
+                    context: context,
+                    builder: (_) {
+                      return CustomAlertDialog(
+                        title: "削除",
+                        message: "削除しますか？",
+                        onOkPressed: () {
+                          ref
+                              .read(userQuizzesUseCaseProvider.notifier)
+                              .deleteQuiz(quizId);
+                        },
+                      );
+                    },
+                  );
+                },
+              );
             },
             childCount: length,
           ),
