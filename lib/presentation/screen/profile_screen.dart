@@ -119,7 +119,7 @@ class ProfileScreen extends HookConsumerWidget {
                     builder: (_) {
                       return CustomAlertDialog(
                         title: "削除",
-                        message: "削除しますか？",
+                        message: "クイズを削除しますか？",
                         onOkPressed: () {
                           ref
                               .read(deleteQuizUseCaseProvider.notifier)
