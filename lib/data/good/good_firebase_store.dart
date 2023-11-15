@@ -15,6 +15,15 @@ class GoodFirebaseStore {
     return quiz.collection('good');
   }
 
+  Future<void> deleteAllDocuments(String quizId) async {
+    CollectionReference<Map<String, dynamic>> collection = _getCollection(quizId);
+    var snapshots = await collection.get();
+
+    for (var doc in snapshots.docs) {
+      await doc.reference.delete();
+    }
+  }
+
   Future<List<GoodDto>> fetchGood(
       DocumentReference<Map<String, dynamic>> quiz) {
     return _getGoodCollectionFromQuiz(quiz)

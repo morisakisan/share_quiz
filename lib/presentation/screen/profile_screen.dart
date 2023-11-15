@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:share_quiz/presentation/common/custom_alert_dialog.dart';
 
 // Project imports:
+import '../../provider/delete_quiz_use_case_provider.dart';
 import '../../provider/profile_use_case_provider.dart';
 import '../../provider/user_quizzes_use_case_provider.dart';
 import '../common/loading.dart';
+import '../common/loading_screen.dart';
 import '../common/quiz_list_item.dart';
 import '../utility/error_handler.dart';
 
@@ -71,16 +74,14 @@ class ProfileScreen extends HookConsumerWidget {
       loading: () => const Loading(),
     );
 
-    var appBar= SliverAppBar(
+    var appBar = SliverAppBar(
       expandedHeight: 250.0,
       floating: false,
       pinned: true,
       flexibleSpace: FlexibleSpaceBar(
         background: Stack(
           fit: StackFit.expand,
-          children: [
-            profileWidget
-          ],
+          children: [profileWidget],
         ),
         title: title,
         centerTitle: true,
@@ -110,7 +111,32 @@ class ProfileScreen extends HookConsumerWidget {
                   quizzes.pagination.hasMore) {
                 return const Loading();
               }
-              return QuizListItem(quizzes.quizzes[index]);
+              return QuizListItem(
+                quizzes.quizzes[index],
+                (quizId) {
+                  showDialog(
+                    context: context,
+                    builder: (_) {
+                      return CustomAlertDialog(
+                        title: "削除",
+                        message: "クイズを削除しますか？",
+                        onOkPressed: () {
+                          ref
+                              .read(deleteQuizUseCaseProvider.notifier)
+                              .deleteQuiz(
+                            quizId,
+                            () {
+                              ref
+                                  .read(userQuizzesUseCaseProvider.notifier)
+                                  .deleteQuiz(quizId);
+                            },
+                          );
+                        },
+                      );
+                    },
+                  );
+                },
+              );
             },
             childCount: length,
           ),
@@ -121,14 +147,28 @@ class ProfileScreen extends HookConsumerWidget {
       ),
     );
 
-    return Scaffold(
-      body: CustomScrollView(
-        controller: scrollController,
-        slivers: [
-          appBar,
-          quizzesWidget,
-        ],
-      ),
+    var deleteAsyncValue = ref.watch(deleteQuizUseCaseProvider);
+    if (deleteAsyncValue is AsyncError) {
+      WidgetsBinding.instance.addPostFrameCallback(
+            (_) {
+          ErrorHandler.showErrorDialog(context, deleteAsyncValue.error, deleteAsyncValue.stackTrace);
+        },
+      );
+    }
+
+    return Stack(
+      children: [
+        Scaffold(
+          body: CustomScrollView(
+            controller: scrollController,
+            slivers: [
+              appBar,
+              quizzesWidget,
+            ],
+          ),
+        ),
+        if (deleteAsyncValue is AsyncLoading) const LoadingScreen()
+      ],
     );
   }
 }

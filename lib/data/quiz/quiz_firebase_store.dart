@@ -9,6 +9,11 @@ class QuizFirebaseStore {
     return FirebaseFirestore.instance.collection('quiz');
   }
 
+  Future<void> deleteDocument(String documentId) async {
+    CollectionReference<Map<String, dynamic>> collection = _getCollection();
+    await collection.doc(documentId).delete();
+  }
+
   Stream<List<QuizDto>> fetchList(Object field, bool descending) {
     return _getCollection()
         .orderBy(field, descending: descending)
@@ -40,6 +45,16 @@ class QuizFirebaseStore {
 
   DocumentReference<Map<String, dynamic>> getDoc(String quizDocId) {
     return _getCollection().doc(quizDocId);
+  }
+
+  Future<QuizDto?> getDto(String quizDocId) async {
+    var doc = await getDoc(quizDocId).get();
+    final json = doc.data();
+    if (json == null) {
+      return null;
+    }
+    final dto = QuizDto.fromJson(json);
+    return dto.copyWith(docId: doc.id);
   }
 
   void updateQuizInTransaction(Transaction transaction,

@@ -1,4 +1,5 @@
 // Package imports:
+import 'package:share_quiz/domain/models/quiz/quiz.dart';
 import 'package:state_notifier/state_notifier.dart';
 
 // Project imports:
@@ -34,6 +35,18 @@ class UserQuizzesUseCase extends StateNotifier<PaginationState<UserQuizzes>> {
         loading: () => {},
         success: (quizzes) {
           fetchQuizzes();
+        },
+        error: (error, stackTrace, previousData) => {});
+  }
+
+  Future<void> deleteQuiz(String quizId) async {
+    state.when(
+        loading: () => {},
+        success: (quizzes) {
+          state = const PaginationState.loading();
+          var modifiableList = List<Quiz>.from(quizzes.quizzes);
+          modifiableList.removeWhere((element) => element.documentId == quizId);
+          state = PaginationState.success(quizzes.copyWith(quizzes: modifiableList));
         },
         error: (error, stackTrace, previousData) => {});
   }

@@ -11,8 +11,9 @@ import '../nav.dart';
 
 class QuizListItem extends StatelessWidget {
   final Quiz quiz;
+  final Function(String) delete;
 
-  const QuizListItem(this.quiz, {super.key});
+  const QuizListItem(this.quiz, this.delete, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -68,49 +69,51 @@ class QuizListItem extends StatelessWidget {
             arguments: quiz,
           );
         },
-        child: Stack(
+        child: Row(
           children: [
-            Row(
-              children: [
-                if (quiz.imageUrl != null)
-                  Image.network(
-                    quiz.imageUrl!,
-                    width: 125.0,
-                    height: 125.0,
-                    fit: BoxFit.cover,
-                  ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          quiz.title,
-                          style: theme.textTheme.headlineSmall,
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          appLocalizations.questionText(quiz.question),
-                          style: theme.textTheme.bodyMedium,
-                        ),
-                        const SizedBox(height: 4),
-                        Wrap(
-                          spacing: 8.0, // 横の隙間
-                          runSpacing: 4.0, // 縦の隙間（改行後の隙間）
-                          children: texts,
-                        ),
-                        const SizedBox(height: 4),
-                        Text(
-                          formatted ?? "",
-                          style: theme.textTheme.labelSmall,
-                        ),
-                      ],
+            if (quiz.imageUrl != null)
+              Image.network(
+                quiz.imageUrl!,
+                width: 125.0,
+                height: 125.0,
+                fit: BoxFit.cover,
+              ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      quiz.title,
+                      style: theme.textTheme.headlineSmall,
                     ),
-                  ),
+                    const SizedBox(height: 4),
+                    Text(
+                      appLocalizations.questionText(quiz.question),
+                      style: theme.textTheme.bodyMedium,
+                    ),
+                    const SizedBox(height: 4),
+                    Wrap(
+                      spacing: 8.0, // 横の隙間
+                      runSpacing: 4.0, // 縦の隙間（改行後の隙間）
+                      children: texts,
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      formatted ?? "",
+                      style: theme.textTheme.labelSmall,
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
+            IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: () {
+                delete(quiz.documentId);
+              },
+            )
           ],
         ),
       ),
