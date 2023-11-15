@@ -12,8 +12,6 @@ class UserQuizzesUseCase extends StateNotifier<PaginationState<UserQuizzes>> {
 
   UserQuizzesUseCase(this.repository) : super(const PaginationState.loading());
 
-  final deleteQuizIds = <String>[];
-
   Future<void> fetchQuizzes() async {
     try {
       final newUserQuizzes = await repository.getUserQuizzes();
@@ -45,6 +43,7 @@ class UserQuizzesUseCase extends StateNotifier<PaginationState<UserQuizzes>> {
     state.when(
         loading: () => {},
         success: (quizzes) {
+          state = const PaginationState.loading();
           var modifiableList = List<Quiz>.from(quizzes.quizzes);
           modifiableList.removeWhere((element) => element.documentId == quizId);
           state = PaginationState.success(quizzes.copyWith(quizzes: modifiableList));
