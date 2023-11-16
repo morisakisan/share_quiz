@@ -3,13 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class FirebaseAuthStore {
-  Future<void> signIn(GoogleSignInAccount account) async {
+  Future<UserCredential> signIn(GoogleSignInAccount account) async {
     final googleSignInAuthentication = await account.authentication;
     final credential = GoogleAuthProvider.credential(
       accessToken: googleSignInAuthentication.accessToken,
       idToken: googleSignInAuthentication.idToken,
     );
-    await FirebaseAuth.instance.signInWithCredential(credential);
+    return FirebaseAuth.instance.signInWithCredential(credential);
   }
 
   Future<void> signOut() async {
