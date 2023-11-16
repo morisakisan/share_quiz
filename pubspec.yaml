@@ -12,11 +12,11 @@ dependencies:
   hooks_riverpod: 2.4.6
 
   firebase_core: 2.22.0
-  firebase_analytics: 10.6.4
-  firebase_auth: 4.13.0
-  cloud_firestore: 4.13.0
+  firebase_analytics: 10.7.0
+  firebase_auth: 4.14.0
+  cloud_firestore: 4.13.1
   google_sign_in: 6.1.6
-  firebase_storage: 11.5.0
+  firebase_storage: 11.5.1
   tuple: 2.0.2
   firebase_crashlytics: 3.4.4
   crypto: 3.0.3
