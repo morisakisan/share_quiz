@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:share_quiz/domain/models/quiz_form/quiz_form.dart';
+import 'package:share_quiz/domain/use_cases/quiz_post_use_case.dart';
 
 // Project imports:
 import '../../domain/models/quiz_post/quiz_post_data.dart';
@@ -14,6 +16,7 @@ import '../../presentation/widget/form/choices_form_field.dart';
 import '../../presentation/widget/form/image_form_field.dart';
 import '../../provider/quiz_form_use_case_provider.dart';
 import '../../provider/quiz_post_use_case_provider.dart';
+import '../common/custom_alert_dialog.dart';
 import '../common/loading_screen.dart';
 
 class QuizPostScreen extends HookConsumerWidget {
@@ -47,10 +50,30 @@ class QuizPostScreen extends HookConsumerWidget {
             if (!formKey.currentState!.validate()) {
               return;
             }
-
             formKey.currentState!.save();
             var postUseCase = ref.read(quizPostUseCaseProvider.notifier);
             final quizForm = ref.read(quizFormUseCaseProvider);
+            _showPostDialog(context, quizForm, postUseCase);
+          },
+          icon: const Icon(Icons.send),
+          label: Text(appLocalizations.postQuiz),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      ),
+      if (postState is AsyncLoading) const LoadingScreen()
+    ]);
+  }
+
+  _showPostDialog(
+      BuildContext context, QuizForm quizForm, QuizPostUseCase postUseCase) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext dialogContext) {
+        return CustomAlertDialog(
+          title: "投稿",
+          message: "クイズを投稿します。よろしいですか？",
+          onOkPressed: () {
             var post = QuizPostData(
               title: quizForm.title!,
               question: quizForm.question!,
@@ -60,13 +83,9 @@ class QuizPostScreen extends HookConsumerWidget {
             );
             postUseCase.post(post);
           },
-          icon: const Icon(Icons.send),
-          label: Text(appLocalizations.postQuiz),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      ),
-      if (postState is AsyncLoading) const LoadingScreen()
-    ]);
+        );
+      },
+    );
   }
 }
 
