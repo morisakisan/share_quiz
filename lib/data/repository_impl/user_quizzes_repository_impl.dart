@@ -5,7 +5,6 @@ import 'package:share_quiz/data/mapper/user_quizzes_mapper.dart';
 import 'package:share_quiz/domain/models/user_quizzes/user_quizzes.dart';
 import 'package:share_quiz/domain/repository/user_quizzes_repository.dart';
 
-
 class UserQuizzesRepositoryImpl implements UserQuizzesRepository {
   final _firebaseStore = QuizFirebaseStore();
   final _firebaseAuthStore = FirebaseAuthStore();

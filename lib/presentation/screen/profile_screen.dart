@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 // Package imports:
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:share_quiz/presentation/common/custom_alert_dialog.dart';
 
 // Project imports:
+import 'package:share_quiz/presentation/common/custom_alert_dialog.dart';
 import '../../provider/delete_quiz_use_case_provider.dart';
 import '../../provider/profile_use_case_provider.dart';
 import '../../provider/user_quizzes_use_case_provider.dart';

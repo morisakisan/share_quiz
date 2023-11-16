@@ -10,7 +10,6 @@ import 'package:share_quiz/data/firestore/quiz/quiz_dto.dart';
 import 'package:share_quiz/data/firestore/quiz/quiz_firebase_store.dart';
 import '../../domain/repository/quiz_answer_post_repository.dart';
 
-
 class QuizAnswerPostRepositoryImpl extends QuizAnswerPostRepository {
   final _firebaseAuthStore = FirebaseAuthStore();
   final _answerFirebaseStore = AnswerFirebaseStore();
