@@ -156,7 +156,8 @@ class _QuizPostForm extends HookConsumerWidget {
                   quizFromUseCase.addChoices(value!.item1);
                   quizFromUseCase.addAnswer(value.item2);
                 },
-              )
+              ),
+              const SizedBox(height: 100),
             ],
           ),
         ),
