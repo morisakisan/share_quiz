@@ -8,12 +8,15 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
+import 'package:share_quiz/domain/models/quiz_form/quiz_form.dart';
+import 'package:share_quiz/domain/use_cases/quiz_post_use_case.dart';
 import '../../domain/models/quiz_post/quiz_post_data.dart';
 import '../../presentation/utility/error_handler.dart';
 import '../../presentation/widget/form/choices_form_field.dart';
 import '../../presentation/widget/form/image_form_field.dart';
 import '../../provider/quiz_form_use_case_provider.dart';
 import '../../provider/quiz_post_use_case_provider.dart';
+import '../common/custom_alert_dialog.dart';
 import '../common/loading_screen.dart';
 
 class QuizPostScreen extends HookConsumerWidget {
@@ -21,22 +24,11 @@ class QuizPostScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final formKey = GlobalKey<FormState>();
     final postState = ref.watch(quizPostUseCaseProvider);
-    final List<Widget> children = [];
-
     final appLocalizations = AppLocalizations.of(context)!;
-    children.add(
-      Scaffold(
-        appBar: AppBar(
-          title: Text(appLocalizations.enterQuizPrompt),
-        ),
-        body: _QuizPostForm(),
-      ),
-    );
 
-    if (postState is AsyncLoading) {
-      children.add(const LoadingScreen());
-    } else if (postState is AsyncError) {
+    if (postState is AsyncError) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ErrorHandler.showErrorDialog(
             context, postState.error, postState.stackTrace);
@@ -47,12 +39,60 @@ class QuizPostScreen extends HookConsumerWidget {
       });
     }
 
-    return Stack(children: children);
+    return Stack(children: [
+      Scaffold(
+        appBar: AppBar(
+          title: Text(appLocalizations.enterQuizPrompt),
+        ),
+        body: _QuizPostForm(formKey: formKey),
+        floatingActionButton: FloatingActionButton.extended(
+          onPressed: () {
+            if (!formKey.currentState!.validate()) {
+              return;
+            }
+            formKey.currentState!.save();
+            var postUseCase = ref.read(quizPostUseCaseProvider.notifier);
+            final quizForm = ref.read(quizFormUseCaseProvider);
+            _showPostDialog(context, quizForm, postUseCase);
+          },
+          icon: const Icon(Icons.send),
+          label: Text(appLocalizations.postQuiz),
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      ),
+      if (postState is AsyncLoading) const LoadingScreen()
+    ]);
+  }
+
+  _showPostDialog(
+      BuildContext context, QuizForm quizForm, QuizPostUseCase postUseCase) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext dialogContext) {
+        return CustomAlertDialog(
+          title: "投稿",
+          message: "クイズを投稿します。よろしいですか？",
+          onOkPressed: () {
+            var post = QuizPostData(
+              title: quizForm.title!,
+              question: quizForm.question!,
+              choices: quizForm.choices!,
+              answer: quizForm.answer!,
+              imageFile: quizForm.image,
+            );
+            postUseCase.post(post);
+          },
+        );
+      },
+    );
   }
 }
 
 class _QuizPostForm extends HookConsumerWidget {
-  final _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> formKey;
+
+  const _QuizPostForm({required this.formKey});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -62,7 +102,7 @@ class _QuizPostForm extends HookConsumerWidget {
       child: Container(
         margin: const EdgeInsets.all(16.0),
         child: Form(
-          key: _formKey,
+          key: formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -116,27 +156,6 @@ class _QuizPostForm extends HookConsumerWidget {
                   quizFromUseCase.addChoices(value!.item1);
                   quizFromUseCase.addAnswer(value.item2);
                 },
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () {
-                  if (!_formKey.currentState!.validate()) {
-                    return;
-                  }
-                  // 入力データが正常な場合の処理
-                  _formKey.currentState!.save();
-                  var postUseCase = ref.read(quizPostUseCaseProvider.notifier);
-                  final quizFrom = ref.read(quizFormUseCaseProvider);
-                  var post = QuizPostData(
-                    title: quizFrom.title!,
-                    question: quizFrom.question!,
-                    choices: quizFrom.choices!,
-                    answer: quizFrom.answer!,
-                    imageFile: quizFrom.image,
-                  );
-                  postUseCase.post(post);
-                },
-                child: Text(appLocalizations.postQuiz),
               )
             ],
           ),
