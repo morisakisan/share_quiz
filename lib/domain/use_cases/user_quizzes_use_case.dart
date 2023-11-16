@@ -1,8 +1,8 @@
 // Package imports:
-import 'package:share_quiz/domain/models/quiz/quiz.dart';
 import 'package:state_notifier/state_notifier.dart';
 
 // Project imports:
+import 'package:share_quiz/domain/models/quiz/quiz.dart';
 import '../models/pagination_state/pagination_state.dart';
 import '../models/user_quizzes/user_quizzes.dart';
 import '../repository/user_quizzes_repository.dart';

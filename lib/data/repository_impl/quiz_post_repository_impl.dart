@@ -3,11 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 // Project imports:
 import 'package:share_quiz/data/firebase_auth/firebase_auth_store.dart';
-import 'package:share_quiz/data/quiz/quiz_dto.dart';
-import '../../domain/models/quiz_post/quiz_post_data.dart';
-import '../../domain/repository/quiz_post_repository.dart';
-import '../quiz/quiz_firebase_store.dart';
-import '../storage/firebase_storage_data_store.dart';
+import 'package:share_quiz/data/firestore/quiz/quiz_dto.dart';
+import 'package:share_quiz/data/firestore/quiz/quiz_firebase_store.dart';
+import 'package:share_quiz/data/storage/firebase_storage_data_store.dart';
+import 'package:share_quiz/domain/models/quiz_post/quiz_post_data.dart';
+import 'package:share_quiz/domain/repository/quiz_post_repository.dart';
 
 class QuizPostRepositoryImpl extends QuizPostRepository {
   final _storage = FirebaseStorageDataStore();
