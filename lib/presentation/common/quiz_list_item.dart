@@ -71,9 +71,9 @@ class QuizListItem extends StatelessWidget {
         },
         child: Row(
           children: [
-            if (quiz.imageUrl != null)
+            if (quiz.imageUrl.isNotEmpty)
               Image.network(
-                quiz.imageUrl!,
+                quiz.imageUrl.first,
                 width: 125.0,
                 height: 125.0,
                 fit: BoxFit.cover,

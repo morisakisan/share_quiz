@@ -72,8 +72,8 @@ class QuizGridItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch, // 横に広げる
           children: [
             Expanded(
-              child: quiz.imageUrl != null
-                  ? QuizImage(imageSize: 125.0, imageUrl: quiz.imageUrl!)
+              child: quiz.imageUrl.isNotEmpty
+                  ? QuizImage(imageSize: 125.0, imageUrl: quiz.imageUrl.first)
                   : Container(
                       color: Colors.grey, // 画像がない場合のプレースホルダー
                       child: const Icon(Icons.image,

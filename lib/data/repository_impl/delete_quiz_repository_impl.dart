@@ -16,9 +16,11 @@ class DeleteQuizRepositoryImpl extends DeleteQuizRepository {
     var dto = await quizStore.getDto(docId);
     await goodStore.deleteAllDocuments(docId);
     await answer.deleteAllDocuments(docId);
-    var imageUrl = dto?.imageUrl;
-    if (imageUrl != null) {
-      await storage.deleteFileFromURL(imageUrl);
+    var images = dto?.imageUrl;
+    if (images != null) {
+      for (String imageUrl in images) {
+        await storage.deleteFileFromURL(imageUrl);
+      }
     }
     await quizStore.deleteDocument(docId);
   }
