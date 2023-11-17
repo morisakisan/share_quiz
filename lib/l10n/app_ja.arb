@@ -35,7 +35,7 @@
   "questionPrompt": "問題文",
   "enterQuestionPrompt": "問題文を入れてください",
   "questionTextMissing": "問題文が入っていません",
-  "postQuiz": "クイズを投稿してください",
+  "postQuiz": "クイズを投稿する",
   "others": "その他",
   "license": "ライセンス",
   "version": "バージョン",
