@@ -9,15 +9,14 @@ part of 'good_dto.dart';
 _$GoodDtoImpl _$$GoodDtoImplFromJson(Map<String, dynamic> json) =>
     _$GoodDtoImpl(
       userId: json['uid'] as String,
-      createdAt: _$JsonConverterFromJson<Timestamp, DateTime>(
+      createdAt: _$JsonConverterFromJson<Object, DateTime?>(
           json['created_at'], const TimestampConverter().fromJson),
     );
 
 Map<String, dynamic> _$$GoodDtoImplToJson(_$GoodDtoImpl instance) =>
     <String, dynamic>{
       'uid': instance.userId,
-      'created_at': _$JsonConverterToJson<Timestamp, DateTime>(
-          instance.createdAt, const TimestampConverter().toJson),
+      'created_at': const TimestampConverter().toJson(instance.createdAt),
     };
 
 Value? _$JsonConverterFromJson<Json, Value>(
@@ -25,9 +24,3 @@ Value? _$JsonConverterFromJson<Json, Value>(
   Value? Function(Json json) fromJson,
 ) =>
     json == null ? null : fromJson(json as Json);
-
-Json? _$JsonConverterToJson<Json, Value>(
-  Value? value,
-  Json? Function(Value value) toJson,
-) =>
-    value == null ? null : toJson(value);

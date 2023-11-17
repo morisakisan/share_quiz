@@ -16,7 +16,7 @@ _$QuizDtoImpl _$$QuizDtoImplFromJson(Map<String, dynamic> json) =>
           (json['image_url'] as List<dynamic>).map((e) => e as String).toList(),
       choices:
           (json['choices'] as List<dynamic>).map((e) => e as String).toList(),
-      createdAt: _$JsonConverterFromJson<Timestamp, DateTime>(
+      createdAt: _$JsonConverterFromJson<Object, DateTime?>(
           json['created_at'], const TimestampConverter().fromJson),
       uid: json['uid'] as String,
       correctAnswerRate: (json['correct_answer_rate'] as num?)?.toDouble(),
@@ -32,8 +32,7 @@ Map<String, dynamic> _$$QuizDtoImplToJson(_$QuizDtoImpl instance) =>
       'question': instance.question,
       'image_url': instance.imageUrl,
       'choices': instance.choices,
-      'created_at': _$JsonConverterToJson<Timestamp, DateTime>(
-          instance.createdAt, const TimestampConverter().toJson),
+      'created_at': const TimestampConverter().toJson(instance.createdAt),
       'uid': instance.uid,
       'correct_answer_rate': instance.correctAnswerRate,
       'answer_count': instance.answerCount,
@@ -45,9 +44,3 @@ Value? _$JsonConverterFromJson<Json, Value>(
   Value? Function(Json json) fromJson,
 ) =>
     json == null ? null : fromJson(json as Json);
-
-Json? _$JsonConverterToJson<Json, Value>(
-  Value? value,
-  Json? Function(Value value) toJson,
-) =>
-    value == null ? null : toJson(value);

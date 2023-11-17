@@ -43,7 +43,6 @@ class QuizAnswerPostRepositoryImpl extends QuizAnswerPostRepository {
                 isCorrect: isCorrect,
                 createdAt: null)
             .toJson();
-        answerJson["created_at"] = FieldValue.serverTimestamp();
         _answerFirebaseStore.addAnswerInTransaction(
             transaction, updateQuiz.reference, answerJson);
         _quizFirebaseStore.updateQuizInTransaction(

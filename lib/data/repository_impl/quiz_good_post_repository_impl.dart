@@ -31,7 +31,6 @@ class QuizGoodPostRepositoryImpl implements QuizGoodPostRepository {
 
         if (isGood) {
           var goodJson = GoodDto(userId: user!.uid, createdAt: null).toJson();
-          goodJson['created_at'] = FieldValue.serverTimestamp();
           await _goodFirebaseStore.addGoodInTransaction(
               transaction, updateQuiz.reference, goodJson);
         } else {
