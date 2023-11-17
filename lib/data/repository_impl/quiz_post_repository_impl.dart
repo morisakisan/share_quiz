@@ -12,20 +12,25 @@ import 'package:share_quiz/domain/repository/quiz_post_repository.dart';
 class QuizPostRepositoryImpl extends QuizPostRepository {
   final _storage = FirebaseStorageDataStore();
   final _quizFireStore = QuizFirebaseStore();
-  final _userFireStore = FirebaseAuthStore();
+  final _authStore = FirebaseAuthStore();
 
   @override
   Future<void> store(QuizPostData post) async {
-    final user = _userFireStore.getCurrentUser();
+    final user = _authStore.getCurrentUser();
     final userId = user!.uid;
-    final imageUrl = await _storage.uploadFile(post.imageFile, userId);
+
+    final images = <String>[];
+    if(post.imageFile != null) {
+      final imageUrl = await _storage.uploadFile(post.imageFile!, userId);
+      images.add(imageUrl);
+    }
 
     var json = QuizDto(
             title: post.title,
             question: post.question,
             choices: post.choices,
             correctAnswer: post.answer,
-            imageUrl: imageUrl,
+            imageUrl: images,
             createdAt: null,
             uid: userId,
             answerCount: null,

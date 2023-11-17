@@ -12,7 +12,8 @@ _$QuizDtoImpl _$$QuizDtoImplFromJson(Map<String, dynamic> json) =>
       correctAnswer: json['correct_answer'] as int,
       title: json['title'] as String,
       question: json['question'] as String,
-      imageUrl: json['image_url'] as String?,
+      imageUrl:
+          (json['image_url'] as List<dynamic>).map((e) => e as String).toList(),
       choices:
           (json['choices'] as List<dynamic>).map((e) => e as String).toList(),
       createdAt: _$JsonConverterFromJson<Timestamp, DateTime>(

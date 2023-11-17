@@ -10,10 +10,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 
 class FirebaseStorageDataStore {
 
-  Future<String?> uploadFile(File? file, String userId) async {
-    if (file == null) {
-      return null;
-    }
+  Future<String> uploadFile(File file, String userId) async {
 
     final value = await sha256.bind(file.openRead()).first;
 

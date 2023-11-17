@@ -20,7 +20,7 @@ abstract class QuizDto with _$QuizDto {
     @JsonKey(name: 'correct_answer') required int correctAnswer,
     @JsonKey(name: 'title') required String title,
     @JsonKey(name: 'question') required String question,
-    @JsonKey(name: 'image_url') required String? imageUrl,
+    @JsonKey(name: 'image_url') required List<String> imageUrl,
     @JsonKey(name: 'choices') required List<String> choices,
     @TimestampConverter()
     @JsonKey(name: 'created_at')

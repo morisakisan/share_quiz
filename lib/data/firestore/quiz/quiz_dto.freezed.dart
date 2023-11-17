@@ -29,7 +29,7 @@ mixin _$QuizDto {
   @JsonKey(name: 'question')
   String get question => throw _privateConstructorUsedError;
   @JsonKey(name: 'image_url')
-  String? get imageUrl => throw _privateConstructorUsedError;
+  List<String> get imageUrl => throw _privateConstructorUsedError;
   @JsonKey(name: 'choices')
   List<String> get choices => throw _privateConstructorUsedError;
   @TimestampConverter()
@@ -59,7 +59,7 @@ abstract class $QuizDtoCopyWith<$Res> {
       @JsonKey(name: 'correct_answer') int correctAnswer,
       @JsonKey(name: 'title') String title,
       @JsonKey(name: 'question') String question,
-      @JsonKey(name: 'image_url') String? imageUrl,
+      @JsonKey(name: 'image_url') List<String> imageUrl,
       @JsonKey(name: 'choices') List<String> choices,
       @TimestampConverter() @JsonKey(name: 'created_at') DateTime? createdAt,
       @JsonKey(name: 'uid') String uid,
@@ -85,7 +85,7 @@ class _$QuizDtoCopyWithImpl<$Res, $Val extends QuizDto>
     Object? correctAnswer = null,
     Object? title = null,
     Object? question = null,
-    Object? imageUrl = freezed,
+    Object? imageUrl = null,
     Object? choices = null,
     Object? createdAt = freezed,
     Object? uid = null,
@@ -110,10 +110,10 @@ class _$QuizDtoCopyWithImpl<$Res, $Val extends QuizDto>
           ? _value.question
           : question // ignore: cast_nullable_to_non_nullable
               as String,
-      imageUrl: freezed == imageUrl
+      imageUrl: null == imageUrl
           ? _value.imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as List<String>,
       choices: null == choices
           ? _value.choices
           : choices // ignore: cast_nullable_to_non_nullable
@@ -154,7 +154,7 @@ abstract class _$$QuizDtoImplCopyWith<$Res> implements $QuizDtoCopyWith<$Res> {
       @JsonKey(name: 'correct_answer') int correctAnswer,
       @JsonKey(name: 'title') String title,
       @JsonKey(name: 'question') String question,
-      @JsonKey(name: 'image_url') String? imageUrl,
+      @JsonKey(name: 'image_url') List<String> imageUrl,
       @JsonKey(name: 'choices') List<String> choices,
       @TimestampConverter() @JsonKey(name: 'created_at') DateTime? createdAt,
       @JsonKey(name: 'uid') String uid,
@@ -178,7 +178,7 @@ class __$$QuizDtoImplCopyWithImpl<$Res>
     Object? correctAnswer = null,
     Object? title = null,
     Object? question = null,
-    Object? imageUrl = freezed,
+    Object? imageUrl = null,
     Object? choices = null,
     Object? createdAt = freezed,
     Object? uid = null,
@@ -203,10 +203,10 @@ class __$$QuizDtoImplCopyWithImpl<$Res>
           ? _value.question
           : question // ignore: cast_nullable_to_non_nullable
               as String,
-      imageUrl: freezed == imageUrl
-          ? _value.imageUrl
+      imageUrl: null == imageUrl
+          ? _value._imageUrl
           : imageUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as List<String>,
       choices: null == choices
           ? _value._choices
           : choices // ignore: cast_nullable_to_non_nullable
@@ -243,7 +243,7 @@ class _$QuizDtoImpl with DiagnosticableTreeMixin implements _QuizDto {
       @JsonKey(name: 'correct_answer') required this.correctAnswer,
       @JsonKey(name: 'title') required this.title,
       @JsonKey(name: 'question') required this.question,
-      @JsonKey(name: 'image_url') required this.imageUrl,
+      @JsonKey(name: 'image_url') required final List<String> imageUrl,
       @JsonKey(name: 'choices') required final List<String> choices,
       @TimestampConverter()
       @JsonKey(name: 'created_at')
@@ -252,7 +252,8 @@ class _$QuizDtoImpl with DiagnosticableTreeMixin implements _QuizDto {
       @JsonKey(name: 'correct_answer_rate') required this.correctAnswerRate,
       @JsonKey(name: 'answer_count') required this.answerCount,
       @JsonKey(name: 'good_count') required this.goodCount})
-      : _choices = choices;
+      : _imageUrl = imageUrl,
+        _choices = choices;
 
   factory _$QuizDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$QuizDtoImplFromJson(json);
@@ -269,9 +270,15 @@ class _$QuizDtoImpl with DiagnosticableTreeMixin implements _QuizDto {
   @override
   @JsonKey(name: 'question')
   final String question;
+  final List<String> _imageUrl;
   @override
   @JsonKey(name: 'image_url')
-  final String? imageUrl;
+  List<String> get imageUrl {
+    if (_imageUrl is EqualUnmodifiableListView) return _imageUrl;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_imageUrl);
+  }
+
   final List<String> _choices;
   @override
   @JsonKey(name: 'choices')
@@ -332,8 +339,7 @@ class _$QuizDtoImpl with DiagnosticableTreeMixin implements _QuizDto {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.question, question) ||
                 other.question == question) &&
-            (identical(other.imageUrl, imageUrl) ||
-                other.imageUrl == imageUrl) &&
+            const DeepCollectionEquality().equals(other._imageUrl, _imageUrl) &&
             const DeepCollectionEquality().equals(other._choices, _choices) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
@@ -354,7 +360,7 @@ class _$QuizDtoImpl with DiagnosticableTreeMixin implements _QuizDto {
       correctAnswer,
       title,
       question,
-      imageUrl,
+      const DeepCollectionEquality().hash(_imageUrl),
       const DeepCollectionEquality().hash(_choices),
       createdAt,
       uid,
@@ -382,7 +388,7 @@ abstract class _QuizDto implements QuizDto {
       @JsonKey(name: 'correct_answer') required final int correctAnswer,
       @JsonKey(name: 'title') required final String title,
       @JsonKey(name: 'question') required final String question,
-      @JsonKey(name: 'image_url') required final String? imageUrl,
+      @JsonKey(name: 'image_url') required final List<String> imageUrl,
       @JsonKey(name: 'choices') required final List<String> choices,
       @TimestampConverter()
       @JsonKey(name: 'created_at')
@@ -410,7 +416,7 @@ abstract class _QuizDto implements QuizDto {
   String get question;
   @override
   @JsonKey(name: 'image_url')
-  String? get imageUrl;
+  List<String> get imageUrl;
   @override
   @JsonKey(name: 'choices')
   List<String> get choices;

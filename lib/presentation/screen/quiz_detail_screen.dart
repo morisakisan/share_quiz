@@ -56,8 +56,8 @@ class QuizDetailScreen extends HookConsumerWidget {
     List<Widget> list = [];
 
     //画像
-    if (quiz.imageUrl != null) {
-      Widget image = QuizImage(imageSize: 250.0, imageUrl: quiz.imageUrl!);
+    if (quiz.imageUrls.isNotEmpty) {
+      Widget image = QuizImage(imageSize: 250.0, imageUrl: quiz.imageUrls.first);
       list.add(
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,

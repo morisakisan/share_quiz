@@ -12,7 +12,7 @@ class QuizMapper {
         question: dto.question,
         choices: dto.choices,
         correctAnswer: dto.correctAnswer,
-        imageUrl: dto.imageUrl,
+        imageUrls: dto.imageUrl,
         createdAt: dto.createdAt,
         correctAnswerRate: dto.correctAnswerRate,
         answerCount: dto.answerCount,
