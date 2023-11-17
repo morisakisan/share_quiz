@@ -36,6 +36,7 @@
   "enterQuestionPrompt": "問題文を入れてください",
   "questionTextMissing": "問題文が入っていません",
   "postQuiz": "クイズを投稿する",
+  "confirmPostQuiz": "クイズを投稿します。よろしいですか？",
   "others": "その他",
   "license": "ライセンス",
   "version": "バージョン",
