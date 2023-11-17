@@ -46,6 +46,5 @@
   "markCorrectChoice": "正解の選択肢にチェックを入れてね",
   "enterChoicePrompt": "選択肢を入力してね",
   "choiceMissing": "選択肢がはいってないよ",
-  "image": "画像",
-  "noImage": "No image"
+  "image": "画像"
 }
