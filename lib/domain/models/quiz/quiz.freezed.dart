@@ -25,7 +25,7 @@ mixin _$Quiz {
   double? get correctAnswerRate => throw _privateConstructorUsedError;
   int? get answerCount => throw _privateConstructorUsedError;
   int? get goodCount => throw _privateConstructorUsedError;
-  List<String> get imageUrl => throw _privateConstructorUsedError;
+  List<String> get imageUrls => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $QuizCopyWith<Quiz> get copyWith => throw _privateConstructorUsedError;
@@ -46,7 +46,7 @@ abstract class $QuizCopyWith<$Res> {
       double? correctAnswerRate,
       int? answerCount,
       int? goodCount,
-      List<String> imageUrl});
+      List<String> imageUrls});
 }
 
 /// @nodoc
@@ -71,7 +71,7 @@ class _$QuizCopyWithImpl<$Res, $Val extends Quiz>
     Object? correctAnswerRate = freezed,
     Object? answerCount = freezed,
     Object? goodCount = freezed,
-    Object? imageUrl = null,
+    Object? imageUrls = null,
   }) {
     return _then(_value.copyWith(
       documentId: null == documentId
@@ -110,9 +110,9 @@ class _$QuizCopyWithImpl<$Res, $Val extends Quiz>
           ? _value.goodCount
           : goodCount // ignore: cast_nullable_to_non_nullable
               as int?,
-      imageUrl: null == imageUrl
-          ? _value.imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
+      imageUrls: null == imageUrls
+          ? _value.imageUrls
+          : imageUrls // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ) as $Val);
   }
@@ -135,7 +135,7 @@ abstract class _$$QuizImplCopyWith<$Res> implements $QuizCopyWith<$Res> {
       double? correctAnswerRate,
       int? answerCount,
       int? goodCount,
-      List<String> imageUrl});
+      List<String> imageUrls});
 }
 
 /// @nodoc
@@ -157,7 +157,7 @@ class __$$QuizImplCopyWithImpl<$Res>
     Object? correctAnswerRate = freezed,
     Object? answerCount = freezed,
     Object? goodCount = freezed,
-    Object? imageUrl = null,
+    Object? imageUrls = null,
   }) {
     return _then(_$QuizImpl(
       documentId: null == documentId
@@ -196,9 +196,9 @@ class __$$QuizImplCopyWithImpl<$Res>
           ? _value.goodCount
           : goodCount // ignore: cast_nullable_to_non_nullable
               as int?,
-      imageUrl: null == imageUrl
-          ? _value._imageUrl
-          : imageUrl // ignore: cast_nullable_to_non_nullable
+      imageUrls: null == imageUrls
+          ? _value._imageUrls
+          : imageUrls // ignore: cast_nullable_to_non_nullable
               as List<String>,
     ));
   }
@@ -217,9 +217,9 @@ class _$QuizImpl with DiagnosticableTreeMixin implements _Quiz {
       required this.correctAnswerRate,
       required this.answerCount,
       required this.goodCount,
-      final List<String> imageUrl = null})
+      required final List<String> imageUrls})
       : _choices = choices,
-        _imageUrl = imageUrl;
+        _imageUrls = imageUrls;
 
   @override
   final String documentId;
@@ -245,18 +245,17 @@ class _$QuizImpl with DiagnosticableTreeMixin implements _Quiz {
   final int? answerCount;
   @override
   final int? goodCount;
-  final List<String> _imageUrl;
+  final List<String> _imageUrls;
   @override
-  @JsonKey()
-  List<String> get imageUrl {
-    if (_imageUrl is EqualUnmodifiableListView) return _imageUrl;
+  List<String> get imageUrls {
+    if (_imageUrls is EqualUnmodifiableListView) return _imageUrls;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_imageUrl);
+    return EqualUnmodifiableListView(_imageUrls);
   }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Quiz(documentId: $documentId, title: $title, question: $question, choices: $choices, correctAnswer: $correctAnswer, createdAt: $createdAt, correctAnswerRate: $correctAnswerRate, answerCount: $answerCount, goodCount: $goodCount, imageUrl: $imageUrl)';
+    return 'Quiz(documentId: $documentId, title: $title, question: $question, choices: $choices, correctAnswer: $correctAnswer, createdAt: $createdAt, correctAnswerRate: $correctAnswerRate, answerCount: $answerCount, goodCount: $goodCount, imageUrls: $imageUrls)';
   }
 
   @override
@@ -273,7 +272,7 @@ class _$QuizImpl with DiagnosticableTreeMixin implements _Quiz {
       ..add(DiagnosticsProperty('correctAnswerRate', correctAnswerRate))
       ..add(DiagnosticsProperty('answerCount', answerCount))
       ..add(DiagnosticsProperty('goodCount', goodCount))
-      ..add(DiagnosticsProperty('imageUrl', imageUrl));
+      ..add(DiagnosticsProperty('imageUrls', imageUrls));
   }
 
   @override
@@ -297,7 +296,8 @@ class _$QuizImpl with DiagnosticableTreeMixin implements _Quiz {
                 other.answerCount == answerCount) &&
             (identical(other.goodCount, goodCount) ||
                 other.goodCount == goodCount) &&
-            const DeepCollectionEquality().equals(other._imageUrl, _imageUrl));
+            const DeepCollectionEquality()
+                .equals(other._imageUrls, _imageUrls));
   }
 
   @override
@@ -312,7 +312,7 @@ class _$QuizImpl with DiagnosticableTreeMixin implements _Quiz {
       correctAnswerRate,
       answerCount,
       goodCount,
-      const DeepCollectionEquality().hash(_imageUrl));
+      const DeepCollectionEquality().hash(_imageUrls));
 
   @JsonKey(ignore: true)
   @override
@@ -332,7 +332,7 @@ abstract class _Quiz implements Quiz {
       required final double? correctAnswerRate,
       required final int? answerCount,
       required final int? goodCount,
-      final List<String> imageUrl}) = _$QuizImpl;
+      required final List<String> imageUrls}) = _$QuizImpl;
 
   @override
   String get documentId;
@@ -353,7 +353,7 @@ abstract class _Quiz implements Quiz {
   @override
   int? get goodCount;
   @override
-  List<String> get imageUrl;
+  List<String> get imageUrls;
   @override
   @JsonKey(ignore: true)
   _$$QuizImplCopyWith<_$QuizImpl> get copyWith =>

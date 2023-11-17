@@ -19,6 +19,6 @@ abstract class Quiz with _$Quiz {
     required double? correctAnswerRate,
     required int? answerCount,
     required int? goodCount,
-    @Default(null) List<String> imageUrl,
+    required List<String> imageUrls,
   }) = _Quiz;
 }
