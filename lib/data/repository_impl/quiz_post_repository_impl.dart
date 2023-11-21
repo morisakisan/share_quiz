@@ -37,7 +37,6 @@ class QuizPostRepositoryImpl extends QuizPostRepository {
             goodCount: null,
             correctAnswerRate: null)
         .toJson();
-    json['created_at'] = FieldValue.serverTimestamp();
     return await _quizFireStore.post(json);
   }
 }

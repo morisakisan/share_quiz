@@ -70,9 +70,10 @@ class QuizPostScreen extends HookConsumerWidget {
       context: context,
       barrierDismissible: false,
       builder: (BuildContext dialogContext) {
+        final appLocalizations = AppLocalizations.of(context)!;
         return CustomAlertDialog(
-          title: "投稿",
-          message: "クイズを投稿します。よろしいですか？",
+          title: appLocalizations.postQuiz,
+          message: appLocalizations.confirmPostQuiz,
           onOkPressed: () {
             var post = QuizPostData(
               title: quizForm.title!,
