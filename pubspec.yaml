@@ -17,7 +17,7 @@ dependencies:
   google_sign_in: 6.1.6
   firebase_storage: 11.5.2
   tuple: 2.0.2
-  firebase_crashlytics: 3.4.5
+  firebase_crashlytics: 3.4.6
   crypto: 3.0.3
   image_picker: 1.0.4
   flutter_launcher_icons: 0.13.1
