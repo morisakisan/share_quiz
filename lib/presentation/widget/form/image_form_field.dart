@@ -5,14 +5,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImageFormField extends FormField<File> {
-  ImageFormField({FormFieldSetter<File>? onSaved})
+  ImageFormField({super.key, super.onSaved})
       : super(
-          onSaved: onSaved,
           builder: (FormFieldState<File> state) {
-            final theme = Theme.of(state.context);
+            final appLocalizations = AppLocalizations.of(state.context)!;
             final icons = [
               IconButton(
                 icon: const Icon(Icons.photo_camera),
@@ -28,8 +28,8 @@ class ImageFormField extends FormField<File> {
               ),
             ];
             final List<Widget> children = [
-              const Text(
-                "画像",
+              Text(
+                appLocalizations.image,
               ),
             ];
             if (state.value != null) {
@@ -66,7 +66,7 @@ class ImageFormField extends FormField<File> {
         );
 
   static _pickImage(ImageSource source, FormFieldState<File> state) async {
-    final pickedFile = await ImagePicker().getImage(
+    final pickedFile = await ImagePicker().pickImage(
       source: source,
       maxWidth: 1024,
       maxHeight: 1024,

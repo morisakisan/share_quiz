@@ -2,69 +2,68 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:tuple/tuple.dart';
 
 class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
   ChoicesFormField(BuildContext context,
-      {FormFieldSetter<Tuple2<List<String>, int>>? onSaved})
+      {super.key, super.onSaved})
       : super(
           initialValue: Tuple2([], 0),
-          onSaved: onSaved,
           validator: (value) {
+            final appLocalizations = AppLocalizations.of(context)!;
             final list = value!.item1;
             if (list.length < 2) {
-              return "選択肢は二つ以上いれてね";
+              return appLocalizations.minimumChoicePrompt;
             }
             final a = list.toSet().toList();
             var isDistinct = list.length != a.length;
             if (isDistinct) {
-              return "重複する選択肢があるよ";
+              return appLocalizations.duplicateChoiceWarning;
             }
 
             return null;
           },
           builder: (FormFieldState<Tuple2<List<String>, int>> state) {
             final selectedRadioTile = state.value!.item2;
-            final headerChildren = <Widget>[];
-            headerChildren.add(
-              const Text(
-                "選択肢",
-              ),
-            );
-            if (state.value!.item1.length < 5) {
-              headerChildren.add(
+            final footerChildren = <Widget>[];
+            final appLocalizations = AppLocalizations.of(context)!;
+
+            if (state.value!.item1.length > 1) {
+              footerChildren.add(
                 const SizedBox(
                   height: 8,
                 ),
               );
-              headerChildren.add(
+              footerChildren.add(
+                Text(
+                  appLocalizations.markCorrectChoice,
+                ),
+              );
+            }
+
+            if (state.value!.item1.length < 5) {
+              footerChildren.add(
+                const SizedBox(
+                  height: 8,
+                ),
+              );
+              footerChildren.add(
                 TextButton.icon(
-                  label: const Text('選択肢を追加する'),
+                  label: Text(appLocalizations.addChoicePrompt),
                   icon: const Icon(Icons.add),
                   onPressed: () => _showInputTextDialog(context, state),
                 ),
               );
             }
-            if (state.value!.item1.length > 1) {
-              headerChildren.add(
-                const SizedBox(
-                  height: 8,
-                ),
-              );
-              headerChildren.add(
-                const Text(
-                  "正解の選択肢にチェックを入れてね",
-                ),
-              );
-            }
 
             if (state.hasError) {
-              headerChildren.add(
+              footerChildren.add(
                 const SizedBox(
                   height: 8,
                 ),
               );
-              headerChildren.add(
+              footerChildren.add(
                 Text(
                   state.errorText!,
                   style: TextStyle(
@@ -83,7 +82,19 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   // mainAxisSize: MainAxisSize.min,
-                  children: headerChildren,
+                  children: [
+                    Text(
+                      appLocalizations.choiceLabel,
+                    )
+                  ],
+                ),
+              ),
+              footer: Container(
+                alignment: Alignment.topLeft,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  // mainAxisSize: MainAxisSize.min,
+                  children: footerChildren,
                 ),
               ),
               onReorder: (oldIndex, newIndex) {
@@ -133,27 +144,28 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
 
   static _showInputTextDialog(
       BuildContext context, FormFieldState<Tuple2<List<String>, int>> state) {
+    final appLocalizations = AppLocalizations.of(context)!;
     showDialog(
       barrierDismissible: false,
       context: context,
       builder: (context) {
         String? choice;
-        final _formKey = GlobalKey<FormState>();
+        final formKey = GlobalKey<FormState>();
         return AlertDialog(
-          title: const Text("選択肢を入力してね"),
+          title: Text(appLocalizations.enterChoicePrompt),
           content: Form(
-            key: _formKey,
+            key: formKey,
             child: TextFormField(
               keyboardType: TextInputType.multiline,
               maxLines: null,
               maxLength: 30,
-              decoration: const InputDecoration(
-                labelText: "選択肢",
-                hintText: '選択肢を入力してね',
+              decoration: InputDecoration(
+                labelText: appLocalizations.choiceLabel,
+                hintText: appLocalizations.enterChoicePrompt,
               ),
               validator: (value) {
                 if (value?.isEmpty ?? true) {
-                  return '選択肢がはいってないよ';
+                  return appLocalizations.choiceMissing;
                 }
                 return null;
               },
@@ -164,15 +176,15 @@ class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
           ),
           actions: [
             TextButton(
-              child: const Text("Cancel"),
+              child: Text(appLocalizations.cancel),
               onPressed: () => Navigator.pop(context),
             ),
             TextButton(
-              child: const Text("OK"),
+              child: Text(appLocalizations.ok),
               onPressed: () {
-                if (!_formKey.currentState!.validate()) return;
+                if (!formKey.currentState!.validate()) return;
                 // 入力データが正常な場合の処理
-                _formKey.currentState!.save();
+                formKey.currentState!.save();
 
                 final list = state.value!.item1;
                 list.add(choice!);
