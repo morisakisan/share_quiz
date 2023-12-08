@@ -82,7 +82,7 @@ android {
         }
     }
 
-    def APP_BASE_NAME="みんなのクイズ"
+    def APP_BASE_NAME="QuizBuzz"
 
     buildTypes {
         debug {
