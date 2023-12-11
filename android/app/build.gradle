@@ -82,19 +82,21 @@ android {
         }
     }
 
+    def APP_BASE_NAME="QuizBuzz"
+
     buildTypes {
         debug {
             applicationIdSuffix ".debug"
             versionNameSuffix '-DEBUG'
             debuggable true
-            resValue "string", "app_name", "みんなのクイズ Dev"
+            resValue "string", "app_name", "${APP_BASE_NAME} Dev"
         }
 
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.release
-            resValue "string", "app_name", "みんなのクイズ"
+            resValue "string", "app_name", APP_BASE_NAME
         }
     }
 
