@@ -1,4 +1,4 @@
-name: Android Build
+name: Flutter Build
 
 on:
   workflow_dispatch:
