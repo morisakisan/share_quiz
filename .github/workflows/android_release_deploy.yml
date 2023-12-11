@@ -20,7 +20,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Build Environment
+      - name: Build Flutter
         uses: ./.github/actions/flutter-build
 
       - name: Setup Build Environment
