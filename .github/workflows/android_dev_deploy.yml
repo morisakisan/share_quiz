@@ -22,7 +22,7 @@ jobs:
       - name: Build Flutter
         uses: ./.github/actions/flutter-build
         
-      - name: Setup Build Environment
+      - name: Android Build Dev
         uses: ./.github/actions/android-build
         with:
           build_type: debug

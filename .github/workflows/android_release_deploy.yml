@@ -23,7 +23,7 @@ jobs:
       - name: Build Flutter
         uses: ./.github/actions/flutter-build
 
-      - name: Setup Build Environment
+      - name: Android Build Release
         uses: ./.github/actions/android-build
         with:
           build_type: release
