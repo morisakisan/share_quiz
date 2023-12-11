@@ -12,6 +12,10 @@ class FirebaseAuthStore {
     return FirebaseAuth.instance.signInWithCredential(credential);
   }
 
+  Future<void> delete() async {
+    return FirebaseAuth.instance.currentUser?.delete();
+  }
+
   Future<void> signOut() async {
     return FirebaseAuth.instance.signOut();
   }

@@ -7,7 +7,7 @@ class DeleteUserRepositoryImpl extends DeleteUserRepository {
 
   @override
   Future<void> delete() async {
-    await FirebaseAuthStore().signOut();
+    await FirebaseAuthStore().delete();
     await GoogleSignInStore().signOut();
   }
 }
