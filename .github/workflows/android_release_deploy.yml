@@ -21,7 +21,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Build Environment
-        uses: ./.github/actions/setup-build-env
+        uses: ./.github/actions/flutter-build
+
+      - name: Setup Build Environment
+        uses: ./.github/actions/android-build
         with:
           build_type: release
           google_service_secret: ${{ secrets.RELEASE_ANDROID_GOOGLE_SERVICE }}
