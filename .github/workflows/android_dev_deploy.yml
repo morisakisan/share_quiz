@@ -18,18 +18,26 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Build Flutter
+        uses: ./.github/actions/flutter-build
         
-      - name: Setup Build Environment
-        uses: ./.github/actions/setup-build-env
+      - name: Android Build Dev
+        uses: ./.github/actions/android-build
         with:
           build_type: debug
           google_service_secret: ${{ secrets.DEBUG_ANDROID_GOOGLE_SERVICE }}
           keystore_secret: ${{ secrets.DEBUG_ANDROID_KEYSTORE }}
           key_properties_secret: ${{ secrets.DEBUG_KEY_PROPERTIES }}
 
-      - name: deploy
-        uses: ./.github/actions/deploy
+      - name: Decode Firebase Service Account Key
+        run: echo "${{ secrets.DEVELOP_GCLOUD_SERVICE_KEY }}" | base64 -d > service_account_key.json
+        shell: bash
+
+      - name: Firebase App Distribution
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
         with:
-          gcloud_service_key: ${{ secrets.DEVELOP_GCLOUD_SERVICE_KEY }}
-          deploy_file_path: ./build/app/outputs/apk/debug/app-debug.apk
           appId: ${{secrets.FIREBASE_APP_ID_ANDROID}}
+          groups: testers
+          file: ./build/app/outputs/apk/debug/app-debug.apk
+          serviceCredentialsFile: service_account_key.json
