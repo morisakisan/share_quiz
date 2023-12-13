@@ -18,7 +18,7 @@ dependencies:
   tuple: 2.0.2
   firebase_crashlytics: 3.4.8
   crypto: 3.0.3
-  image_picker: 1.0.4
+  image_picker: 1.0.5
   flutter_launcher_icons: 0.13.1
   flutter_settings_ui: 2.0.1
   state_notifier: 1.0.0
