@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$QuizForm {
   String? get title => throw _privateConstructorUsedError;
   String? get question => throw _privateConstructorUsedError;
-  File? get image => throw _privateConstructorUsedError;
+  XFile? get image => throw _privateConstructorUsedError;
   List<String>? get choices => throw _privateConstructorUsedError;
   int? get answer => throw _privateConstructorUsedError;
 
@@ -35,7 +35,7 @@ abstract class $QuizFormCopyWith<$Res> {
   $Res call(
       {String? title,
       String? question,
-      File? image,
+      XFile? image,
       List<String>? choices,
       int? answer});
 }
@@ -71,7 +71,7 @@ class _$QuizFormCopyWithImpl<$Res, $Val extends QuizForm>
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
-              as File?,
+              as XFile?,
       choices: freezed == choices
           ? _value.choices
           : choices // ignore: cast_nullable_to_non_nullable
@@ -95,7 +95,7 @@ abstract class _$$QuizFormImplCopyWith<$Res>
   $Res call(
       {String? title,
       String? question,
-      File? image,
+      XFile? image,
       List<String>? choices,
       int? answer});
 }
@@ -129,7 +129,7 @@ class __$$QuizFormImplCopyWithImpl<$Res>
       image: freezed == image
           ? _value.image
           : image // ignore: cast_nullable_to_non_nullable
-              as File?,
+              as XFile?,
       choices: freezed == choices
           ? _value._choices
           : choices // ignore: cast_nullable_to_non_nullable
@@ -158,7 +158,7 @@ class _$QuizFormImpl with DiagnosticableTreeMixin implements _QuizForm {
   @override
   final String? question;
   @override
-  final File? image;
+  final XFile? image;
   final List<String>? _choices;
   @override
   List<String>? get choices {
@@ -217,7 +217,7 @@ abstract class _QuizForm implements QuizForm {
   const factory _QuizForm(
       {final String? title,
       final String? question,
-      final File? image,
+      final XFile? image,
       final List<String>? choices,
       final int? answer}) = _$QuizFormImpl;
 
@@ -226,7 +226,7 @@ abstract class _QuizForm implements QuizForm {
   @override
   String? get question;
   @override
-  File? get image;
+  XFile? get image;
   @override
   List<String>? get choices;
   @override

@@ -1,17 +1,15 @@
-// Dart imports:
-import 'dart:io';
-
 // Flutter imports:
 import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:image_picker_for_web/image_picker_for_web.dart';
 
-class ImageFormField extends FormField<File> {
+class ImageFormField extends FormField<XFile> {
   ImageFormField({super.key, super.onSaved})
       : super(
-          builder: (FormFieldState<File> state) {
+          builder: (FormFieldState<XFile> state) {
             final appLocalizations = AppLocalizations.of(state.context)!;
             final icons = [
               IconButton(
@@ -38,7 +36,7 @@ class ImageFormField extends FormField<File> {
                   height: 16,
                 ),
               );
-              Widget widget = Image.file(File(state.value!.path),
+              Widget widget = Image.network(state.value!.path,
                   width: 150, height: 150, fit: BoxFit.cover);
               children.add(widget);
               icons.add(
@@ -65,8 +63,8 @@ class ImageFormField extends FormField<File> {
           },
         );
 
-  static _pickImage(ImageSource source, FormFieldState<File> state) async {
-    final pickedFile = await ImagePicker().pickImage(
+  static _pickImage(ImageSource source, FormFieldState<XFile> state) async {
+    final pickedFile = await ImagePickerPlugin().getImage(
       source: source,
       maxWidth: 1024,
       maxHeight: 1024,
@@ -75,6 +73,6 @@ class ImageFormField extends FormField<File> {
     if (pickedFile == null) {
       return;
     }
-    state.didChange(File(pickedFile.path));
+    state.didChange(pickedFile);
   }
 }

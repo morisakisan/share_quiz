@@ -7,10 +7,11 @@ import 'package:flutter/foundation.dart';
 // Package imports:
 import 'package:crypto/crypto.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
 
 class FirebaseStorageDataStore {
 
-  Future<String> uploadFile(File file, String userId) async {
+  Future<String> uploadFile(XFile file, String userId) async {
 
     final value = await sha256.bind(file.openRead()).first;
 

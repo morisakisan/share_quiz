@@ -16,7 +16,16 @@ import '../provider/app_providers.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  var options = const FirebaseOptions(
+      apiKey: "AIzaSyAmW1fxRTPvZ-8kk_poGdcaJ0y0GxnOUCI",
+      authDomain: "quizsharerelease.firebaseapp.com",
+      projectId: "quizsharerelease",
+      storageBucket: "quizsharerelease.appspot.com",
+      messagingSenderId: "574942560083",
+      appId: "1:574942560083:web:adb1e70d8f88b2da722ba6",
+      measurementId: "G-E2MM2Y5KKF"
+  );
+  await Firebase.initializeApp(options: options);
   initializeDateFormatting('ja_JP');
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
   runZonedGuarded(() {

@@ -1,7 +1,5 @@
-// Dart imports:
-import 'dart:io';
-
 // Package imports:
+import 'package:image_picker/image_picker.dart';
 import 'package:state_notifier/state_notifier.dart';
 
 // Project imports:
@@ -18,7 +16,7 @@ class QuizFormUseCase extends StateNotifier<QuizForm> {
     state = state.copyWith(question: newQuestion);
   }
 
-  addImage(File? newImage) {
+  addImage(XFile? newImage) {
     state = state.copyWith(image: newImage);
   }
 

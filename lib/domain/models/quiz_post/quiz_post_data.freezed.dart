@@ -20,7 +20,7 @@ mixin _$QuizPostData {
   String get question => throw _privateConstructorUsedError;
   List<String> get choices => throw _privateConstructorUsedError;
   int get answer => throw _privateConstructorUsedError;
-  File? get imageFile => throw _privateConstructorUsedError;
+  XFile? get imageFile => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $QuizPostDataCopyWith<QuizPostData> get copyWith =>
@@ -38,7 +38,7 @@ abstract class $QuizPostDataCopyWith<$Res> {
       String question,
       List<String> choices,
       int answer,
-      File? imageFile});
+      XFile? imageFile});
 }
 
 /// @nodoc
@@ -80,7 +80,7 @@ class _$QuizPostDataCopyWithImpl<$Res, $Val extends QuizPostData>
       imageFile: freezed == imageFile
           ? _value.imageFile
           : imageFile // ignore: cast_nullable_to_non_nullable
-              as File?,
+              as XFile?,
     ) as $Val);
   }
 }
@@ -98,7 +98,7 @@ abstract class _$$QuizPostDataImplCopyWith<$Res>
       String question,
       List<String> choices,
       int answer,
-      File? imageFile});
+      XFile? imageFile});
 }
 
 /// @nodoc
@@ -138,7 +138,7 @@ class __$$QuizPostDataImplCopyWithImpl<$Res>
       imageFile: freezed == imageFile
           ? _value.imageFile
           : imageFile // ignore: cast_nullable_to_non_nullable
-              as File?,
+              as XFile?,
     ));
   }
 }
@@ -170,7 +170,7 @@ class _$QuizPostDataImpl with DiagnosticableTreeMixin implements _QuizPostData {
   final int answer;
   @override
   @JsonKey()
-  final File? imageFile;
+  final XFile? imageFile;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -220,7 +220,7 @@ abstract class _QuizPostData implements QuizPostData {
       required final String question,
       required final List<String> choices,
       required final int answer,
-      final File? imageFile}) = _$QuizPostDataImpl;
+      final XFile? imageFile}) = _$QuizPostDataImpl;
 
   @override
   String get title;
@@ -231,7 +231,7 @@ abstract class _QuizPostData implements QuizPostData {
   @override
   int get answer;
   @override
-  File? get imageFile;
+  XFile? get imageFile;
   @override
   @JsonKey(ignore: true)
   _$$QuizPostDataImplCopyWith<_$QuizPostDataImpl> get copyWith =>
