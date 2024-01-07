@@ -2,7 +2,7 @@ name: share_quiz
 version: 1.1.1+6
 environment:
   sdk: 3.2.3
-  flutter: 3.16.3
+  flutter: 3.16.5
 
 dependencies:
   flutter:
