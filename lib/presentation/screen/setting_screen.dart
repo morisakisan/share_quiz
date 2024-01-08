@@ -72,13 +72,13 @@ class _SettingItems extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final useCase = ref.watch(deleteUserUseCaseProvider.notifier);
     final appLocalizations = AppLocalizations.of(context)!;
-    List<AbstractTile> tiles = [];
+    List<AbstractSettingsTile> tiles = [];
 
     final themeMode = ref.watch(appThemeSelectorProvider);
 
     tiles.add(
       SettingsTile(
-        title: "テーマ選択",
+        title: const Text("テーマ選択"),
         leading: const Icon(Icons.palette),
         onPressed: (context) {
           showDialog(
@@ -115,7 +115,7 @@ class _SettingItems extends HookConsumerWidget {
     if (_setting.isLogin) {
       tiles.add(
         SettingsTile(
-          title: "退会",
+          title: Text("退会"),
           leading: const Icon(Icons.exit_to_app),
           onPressed: (context) {
             showDialog(
@@ -137,7 +137,7 @@ class _SettingItems extends HookConsumerWidget {
 
     tiles.add(
       SettingsTile(
-        title: appLocalizations.license,
+        title: Text(appLocalizations.license),
         leading: const Icon(Icons.gavel),
         onPressed: (context) {
           showLicensePage(
@@ -151,7 +151,7 @@ class _SettingItems extends HookConsumerWidget {
 
     tiles.add(
       SettingsTile(
-        title: appLocalizations.version,
+        title: Text(appLocalizations.version),
         leading: const Icon(Icons.info_outline),
         trailing: Text(_setting.packageInfo.version),
       ),
