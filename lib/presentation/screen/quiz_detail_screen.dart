@@ -223,7 +223,7 @@ class QuizDetailScreen extends HookConsumerWidget {
         return CustomAlertDialog(
           title: appLocalizations.answer,
           message: appLocalizations.confirmAnswerFormat(
-              quiz.question, quiz.choices[select]),
+              quiz.choices[select], quiz.question),
           onOkPressed: () {
             quizAnswerNotifier.post(quiz.documentId, select);
           },
@@ -275,7 +275,7 @@ class _QuizDetailBottomBar extends HookConsumerWidget {
             icon: const Icon(Icons.share),
             onPressed: () {
               Share.share(
-                  appLocalizations.shareFormat(quiz.title, quiz.question));
+                  appLocalizations.shareFormat(quiz.question, quiz.title));
             },
             label: Text(appLocalizations.share),
           ),
