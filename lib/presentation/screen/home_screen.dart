@@ -7,6 +7,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 // Project imports:
 import 'package:share_quiz/presentation/common/loading_screen.dart';
+import 'package:share_quiz/presentation/screen/search_screen.dart';
 import '../../domain/models/user/user_data.dart';
 import '../../provider/current_user_provider.dart';
 import '../../provider/log_out_use_case_provider.dart';
@@ -47,6 +48,14 @@ class HomeScreen extends HookConsumerWidget {
             bottom: TabBar(
               tabs: tab,
             ),
+            actions: [
+              IconButton(
+                icon: const Icon(Icons.search),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(Nav.search);
+                },
+              ),
+            ],
           ),
           drawer: _HomeDrawer(currentUser),
           body: TabBarView(
