@@ -333,18 +333,18 @@ packages:
     dependency: "direct main"
     description:
       name: firebase_crashlytics
-      sha256: "976b325d1615873735618054509fa03e5443149d52deb4245565f31f11655e3f"
+      sha256: f2c41de041f68642eddafbebeb9e0de7c204457270ed2ec981a1efe892b41479
       url: "https://pub.dev"
     source: hosted
-    version: "3.4.11"
+    version: "3.4.12"
   firebase_crashlytics_platform_interface:
     dependency: transitive
     description:
       name: firebase_crashlytics_platform_interface
-      sha256: "724b30d67b971adb987481944885426b4bd892a662ea35d376e95e637961a9b1"
+      sha256: "747316e4fcbea563738c6dbd7106ce9709d087d43b33dea4e5061dfd1a962ffd"
       url: "https://pub.dev"
     source: hosted
-    version: "3.6.18"
+    version: "3.6.19"
   firebase_performance:
     dependency: "direct main"
     description:
