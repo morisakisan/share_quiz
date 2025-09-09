@@ -10,7 +10,7 @@ dependencies:
   flutter_hooks: 0.20.5
   hooks_riverpod: 2.6.1
 
-  firebase_core: 2.25.2
+  firebase_core: 2.27.0
   firebase_auth: 4.17.2
   cloud_firestore: 4.15.2
   google_sign_in: 6.2.1
