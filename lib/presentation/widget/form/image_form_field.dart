@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:share_quiz/generated/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImageFormField extends FormField<File> {

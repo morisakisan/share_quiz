@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 // Package imports:
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:share_quiz/generated/app_localizations.dart';
 import 'package:tuple/tuple.dart';
 
 class ChoicesFormField extends FormField<Tuple2<List<String>, int>> {
