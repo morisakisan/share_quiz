@@ -6,7 +6,7 @@ class FirebaseAuthStore {
   Future<UserCredential> signIn(GoogleSignInAccount account) async {
     final googleSignInAuthentication = await account.authentication;
     final credential = GoogleAuthProvider.credential(
-      accessToken: googleSignInAuthentication.accessToken,
+      accessToken: googleSignInAuthentication.idToken,
       idToken: googleSignInAuthentication.idToken,
     );
     return FirebaseAuth.instance.signInWithCredential(credential);

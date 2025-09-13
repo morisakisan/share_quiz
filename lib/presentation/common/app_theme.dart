@@ -41,7 +41,7 @@ class AppTheme {
         borderSide: BorderSide(color: Colors.orange[700]!),
       ),
     ),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: Colors.white,
       shadowColor: Colors.grey[50],
       elevation: 1,
@@ -49,7 +49,7 @@ class AppTheme {
         borderRadius: BorderRadius.circular(10),
       ),
     ),
-    tabBarTheme: TabBarTheme(
+    tabBarTheme: TabBarThemeData(
       labelColor: Colors.white, // 選択中のタブのテキスト色
       unselectedLabelColor: Colors.grey[300], // 非選択のタブのテキスト色
       indicator: const UnderlineTabIndicator(
@@ -129,7 +129,7 @@ class AppTheme {
     ),
 
     // カードテーマ
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: Colors.grey[800],
       shadowColor: Colors.black,
       elevation: 1,
@@ -138,7 +138,7 @@ class AppTheme {
       ),
     ),
 
-    tabBarTheme: TabBarTheme(
+    tabBarTheme: TabBarThemeData(
       labelColor: Colors.white, // 選択中のタブのテキスト色
       unselectedLabelColor: Colors.grey, // 非選択のタブのテキスト色
       indicator: UnderlineTabIndicator(

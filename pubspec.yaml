@@ -1,46 +1,46 @@
 name: share_quiz
 version: 1.1.2+7
 environment:
-  sdk: 3.2.6
-  flutter: 3.16.9
+  sdk: '>=3.2.6 <4.0.0'
+  flutter: '>=3.16.9'
 
 dependencies:
   flutter:
     sdk: flutter
-  flutter_hooks: 0.20.5
+  flutter_hooks: ^0.21.3+1
   hooks_riverpod: 2.6.1
 
-  firebase_core: 2.27.0
-  firebase_auth: 4.17.2
-  cloud_firestore: 4.15.2
-  google_sign_in: 6.2.1
-  firebase_storage: 11.6.2
+  firebase_core: ^4.1.0
+  firebase_auth: ^6.0.2
+  cloud_firestore: ^6.0.1
+  google_sign_in: ^7.1.1
+  firebase_storage: ^13.0.1
   tuple: 2.0.2
-  firebase_crashlytics: 3.4.12
-  crypto: 3.0.3
-  image_picker: 1.0.7
-  flutter_launcher_icons: 0.13.1
+  firebase_crashlytics: ^5.0.1
+  crypto: 3.0.6
+  image_picker: ^1.2.0
+  flutter_launcher_icons: 0.14.4
   flutter_settings_ui: 3.0.1
   state_notifier: 1.0.0
-  intl: 0.18.1
+  intl: ^0.20.2
   flutter_localizations:
     sdk: flutter
-  rxdart: 0.27.7
-  package_info_plus: 5.0.1
-  share_plus: 7.2.2
-  firebase_performance: 0.9.3+2
-  collection: 1.18.0
-  shared_preferences: 2.2.2
+  rxdart: 0.28.0
+  package_info_plus: ^9.0.0
+  share_plus: ^12.0.0
+  firebase_performance: ^0.11.0+1
+  collection: ^1.19.1
+  shared_preferences: ^2.5.3
 
 dev_dependencies:
-  freezed_annotation: 2.4.1
-  freezed: 2.4.6
-  build_runner: 2.4.9
-  json_serializable: 6.7.1
+  freezed_annotation: ^3.1.0
+  freezed: ^3.2.3
+  build_runner: ^2.8.0
+  json_serializable: ^6.11.1
   import_sorter: 4.6.0
   flutter_test:
     sdk: flutter
-  flutter_lints: 3.0.1
+  flutter_lints: ^6.0.0
 
 flutter_icons:
   android: true
