@@ -3,14 +3,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class GoogleSignInStore {
-
   Future<UserCredential?> signIn() async {
     try {
-      // GoogleSignInインスタンスの初期化（clientIdはFirebaseのWebクライアントIDを指定する場合）
-      final GoogleSignIn googleSignIn = GoogleSignIn.instance;
+
+      await GoogleSignIn.instance.initialize(
+        serverClientId: '1:225826406409:android:e45b90e5dd989c4391b8d8',
+      );
 
       // 新しいauthenticate()メソッドを使用（v7.0以降）
-      final GoogleSignInAccount googleUser = await googleSignIn.authenticate(
+      final GoogleSignInAccount googleUser = await GoogleSignIn.instance.authenticate(
         scopeHint: ['email'], // スコープヒント（オプション）
       );
 
@@ -25,9 +26,8 @@ class GoogleSignInStore {
 
       // Firebase Authにサインイン
       return FirebaseAuth.instance.signInWithCredential(credential);
-    } on GoogleSignInException catch (e) {
-      return null;
     } catch (e) {
+      print(e);
       return null;
     }
   }
