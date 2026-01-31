@@ -88,6 +88,8 @@ android {
             versionNameSuffix '-DEBUG'
             debuggable true
             resValue "string", "app_name", "${APP_BASE_NAME} Dev"
+            // これを追加することで、自分で定義した signingConfigs.debug が使われるようになります
+            signingConfig signingConfigs.debug
         }
 
         release {

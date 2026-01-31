@@ -47,3 +47,4 @@ app.*.map.json
 flutter_lldb_helper.py
 flutter_lldbinit
 lib/generated
+lib/core/infrastructure/google_sign_in/google_signin_config.dart
